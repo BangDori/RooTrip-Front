@@ -1,0 +1,32 @@
+div{
+    text-align: center;
+}
+.Logo{
+    margin: 0;
+    padding: 50px;
+    border-bottom: solid 1px #ccc;
+    color: darkcyan;
+}
+.middle{
+    padding: 20px 20px 3px 20px;
+    width: 65%;
+    margin:auto;
+}
+input{
+    border-radius: 5px;
+    width: 500px;
+    height: 40px;
+    padding: 5px;
+    margin: 8px;
+    border-color: powderblue;
+}
+button{
+    background-color: powderblue;
+    border-radius: 5px;
+    border-color: white;
+    width: 515px;
+    height: 60px;
+    font-size: 20px;
+    color: darkcyan;
+    font-weight: bold;
+}
