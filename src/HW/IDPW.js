@@ -1,6 +1,5 @@
-import './IDPW.css';
+import './css/IDPW.css';
 import {Component} from 'react';
-import { useNavigate } from "react-router-dom";
 
 class IDPW extends Component {
     
@@ -19,13 +18,14 @@ class IDPW extends Component {
         });
     }
     handleClick = () => {
-        const navigate = useNavigate();
-        navigate('/api/auth/login', {
-            state:{
-                id: this.state.ID,
-                pw: this.state.PW
-            }
-        });
+        //비밀번호 조건 : 문자와 숫자, 특수문자(최소 하나) 섞여있고 4~15자
+        const regex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[\!\@\#\$\%\^\&\*\(\)\~]+)[0-9a-zA-Z\!\@\#\$\%\^\&\*\(\)\~]{4,15}$/;
+        if(regex.test(this.state.PW)){
+            alert("로그인 성공");
+        }
+        else{
+            alert("로그인 실패! 비밀번호 다시 입력");
+        }
     }
     
     render(){
