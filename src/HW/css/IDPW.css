@@ -1,4 +1,4 @@
-div{
+.page1{
     text-align: center;
 }
 .Logo{
@@ -12,7 +12,7 @@ div{
     width: 65%;
     margin:auto;
 }
-input{
+.Logintext{
     border-radius: 5px;
     width: 500px;
     height: 40px;
@@ -20,7 +20,7 @@ input{
     margin: 8px;
     border-color: powderblue;
 }
-button{
+.LoginButton{
     background-color: powderblue;
     border-radius: 5px;
     border-color: white;

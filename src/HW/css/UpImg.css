@@ -1,0 +1,23 @@
+#imageEdit{
+    text-align: center;
+    padding-top: 150px;
+}
+.Upfile{
+    cursor: pointer;
+    text-align: center;
+    font-size: 15px;
+    color: 
+}
+.file-box{
+    
+    padding: 15px 20px 10px 15px;
+    border-radius: 30px;
+    text-align: center;
+    margin: auto;
+    width: 190px;
+    height: 31px;
+    
+}
+.file-box:hover{
+    background-color: #ccc;
+}

@@ -4,10 +4,6 @@ body {
   }
 .inner {
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 100px;
   }
 .outer {
     height: 100vh;
@@ -24,11 +20,11 @@ body {
     background-color: gray;
 }
 .bg-yellow {
-    background-color: #f7f6cf;
+    background-color: white;
 }
   
 .bg-blue {
-    background-color: #b6d8f2;
+    background-color: powderblue;
 }
   
 .bg-pink {

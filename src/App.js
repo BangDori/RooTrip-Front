@@ -1,9 +1,9 @@
 import './App.css';
-import IDPW from './HW/IDPW.js'
 import Scroll_section from './HW/Scroll_section.js' 
+import UpImg from './HW/UpImg';
 
 const App = () => {
-  return <IDPW />;   
+  return <Scroll_section />;
 }
 
 export default App;

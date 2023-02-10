@@ -1,11 +1,14 @@
 import './css/Scroll_section.css';
-import {Component} from 'react';
+import IDPW from './IDPW.js';
+import SignUp from './SignUp.js';
+import UpImg from './UpImg.js';
 import {useState, useEffect, useRef } from "react";
 import Dots from "./Dots";
 
+
 const DIVIDER_HEIGHT = 5;
 function Scroll_section(){
-    const outerDivRef = useRef();
+  const outerDivRef = useRef();
   const [scrollIndex, setScrollIndex] = useState(1);
   useEffect(() => {
     const wheelHandler = (e) => {
@@ -79,14 +82,36 @@ function Scroll_section(){
       outerDivRefCurrent.removeEventListener("wheel", wheelHandler);
     };
   }, []);
+
+  const nextPage = () =>{
+    const pageHeight = window.innerHeight;
+    outerDivRef.current.scrollTo({
+      top: pageHeight + DIVIDER_HEIGHT,
+      left: 0,
+      behavior: "smooth",
+    });
+    setScrollIndex(2);
+  }
+  
   return (
     <div ref={outerDivRef} className="outer">
       <Dots scrollIndex={scrollIndex} />
-      <div className="inner bg-yellow">1</div>
+      {/* 비밀번호 아이디 입력창 */}
+      <div className="inner bg-yellow">
+        <IDPW />
+      </div>
       <div className="divider"></div>
-      <div className="inner bg-blue">2</div>
+
+      {/* 회원가입 창 */}
+      <div className="inner bg-blue">
+        <SignUp />
+      </div>
       <div className="divider"></div>
-      <div className="inner bg-pink">3</div>
+
+      {/* 사진 업로드 창 */}
+      <div className="inner bg-pink">
+        <UpImg/>
+      </div>
     </div>
   );
 }
