@@ -1,9 +1,8 @@
 import './App.css';
-import Scroll_section from './HW/Scroll_section.js' 
-import UpImg from './HW/UpImg';
+import Login from './RootTrip/Login.js'
 
 const App = () => {
-  return <Scroll_section />;
+  return <Login />;
 }
 
 export default App;
