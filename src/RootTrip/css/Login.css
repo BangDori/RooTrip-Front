@@ -83,7 +83,7 @@ button{
     width: 125px;
     height: 35px;
     font-size: 13px;
-    background-color: powderblue;
+    background-color: rgb(132, 216, 227);
     margin-right: 5px;
 }
 .gosignupbtn{
@@ -94,7 +94,7 @@ button{
     width: 125px;
     height: 35px;
     font-size: 13px;
-    background-color: powderblue;
+    background-color: rgb(132, 216, 227);
 }
 .signupbtn{
     border: powderblue;
@@ -104,7 +104,7 @@ button{
     width: 125px;
     height: 35px;
     font-size: 13px;
-    background-color: powderblue;
+    background-color: rgb(132, 216, 227);
     margin-top: 10px;
 }
 .social_login{

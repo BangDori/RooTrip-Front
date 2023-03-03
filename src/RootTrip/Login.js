@@ -56,7 +56,7 @@ function Login (){
         <>
             <div className="Full-Map">
             {modal === true && !visible ? <SignupModal></SignupModal> : null}
-                <div id = "map" className="map">
+                <div>
                 </div>
                 {visible && <div className="LoginPage">
                     <div className='Login_logo'>
