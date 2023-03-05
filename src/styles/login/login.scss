@@ -1,0 +1,85 @@
+button{
+    cursor: pointer;
+}
+
+.LoginPage{
+    box-shadow: 10px 10px 5px #aaa;
+    right: 15%;
+    top: 20%;
+    position: absolute;
+    width: 300px;
+    height: 100%;
+    max-height: 410px;
+    background-color: white;
+    text-align: center;
+    .Logotext{
+        color: #bbb;
+        .text{
+            font-size: 9px;
+        }
+        .text2{
+            font-size: 9px;
+            font-weight: bold;
+        }
+    }
+    
+    .login_index{
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0 20px 0;
+        .logintext{
+            border: #f5f5f5;
+            background-color: #eeeeee;
+            border-radius: 1px;
+            width: 240px;
+            height: 20px;
+            padding: 5px 5px 5px 10px;
+            margin: 10px 0 10px 0;
+        }
+        .loginbtn{
+            border: powderblue;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 125px;
+            height: 35px;
+            font-size: 13px;
+            background-color: rgb(132, 216, 227);
+            margin-right: 5px;
+        }
+        .gosignupbtn{
+            border: powderblue;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 125px;
+            height: 35px;
+            font-size: 13px;
+            background-color: rgb(132, 216, 227);
+        }
+    }
+    
+    .social_login{
+        padding: 10px 0 10px 0;
+    
+        button{
+            border-radius: 5px;
+            width: 260px;
+            height: 35px;
+            font-size: 17px;
+            margin: 5px 0 5px 0;
+            border: white;
+            font-weight: bold;
+        }
+        .kakaobtn{
+            background-color: rgb(248, 248, 87);
+        }
+        .naverbtn{
+            background-color: rgb(44, 224, 44);
+            color: white;
+        }
+        .googlebtn{
+            background-color: whitesmoke;
+        }
+    } 
+}
+
