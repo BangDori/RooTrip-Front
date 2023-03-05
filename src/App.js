@@ -1,8 +1,7 @@
-import './App.css';
-import Login from './RootTrip/Login.js'
+import Index from './pages/Index';
 
 const App = () => {
-  return <Login />;
-}
+  return <Index />;
+};
 
 export default App;

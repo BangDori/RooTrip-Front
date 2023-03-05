@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import LocalLogin from './LocalLogin';
+import Login from './Login';
 import SocialLogin from './SocialLogin';
 import Title from './Title';
 import '../../styles/login/login.css';
@@ -52,7 +52,7 @@ const Index = () => {
       <div className='Full-Map'>
         <div className='LoginPage'>
           <Title />
-          <LocalLogin />
+          <Login />
           <SocialLogin />
         </div>
       </div>
