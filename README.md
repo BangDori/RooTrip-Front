@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# RooTrip-FE
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+나의 여행을 공유하는 여행용 SNS
 
-## Available Scripts
+## Table of Contents
+1. <a href="#커밋-컨벤션">커밋 컨벤션</a> 
+2. <a href="#폴더-규칙">폴더 규칙</a>
+3. <a href="#팀원">팀원</a>
+4. <a href="#주소">RooTrip 주소</a>
 
-In the project directory, you can run:
+## 커밋 컨벤션
+<img src="https://user-images.githubusercontent.com/44726494/222941077-0441e481-34ce-44d8-9673-7108840d09e6.png" alt="commit convention" width="432px" />
 
-### `yarn start`
+## 폴더 규칙
+```
+└─ src
+ ├─ components          재사용 컴포넌트
+ ├─ assets              이미지, 폰트
+ ├─ hooks (= hoc)       커스텀 훅
+ ├─ pages               페이지 컴포넌트
+ ├─ constants           공통 상수
+ ├─ config              초기 설정 및 구성 정보
+ ├─ styles              css, scss 스타일
+ ├─ services (= api)    api 관련 로직 모듈, auth 인증 관련 모듈
+ ├─ utils               정규표현식 패턴, 공통 함수
+ ├─ store               전역 상태 관리
+ ├─ App.js
+ └─ index.js
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 팀원
+- PM
+  - [Kim himchan](https://github.com/HmDol)
+- FE
+  - [Kang ByungJun](https://github.com/bangdori)
+  - [Jung Mun Gyu](https://github.com/JungMunGyu)
+- BE
+  - [Woo Jaemin](https://github.com/WooJJam)
+  - [Lee Young Su](https://github.com/youngsu5582)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 주소
+- [RooTrip-FE,](https://github.com/JungMunGyu/RooTrip-Front) [RooTrip-BE](https://github.com/youngsu5582/RooTrip-Backend)
