@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Login from './login/Index';
 import Home from './home/Index';
+import Register from './register/Index';
 
 const Index = () => {
-  // 로그인 시 유저정보를 받아오기 위한 field
-  // 토큰 정보를 저장, 상태 변경 필요
+  // accssToken, refreshToken 저장 필요
   const [isLogin, setIsLogin] = useState(false);
 
   return (
@@ -15,6 +15,7 @@ const Index = () => {
       ) : (
         <Route path='/' element={<Login />} />
       )}
+      <Route path='/register' element={<Register />} />
     </Routes>
   );
 };
