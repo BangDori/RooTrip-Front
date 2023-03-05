@@ -29,12 +29,12 @@
 ```
 
 ## 팀원
-- PM
+- **PM**
   - [Kim himchan](https://github.com/HmDol)
-- FE
+- **FE**
   - [Kang ByungJun](https://github.com/bangdori)
   - [Jung Mun Gyu](https://github.com/JungMunGyu)
-- BE
+- **BE**
   - [Woo Jaemin](https://github.com/WooJJam)
   - [Lee Young Su](https://github.com/youngsu5582)
 
