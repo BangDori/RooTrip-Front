@@ -1,11 +1,12 @@
 import React from 'react';
-import Title from './Title'
-import Register from './Register'
+import Title from './Title';
+import RegisterContainer from './RegisterContainer';
+
 const Index = () => {
   return (
     <>
       <Title />
-      <Register />
+      <RegisterContainer />
     </>
   );
 };
