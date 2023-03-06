@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Login from './login/Index';
 import Home from './home/Index';
 import Register from './register/Index';
 
 const Index = () => {
-  // accssToken, refreshToken 저장 필요
-  const [isLogin, setIsLogin] = useState(false);
+  const { status } = useSelector((state) => state.user);
 
   return (
     <Routes>
-      {isLogin ? (
+      {status ? (
         <Route path='/' element={<Home />} />
       ) : (
         <Route path='/' element={<Login />} />
       )}
+      <Route path='/' element={<Login />} />
       <Route path='/register' element={<Register />} />
     </Routes>
   );
