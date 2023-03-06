@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setToken } from '../../store/user';
 import { login } from '../../services/user';
+import { regExpSpace } from '../../utils/regExp';
 
 const LoginContainer = () => {
   const [form, setForm] = useState({
@@ -15,10 +16,12 @@ const LoginContainer = () => {
 
   const onInput = useCallback(
     (e) => {
-      setForm({
-        ...form,
-        [e.target.name]: e.target.value,
-      });
+      if (!regExpSpace.test(e.target.value)) {
+        setForm({
+          ...form,
+          [e.target.name]: e.target.value,
+        });
+      }
     },
     [form],
   );
