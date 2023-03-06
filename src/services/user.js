@@ -31,9 +31,9 @@ export async function register(form) {
       url: `${process.env.REACT_APP_SERVER}/api/auth/register`,
       method: 'post',
       data: form,
+    }).then((result) => {
+      console.log(result);
     });
-
-    console.log(res);
   } catch (e) {
     console.log(e);
   }
