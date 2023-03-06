@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../styles/register/register.scss'
+import {usestate} from 'react';
 const Register = () => {
 
     return (
