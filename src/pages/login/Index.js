@@ -1,7 +1,7 @@
 import Login from './Login';
 import SocialLogin from './SocialLogin';
 import Title from './Title';
-import '../../styles/login/login.css';
+import '../../styles/login/login.scss';
 
 const Index = () => {
   return (

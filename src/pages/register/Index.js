@@ -1,7 +1,13 @@
 import React from 'react';
-
+import Title from './Title'
+import Register from './Register'
 const Index = () => {
-  return <div>Register 화면</div>;
+  return (
+    <>
+      <Title />
+      <Register />
+    </>
+  );
 };
 
 export default Index;
