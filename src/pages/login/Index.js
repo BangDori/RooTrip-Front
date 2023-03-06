@@ -1,4 +1,4 @@
-import Login from './Login';
+import LoginContainer from './LoginContainer';
 import SocialLogin from './SocialLogin';
 import Title from './Title';
 import '../../styles/login/login.scss';
@@ -7,7 +7,7 @@ const Index = () => {
   return (
     <div className='LoginPage'>
       <Title />
-      <Login />
+      <LoginContainer />
       <SocialLogin />
     </div>
   );
