@@ -30,13 +30,13 @@
 
 ## 팀원
 - **PM**
-  - [Kim himchan](https://github.com/HmDol)
+  - [Kim HimChan](https://github.com/HmDol)
 - **FE**
   - [Kang ByungJun](https://github.com/bangdori)
-  - [Jung Mun Gyu](https://github.com/JungMunGyu)
+  - [Jung MunGyu](https://github.com/JungMunGyu)
 - **BE**
-  - [Woo Jaemin](https://github.com/WooJJam)
-  - [Lee Young Su](https://github.com/youngsu5582)
+  - [Woo JaeMin](https://github.com/WooJJam)
+  - [Lee YoungSu](https://github.com/youngsu5582)
 
 ## 주소
 - [RooTrip-FE,](https://github.com/JungMunGyu/RooTrip-Front) [RooTrip-BE](https://github.com/youngsu5582/RooTrip-Backend)
