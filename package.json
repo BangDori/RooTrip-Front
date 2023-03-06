@@ -19,6 +19,7 @@
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
     "redux-actions": "^3.0.0",
+    "redux-devtools-extension": "^2.13.9",
     "sass": "^1.58.3",
     "styled-components": "^5.3.8",
     "web-vitals": "^2.1.0"
