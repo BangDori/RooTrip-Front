@@ -1,58 +1,29 @@
-import React, { useCallback, useState } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { login } from '../../services/user';
 
-const LocalLogin = () => {
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
+const Login = ({ form, onInput, onLogin }) => {
   const { email, password } = form;
-
-  const onChange = useCallback(
-    (e) => {
-      setForm({
-        ...form,
-        [e.target.name]: e.target.value,
-      });
-    },
-    [form],
-  );
-
-  const onLogin = useCallback(
-    async (e) => {
-      e.preventDefault();
-
-      try {
-        // accessToken, refreshToken 저장
-        const { accessToken, refreshToken } = await login(form);
-
-        setForm({
-          email: '',
-          password: '',
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    },
-    [form],
-  );
+  const errorText = useRef(null);
 
   return (
-    <form className='login_index' action='' method='post' onSubmit={onLogin}>
+    <form
+      className='login_index'
+      method='post'
+      onSubmit={(e) => onLogin(e, errorText)}
+    >
       <input
         className='logintext'
         name='email'
         value={email}
         placeholder='사용자 이메일 또는 아이디'
-        onChange={onChange}
+        onChange={onInput}
       />
       <input
         className='logintext'
         name='password'
         value={password}
         placeholder='비밀번호'
-        onChange={onChange}
+        onChange={onInput}
       />
       <button type='submit' className='loginbtn'>
         로그인
@@ -62,8 +33,9 @@ const LocalLogin = () => {
           회원 가입
         </button>
       </Link>
+      <p ref={errorText}></p>
     </form>
   );
 };
 
-export default LocalLogin;
+export default Login;
