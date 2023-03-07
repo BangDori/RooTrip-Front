@@ -3,17 +3,18 @@ import Register from './Register';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../services/user';
 import { regExpSpace } from '../../utils/regExp';
-import { useValidation } from '../../hooks/useValidation';
+import useInputValidator, { validate } from '../../hooks/useInputValidator';
 
 const RegisterContainer = () => {
+  const { messages, validateInput } = useInputValidator();
   const [form, setForm] = useState({
-    name: '강병준',
-    email: 'test@naver.com',
-    nickname: 'test',
-    password: 'test1234!',
-    gender: '남자',
+    name: '',
+    gender: 'M',
+    email: '',
+    nickname: '',
+    password: '',
+    cpassword: '',
   });
-  const isValid = useValidation(form);
   const navigate = useNavigate();
 
   const onInput = useCallback(
@@ -28,32 +29,46 @@ const RegisterContainer = () => {
     [form],
   );
 
+  const onCheck = useCallback(
+    async (type, data) => {
+      await validateInput(type, data);
+    },
+    [validateInput],
+  );
+
   const onRegister = useCallback(
-    async (e, repassword, errorText) => {
+    async (e) => {
       e.preventDefault();
 
       try {
-        if (isValid && form.password === repassword) {
-          // const res = await register(form);
+        if (validate(messages)) {
+          await register(form);
+
           setForm({
             name: '',
             email: '',
             nickname: '',
             password: '',
-            gender: '남자',
+            gender: 'M',
           });
           navigate('/');
-        } else {
-          errorText.current.textContent = '입력 정보가 정확하지 않습니다.';
         }
       } catch (e) {
         console.log(e);
       }
     },
-    [navigate, isValid, form.password],
+    [navigate, form, messages],
   );
 
-  return <Register form={form} onInput={onInput} onRegister={onRegister} />;
+  return (
+    <Register
+      form={form}
+      messages={messages}
+      onInput={onInput}
+      onCheck={onCheck}
+      onRegister={onRegister}
+    />
+  );
 };
 
 export default RegisterContainer;
