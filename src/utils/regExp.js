@@ -3,9 +3,9 @@
  */
 const regExpName = /^[가-힣]{2,}$/;
 const regExpEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const regExpNickname = /^[A-Za-z\dㄱ-ㅎㅏ-ㅣ가-힣].{2,}$/; // nickname
+const regExpNickname = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,8}$/;
 const regExpPassword =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]*$/;
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/;
 const regExpSpace = /\s/;
 
 export { regExpName, regExpEmail, regExpPassword, regExpNickname, regExpSpace };
