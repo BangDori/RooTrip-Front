@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../styles/register/register.scss';
 
 const Register = ({ form, onInput, onRegister }) => {
   const { name, email, nickname, password } = form;
   const [gender, setGender] = useState('남자');
   const [repassword, setRepassword] = useState('');
+  const refName = useRef(null);
+  const errorText = useRef(null);
+
+  useEffect(() => {
+    refName.current.focus();
+  }, []);
 
   return (
-    <form className='Register_main' onSubmit={onRegister}>
+    <form
+      className='Register_main'
+      onSubmit={(e) => onRegister(e, repassword, errorText)}
+    >
       <div className='User_data'>
         <div className='User_data_name'>
           <span>성명</span>
@@ -19,6 +28,7 @@ const Register = ({ form, onInput, onRegister }) => {
         <div className='User_data_content'>
           <div className='Name'>
             <input
+              ref={refName}
               type='text'
               name='name'
               value={name}
@@ -110,6 +120,7 @@ const Register = ({ form, onInput, onRegister }) => {
         <div className='signbtn'>
           <button type='submit'>가입하기</button>
         </div>
+        <p ref={errorText} style={{ color: 'red' }}></p>
       </div>
     </form>
   );
