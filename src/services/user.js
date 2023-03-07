@@ -9,7 +9,7 @@ export async function login(form) {
   try {
     // 주소 변경 필요
     const data = await axios({
-      url: `${process.env.REACT_APP_SERVER}/api/auth/login`,
+      url: `${process.env.REACT_APP_SERVER_SUB}/api/auth/login`,
       method: 'post',
       data: form,
     }).then((res) => res.data);
@@ -27,13 +27,38 @@ export async function login(form) {
  */
 export async function register(form) {
   try {
-    const res = await axios({
-      url: `${process.env.REACT_APP_SERVER}/api/auth/register`,
+    await axios({
+      url: `${process.env.REACT_APP_SERVER_SUB}/api/auth/register`,
       method: 'post',
       data: form,
     }).then((result) => {
       console.log(result);
+      if (result.data.status) {
+        return result.data.status;
+      } else {
+        throw new Error(result.data.message);
+      }
     });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
+ * auth findOne 함수
+ * @param {*} type 입력 타입
+ * @param {*} data 입력 쿼리
+ * @returns
+ */
+export async function findOne(type, data) {
+  try {
+    const status = await axios({
+      url: `${process.env.REACT_APP_SERVER_SUB}/api/auth/check?type=${type}&data=${data}`,
+      method: 'get',
+      responseType: 'json',
+    }).then((result) => result.data);
+
+    return status;
   } catch (e) {
     console.log(e);
   }
