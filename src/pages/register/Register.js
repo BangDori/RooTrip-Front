@@ -24,6 +24,7 @@ const Register = ({ form, onInput, onRegister }) => {
           <span>닉네임</span>
           <span>비밀번호</span>
           <span>비밀번호 확인</span>
+          <span>전화번호</span>
         </div>
         <div className='User_data_content'>
           <div className='Name'>
@@ -40,7 +41,11 @@ const Register = ({ form, onInput, onRegister }) => {
                 <button
                   type='button'
                   style={{
-                    background: `${gender === '남자' ? 'green' : 'white'}`,
+                    background: `${gender === '남자' ? '#0c4fc7' : 'white'}`,
+                    color: `${gender === '남자' ? 'white' : 'black'}`,
+                    fontWeight: `${gender === '남자' ? 'bold' : ''}`,
+                    width: `${gender === '남자' ? '50px': '45px'}`,
+                    height: `${gender === '남자' ? '50px': '45px'}`
                   }}
                   onClick={() => setGender('남자')}
                 >
@@ -51,7 +56,11 @@ const Register = ({ form, onInput, onRegister }) => {
                 <button
                   type='button'
                   style={{
-                    background: `${gender === '여자' ? 'green' : 'white'}`,
+                    background: `${gender === '여자' ? '#0c4fc7' : 'white'}`,
+                    color: `${gender === '여자' ? 'white' : 'black'}`,
+                    fontWeight: `${gender === '여자' ? 'bold' : ''}`,
+                    width: `${gender === '여자' ? '50px': '45px'}`,
+                    height: `${gender === '여자' ? '50px': '45px'}`
                   }}
                   onClick={() => setGender('여자')}
                 >
@@ -104,6 +113,17 @@ const Register = ({ form, onInput, onRegister }) => {
             />
             {/* 위의 비밀번호랑 일치하면 파란색으로 * 비밀번호가 일치합니다로 바뀜 */}
             <span>※ 위 입력한 비밀번호를 다시 입력해주세요</span>
+          </div>
+          <div>
+            <input
+              type='text'
+              name='phone'
+              value=''
+              //onChange={(e) => setRepassword(e.target.value)}
+              placeholder='전화번호를 입력해주세요'
+            />
+            {/* 위의 비밀번호랑 일치하면 파란색으로 * 비밀번호가 일치합니다로 바뀜 */}
+            <button className='certification_PN'>인증하기</button>
           </div>
         </div>
       </div>
