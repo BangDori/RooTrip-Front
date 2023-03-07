@@ -29,32 +29,28 @@ const RegisterContainer = () => {
   );
 
   const onRegister = useCallback(
-    async (e) => {
+    async (e, repassword, errorText) => {
       e.preventDefault();
 
       try {
-        console.log('유효성 검증: ', isValid);
-        if (isValid) {
+        if (isValid && form.password === repassword) {
           // const res = await register(form);
-
-          if (false) {
-            navigate('/');
-            setForm({
-              name: '',
-              email: '',
-              nickname: '',
-              password: '',
-              gender: '남자',
-            });
-          }
+          setForm({
+            name: '',
+            email: '',
+            nickname: '',
+            password: '',
+            gender: '남자',
+          });
+          navigate('/');
         } else {
-          console.log('유효하지 않습니다');
+          errorText.current.textContent = '입력 정보가 정확하지 않습니다.';
         }
       } catch (e) {
         console.log(e);
       }
     },
-    [navigate, isValid],
+    [navigate, isValid, form.password],
   );
 
   return <Register form={form} onInput={onInput} onRegister={onRegister} />;
