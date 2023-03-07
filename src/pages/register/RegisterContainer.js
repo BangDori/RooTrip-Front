@@ -42,6 +42,7 @@ const RegisterContainer = () => {
 
       try {
         if (validate(messages)) {
+          delete form.cpassword;
           await register(form);
 
           setForm({
