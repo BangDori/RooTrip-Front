@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setToken } from '../../store/user';
 import { login } from '../../services/user';
-import { regExpSpace } from '../../utils/regExp';
+import { regExpSpace } from '../../utils/constant/regExp';
 import { useInitialState } from '../../hooks/useInitialState';
 
 const LoginContainer = () => {

@@ -5,7 +5,7 @@ import {
   regExpEmail,
   regExpPassword,
   regExpNickname,
-} from '../utils/regExp';
+} from '../utils/constant/regExp';
 import {
   NAME,
   EMAIL,
@@ -13,7 +13,7 @@ import {
   PASSWORD,
   CPASSWORD,
   AXIOSERROR,
-} from '../utils/registerType';
+} from '../utils/constant/registerType';
 
 export function validate({ name, email, nickname, password, cpassword }) {
   let isValid = true;
