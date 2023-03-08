@@ -46,6 +46,10 @@ const useInputValidator = () => {
     axiosError: '',
     isValid: false,
   });
+  const [prevData, setPrevData] = useState({
+    email: '',
+    nickname: '',
+  });
 
   const validateInput = useCallback(
     async (type, data) => {
@@ -61,23 +65,21 @@ const useInputValidator = () => {
           break;
 
         case EMAIL:
-          if (!regExpEmail.test(data)) {
-            message = '※ 이메일 형식에 맞춰주세요.';
-          } else {
-            const isDup = await findOne(type, data);
-
-            if (!isDup) {
-              message = '중복';
-            } else {
-              message = '완료';
-            }
-          }
-          break;
-
         case NICKNAME:
-          if (!regExpNickname.test(data)) {
-            message = '※ 한글, 영어, 숫자를 조합한 닉네임을 입력해주세요.';
+          if (
+            (type === EMAIL && !regExpEmail.test(data)) ||
+            (type === NICKNAME && !regExpNickname.test(data))
+          ) {
+            message =
+              type === EMAIL
+                ? '※ 이메일 형식에 맞춰주세요.'
+                : '※ 한글, 영어, 숫자를 조합한 닉네임을 입력해주세요.';
           } else {
+            if (data === prevData[type]) break;
+            setPrevData((prevData) => ({
+              ...prevData,
+              [type]: data,
+            }));
             const isDup = await findOne(type, data);
 
             if (!isDup) {
@@ -124,7 +126,7 @@ const useInputValidator = () => {
         [type]: message,
       });
     },
-    [messages],
+    [messages, prevData],
   );
 
   return { messages, validateInput };
