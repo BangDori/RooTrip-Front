@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import Register from './Register';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../services/user';
-import { regExpSpace } from '../../utils/constant/regExp';
+import { regExpSpace } from '../../constants/regExp';
 import useInputValidator, { validate } from '../../hooks/useInputValidator';
 import { useInitialState } from '../../hooks/useInitialState';
 
