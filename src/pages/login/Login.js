@@ -1,16 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Login = ({ form, onInput, onLogin }) => {
+const Login = ({ form, onInput, onLogin, error }) => {
   const { email, password } = form;
-  const errorText = useRef(null);
 
   return (
-    <form
-      className='login_index'
-      method='post'
-      onSubmit={(e) => onLogin(e, errorText)}
-    >
+    <form className='login_index' method='post' onSubmit={onLogin}>
       <input
         className='logintext'
         name='email'
@@ -33,7 +28,7 @@ const Login = ({ form, onInput, onLogin }) => {
           회원 가입
         </button>
       </Link>
-      <p ref={errorText}></p>
+      {error && <span>{error}</span>}
     </form>
   );
 };
