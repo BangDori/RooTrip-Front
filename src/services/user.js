@@ -1,20 +1,20 @@
 import axios from 'axios';
 
 /**
- * auth login 함수
- * @param {*} form 이메일, 비밀번호
- * @returns accessToken, refreshToken
+ * auth findOne 함수
+ * @param {*} type 입력 타입
+ * @param {*} data 입력 쿼리
+ * @returns
  */
-export async function login(form) {
+export async function findOne(type, data) {
   try {
-    // 주소 변경 필요
-    const data = await axios({
-      url: `${process.env.REACT_APP_SERVER_SUB}/api/auth/login`,
-      method: 'post',
-      data: form,
-    }).then((res) => res.data);
+    const status = await axios
+      .get(
+        `${process.env.REACT_APP_SERVER_MAIN}/api/auth/check?type=${type}&data=${data}`,
+      )
+      .then((result) => result.data);
 
-    return data;
+    return status;
   } catch (e) {
     console.log(e);
   }
@@ -25,40 +25,57 @@ export async function login(form) {
  * @param {*} form 이름, 닉네임, 이메일, 비밀번호, 비밀번호 확인
  * @returns
  */
-export async function register(form) {
+export async function register(data) {
   try {
-    await axios({
-      url: `${process.env.REACT_APP_SERVER_SUB}/api/auth/register`,
-      method: 'post',
-      data: form,
-    }).then((result) => {
-      console.log(result);
-      if (result.data.status) {
-        return result.data.status;
-      } else {
-        throw new Error(result.data.message);
-      }
-    });
+    await axios
+      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/register`, data)
+      .then((result) => {
+        if (result.data.status) {
+          return result.data.status;
+        } else {
+          throw new Error(result.data.message);
+        }
+      });
+  } catch (e) {
+    throw new Error(e.message);
+  }
+}
+
+/**
+ * auth login 함수
+ * @param {*} form 이메일, 비밀번호
+ * @returns accessToken, refreshToken
+ */
+export async function login(data) {
+  try {
+    // 주소 변경 필요
+    const result = await axios
+      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/login`, data)
+      .then((res) => res.data);
+
+    return result;
   } catch (e) {
     console.log(e);
   }
 }
 
 /**
- * auth findOne 함수
- * @param {*} type 입력 타입
- * @param {*} data 입력 쿼리
- * @returns
+ * auth token 함수
+ * @param {*} type refreshType
+ * @param {*} token refreshToken
+ * @returns accessToken, expire
  */
-export async function findOne(type, data) {
+export async function reIssue(type, token) {
+  const data = {
+    grant_type: type,
+    refresh_token: token,
+  };
   try {
-    const status = await axios({
-      url: `${process.env.REACT_APP_SERVER_SUB}/api/auth/check?type=${type}&data=${data}`,
-      method: 'get',
-      responseType: 'json',
-    }).then((result) => result.data);
+    const result = await axios
+      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/token/reissue`, data)
+      .then((res) => res.data);
 
-    return status;
+    return result;
   } catch (e) {
     console.log(e);
   }
