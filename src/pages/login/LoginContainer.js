@@ -1,13 +1,14 @@
 import Login from './Login';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setToken } from '../../store/user';
 import { login } from '../../services/user';
 import { regExpSpace } from '../../utils/regExp';
+import { useInitialState } from '../../hooks/useInitialState';
 
 const LoginContainer = () => {
-  const [form, setForm] = useState({
+  const [form, setForm, resetForm] = useInitialState({
     email: '',
     password: '',
   });
@@ -23,7 +24,7 @@ const LoginContainer = () => {
         });
       }
     },
-    [form],
+    [form, setForm],
   );
 
   const onLogin = useCallback(
@@ -41,16 +42,13 @@ const LoginContainer = () => {
           navigate('/');
         } else {
           errorText.current.textContent = '유저 정보가 일치하지 않습니다.';
-          setForm({
-            email: '',
-            password: '',
-          });
+          resetForm();
         }
       } catch (e) {
         console.log(e);
       }
     },
-    [form, dispatch, navigate],
+    [form, dispatch, navigate, resetForm],
   );
 
   return <Login form={form} onInput={onInput} onLogin={onLogin} />;
