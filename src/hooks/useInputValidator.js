@@ -12,25 +12,26 @@ import {
   NICKNAME,
   PASSWORD,
   CPASSWORD,
+  AXIOSERROR,
 } from '../utils/registerType';
 
 export function validate({ name, email, nickname, password, cpassword }) {
   let isValid = true;
 
   // Last Name validation
-  if (name !== '완료') isValid = false;
+  if (!regExpName.test(name)) isValid = false;
 
   // Email validation
-  if (email !== '완료') isValid = false;
+  if (!regExpEmail.test(email)) isValid = false;
 
   // Nickname validation
-  if (nickname !== '완료') isValid = false;
+  if (!regExpNickname.test(nickname)) isValid = false;
 
   // Password validation
-  if (password !== '완료') isValid = false;
+  if (!regExpPassword.test(password)) isValid = false;
 
   // Confirm Password validation
-  if (cpassword !== '일치') isValid = false;
+  if (password !== cpassword) isValid = false;
 
   return isValid;
 }
@@ -42,6 +43,8 @@ const useInputValidator = () => {
     nickname: '※ 한글, 영어, 숫자를 조합한 닉네임을 입력해주세요.',
     password: '※ 숫자, 영어, 특수문자를 포함해 8~16자리로 입력해주세요.',
     cpassword: '※ 위 입력한 비밀번호를 다시 입력해주세요',
+    axiosError: '',
+    isValid: false,
   });
 
   const validateInput = useCallback(
@@ -106,6 +109,10 @@ const useInputValidator = () => {
           } else {
             message = '일치';
           }
+          break;
+
+        case AXIOSERROR:
+          message = data;
           break;
 
         default:
