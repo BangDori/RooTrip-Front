@@ -1,13 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import Register from './Register';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../../services/user';
 import { regExpSpace } from '../../utils/regExp';
 import useInputValidator, { validate } from '../../hooks/useInputValidator';
+import { useInitialState } from '../../hooks/useInitialState';
 
 const RegisterContainer = () => {
   const { messages, validateInput } = useInputValidator();
-  const [form, setForm] = useState({
+  const [form, setForm, resetForm] = useInitialState({
     name: '',
     gender: 'M',
     email: '',
@@ -26,13 +27,11 @@ const RegisterContainer = () => {
         });
       }
     },
-    [form],
+    [form, setForm],
   );
 
   const onCheck = useCallback(
-    async (type, data) => {
-      await validateInput(type, data);
-    },
+    async (type, data) => await validateInput(type, data),
     [validateInput],
   );
 
@@ -41,24 +40,18 @@ const RegisterContainer = () => {
       e.preventDefault();
 
       try {
-        if (validate(messages)) {
+        if (validate(form)) {
           delete form.cpassword;
           await register(form);
 
-          setForm({
-            name: '',
-            email: '',
-            nickname: '',
-            password: '',
-            gender: 'M',
-          });
+          resetForm();
           navigate('/');
         }
       } catch (e) {
-        console.log(e);
+        await validateInput('axiosError', e.message);
       }
     },
-    [navigate, form, messages],
+    [navigate, form, validateInput, resetForm],
   );
 
   return (
