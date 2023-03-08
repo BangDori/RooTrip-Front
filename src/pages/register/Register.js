@@ -131,6 +131,7 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
           <button type='submit'>가입하기</button>
         </div>
       </div>
+      {messages.axiosError && <span style={{color: 'red'}}>{messages.axiosError}</span>}
     </form>
   );
 };
