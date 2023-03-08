@@ -1,19 +1,16 @@
 import Login from './Login';
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setToken } from '../../store/user';
+import { useCallback, useState } from 'react';
 import { login } from '../../services/user';
-import { regExpSpace } from '../../utils/constant/regExp';
+import { regExpSpace } from '../../constants/regExp';
 import { useInitialState } from '../../hooks/useInitialState';
+import { setAccessToken, setRefreshToken } from '../../utils/auth';
 
 const LoginContainer = () => {
   const [form, setForm, resetForm] = useInitialState({
     email: '',
     password: '',
   });
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const onInput = useCallback(
     (e) => {
@@ -28,30 +25,34 @@ const LoginContainer = () => {
   );
 
   const onLogin = useCallback(
-    async (e, errorText) => {
+    async (e) => {
       e.preventDefault();
 
       try {
-        const { status, accessToken, refreshToken, message } = await login(
-          form,
-        );
+        const { status, accessToken, refreshToken, expire } = await login(form);
 
         if (status) {
-          // accessToken, refreshToken 저장
-          dispatch(setToken({ status: true }));
-          navigate('/');
+          // 최초 로그인 시 accessToken, refreshToken 저장
+          setAccessToken(accessToken, expire);
+          setRefreshToken(refreshToken);
+
+          setError('');
+          window.location.reload();
         } else {
-          errorText.current.textContent = '유저 정보가 일치하지 않습니다.';
-          resetForm();
+          throw new Error('유저 정보가 일치하지 않습니다.');
         }
+
+        resetForm();
       } catch (e) {
-        console.log(e);
+        setError(e.message);
       }
     },
-    [form, dispatch, navigate, resetForm],
+    [form, resetForm],
   );
 
-  return <Login form={form} onInput={onInput} onLogin={onLogin} />;
+  return (
+    <Login form={form} onInput={onInput} onLogin={onLogin} error={error} />
+  );
 };
 
 export default LoginContainer;
