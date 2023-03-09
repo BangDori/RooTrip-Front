@@ -22,7 +22,7 @@ export async function findOne(type, data) {
 
 /**
  * auth register 함수
- * @param {*} form 이름, 닉네임, 이메일, 비밀번호, 비밀번호 확인
+ * @param {*} form 이름, 닉네임, 이메일, 비밀번호
  * @returns
  */
 export async function register(data) {
