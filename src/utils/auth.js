@@ -9,7 +9,7 @@ function setAccessToken(token, minutes) {
 // session cookie 브라우저가 닫히면 만료
 function setRefreshToken(token) {
   Cookies.set('refreshToken', token);
-}
+} 
 
 // accessToken을 쿠키에서 가져오는 함수
 function getAccessToken() {
@@ -19,6 +19,10 @@ function getAccessToken() {
 // refreshToken을 쿠키에서 가져오는 함수
 function getRefreshToken() {
   return Cookies.get('refreshToken');
+}
+
+function removeAccessToken() {
+  Cookies.remove('accessToken');
 }
 
 // refreshToken을 쿠키에서 삭제하는 함수
@@ -31,5 +35,6 @@ export {
   setRefreshToken,
   getAccessToken,
   getRefreshToken,
+  removeAccessToken,
   removeRefreshToken,
 };
