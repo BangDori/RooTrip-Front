@@ -75,7 +75,7 @@ const useInputValidator = () => {
                 ? '※ 이메일 형식에 맞춰주세요.'
                 : '※ 한글, 영어, 숫자를 조합한 닉네임을 입력해주세요.';
           } else {
-            if (data === prevData[type]) break;
+            if (data === prevData[type]) return;
             setPrevData((prevData) => ({
               ...prevData,
               [type]: data,
