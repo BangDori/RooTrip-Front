@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { login } from '../../services/user';
 import { regExpSpace } from '../../constants/regExp';
 import { useInitialState } from '../../hooks/useInitialState';
-import { setAccessToken, setRefreshToken } from '../../utils/auth';
+import { setTokens } from '../../utils/auth';
 
 const LoginContainer = () => {
   const [form, setForm, resetForm] = useInitialState({
@@ -33,16 +33,14 @@ const LoginContainer = () => {
 
         if (status) {
           // 최초 로그인 시 accessToken, refreshToken 저장
-          setAccessToken(accessToken, expire);
-          setRefreshToken(refreshToken);
+          setTokens(accessToken, refreshToken, expire);
 
-          setError('');
+          // HTTP 재 요청
           window.location.reload();
         } else {
+          resetForm();
           throw new Error('유저 정보가 일치하지 않습니다.');
         }
-
-        resetForm();
       } catch (e) {
         setError(e.message);
       }

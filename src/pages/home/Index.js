@@ -1,11 +1,12 @@
 import React from 'react';
-import { removeAccessToken, removeRefreshToken } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
+import { removeTokens } from '../../utils/auth';
 
 const Index = () => {
+  const navigate = useNavigate();
   const onRemove = () => {
-    removeAccessToken();
-    removeRefreshToken();
-    window.location.reload();
+    removeTokens();
+    navigate('/');
   };
 
   return (
