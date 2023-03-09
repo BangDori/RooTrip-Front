@@ -48,7 +48,6 @@ export async function register(data) {
  */
 export async function login(data) {
   try {
-    // 주소 변경 필요
     const result = await axios
       .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/login`, data)
       .then((res) => res.data);
@@ -60,19 +59,39 @@ export async function login(data) {
 }
 
 /**
- * auth token 함수
+ * auth social login 함수
+ * @param {*} provider 소셜 제공자
+ * @param {*} code 로그인 코드
+ * @returns accessToken, refreshToken, expire
+ */
+export async function socialLogin(provider, code) {
+  try {
+    const result = await axios
+      .post('http://165.229.86.126:8000/api/auth/social', {
+        provider,
+        code,
+      })
+      .then((res) => res.data);
+
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
+ * auth token 재발급 함수
  * @param {*} type refreshType
  * @param {*} token refreshToken
  * @returns accessToken, expire
  */
-export async function reIssue(type, token) {
-  const data = {
-    grant_type: type,
-    refresh_token: token,
-  };
+export async function reIssue(grant_type, refresh_token) {
   try {
     const result = await axios
-      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/token/reissue`, data)
+      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/token/reissue`, {
+        grant_type,
+        refresh_token,
+      })
       .then((res) => res.data);
 
     return result;
