@@ -8,11 +8,19 @@ const useToken = () => {
   useEffect(() => {
     const refreshToken = getRefreshToken();
 
-    if (refreshToken && !accessToken) {
-      const { accessToken, expire } = reIssue('refresh_token', refreshToken);
-      setAccessToken(accessToken, expire);
-      setAccessTokenState(accessToken);
-    }
+    const getToken = async () => {
+      if (refreshToken && !accessToken) {
+        const { accessToken, expire } = await reIssue(
+          'refresh_token',
+          refreshToken,
+        );
+
+        setAccessToken(accessToken, expire);
+        setAccessTokenState(accessToken);
+      }
+    };
+
+    getToken();
   }, [accessToken]);
 
   return accessToken;
