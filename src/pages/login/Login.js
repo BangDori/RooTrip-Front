@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import loadable from '@loadable/component';
+
+const Register = loadable(() => import('../register/Index'));
 
 const Login = ({ form, onInput, onLogin, error }) => {
   const { email, password } = form;
+
+  const onRegisterLoad = () => Register.preload();
 
   return (
     <form className='login_index' method='post' onSubmit={onLogin}>
@@ -23,7 +28,7 @@ const Login = ({ form, onInput, onLogin, error }) => {
       <button type='submit' className='loginbtn'>
         로그인
       </button>
-      <Link to='/register'>
+      <Link to='/register' onMouseEnter={onRegisterLoad}>
         <button type='button' className='gosignupbtn'>
           회원 가입
         </button>
