@@ -1,6 +1,7 @@
 {
-  "name": "hello-react",
-  "version": "0.1.0",
+  "name": "rootrip",
+  "homepage": "http://165.229.86.126:8080/",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.15.3",
@@ -15,6 +16,7 @@
     "mapbox-gl": "^2.13.0",
     "multer": "^1.4.5-lts.1",
     "multer-s3": "^3.0.1",
+    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
@@ -23,16 +25,19 @@
     "redux": "^4.2.1",
     "redux-actions": "^3.0.0",
     "redux-devtools-extension": "^2.13.9",
-    "sass": "^1.58.3",
     "serve": "^14.2.0",
     "styled-components": "^5.3.8",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "export PORT=8080 && react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack --mode=production --node-env=production",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:dev": "webpack --mode=development",
+    "build:prod": "webpack --mode=production --node-env=production",
+    "watch": "webpack --watch",
+    "serve": "webpack serve"
   },
   "eslintConfig": {
     "extends": [
@@ -51,5 +56,23 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@webpack-cli/generators": "^3.0.1",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.7.3",
+    "prettier": "^2.8.4",
+    "sass": "^1.59.2",
+    "sass-loader": "^13.2.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.76.1",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  },
+  "description": "My webpack project"
 }
