@@ -1,7 +1,7 @@
 import React from 'react';
-import '../../styles/register/register.scss';
-import Logo from '../../assets/Logo.png';
 import { Link } from 'react-router-dom';
+import Logo from '@assets/Logo.png';
+import '@styles/register/register.scss';
 
 const Title = () => {
   return (

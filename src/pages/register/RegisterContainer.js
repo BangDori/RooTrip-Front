@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import Register from './Register';
 import { useNavigate } from 'react-router-dom';
-import { register } from '../../services/user';
-import { regExpSpace } from '../../constants/regExp';
-import useInputValidator, { validate } from '../../hooks/useInputValidator';
-import { useInitialState } from '../../hooks/useInitialState';
+import { register } from '@services/user';
+import { regExpSpace } from '@constants/regExp';
+import useInputValidator, { validate } from '@hooks/useInputValidator';
+import { useInitialState } from '@hooks/useInitialState';
 
 const RegisterContainer = () => {
   const { messages, validateInput } = useInputValidator();

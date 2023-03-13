@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import '../../styles/register/register.scss';
+import '@styles/register/register.scss';
 
 const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
   const { name, email, nickname, password, gender, cpassword } = form;
@@ -131,7 +131,9 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
           <button type='submit'>가입하기</button>
         </div>
       </div>
-      {messages.axiosError && <span style={{color: 'red'}}>{messages.axiosError}</span>}
+      {messages.axiosError && (
+        <span style={{ color: 'red' }}>{messages.axiosError}</span>
+      )}
     </form>
   );
 };
