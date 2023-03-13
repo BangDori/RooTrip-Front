@@ -1,7 +1,10 @@
-const webpack = require('webpack');
 const path = require('path');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -28,6 +31,28 @@ const config = {
       process: 'process/browser',
     }),
     new webpack.ProgressPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        REACT_APP_DOMAIN: JSON.stringify(process.env.REACT_APP_DOMAIN),
+        REACT_APP_PORT: JSON.stringify(process.env.REACT_APP_PORT),
+        REACT_APP_MAIN_SERVER: JSON.stringify(
+          process.env.REACT_APP_MAIN_SERVER,
+        ),
+        REACT_APP_SUB_SERVER: JSON.stringify(process.env.REACT_APP_SUB_SERVER),
+        REACT_APP_KAKAO_AUTH_URL: JSON.stringify(
+          process.env.REACT_APP_KAKAO_AUTH_URL,
+        ),
+        REACT_APP_NAVER_AUTH_URL: JSON.stringify(
+          process.env.REACT_APP_NAVER_AUTH_URL,
+        ),
+        REACT_APP_GOOGLE_AUTH_URL: JSON.stringify(
+          process.env.REACT_APP_GOOGLE_AUTH_URL,
+        ),
+        REACT_APP_MAP_API_TOKEN: JSON.stringify(
+          process.env.REACT_APP_MAP_API_TOKEN,
+        ),
+      },
+    }),
   ],
   module: {
     rules: [
