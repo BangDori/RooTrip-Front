@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import '@styles/register/register.scss';
-
+import { Link } from 'react-router-dom';
 const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
   const { name, email, nickname, password, gender, cpassword } = form;
 
@@ -128,7 +128,9 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
           <span>개인정보 이용 (선택)</span>
         </label>
         <div className='signbtn'>
+          <Link to = './certificationemail'>
           <button type='submit'>가입하기</button>
+          </Link>
         </div>
       </div>
       {messages.axiosError && (

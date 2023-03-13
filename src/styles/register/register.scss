@@ -28,6 +28,12 @@
         margin-top: 75px;
         margin-left: 460px;
     }
+    .User_data_crt{
+        display: flex;
+        flex-direction: row;
+        margin-top: 15px;
+        margin-left: 375px;
+    }
     .User_data_name{
         display: flex;
         flex-direction: column;
@@ -95,6 +101,42 @@
             margin-left: 30px;
 
         }
+
+        .check_name{
+            color:rgb(36, 238, 36);
+        }
+
+        .Sign_certification_btn{
+            margin-left: 15px;
+            height: 40px;
+            width: 90px;
+            background: white;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 4px 4px 2px 1px #ccc;
+            cursor: pointer;            
+        }
+        .Resign_certification_btn{
+            display: none;
+            margin-left: 15px;
+            height: 40px;
+            width: 90px;
+            background: white;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            font-weight: bold;
+            box-shadow: 4px 4px 2px 1px #ccc;
+            cursor: pointer; 
+        }
+        .certification_Num{
+            width: 160px;
+        }
+        .Certi_email_checktext{
+            font-size: 14px;
+            color: rgb(250, 31, 31);
+            font-weight: bold;            
+        }
     }
     .check_assign{
         text-align: center;
@@ -144,4 +186,32 @@
         }
         
     }
+    .Certification_email_title{
+        display: flex;
+        align-items: center;
+        margin-left: 415px;
+        margin-top: 80px;
+
+        .certification_email_title_text{
+            margin: 0;
+            font-size: 30px;
+        }
+        .Goo_logo{
+            width: 118px;
+            margin-left: 20px;
+            margin-top: 7px;
+        }
+    }
+    .Com_certification_btn{
+        cursor: pointer;
+        background-color: rgb(72, 72, 196);
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid rgb(45, 45, 254);
+        width: 150px;
+        height: 50px;
+        box-shadow: 4px 4px 2px 2px #ccc;        
+    }
+
 }

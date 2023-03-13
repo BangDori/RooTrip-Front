@@ -12,8 +12,7 @@ button{
     top: 20%;
     position: absolute;
     width: 300px;
-    height: 100%;
-    max-height: 450px;
+    max-height: 475px;
     background-color: white;
     text-align: center;
     .Login_logo{
@@ -63,11 +62,19 @@ button{
             font-size: 13px;
             background-color: rgb(132, 216, 227);
         }
+        .error_login_text{
+            color: rgb(249, 63, 63);
+            font-weight: bold;
+        }
     }
     
     .social_login{
-        padding: 20px 0 10px 0;
-    
+        padding: 20px 0 20px 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
         button{
             border-radius: 5px;
             width: 260px;
