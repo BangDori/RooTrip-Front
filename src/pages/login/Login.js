@@ -33,8 +33,12 @@ const Login = ({ form, onInput, onLogin, error }) => {
           회원 가입
         </button>
       </Link>
-      <div style={{marginTop: "15px"}}>
-        {error && <span className='error_login_text'>로그인 정보가 일치하지 않습니다!</span>}
+      <div style={{ marginTop: '15px' }}>
+        {error && (
+          <span className='error_login_text'>
+            로그인 정보가 일치하지 않습니다!
+          </span>
+        )}
       </div>
     </form>
   );

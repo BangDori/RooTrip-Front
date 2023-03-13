@@ -128,8 +128,8 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
           <span>개인정보 이용 (선택)</span>
         </label>
         <div className='signbtn'>
-          <Link to = './certificationemail'>
-          <button type='submit'>가입하기</button>
+          <Link to='./certificationemail'>
+            <button type='submit'>가입하기</button>
           </Link>
         </div>
       </div>
