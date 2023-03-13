@@ -22,7 +22,7 @@ export async function findOne(type, data) {
 /**
  * auth register 함수
  * @param {*} form 이름, 닉네임, 이메일, 비밀번호
- * @returns
+ * @returns 회원가입 여부 or 에러메시지
  */
 export async function register(data) {
   try {
@@ -90,6 +90,26 @@ export async function reIssue(grant_type, refresh_token) {
       .post(`${MAIN_SERVER}/api/auth/token/reissue`, {
         grant_type,
         refresh_token,
+      })
+      .then((res) => res.data);
+
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
+ * auth logout 함수
+ * @param {*} accessToken accessToken
+ */
+export async function logout(accessToken) {
+  try {
+    const result = await axios
+      .post(`${MAIN_SERVER}/api/auth/logout`, null, {
+        headers: {
+          Authorization: 'Bearer ' + accessToken,
+        },
       })
       .then((res) => res.data);
 

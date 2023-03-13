@@ -1,18 +1,20 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { removeTokens } from '@utils/auth';
-
+import { getAccessToken, removeTokens } from '@utils/auth';
+import { logout } from '@services/user';
 const Index = () => {
-  const navigate = useNavigate();
-  const onRemove = () => {
-    removeTokens();
-    navigate('/');
+  const onRemove = async () => {
+    const result = await logout(getAccessToken());
+
+    if (result) {
+      removeTokens();
+      window.location.reload();
+    }
   };
 
   return (
     <div>
       <h3>Home</h3>
-      <button onClick={onRemove}>토큰 만료</button>
+      <button onClick={onRemove}>로그아웃</button>
     </div>
   );
 };
