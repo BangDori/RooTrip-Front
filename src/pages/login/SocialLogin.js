@@ -1,6 +1,11 @@
 import React from 'react';
 import loadable from '@loadable/component';
 import { Link } from 'react-router-dom';
+import {
+  GOOGLE_AUTH_URL,
+  KAKAO_AUTH_URL,
+  NAVER_AUTH_URL,
+} from '../../config/auth';
 
 const Auth = loadable(() => import('../../components/Auth'));
 
@@ -10,21 +15,21 @@ const SocialLogin = () => {
   return (
     <div className='social_login'>
       <Link
-        to={process.env.REACT_APP_KAKAO_AUTH_URL}
+        to={KAKAO_AUTH_URL}
         state={{ type: 'kakao' }}
         onMouseEnter={onAuthLoad}
       >
         <button className='kakaobtn'>카카오톡 로그인</button>
       </Link>
       <Link
-        to={process.env.REACT_APP_NAVER_AUTH_URL}
+        to={NAVER_AUTH_URL}
         state={{ type: 'naver' }}
         onMouseEnter={onAuthLoad}
       >
         <button className='naverbtn'>네이버 로그인</button>
       </Link>
       <Link
-        to={process.env.REACT_APP_GOOGLE_AUTH_URL}
+        to={GOOGLE_AUTH_URL}
         state={{ type: 'google' }}
         onMouseEnter={onAuthLoad}
       >

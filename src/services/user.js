@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MAIN_SERVER } from '../config/user';
 
 /**
  * auth findOne 함수
@@ -9,9 +10,7 @@ import axios from 'axios';
 export async function findOne(type, data) {
   try {
     const status = await axios
-      .get(
-        `${process.env.REACT_APP_SERVER_MAIN}/api/auth/check?type=${type}&data=${data}`,
-      )
+      .get(`${MAIN_SERVER}/api/auth/check?type=${type}&data=${data}`)
       .then((result) => result.data);
 
     return status;
@@ -28,7 +27,7 @@ export async function findOne(type, data) {
 export async function register(data) {
   try {
     await axios
-      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/register`, data)
+      .post(`${MAIN_SERVER}/api/auth/register`, data)
       .then((result) => {
         if (result.data.status) {
           return result.data.status;
@@ -49,7 +48,7 @@ export async function register(data) {
 export async function login(data) {
   try {
     const result = await axios
-      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/login`, data)
+      .post(`${MAIN_SERVER}/api/auth/login`, data)
       .then((res) => res.data);
 
     return result;
@@ -67,7 +66,7 @@ export async function login(data) {
 export async function socialLogin(provider, code) {
   try {
     const result = await axios
-      .post('http://165.229.86.126:8000/api/auth/social', {
+      .post(`${MAIN_SERVER}/api/auth/social`, {
         provider,
         code,
       })
@@ -88,7 +87,7 @@ export async function socialLogin(provider, code) {
 export async function reIssue(grant_type, refresh_token) {
   try {
     const result = await axios
-      .post(`${process.env.REACT_APP_SERVER_MAIN}/api/auth/token/reissue`, {
+      .post(`${MAIN_SERVER}/api/auth/token/reissue`, {
         grant_type,
         refresh_token,
       })
