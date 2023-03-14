@@ -1,6 +1,10 @@
 import React from 'react';
 import { getAccessToken, removeTokens } from '@utils/auth';
 import { logout } from '@services/user';
+import Nav from './Nav';
+import Article from './Article';
+import '@styles/home/Nav.scss';
+
 const Index = () => {
   const onRemove = async () => {
     const result = await logout(getAccessToken());
@@ -13,8 +17,11 @@ const Index = () => {
 
   return (
     <div>
-      <h3>Home</h3>
       <button onClick={onRemove}>로그아웃</button>
+      <div className='map'>
+        <Nav />
+        <Article />
+      </div>
     </div>
   );
 };
