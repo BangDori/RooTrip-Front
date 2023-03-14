@@ -29,6 +29,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "start": "export PORT=8080 && react-scripts start",
     "dev": "webpack serve",
     "build:dev": "webpack --mode=development --node-env=development",
     "build:prod": "webpack --mode=production --node-env=production"

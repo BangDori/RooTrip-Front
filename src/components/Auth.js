@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { socialLogin } from '@services/user';
-import { setTokens } from '@utils/auth';
+import { socialLogin } from '../services/user';
+import { setTokens } from '../utils/auth';
 
 const Auth = () => {
   const navigate = useNavigate();

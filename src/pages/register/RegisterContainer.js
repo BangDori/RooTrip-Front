@@ -1,10 +1,11 @@
 import { useCallback } from 'react';
 import Register from './Register';
-import { useNavigate } from 'react-router-dom';
-import { register } from '@services/user';
-import { regExpSpace } from '@constants/regExp';
-import useInputValidator, { validate } from '@hooks/useInputValidator';
-import { useInitialState } from '@hooks/useInitialState';
+import CertificationEmail from './CertificationEmail';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { register } from '../../services/user';
+import { regExpSpace } from '../../constants/regExp';
+import useInputValidator, { validate } from '../../hooks/useInputValidator';
+import { useInitialState } from '../../hooks/useInitialState';
 
 const RegisterContainer = () => {
   const { messages, validateInput } = useInputValidator();
@@ -39,13 +40,14 @@ const RegisterContainer = () => {
     async (e) => {
       e.preventDefault();
 
+      navigate('./certification');
       try {
         if (validate(form)) {
           delete form.cpassword;
           await register(form);
 
           resetForm();
-          navigate('/');
+          navigate('./certification');
         }
       } catch (e) {
         await validateInput('axiosError', e.message);
@@ -55,13 +57,21 @@ const RegisterContainer = () => {
   );
 
   return (
-    <Register
-      form={form}
-      messages={messages}
-      onInput={onInput}
-      onCheck={onCheck}
-      onRegister={onRegister}
-    />
+    <>
+      <Register
+        form={form}
+        messages={messages}
+        onInput={onInput}
+        onCheck={onCheck}
+        onRegister={onRegister}
+      />
+      <Routes>
+        <Route
+          Path='/register/certification'
+          element={<CertificationEmail />}
+        />
+      </Routes>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Title from './Title';
-import '@styles/register/register.scss';
+import '../../styles/register/register.scss';
 import GoogleLogo from '../../assets/googleLogo.png';
 
 const CertificationEmail = () => {

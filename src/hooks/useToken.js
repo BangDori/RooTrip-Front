@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getAccessToken, getRefreshToken, setAccessToken } from '@utils/auth';
-import { reIssue } from '@services/user'; // assume this is the function that issues new tokens
+import { getAccessToken, getRefreshToken, setAccessToken } from '../utils/auth';
+import { reIssue } from '../services/user'; // assume this is the function that issues new tokens
 
 const useToken = () => {
   const [accessToken, setAccessTokenState] = useState(getAccessToken());

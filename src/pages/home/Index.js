@@ -1,6 +1,7 @@
 import React from 'react';
-import { getAccessToken, removeTokens } from '@utils/auth';
-import { logout } from '@services/user';
+import { getAccessToken, removeTokens } from '../../utils/auth';
+import { logout } from '../../services/user';
+
 const Index = () => {
   const onRemove = async () => {
     const result = await logout(getAccessToken());

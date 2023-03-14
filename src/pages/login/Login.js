@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-const Register = loadable(() => import('@pages/register/Index'));
+const Register = loadable(() => import('../register/Index'));
 
 const Login = ({ form, onInput, onLogin, error }) => {
   const { email, password } = form;

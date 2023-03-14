@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MAIN_SERVER } from '@config/user';
+import { MAIN_SERVER } from '../config/user';
 
 /**
  * auth findOne 함수
