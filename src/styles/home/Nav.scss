@@ -1,0 +1,71 @@
+.Side_nav {
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+
+  .Title {
+    display: flex;
+    flex-direction: column;
+
+    .Logo {
+      width: 200px;
+      cursor: pointer;
+    }
+
+    .Profile {
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+    margin-top: 30px;
+
+    .menu_Icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      .icon_up {
+        display: flex;
+        align-items: center;
+        span {
+          cursor: pointer;
+          font-weight: 800;
+          font-size: 20px;
+          letter-spacing: 1px;
+          -webkit-transition: all 0.2s ease-in-out;
+          margin-left: 15px;
+        }
+      }
+      .icon_up:hover {
+        -webkit-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+        -webkit-transform: translateY(-5px);
+        transform: translateY(-5px);
+        -ms-transform: translateY(-5px);
+      }
+
+      button {
+        padding: 0;
+        margin: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px 0px #ccc;
+        font-size: 15px;
+        -webkit-transition: all 0.2s ease-in-out;
+        img {
+          width: 38px;
+        }
+      }
+    }
+  }
+}
