@@ -72,8 +72,10 @@ const config = {
     rules: [
       {
         test: /\.(js|jsx)$/i,
+        // babel을 적용하지 않을 폴더
         exclude: /node_modules/,
         use: {
+          // babel ES6 -> ES5
           loader: 'babel-loader',
           options: {
             presets: [
@@ -83,6 +85,7 @@ const config = {
             plugins: [
               '@babel/plugin-proposal-class-properties',
               'react-refresh/babel',
+              '@babel/syntax-dynamic-import',
             ],
           },
         },
