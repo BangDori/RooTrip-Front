@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Title from './Title';
-import '../../styles/register/register.scss';
-import GoogleLogo from '../../assets/googleLogo.png';
+import Title from '../Title';
+import '@styles/register/register.scss';
+import GoogleLogo from '@assets/googleLogo.png';
 
 const CertificationEmail = () => {
   const [send, setSend] = useState('false');

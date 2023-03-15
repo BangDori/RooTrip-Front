@@ -1,9 +1,9 @@
 import Login from './Login';
 import { useCallback, useState } from 'react';
-import { login } from '../../services/user';
-import { regExpSpace } from '../../constants/regExp';
-import { useInitialState } from '../../hooks/useInitialState';
-import { setTokens } from '../../utils/auth';
+import { login } from '@services/user';
+import { regExpSpace } from '@constants/regExp';
+import { useInitialState } from '@hooks/useInitialState';
+import { setTokens } from '@utils/auth';
 
 const LoginContainer = () => {
   const [form, setForm, resetForm] = useInitialState({

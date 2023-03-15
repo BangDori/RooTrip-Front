@@ -1,9 +1,9 @@
 import React from 'react';
-import { getAccessToken, removeTokens } from '../../utils/auth';
-import { logout } from '../../services/user';
+import { getAccessToken, removeTokens } from '@utils/auth';
+import { logout } from '@services/user';
 import Nav from './Nav';
 import Article from './Article';
-import '../../styles/home/Nav.scss';
+import '@styles/home/Nav.scss';
 
 const Index = () => {
   const onRemove = async () => {

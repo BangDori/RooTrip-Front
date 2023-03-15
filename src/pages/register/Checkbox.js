@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/register/register.scss';
+import '@styles/register/register.scss';
 
 function Checkbox({ children, disabled, checked, onChange }) {
   return (

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../../styles/register/register.scss';
-import { Link } from 'react-router-dom';
+import '@styles/register/register.scss';
 import Checkbox from './Checkbox';
 
 const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
@@ -121,7 +120,6 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
         </div>
       </div>
       <div className='check_assign'>
-        {/* 필수 누르면 가입하기 버튼 활성화 원래는 활성화 x -> 이거 내가 만들거 */}
         <Checkbox checked={service} onChange={setService}>
           <span>(필수) 서비스 이용약관</span>
         </Checkbox>
@@ -129,15 +127,13 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
           <span>(선택) 개인정보 이용</span>
         </Checkbox>
         <div className='signbtn'>
-          <Link to='./certificationemail'>
-            <button
-              type='submit'
-              className={service ? 'check_btn' : 'Ncheck_btn'}
-              disabled={!service}
-            >
-              가입하기
-            </button>
-          </Link>
+          <button
+            type='submit'
+            className={service ? 'check_btn' : 'Ncheck_btn'}
+            disabled={!service}
+          >
+            가입하기
+          </button>
         </div>
       </div>
       {messages.axiosError && (

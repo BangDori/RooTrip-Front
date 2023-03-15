@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
-import { findOne } from '../services/user';
+import { findOne } from '@services/user';
 import {
   regExpName,
   regExpEmail,
   regExpPassword,
   regExpNickname,
-} from '../constants/regExp';
+} from '@constants/regExp';
 import {
   NAME,
   EMAIL,
@@ -13,7 +13,7 @@ import {
   PASSWORD,
   CPASSWORD,
   AXIOSERROR,
-} from '../constants/registerType';
+} from '@constants/registerType';
 
 export function validate({ name, email, nickname, password, cpassword }) {
   let isValid = true;
