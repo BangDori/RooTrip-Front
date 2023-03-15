@@ -1,11 +1,13 @@
 import { useCallback } from 'react';
 import Register from './Register';
-import Email from './certification/Email';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { register } from '@services/user';
 import { regExpSpace } from '@constants/regExp';
 import useInputValidator, { validate } from '@hooks/useInputValidator';
 import { useInitialState } from '@hooks/useInitialState';
+import loadable from '@loadable/component';
+
+const Email = loadable(() => import('./certification/Email'));
 
 const RegisterContainer = () => {
   const { messages, validateInput } = useInputValidator();
@@ -38,6 +40,7 @@ const RegisterContainer = () => {
 
   const onRegister = useCallback(
     async (e) => {
+      Email.preload();
       e.preventDefault();
 
       try {
@@ -46,7 +49,7 @@ const RegisterContainer = () => {
           await register(form);
 
           resetForm();
-          navigate('./certification');
+          navigate('/register/certification');
         }
       } catch (e) {
         await validateInput('axiosError', e.message);
@@ -56,18 +59,13 @@ const RegisterContainer = () => {
   );
 
   return (
-    <>
-      <Register
-        form={form}
-        messages={messages}
-        onInput={onInput}
-        onCheck={onCheck}
-        onRegister={onRegister}
-      />
-      <Routes>
-        <Route Path='/register/certification' element={<Email />} />
-      </Routes>
-    </>
+    <Register
+      form={form}
+      messages={messages}
+      onInput={onInput}
+      onCheck={onCheck}
+      onRegister={onRegister}
+    />
   );
 };
 

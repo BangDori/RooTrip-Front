@@ -21,7 +21,7 @@ const App = () => {
         <Route path='/' element={<Login />} />
       )}
       <Route path='/register' element={<Register />} />
-      <Route Path='/register/certification' element={<Email />} />
+      <Route path='/register/certification' element={<Email />} />
       <Route path='/oauth/:provider/*' element={<Auth />} />
       <Route path='/*' element={<NotFound />} />
     </Routes>
