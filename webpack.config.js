@@ -3,7 +3,9 @@ const dotenv = require('dotenv');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
+// 환경변수 가져오기
 dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -16,13 +18,16 @@ const config = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
+
+    // 모든 요청에 대해서 루트 경로(/)를 기준으로 파일을 찾도록 수정
     publicPath: '/',
   },
   devServer: {
     open: true,
     host: process.env.REACT_APP_DOMAIN,
     port: process.env.REACT_APP_PORT,
-    hot: true,
+
+    // 브라우저에서 요청한 URL에 대해 해당 URL 경로에 대한 파일이 없을 경우, 설정한 fallback 경로에 있는 파일을 제공하는 옵션
     historyApiFallback: true,
   },
   plugins: [
@@ -34,6 +39,8 @@ const config = {
       process: 'process/browser',
     }),
     new webpack.ProgressPlugin(),
+
+    // 환경변수 설정
     new webpack.DefinePlugin({
       'process.env': {
         REACT_APP_DOMAIN: JSON.stringify(process.env.REACT_APP_DOMAIN),
@@ -56,6 +63,10 @@ const config = {
         ),
       },
     }),
+
+    // React 개발 과정에서, 수정된 모듈만 변경하기 위한 plugin
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin(),
   ],
   module: {
     rules: [
@@ -68,6 +79,10 @@ const config = {
             presets: [
               '@babel/preset-env',
               ['@babel/preset-react', { runtime: 'automatic' }],
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              'react-refresh/babel',
             ],
           },
         },
@@ -89,6 +104,8 @@ const config = {
       },
     ],
   },
+
+  // alias 설정
   resolve: {
     alias: {
       '@assets': path.resolve(__dirname, 'src/assets'),
