@@ -4,7 +4,6 @@ import { login } from '@services/user';
 import { regExpSpace } from '@constants/regExp';
 import { useInitialState } from '@hooks/useInitialState';
 import { setTokens } from '@utils/auth';
-import { useNavigate } from 'react-router-dom';
 
 const LoginContainer = () => {
   const [form, setForm, resetForm] = useInitialState({
@@ -12,7 +11,6 @@ const LoginContainer = () => {
     password: '',
   });
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
   const onInput = useCallback(
     (e) => {
@@ -37,7 +35,6 @@ const LoginContainer = () => {
           // 최초 로그인 시 accessToken, refreshToken 저장
           setTokens(accessToken, refreshToken, expire);
 
-          navigate('/');
           // HTTP 재 요청
           window.location.reload();
         } else {
@@ -48,7 +45,7 @@ const LoginContainer = () => {
         setError(e.message);
       }
     },
-    [form, resetForm, navigate],
+    [form, resetForm],
   );
 
   return (
