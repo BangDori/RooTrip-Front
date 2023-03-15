@@ -20,6 +20,7 @@ const Auth = () => {
         if (status) setTokens(accessToken, refreshToken, expire);
 
         navigate('/');
+        window.location.reload();
       } catch (err) {
         console.log(err);
       }
