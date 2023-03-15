@@ -16,30 +16,14 @@ const config = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
   },
   devServer: {
     open: true,
     host: process.env.REACT_APP_DOMAIN,
     port: process.env.REACT_APP_PORT,
     hot: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Max-Age': '3600',
-      'Access-Control-Allow-Headers':
-        'Content-Type, Authorization, x-id, Content-Length, X-Requested-With',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-    },
-    proxy: {
-      '/api/auth/social': {
-        target: 'http://165.229.86.126:8080/oauth/:provider/callback',
-        changeOrigin: true,
-        secure: false,
-        bypass: function (req, res, proxyOptions) {
-          console.info(req.method + ' ' + req.originalUrl);
-        },
-      },
-    },
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
