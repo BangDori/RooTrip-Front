@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../../styles/register/register.scss';
+import '@styles/register/register.scss';
 import { Link } from 'react-router-dom';
 import Checkbox from './Checkbox';
 
