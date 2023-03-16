@@ -66,6 +66,15 @@
           background-color: white;
           border: 1px solid #ccc;
           box-shadow: 0px 3px 0px 0px #bbb;
+          cursor: pointer;
+        }
+
+        .checked {
+          background: #0c4fc7;
+          color: white;
+          font-weight: bold;
+          width: 50px;
+          height: 50px;
         }
       }
     }
@@ -79,6 +88,7 @@
       background: rgb(72, 72, 196);
       border: 1px solid rgb(72, 72, 196);
       box-shadow: 3px 3px 1px 0px #ccc;
+      cursor: pointer;
     }
     .Certi_email_Num {
       .input_certi_email_Num {
@@ -201,6 +211,7 @@
     .signbtn {
       margin-top: 30px;
       .check_btn {
+        cursor: pointer;
         background-color: rgb(72, 72, 196);
         color: white;
         font-size: 20px;
