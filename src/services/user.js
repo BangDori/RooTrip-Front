@@ -39,10 +39,13 @@ export async function verifyEmail(email) {
  * 이메일 인증 코드 검증 함수
  * @param {*} value 이메일 인증 코드
  */
-export async function verifyCode(code) {
+export async function verifyCode(email, verifyNumber) {
   try {
     const data = await axios
-      .post(`${MAIN_SERVER}/api/email/verify/auth`, code)
+      .post(`${MAIN_SERVER}/api/email/verify/auth`, {
+        email,
+        verifyNumber,
+      })
       .then((result) => result.data);
 
     return data;

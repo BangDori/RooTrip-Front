@@ -10,7 +10,7 @@ const Register = ({ form, messages, onInput, onCheck }) => {
   const { name, email, nickname, password, gender, cpassword } = form;
   const emailAuth = useSelector((state) => state.emailAuth);
   const dispatch = useDispatch();
-  const [code, setCode] = useState('');
+  const [verifyNumber, setVerifyNumber] = useState('');
 
   const sendEmail = useCallback(async () => {
     try {
@@ -26,7 +26,7 @@ const Register = ({ form, messages, onInput, onCheck }) => {
 
   const onVerifyEmail = useCallback(async () => {
     try {
-      const result = await verifyCode(code);
+      const result = await verifyCode(email, verifyNumber);
 
       if (result) {
         alert('인증이 완료되었습니다.');
@@ -37,7 +37,7 @@ const Register = ({ form, messages, onInput, onCheck }) => {
     } catch (e) {
       console.log(e);
     }
-  }, [code, dispatch]);
+  }, [email, verifyNumber, dispatch]);
 
   return (
     <div className='User_data_content'>
@@ -99,10 +99,10 @@ const Register = ({ form, messages, onInput, onCheck }) => {
         <div className='Certi_email_Num'>
           <input
             className='input_certi_email_Num'
-            name='code'
+            name='verifyNumber'
             placeholder='인증번호 입력'
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
+            value={verifyNumber}
+            onChange={(e) => setVerifyNumber(e.target.value)}
           />
           <span className='Certi_Timer'>잔여 시간 표시해야함</span>
           <button
