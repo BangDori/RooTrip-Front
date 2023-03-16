@@ -20,5 +20,9 @@
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"]
     }
-  }
+  },
+
+  // ** 모든 하위 디렉토리를 의미
+  // *.ts, *.tsx는 Typescript 소스 코드 파일을 의미
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
