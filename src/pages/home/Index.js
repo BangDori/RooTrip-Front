@@ -4,7 +4,7 @@ import { logout } from '@services/user';
 import Nav from './Nav';
 import Article from './Article';
 import '@styles/home/Write.scss';
-import WriteBase from './WriteBase';
+import WriteBase from './Wrtie/WriteBase';
 
 const Index = ({ modal, setModal }) => {
   const onRemove = async () => {

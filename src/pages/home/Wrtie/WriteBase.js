@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../styles/home/Write.scss';
-import Write_First from './Write_First';
+import '@styles/home/Write.scss';
+import WriteFirst from './WriteFirst';
 const WriteBase = ({ setModal }) => {
   const ModalClose = () => {
     setModal(false);
@@ -12,7 +12,7 @@ const WriteBase = ({ setModal }) => {
         x
       </button>
       <div className='Content_box'>
-        <Write_First />
+        <WriteFirst />
       </div>
     </div>
   );

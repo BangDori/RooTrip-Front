@@ -6,7 +6,7 @@ import menu_Route from '@assets/Route.png';
 import menu_Trip from '@assets/Trip.png';
 import Article_input from '@assets/article_input.png';
 import '@styles/home/Nav.scss';
-import WriteBase from './WriteBase';
+import WriteBase from './Wrtie/WriteBase';
 
 const Nav = () => {
   const [modal, setModal] = useState(false);
