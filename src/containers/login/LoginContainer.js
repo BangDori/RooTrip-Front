@@ -1,4 +1,4 @@
-import Login from './Login';
+import Login from '@pages/login/Login';
 import { useCallback, useState } from 'react';
 import { login } from '@services/user';
 import { regExpSpace } from '@constants/regExp';

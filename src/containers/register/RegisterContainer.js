@@ -1,13 +1,12 @@
-import { useCallback } from 'react';
-import Register from './Register';
+import { useCallback, useState } from 'react';
+import Register from '@pages/register/Register';
 import { useNavigate } from 'react-router-dom';
 import { register } from '@services/user';
 import { regExpSpace } from '@constants/regExp';
 import useInputValidator, { validate } from '@hooks/useInputValidator';
 import { useInitialState } from '@hooks/useInitialState';
-import loadable from '@loadable/component';
-
-const Email = loadable(() => import('./certification/Email'));
+import TOC from '@pages/register/TOC';
+import Assign from '@pages/register/Assign';
 
 const RegisterContainer = () => {
   const { messages, validateInput } = useInputValidator();
@@ -19,6 +18,7 @@ const RegisterContainer = () => {
     password: '',
     cpassword: '',
   });
+
   const navigate = useNavigate();
 
   const onInput = useCallback(
@@ -40,7 +40,6 @@ const RegisterContainer = () => {
 
   const onRegister = useCallback(
     async (e) => {
-      Email.preload();
       e.preventDefault();
 
       try {
@@ -59,13 +58,19 @@ const RegisterContainer = () => {
   );
 
   return (
-    <Register
-      form={form}
-      messages={messages}
-      onInput={onInput}
-      onCheck={onCheck}
-      onRegister={onRegister}
-    />
+    <form className='Register_main' onSubmit={onRegister}>
+      <div className='User_data'>
+        <TOC />
+        <Register
+          form={form}
+          messages={messages}
+          onInput={onInput}
+          onCheck={onCheck}
+        />
+      </div>
+
+      <Assign onRegister={onRegister} />
+    </form>
   );
 };
 
