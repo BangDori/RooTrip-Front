@@ -11,7 +11,7 @@ const initialState = false;
 const emailAuth = handleActions(
   {
     [INIT]: (state, action) => false,
-    [SEND]: (state, action) => true,
+    [SEND]: (state, action) => action.payload,
   },
   initialState,
 );

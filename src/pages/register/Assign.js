@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Checkbox from './Checkbox';
 
-const Assign = ({ onRegister }) => {
+const Assign = () => {
   const [checkBox, setCheckBox] = useState({
     service: false,
     marketing: false,
@@ -28,9 +28,9 @@ const Assign = ({ onRegister }) => {
       </Checkbox>
       <div className='signbtn'>
         <button
+          type='submit'
           className={service ? 'check_btn' : 'Ncheck_btn'}
           disabled={!service}
-          onClick={onRegister}
         >
           가입하기
         </button>
