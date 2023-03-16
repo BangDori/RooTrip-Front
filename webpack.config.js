@@ -71,7 +71,7 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/i,
+        test: /\.(js|jsx|ts|tsx)$/i,
         // babel을 적용하지 않을 폴더
         exclude: /node_modules/,
         use: {
@@ -81,6 +81,7 @@ const config = {
             presets: [
               '@babel/preset-env',
               ['@babel/preset-react', { runtime: 'automatic' }],
+              '@babel/preset-typescript',
             ],
             plugins: [
               '@babel/plugin-proposal-class-properties',
@@ -122,6 +123,7 @@ const config = {
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@utils': path.resolve(__dirname, 'src/utils'),
     },
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
 };
 
