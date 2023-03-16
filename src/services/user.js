@@ -20,6 +20,38 @@ export async function findOne(type, data) {
 }
 
 /**
+ * 이메일 인증 코드 전송 함수
+ * @param {*} email 이메일
+ */
+export async function verifyEmail(email) {
+  try {
+    const data = await axios
+      .post(`${MAIN_SERVER}/api/email/verify/send`, { email })
+      .then((result) => result.data);
+
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
+ * 이메일 인증 코드 검증 함수
+ * @param {*} value 이메일 인증 코드
+ */
+export async function verifyCode(code) {
+  try {
+    const data = await axios
+      .post(`${MAIN_SERVER}/api/email/verify/auth`, code)
+      .then((result) => result.data);
+
+    return data;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
  * auth register 함수
  * @param {*} form 이름, 닉네임, 이메일, 비밀번호
  * @returns 회원가입 여부 or 에러메시지
