@@ -15,13 +15,13 @@ const LoginContainer = () => {
   const onInput = useCallback(
     (e) => {
       if (!regExpSpace.test(e.target.value)) {
-        setForm({
+        setForm((form) => ({
           ...form,
           [e.target.name]: e.target.value,
-        });
+        }));
       }
     },
-    [form, setForm],
+    [setForm],
   );
 
   const onLogin = useCallback(

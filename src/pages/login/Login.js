@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import loadable from '@loadable/component';
+import Input from '@components/Input';
+import Button from '@components/Button';
 
 const Register = loadable(() => import('@pages/register/Index'));
 
@@ -11,27 +13,24 @@ const Login = ({ form, onInput, onLogin, error }) => {
 
   return (
     <form className='login_index' method='post' onSubmit={onLogin}>
-      <input
+      <Input
         className='logintext'
         name='email'
         value={email}
         placeholder='사용자 이메일 또는 아이디'
         onChange={onInput}
       />
-      <input
+      <Input
         className='logintext'
         name='password'
         value={password}
         placeholder='비밀번호'
         onChange={onInput}
       />
-      <button type='submit' className='loginbtn'>
-        로그인
-      </button>
+      <Button type='submit' className='loginbtn' content='로그인' />
+
       <Link to='/register' onMouseEnter={onRegisterLoad}>
-        <button type='button' className='gosignupbtn'>
-          회원 가입
-        </button>
+        <Button type='button' className='gosignupbtn' content='회원 가입' />
       </Link>
       <div style={{ marginTop: '15px' }}>
         {error && (
