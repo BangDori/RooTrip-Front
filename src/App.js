@@ -15,7 +15,7 @@ const App = () => {
 
   return (
     <Routes>
-      {accessToken ? (
+      {!accessToken ? (
         <Route path='/' element={<Home />} />
       ) : (
         <Route path='/' element={<Login />} />

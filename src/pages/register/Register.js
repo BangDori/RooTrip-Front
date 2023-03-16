@@ -7,17 +7,36 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
   const [service, setService] = useState(false);
   const [marketing, setMarketing] = useState(false);
   const refName = useRef(null);
-
+  const [sendemail, setSendemail] = useState(false);
+  const [minutes, setMinutes] = useState(parseInt(3));
+  const [seconds, setSeconds] = useState(parseInt(0));
   useEffect(() => {
     refName.current.focus();
   }, []);
 
+  useEffect(() => {
+    const countdown = setInterval(() => {
+      if (parseInt(seconds) > 0) {
+        setSeconds(parseInt(seconds) - 1);
+      }
+      if (parseInt(seconds) === 0) {
+        if (parseInt(minutes) === 0) {
+          clearInterval(countdown);
+        } else {
+          setMinutes(parseInt(minutes) - 1);
+          setSeconds(59);
+        }
+      }
+    }, 1000);
+    return () => clearInterval(countdown);
+  }, [minutes, seconds]);
   return (
     <form className='Register_main' onSubmit={onRegister}>
       <div className='User_data'>
         <div className='User_data_name'>
           <span>성명</span>
           <span>email</span>
+          {sendemail && <span>email 인증 번호</span>}
           <span>닉네임</span>
           <span>비밀번호</span>
           <span>비밀번호 확인</span>
@@ -71,16 +90,53 @@ const Register = ({ form, messages, onInput, onCheck, onRegister }) => {
               {messages.name && <span>{messages.name}</span>}
             </div>
           </div>
-          <div>
+          <div className='email'>
             <input
               type='text'
               name='email'
               value={email}
               onChange={onInput}
               onBlur={(e) => onCheck(e.target.name, e.target.value)}
-              placeholder='email을 입력해주세요'
+              placeholder='email을 형식에 맞게 입력해주세요'
             />
-            {messages.email && <span>{messages.email}</span>}
+            {!sendemail ? (
+              <button
+                type='button'
+                className='Certi_email_btn'
+                onClick={setSendemail}
+              >
+                인증하기
+              </button>
+            ) : (
+              <button type='button' className='Certi_email_btn'>
+                재발신
+              </button>
+            )}
+          </div>
+          <div className='Certi_email_Num'>
+            {sendemail && (
+              <input
+                type='number'
+                className='input_certi_email_Num'
+                name='Certi_num'
+                placeholder='인증번호 입력'
+                value=''
+              ></input>
+            )}
+            {sendemail && (
+              <span className='Certi_Timer'>
+                {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+              </span>
+            )}
+            {sendemail && (
+              <button
+                style={{ marginLeft: '69px' }}
+                className='Certi_email_btn'
+                type='button'
+              >
+                인증하기
+              </button>
+            )}
           </div>
           <div>
             <input
