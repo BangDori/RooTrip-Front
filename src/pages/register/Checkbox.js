@@ -1,18 +1,18 @@
 import React from 'react';
 import '@styles/register/register.scss';
 
-function Checkbox({ children, disabled, checked, onChange }) {
+const Checkbox = ({ name, checked, onChange, children }) => {
   return (
     <label>
       <input
+        name={name}
         type='checkbox'
-        disabled={disabled}
         checked={checked}
-        onChange={({ target: { checked } }) => onChange(checked)}
+        onChange={onChange}
       />
       {children}
     </label>
   );
-}
+};
 
-export default Checkbox;
+export default React.memo(Checkbox);
