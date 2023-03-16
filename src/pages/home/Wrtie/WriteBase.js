@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/home/Write.scss';
+import '@styles/home/Write.scss';
 import WriteFirst from './WriteFirst';
 const WriteBase = ({ setModal }) => {
   const ModalClose = () => {
