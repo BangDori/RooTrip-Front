@@ -1,4 +1,4 @@
-import LoginContainer from './LoginContainer';
+import LoginContainer from '@containers/login/LoginContainer';
 import SocialLogin from './SocialLogin';
 import Title from './Title';
 import '@styles/login/login.scss';

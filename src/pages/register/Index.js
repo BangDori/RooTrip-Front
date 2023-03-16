@@ -1,6 +1,6 @@
 import React from 'react';
 import Title from './Title';
-import RegisterContainer from './RegisterContainer';
+import RegisterContainer from '@containers/register/RegisterContainer';
 
 const Index = () => {
   return (
