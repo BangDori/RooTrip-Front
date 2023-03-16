@@ -12,7 +12,6 @@ import {
   NICKNAME,
   PASSWORD,
   CPASSWORD,
-  AXIOSERROR,
 } from '@constants/registerType';
 
 export function validate({ name, email, nickname, password, cpassword }) {
@@ -43,7 +42,6 @@ const useInputValidator = () => {
     nickname: '※ 한글, 영어, 숫자를 조합한 닉네임을 입력해주세요.',
     password: '※ 숫자, 영어, 특수문자를 포함해 8~16자리로 입력해주세요.',
     cpassword: '※ 위 입력한 비밀번호를 다시 입력해주세요',
-    axiosError: '',
     isValid: false,
   });
   const [prevData, setPrevData] = useState({
@@ -85,7 +83,8 @@ const useInputValidator = () => {
             if (!isDup) {
               message = '중복';
             } else {
-              message = '완료';
+              if (type === EMAIL) message = '';
+              else message = '완료';
             }
           }
           break;
@@ -111,10 +110,6 @@ const useInputValidator = () => {
           } else {
             message = '일치';
           }
-          break;
-
-        case AXIOSERROR:
-          message = data;
           break;
 
         default:

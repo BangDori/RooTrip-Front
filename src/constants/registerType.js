@@ -5,6 +5,5 @@ const EMAIL = 'email';
 const NICKNAME = 'nickname';
 const PASSWORD = 'password';
 const CPASSWORD = 'cpassword';
-const AXIOSERROR = 'axiosError';
 
-export { NAME, EMAIL, NICKNAME, PASSWORD, CPASSWORD, AXIOSERROR };
+export { NAME, EMAIL, NICKNAME, PASSWORD, CPASSWORD };
