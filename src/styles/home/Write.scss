@@ -1,0 +1,56 @@
+.Content_box {
+  width: 500px;
+  height: 500px;
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+}
+
+.close_modal_btn {
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  z-index: 999;
+  top: 30px;
+  right: 70px;
+  font-size: 35px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0px;
+  font-weight: bold;
+}
+.First_modal {
+  .Modal_head {
+    text-align: center;
+    font-size: 20px;
+    border-bottom: 1px solid #ccc;
+    padding: 20px 0 20px 0;
+    font-weight: bold;
+  }
+  .Modal_First_content {
+    text-align: center;
+    .Photo_logo {
+      text-align: center;
+      img {
+        margin: 75px 0 45px 0;
+        width: 150px;
+      }
+    }
+    .ChoosePhoto {
+      button {
+        color: white;
+        background-color: rgb(72, 72, 196);
+        border: 1px solid rgb(72, 72, 196);
+        font-size: 20px;
+        width: 300px;
+        height: 50px;
+        box-shadow: 5px 5px 3px 1px #ccc;
+        cursor: pointer;
+      }
+    }
+  }
+}
