@@ -1,12 +1,14 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import Register from '@pages/register/Register';
 import { useNavigate } from 'react-router-dom';
 import { register } from '@services/user';
 import { regExpSpace } from '@constants/regExp';
 import useInputValidator, { validate } from '@hooks/useInputValidator';
 import { useInitialState } from '@hooks/useInitialState';
-import TOC from '@pages/register/TOC';
+import TOC from '@components/register/TOC';
 import Assign from '@pages/register/Assign';
+import { send } from '@store/emailAuth';
+import { useDispatch } from 'react-redux';
 
 const RegisterContainer = () => {
   const { messages, validateInput } = useInputValidator();
@@ -18,23 +20,29 @@ const RegisterContainer = () => {
     password: '',
     cpassword: '',
   });
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    return () => {
+      dispatch(send(false));
+    };
+  }, [dispatch]);
 
   const onInput = useCallback(
     (e) => {
       if (!regExpSpace.test(e.target.value)) {
-        setForm({
+        setForm((form) => ({
           ...form,
           [e.target.name]: e.target.value,
-        });
+        }));
       }
     },
-    [form, setForm],
+    [setForm],
   );
 
   const onCheck = useCallback(
-    async (type, data) => await validateInput(type, data),
+    async (e) => await validateInput(e.target.name, e.target.value),
     [validateInput],
   );
 
@@ -48,7 +56,7 @@ const RegisterContainer = () => {
           await register(form);
 
           resetForm();
-          navigate('/register/certification');
+          navigate('/');
         }
       } catch (e) {
         await validateInput('axiosError', e.message);
@@ -69,7 +77,7 @@ const RegisterContainer = () => {
         />
       </div>
 
-      <Assign onRegister={onRegister} />
+      <Assign />
     </form>
   );
 };
