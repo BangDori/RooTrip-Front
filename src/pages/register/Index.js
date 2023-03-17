@@ -1,5 +1,5 @@
 import React from 'react';
-import Title from './Title';
+import Title from '@components/register/Title';
 import RegisterContainer from '@containers/register/RegisterContainer';
 
 const Index = () => {

@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 export const useInitialState = (initialValue) => {
-  const [state, setState] = useState(initialValue);
+  const [form, setForm] = useState(initialValue);
 
-  const resetState = () => {
-    setState(initialValue);
-  };
+  const resetForm = useCallback(() => {
+    setForm(initialValue);
+  }, [initialValue]);
 
-  return [state, setState, resetState];
+  return [form, setForm, resetForm];
 };
