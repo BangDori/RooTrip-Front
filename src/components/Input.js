@@ -1,6 +1,7 @@
 import React from 'react';
 
 const Input = ({
+  boxName,
   name,
   value,
   onChange,
@@ -9,21 +10,25 @@ const Input = ({
   type,
   checked,
   disabled,
+  message,
   ...attribute
 }) => {
-  console.log(name, ' Input updated!');
+  console.log(name, ' Input update!');
   return (
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      onBlur={onBlur}
-      placeholder={placeholder}
-      checked={checked}
-      disabled={disabled}
-      {...attribute}
-    />
+    <div className={boxName}>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+        checked={checked}
+        disabled={disabled}
+        {...attribute}
+      />
+      {message && <span>{message}</span>}
+    </div>
   );
 };
 
