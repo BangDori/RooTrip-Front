@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { useSelector } from 'react-redux';
+import useAccessToken from './hooks/useAccessToken';
 
 const Home = loadable(() => import('@pages/home/Index'));
 const Login = loadable(() => import('@pages/login/Index'));
@@ -10,7 +11,9 @@ const Auth = loadable(() => import('@components/Auth'));
 const NotFound = loadable(() => import('@components/NotFound'));
 
 const App = () => {
-  const accessToken = useSelector((state) => state.accessToken);
+  const { accessToken, expireTime } = useSelector((state) => state.accessToken);
+
+  useAccessToken(accessToken, expireTime);
 
   return (
     <Routes>
