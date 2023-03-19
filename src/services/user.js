@@ -132,6 +132,7 @@ export async function socialLogin(provider, code) {
     if (status) {
       // (accessToken, expire)과 refreshToken 저장
       setTokens(accessToken, refreshToken, expire);
+      return accessToken;
     }
 
     // 소셜 로그인에 실패했다면
