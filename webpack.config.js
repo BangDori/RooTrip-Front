@@ -14,8 +14,12 @@ const stylesHandler = isProduction
   ? MiniCssExtractPlugin.loader
   : 'style-loader';
 
+// 설정
 const config = {
+  // 시작 엔트리
   entry: './src/index.js',
+
+  // 압축된 파일 위치
   output: {
     path: path.resolve(__dirname, 'build'),
 
@@ -23,8 +27,13 @@ const config = {
     publicPath: '/',
   },
   devServer: {
+    // dev server 구동 시 자동으로 chrome browser 오픈
     open: true,
+
+    // dev server의 DOMAIN IP
     host: process.env.REACT_APP_DOMAIN,
+
+    // dev server의 PORt
     port: process.env.REACT_APP_PORT,
 
     // 브라우저에서 요청한 URL에 대해 해당 URL 경로에 대한 파일이 없을 경우, 설정한 fallback 경로에 있는 파일을 제공하는 옵션
@@ -71,11 +80,11 @@ const config = {
   module: {
     rules: [
       {
+        // js, jsx, ts, tsx 의 경우 babel을 이용해 ES6 -> ES5 변환
         test: /\.(js|jsx|ts|tsx)$/i,
         // babel을 적용하지 않을 폴더
         exclude: /node_modules/,
         use: {
-          // babel ES6 -> ES5
           loader: 'babel-loader',
           options: {
             presets: [
@@ -92,14 +101,17 @@ const config = {
         },
       },
       {
+        // css -> js 변환
         test: /\.css$/i,
         use: [stylesHandler, 'css-loader'],
       },
       {
+        // scss -> js 변환
         test: /\.s[ac]ss$/i,
         use: [stylesHandler, 'css-loader', 'sass-loader'],
       },
       {
+        // image -> js 변환
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: 'asset',
         generator: {
