@@ -1,20 +1,24 @@
 import React from 'react';
-import { getAccessToken, removeTokens } from '@utils/auth';
 import { logout } from '@services/user';
 import Nav from './Nav';
 import Article from './Article';
 import '@styles/home/Write.scss';
 import WriteBase from './Wrtie/WriteBase';
+import { useDispatch } from 'react-redux';
+import { remove } from '@store/accessToken';
 
 const Index = ({ modal, setModal }) => {
-  const onRemove = async () => {
-    const result = await logout(getAccessToken());
+  const dispatch = useDispatch();
 
-    if (result) {
-      removeTokens();
-      window.location.reload();
+  const onRemove = async () => {
+    try {
+      await logout();
+      dispatch(remove());
+    } catch (e) {
+      console.log(e);
     }
   };
+
   return (
     <>
       <div>
