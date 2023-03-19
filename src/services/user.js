@@ -1,5 +1,18 @@
 import axios from 'axios';
 import { MAIN_SERVER } from '@config/user';
+import {
+  getAccessToken,
+  getRefreshToken,
+  setAccessToken,
+  setTokens,
+  removeTokens,
+} from '@utils/AuthCookie';
+import {
+  USER_LOGIN_FAILED_ERROR,
+  USER_SOCIAL_LOGIN_FAILED_ERROR,
+  USER_LOGOUT_FAILED_ERROR,
+  TOKEN_REISSUE_ERROR,
+} from '@constants/error';
 
 /**
  * auth findOne 함수
@@ -77,18 +90,25 @@ export async function register(data) {
 
 /**
  * auth login 함수
- * @param {*} form 이메일, 비밀번호
+ * @param {*} form (이메일, 비밀번호)
  * @returns accessToken, refreshToken
  */
 export async function login(data) {
   try {
-    const result = await axios
-      .post(`${MAIN_SERVER}/api/auth/login`, data)
-      .then((res) => res.data);
+    const response = await axios.post(`${MAIN_SERVER}/api/auth/login`, data);
+    const { status, accessToken, refreshToken, expire } = response.data;
 
-    return result;
+    // 로그인에 성공했다면
+    if (status) {
+      // (accessToken, expire)과 refreshToken 저장
+      setTokens(accessToken, refreshToken, expire);
+      return accessToken;
+    }
+
+    // 로그인에 실패했다면
+    throw new Error(USER_LOGIN_FAILED_ERROR);
   } catch (e) {
-    console.log(e);
+    throw new Error(USER_LOGIN_FAILED_ERROR);
   }
 }
 
@@ -100,47 +120,69 @@ export async function login(data) {
  */
 export async function socialLogin(provider, code) {
   try {
-    const result = await axios
+    const response = await axios
       .post(`${MAIN_SERVER}/api/auth/social`, {
         provider,
         code,
       })
       .then((res) => res.data);
+    const { status, accessToken, refreshToken, expire } = response;
 
-    return result;
+    // 소셜 로그인에 성공했다면
+    if (status) {
+      // (accessToken, expire)과 refreshToken 저장
+      setTokens(accessToken, refreshToken, expire);
+    }
+
+    // 소셜 로그인에 실패했다면
+    throw new Error(USER_SOCIAL_LOGIN_FAILED_ERROR);
   } catch (e) {
-    console.log(e);
+    throw new Error(USER_SOCIAL_LOGIN_FAILED_ERROR);
   }
 }
 
 /**
  * auth token 재발급 함수
- * @param {*} type refreshType
- * @param {*} token refreshToken
- * @returns accessToken, expire
  */
-export async function reIssue(grant_type, refresh_token) {
+export async function reIssue() {
   try {
-    const result = await axios
+    // client 측의 refreshToken 가져오기
+    const refreshToken = getRefreshToken();
+    const response = await axios
       .post(`${MAIN_SERVER}/api/auth/token/reissue`, {
-        grant_type,
-        refresh_token,
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
       })
       .then((res) => res.data);
+    const { accessToken, expire } = response;
 
-    return result;
+    // 재발급에 성공하였다면
+    if (accessToken) {
+      // accessToken을 만료시간과 함께 쿠키에 저장
+      setAccessToken(accessToken, expire);
+      return;
+    }
+
+    throw new Error(TOKEN_REISSUE_ERROR);
   } catch (e) {
-    console.log(e);
+    // 401(인증 오류)이 발생한 경우
+    if (e.response.status === 401) {
+      window.location = '/';
+    }
+
+    throw new Error(TOKEN_REISSUE_ERROR);
   }
 }
 
 /**
  * auth logout 함수
- * @param {*} accessToken accessToken
  */
-export async function logout(accessToken) {
+export async function logout() {
   try {
-    const result = await axios
+    // client 측의 accessToken 가져오기
+    const accessToken = getAccessToken();
+
+    const response = await axios
       .post(`${MAIN_SERVER}/api/auth/logout`, null, {
         headers: {
           Authorization: 'Bearer ' + accessToken,
@@ -148,8 +190,20 @@ export async function logout(accessToken) {
       })
       .then((res) => res.data);
 
-    return result;
+    // 로그아웃이 성공하였다면
+    if (response) {
+      // accessToken과 refreshToken 제거
+      removeTokens();
+      return;
+    }
+
+    throw new Error(USER_LOGOUT_FAILED_ERROR);
   } catch (e) {
-    console.log(e);
+    // 401(인증 오류)이 발생한 경우
+    if (e.response.status === 401) {
+      window.location = '/';
+    }
+
+    throw new Error(USER_LOGOUT_FAILED_ERROR);
   }
 }
