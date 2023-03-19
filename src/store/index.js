@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import emailAuth from './emailAuth';
+import accessToken from './accessToken';
 
 const rootReducer = combineReducers({
-  emailAuth,
+  accessToken,
 });
 
 export default rootReducer;

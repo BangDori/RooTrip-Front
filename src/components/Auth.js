@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { socialLogin } from '@services/user';
-import { setTokens } from '@utils/auth';
+import { useDispatch } from 'react-redux';
+import { issue } from '@store/accessToken';
 
 const Auth = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { provider } = useParams();
   const code = new URL(window.location.href).searchParams.get('code');
@@ -11,23 +13,17 @@ const Auth = () => {
   useEffect(() => {
     const getToken = async () => {
       try {
-        // 소설 로그인 시 accessToken, refreshToken 저장
-        const { status, accessToken, refreshToken, expire } = await socialLogin(
-          provider,
-          code,
-        );
+        const accessToken = await socialLogin(provider, code);
 
-        if (status) setTokens(accessToken, refreshToken, expire);
-
+        dispatch(issue(accessToken));
         navigate('/');
-        window.location.reload();
-      } catch (err) {
-        console.log(err);
+      } catch (e) {
+        console.log(e);
       }
     };
 
     getToken();
-  }, [provider, code, navigate]);
+  }, [provider, code, navigate, dispatch]);
 
   return null;
 };

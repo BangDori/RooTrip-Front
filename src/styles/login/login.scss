@@ -29,18 +29,15 @@ button {
     }
   }
 
-  .login_index {
-    border-bottom: 1px solid #ccc;
-    padding: 10px 0 20px 0;
-    .logintext {
-      border: #f5f5f5;
-      background-color: #eeeeee;
-      border-radius: 1px;
-      width: 240px;
-      height: 20px;
-      padding: 5px 5px 5px 10px;
-      margin: 10px 0 10px 0;
-    }
+  .login_error {
+    color: rgb(249, 63, 63);
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  .login_buttons {
+    padding: 0 0 20px 0;
+
     .loginbtn {
       border: powderblue;
       color: white;
@@ -62,14 +59,25 @@ button {
       font-size: 13px;
       background-color: rgb(132, 216, 227);
     }
-    .error_login_text {
-      color: rgb(249, 63, 63);
-      font-weight: bold;
+  }
+
+  .login_index {
+    padding: 10px 0 0;
+    .logintext {
+      border: #f5f5f5;
+      background-color: #eeeeee;
+      border-radius: 1px;
+      width: 240px;
+      height: 20px;
+      padding: 5px 5px 5px 10px;
+      margin: 10px 0 10px 0;
     }
   }
 
   .social_login {
-    padding: 20px 0 20px 0;
+    border-top: 1px solid #ccc;
+
+    padding: 12px 0 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;

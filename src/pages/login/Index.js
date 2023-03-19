@@ -1,16 +1,16 @@
-import LoginContainer from '@containers/login/LoginContainer';
-import SocialLogin from './SocialLogin';
-import Title from './Title';
-import '@styles/login/login.scss';
 import React from 'react';
+import LoginTitle from './LoginTitle';
+import LoginContainer from './LoginContainer';
+import LoginSocial from './LoginSocial';
+import '@styles/login/login.scss';
 
 const Index = () => {
   return (
     <div className='map-container'>
       <div className='LoginPage'>
-        <Title />
+        <LoginTitle />
         <LoginContainer />
-        <SocialLogin />
+        <LoginSocial />
       </div>
     </div>
   );
