@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import '@styles/register/register.scss';
 import cn from 'classnames';
 import Input from '@components/Input';
@@ -7,7 +7,7 @@ import { useInitialState } from '@hooks/useInitialState';
 import { regExpSpace } from '@constants/regExp';
 import RegisterButton from './RegisterButton';
 import RegisterEmailAuth from './RegisterEmailAuth';
-import { validate } from '@utils/validation';
+import useValidateForm from '@hooks/useValidateForm';
 
 const RegisterForm = ({ onRegister }) => {
   const [form, setForm, resetForm] = useInitialState({
@@ -18,17 +18,13 @@ const RegisterForm = ({ onRegister }) => {
     password: '',
     password2: '',
   });
-  const [validation, setValidation] = useInitialState({
+  const [validation, setValidation, validateForm] = useValidateForm({
     name: false,
     email: false,
     nickname: false,
     password: false,
     password2: false,
   });
-
-  useEffect(() => {
-    console.log(validation);
-  }, [validation]);
 
   const onInput = useCallback(
     (e) => {
@@ -40,27 +36,6 @@ const RegisterForm = ({ onRegister }) => {
       }
     },
     [setForm],
-  );
-
-  const validateForm = useCallback(
-    async (e) => {
-      const { isValid, error, type } = await validate(
-        e.target.name,
-        e.target.value,
-      );
-
-      if (isValid) {
-        e.target.message = '';
-      } else {
-        e.target.message = error;
-      }
-
-      setValidation((validation) => ({
-        ...validation,
-        [type]: isValid,
-      }));
-    },
-    [setValidation],
   );
 
   const confirmPassword = useCallback(
@@ -81,11 +56,13 @@ const RegisterForm = ({ onRegister }) => {
       // 페이지 이동 막기
       e.preventDefault();
 
+      const list = Object.keys(validation);
       const isValid = Object.values(validation);
 
       // 유효성 검사에 만족하지 못한게 하나라도 있다면,
       if (isValid.includes(false)) {
-        alert('회원 정보를 확인해주세요.');
+        const key = isValid.indexOf(false);
+        alert(`${list[key]} 정보에 대해서 확인해주세요.`);
         return;
       }
 
