@@ -1,31 +1,32 @@
 import React, { useCallback, useState } from 'react';
-import Checkbox from './Checkbox';
+import RegisterCheckBox from '@components/register/RegisterCheckBox';
 
-const Assign = () => {
+const RegisterButton = () => {
   const [checkBox, setCheckBox] = useState({
     service: false,
     marketing: false,
   });
   const { service, marketing } = checkBox;
 
-  const onClickCheckBox = useCallback(
-    (e) => {
-      setCheckBox({
-        ...checkBox,
-        [e.target.name]: e.target.checked,
-      });
-    },
-    [checkBox],
-  );
+  const onChecked = useCallback((e) => {
+    setCheckBox((checkBox) => ({
+      ...checkBox,
+      [e.target.name]: e.target.checked,
+    }));
+  }, []);
 
   return (
     <div className='check_assign'>
-      <Checkbox name='service' checked={service} onChange={onClickCheckBox}>
+      <RegisterCheckBox name='service' checked={service} onChange={onChecked}>
         <span>(필수) 서비스 이용약관</span>
-      </Checkbox>
-      <Checkbox name='marketing' checked={marketing} onChange={onClickCheckBox}>
+      </RegisterCheckBox>
+      <RegisterCheckBox
+        name='marketing'
+        checked={marketing}
+        onChange={onChecked}
+      >
         <span>(선택) 개인정보 이용</span>
-      </Checkbox>
+      </RegisterCheckBox>
       <div className='signbtn'>
         <button
           type='submit'
@@ -39,4 +40,4 @@ const Assign = () => {
   );
 };
 
-export default React.memo(Assign);
+export default RegisterButton;

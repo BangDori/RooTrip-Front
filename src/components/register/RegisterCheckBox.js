@@ -1,7 +1,7 @@
 import React from 'react';
 import '@styles/register/register.scss';
 
-const Checkbox = ({ name, checked, onChange, children }) => {
+const RegisterCheckBox = ({ name, checked, onChange, children }) => {
   return (
     <label>
       <input
@@ -15,4 +15,4 @@ const Checkbox = ({ name, checked, onChange, children }) => {
   );
 };
 
-export default React.memo(Checkbox);
+export default React.memo(RegisterCheckBox);

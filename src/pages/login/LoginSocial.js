@@ -3,10 +3,10 @@ import loadable from '@loadable/component';
 import { Link } from 'react-router-dom';
 import { GOOGLE_AUTH_URL, KAKAO_AUTH_URL, NAVER_AUTH_URL } from '@config/auth';
 
-const Auth = loadable(() => import('@components/Auth'));
+const SocialAuth = loadable(() => import('@components/SocialAuth'));
 
 const LoginSocial = () => {
-  const onAuthLoad = () => Auth.preload();
+  const onAuthLoad = () => SocialAuth.preload();
 
   return (
     <div className='social_login'>

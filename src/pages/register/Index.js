@@ -1,12 +1,16 @@
 import React from 'react';
-import Title from '@components/register/Title';
-import RegisterContainer from '@containers/register/RegisterContainer';
+import RegisterTitle from './RegisterTitle';
+import RegisterTOC from './RegisterTOC';
+import RegisterContainer from './RegisterContainer';
 
 const Index = () => {
   return (
     <>
-      <Title />
-      <RegisterContainer />
+      <RegisterTitle />
+      <div className='Register_main'>
+        <RegisterTOC />
+        <RegisterContainer />
+      </div>
     </>
   );
 };
