@@ -14,7 +14,6 @@ const Auth = () => {
     const getToken = async () => {
       try {
         const accessToken = await socialLogin(provider, code);
-
         dispatch(issue(accessToken));
         navigate('/');
       } catch (e) {
@@ -23,7 +22,8 @@ const Auth = () => {
     };
 
     getToken();
-  }, [provider, code, navigate, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return null;
 };
