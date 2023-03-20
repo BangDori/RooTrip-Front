@@ -6,7 +6,7 @@ import {
   setAccessToken,
   setTokens,
   removeTokens,
-} from '@utils/AuthCookie';
+} from '@utils/authCookie';
 import {
   USER_LOGIN_FAILED_ERROR,
   USER_SOCIAL_LOGIN_FAILED_ERROR,
@@ -36,7 +36,7 @@ export async function findOne(type, data) {
  * 이메일 인증 코드 전송 함수
  * @param {*} email 이메일
  */
-export async function verifyEmail(email) {
+export async function sendVerifyNumber(email) {
   try {
     const data = await axios
       .post(`${MAIN_SERVER}/api/email/verify/send`, { email })
@@ -52,7 +52,7 @@ export async function verifyEmail(email) {
  * 이메일 인증 코드 검증 함수
  * @param {*} value 이메일 인증 코드
  */
-export async function verifyCode(email, verifyNumber) {
+export async function authVerifyNumber(email, verifyNumber) {
   try {
     const data = await axios
       .post(`${MAIN_SERVER}/api/email/verify/auth`, {

@@ -7,7 +7,7 @@ import useAccessToken from './hooks/useAccessToken';
 const Home = loadable(() => import('@pages/home/Index'));
 const Login = loadable(() => import('@pages/login/Index'));
 const Register = loadable(() => import('@pages/register/Index'));
-const Auth = loadable(() => import('@components/Auth'));
+const SocialAuth = loadable(() => import('@components/SocialAuth'));
 const NotFound = loadable(() => import('@components/NotFound'));
 
 const App = () => {
@@ -23,7 +23,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
       )}
       <Route path='/register' element={<Register />} />
-      <Route path='/oauth/:provider/*' element={<Auth />} />
+      <Route path='/oauth/:provider/*' element={<SocialAuth />} />
       <Route path='/*' element={<NotFound />} />
     </Routes>
   );

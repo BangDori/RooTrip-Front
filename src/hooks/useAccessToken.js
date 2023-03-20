@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { reIssue } from '@services/user';
 import { issue } from '@store/accessToken';
-import { getRefreshToken } from '@utils/AuthCookie';
+import { getRefreshToken } from '@utils/authCookie';
 
 const useAccessToken = (accessToken, expireTime) => {
   const dispatch = useDispatch();
