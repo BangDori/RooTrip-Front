@@ -6,7 +6,7 @@ import { sendVerifyNumber, authVerifyNumber } from '@services/user';
 import useTimer from '@hooks/useTimer';
 import { validate } from '@utils/validation';
 
-const RegisterEmailAuth = ({ email, onInput }) => {
+const RegisterEmailAuth = ({ email, onInput, setValidation }) => {
   // 타이머
   const { time, isActive, isCompleted, startTimer, resetTimer } = useTimer();
 
@@ -92,6 +92,10 @@ const RegisterEmailAuth = ({ email, onInput }) => {
       // 인증이 확인되었다면,
       if (status) {
         alert('인증번호가 확인되었습니다.');
+        setValidation((validation) => ({
+          ...validation,
+          email: true,
+        }));
         setIsSend(false);
         resetTimer();
 
@@ -102,7 +106,7 @@ const RegisterEmailAuth = ({ email, onInput }) => {
     } catch (e) {
       console.log(e);
     }
-  }, [email, number, isCompleted, resetTimer]);
+  }, [email, setValidation, number, isCompleted, resetTimer]);
 
   return (
     <>
