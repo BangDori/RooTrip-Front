@@ -8,6 +8,7 @@ import { regExpSpace } from '@constants/regExp';
 import RegisterButton from './RegisterButton';
 import RegisterEmailAuth from './RegisterEmailAuth';
 import useValidateForm from '@hooks/useValidateForm';
+import { showError } from '@utils/change';
 
 const RegisterForm = ({ onRegister }) => {
   const [form, setForm, resetForm] = useInitialState({
@@ -62,15 +63,20 @@ const RegisterForm = ({ onRegister }) => {
       // 유효성 검사에 만족하지 못한게 하나라도 있다면,
       if (isValid.includes(false)) {
         const key = isValid.indexOf(false);
-        alert(`${list[key]} 정보에 대해서 확인해주세요.`);
+
+        alert(showError(list[key]));
         return;
       }
 
-      // 상위 컴포넌트로 회원가입 정보 전달
-      onRegister(form);
+      try {
+        // 상위 컴포넌트로 회원가입 정보 전달
+        await onRegister(form);
 
-      // form 상태 초기화
-      resetForm();
+        // form 상태 초기화
+        resetForm();
+      } catch (e) {
+        console.log(e);
+      }
     },
     [onRegister, validation, form, resetForm],
   );
