@@ -8,21 +8,17 @@ const Button = ({
   onClick,
   content,
   ...attribute
-}) => {
-  console.log(content, ' Button updated!');
-
-  return (
-    <button
-      type={type}
-      name={name}
-      value={value}
-      className={className}
-      onClick={onClick}
-      {...attribute}
-    >
-      {content}
-    </button>
-  );
-};
+}) => (
+  <button
+    type={type}
+    name={name}
+    value={value}
+    className={className}
+    onClick={onClick}
+    {...attribute}
+  >
+    {content}
+  </button>
+);
 
 export default React.memo(Button);
