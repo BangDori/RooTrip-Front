@@ -50,6 +50,7 @@ const Login = ({ onLogin }) => {
       />
       <input
         className='logintext'
+        type='password'
         name='password'
         value={password}
         placeholder='비밀번호'

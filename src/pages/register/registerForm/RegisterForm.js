@@ -133,6 +133,7 @@ const RegisterForm = ({ onRegister }) => {
         <div className='input-register_form'>
           <Input
             className='password'
+            type='password'
             name='password'
             value={form.password}
             onChange={onInput}
@@ -144,6 +145,7 @@ const RegisterForm = ({ onRegister }) => {
         <div className='input-register_form'>
           <Input
             className='password2'
+            type='password'
             name='password2'
             value={form.password2}
             onChange={onInput}
