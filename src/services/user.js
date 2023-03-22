@@ -161,7 +161,7 @@ export async function reIssue() {
     if (accessToken) {
       // accessToken을 만료시간과 함께 쿠키에 저장
       setAccessToken(accessToken, expire);
-      return accessToken;
+      return { accessToken, expire };
     }
 
     throw new Error(TOKEN_REISSUE_ERROR);
