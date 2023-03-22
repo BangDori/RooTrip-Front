@@ -21,7 +21,7 @@ const useAccessToken = (accessToken, expireTime) => {
     if (accessToken) {
       const timeout = setTimeout(() => {
         tokenReIssue();
-      }, expireTime);
+      }, expireTime); // expireTime까지의 시간
 
       return () => {
         clearTimeout(timeout);
