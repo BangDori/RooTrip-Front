@@ -4,12 +4,12 @@ import Logo from '@assets/Logo.png';
 import '@styles/register/register.scss';
 
 const Title = () => (
-  <Link to='/' className='Go_before_page'>
-    <div className='Register_Title'>
+  <div className='Register_Title'>
+    <Link to='/' className='Go_before_page'>
       <img className='logo' src={Logo} alt='로고사진' />
       <span className='content'>JOIN MEMBERS</span>
-    </div>
-  </Link>
+    </Link>
+  </div>
 );
 
 export default Title;

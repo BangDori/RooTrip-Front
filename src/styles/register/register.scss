@@ -1,7 +1,3 @@
-.Go_before_page {
-  text-decoration: none;
-  color: black;
-}
 .Register_Title {
   display: flex;
   flex-direction: row;
@@ -10,15 +6,24 @@
   border-bottom: 1px solid black;
   text-align: center;
   padding: 50px 30px 50px 30px;
-  .logo {
-    width: 100px;
-    cursor: pointer;
-  }
-  .content {
-    cursor: pointer;
-    padding-left: 15px;
-    font-size: 35px;
-    font-weight: bold;
+
+  .Go_before_page {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+    color: black;
+
+    .logo {
+      width: 100px;
+      cursor: pointer;
+    }
+    .content {
+      cursor: pointer;
+      padding-left: 15px;
+      font-size: 35px;
+      font-weight: bold;
+    }
   }
 }
 
