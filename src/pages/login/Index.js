@@ -3,8 +3,7 @@ import LoginTitle from './LoginTitle';
 import LoginContainer from './LoginContainer';
 import LoginSocial from './LoginSocial';
 import '@styles/login/login.scss';
-import RegisterButton from './RegisterButton';
-import FindAccount from './FindAccount';
+import Account from './Account';
 
 const Index = () => {
   return (
@@ -16,8 +15,7 @@ const Index = () => {
           <LoginSocial />
         </div>
         <div className='AccountPage'>
-          <FindAccount />
-          <RegisterButton />
+          <Account />
         </div>
       </div>
     </div>
