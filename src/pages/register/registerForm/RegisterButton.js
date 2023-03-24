@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import RegisterCheckBox from '@components/register/RegisterCheckBox';
+import RegisterCheckBox from '@components/account/RegisterCheckBox';
 
 const RegisterButton = () => {
   const [checkBox, setCheckBox] = useState({
