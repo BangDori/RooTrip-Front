@@ -6,6 +6,7 @@ import '@styles/home/Write.scss';
 import WriteBase from './Wrtie/WriteBase';
 import { useDispatch } from 'react-redux';
 import { remove } from '@store/accessToken';
+import Map from '../../components/Map';
 
 const Index = ({ modal, setModal }) => {
   const dispatch = useDispatch();
@@ -21,12 +22,11 @@ const Index = ({ modal, setModal }) => {
 
   return (
     <>
+      <Map></Map>
       <div>
         <button onClick={onRemove}>로그아웃</button>
-        <div className='map'>
-          <Nav />
-          <Article />
-        </div>
+        <Nav />
+        <Article />
       </div>
     </>
   );

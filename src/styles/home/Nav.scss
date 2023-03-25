@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   padding-left: 30px;
-
+  position: absolute;
   .Title {
     display: flex;
     flex-direction: column;
@@ -38,7 +38,12 @@
       display: flex;
       flex-direction: column;
       justify-content: space-around;
-
+      #Trip_nav {
+        border: 1px solid #ccc;
+        padding: 5px;
+        border-radius: 15px;
+        background: #ccc;
+      }
       .icon_up {
         display: flex;
         align-items: center;

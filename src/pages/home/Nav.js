@@ -26,19 +26,13 @@ const Nav = () => {
           </div>
           <div className='menu'>
             <div className='menu_Icon'>
-              <div className='icon_up' onClick={showModal}>
-                <button type='button'>
-                  <img src={Article_input} alt='게시글 작성' />
-                </button>
-                <span>게시글 작성</span>
-              </div>
               <div className='icon_up'>
                 <button type='button'>
                   <img src={menu_friend} alt='친구 게시글' />
                 </button>
                 <span>친구 게시글</span>
               </div>
-              <div className='icon_up'>
+              <div className='icon_up' id='Trip_nav'>
                 <button type='button'>
                   <img src={menu_Trip} alt='Trip' />
                 </button>
@@ -52,7 +46,13 @@ const Nav = () => {
               </div>
               <div className='icon_up'>
                 <button type='button'>Log</button>
-                <span>log</span>
+                <span>Log</span>
+              </div>
+              <div className='icon_up' onClick={showModal}>
+                <button type='button'>
+                  <img src={Article_input} alt='게시글 작성' />
+                </button>
+                <span>게시글 작성</span>
               </div>
             </div>
           </div>
