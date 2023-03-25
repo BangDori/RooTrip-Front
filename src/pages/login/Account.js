@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import loadable from '@loadable/component';
 
-const FindAccount = loadable(() => import('./account/FindAccount'));
+const FindAccount = loadable(() => import('@pages/account/Index'));
 const Register = loadable(() => import('@pages/register/Index'));
 
 const Account = () => {
   return (
     <>
       <div className='account-box'>
-        <Link to='/accounts' onMouseEnter={() => FindAccount.preload()}>
+        <Link to='/account' onMouseEnter={() => FindAccount.preload()}>
           <span>비밀번호를 잊으셨나요?</span>
         </Link>
       </div>

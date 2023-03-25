@@ -6,6 +6,7 @@ import useAccessToken from './hooks/useAccessToken';
 
 const Home = loadable(() => import('@pages/home/Index'));
 const Login = loadable(() => import('@pages/login/Index'));
+const FindAccount = loadable(() => import('@pages/account/Index'));
 const Register = loadable(() => import('@pages/register/Index'));
 const SocialAuth = loadable(() => import('@components/SocialAuth'));
 const NotFound = loadable(() => import('@components/NotFound'));
@@ -22,6 +23,7 @@ const App = () => {
       ) : (
         <Route path='/' element={<Home />} />
       )}
+      <Route path='/account' element={<FindAccount />} />
       <Route path='/register' element={<Register />} />
       <Route path='/oauth/:provider/*' element={<SocialAuth />} />
       <Route path='/*' element={<NotFound />} />
