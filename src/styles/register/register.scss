@@ -17,15 +17,6 @@
     flex-direction: column;
     padding-left: 30px;
 
-    .input-register_form {
-      display: inline-block;
-
-      .x-ray {
-        opacity: 0.5;
-        cursor: auto;
-      }
-    }
-
     .check_box {
       display: inline-flex;
       margin-left: 30px;
@@ -51,41 +42,6 @@
           width: 50px;
           height: 50px;
         }
-      }
-    }
-    .Certi_email_btn {
-      margin-left: 30px;
-      height: 40px;
-      width: 100px;
-      font-weight: bold;
-      font-size: 15px;
-      color: white;
-      background: rgb(72, 72, 196);
-      border: 1px solid rgb(72, 72, 196);
-      box-shadow: 3px 3px 1px 0px #ccc;
-      cursor: pointer;
-    }
-
-    .Certi_email_Num {
-      position: relative;
-
-      .input_certi_email_Num {
-        width: 150px;
-        height: 45px;
-        border-radius: 10px;
-        margin-bottom: 25px;
-        font-size: 15px;
-        padding-left: 15px;
-        border: 1px solid #ccc;
-        background-color: #efefef;
-      }
-      .Certi_Timer {
-        position: absolute;
-        color: #0055ff;
-        margin-left: 48px;
-      }
-      .Certi_email_btn {
-        margin-left: 165px;
       }
     }
 
