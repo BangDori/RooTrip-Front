@@ -5,8 +5,75 @@ import cn from 'classnames';
 import { sendVerifyNumber, authVerifyNumber } from '@services/user';
 import useTimer from '@hooks/useTimer';
 import { validate } from '@utils/validation';
+import styled from 'styled-components';
 
-const RegisterEmailAuth = ({ email, onInput, setValidation }) => {
+const StyledRegisterEmailAuth = styled.div`
+  .input-register_form {
+    .x-ray {
+      opacity: 0.5;
+      cursor: auto;
+    }
+
+    .Certi_email_btn {
+      margin-left: 30px;
+      height: 40px;
+      width: 100px;
+      font-weight: bold;
+      font-size: 15px;
+      color: white;
+      background: rgb(72, 72, 196);
+      border: 1px solid rgb(72, 72, 196);
+      box-shadow: 3px 3px 1px 0px #ccc;
+      cursor: pointer;
+    }
+
+    .Certi_email_Num {
+      position: relative;
+
+      .input_certi_email_Num {
+        width: 150px;
+        height: 45px;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        font-size: 15px;
+        padding-left: 15px;
+        border: 1px solid #ccc;
+        background-color: #efefef;
+      }
+      .Certi_Timer {
+        position: absolute;
+        color: #0055ff;
+        margin-left: 48px;
+      }
+      .Certi_email_btn {
+        margin-left: 165px;
+      }
+    }
+
+    input {
+      width: 285px;
+      height: 45px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      font-size: 15px;
+      padding-left: 15px;
+      border: 1px solid #ccc;
+      background-color: #efefef;
+    }
+    span {
+      letter-spacing: -1px;
+      margin: 15px;
+      font-weight: bold;
+    }
+  }
+`;
+
+const RegisterEmailAuth = ({
+  validateCheck,
+  email,
+  onInput,
+  setValidation,
+}) => {
   // 타이머
   const { time, isActive, isCompleted, startTimer, resetTimer } = useTimer();
 
@@ -32,13 +99,15 @@ const RegisterEmailAuth = ({ email, onInput, setValidation }) => {
   // 인증 번호 발신
   const sendEmail = useCallback(async () => {
     // 이메일 유효성 검사 및 중복 검사
-    const { isValid, error } = await validate('email', email);
+    if (validateCheck) {
+      const { isValid, error } = await validate('email', email);
 
-    // 에러가 발생했다면,
-    if (!isValid) {
-      // 에러 출력
-      alert(error);
-      return;
+      // 에러가 발생했다면,
+      if (!isValid) {
+        // 에러 출력
+        alert(error);
+        return;
+      }
     }
 
     // 에러가 발생하지 않았다면,
@@ -61,7 +130,7 @@ const RegisterEmailAuth = ({ email, onInput, setValidation }) => {
     } catch (e) {
       console.log(e);
     }
-  }, [email, startTimer]);
+  }, [validateCheck, email, startTimer]);
 
   // 인증 번호 재발신
   const resendEmail = useCallback(() => {
@@ -109,7 +178,7 @@ const RegisterEmailAuth = ({ email, onInput, setValidation }) => {
   }, [email, setValidation, number, isCompleted, resetTimer]);
 
   return (
-    <>
+    <StyledRegisterEmailAuth>
       <div className='input-register_form'>
         <Input
           className={cn({ 'x-ray': endEmail.current })}
@@ -164,7 +233,7 @@ const RegisterEmailAuth = ({ email, onInput, setValidation }) => {
           />
         </div>
       </div>
-    </>
+    </StyledRegisterEmailAuth>
   );
 };
 

@@ -116,6 +116,7 @@ const RegisterForm = ({ onRegister }) => {
           </div>
         </div>
         <RegisterEmailAuth
+          validateCheck={true}
           email={form.email}
           onInput={onInput}
           setValidation={setValidation}
