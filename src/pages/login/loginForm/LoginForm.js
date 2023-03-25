@@ -1,7 +1,6 @@
 import LoginButton from './LoginButton';
 import React, { useCallback } from 'react';
 import { useInitialState } from '@hooks/useInitialState';
-import { regExpSpace } from '@constants/regExp';
 
 const Login = ({ onLogin }) => {
   const [form, setForm, resetForm] = useInitialState({
@@ -13,13 +12,10 @@ const Login = ({ onLogin }) => {
   // form 상태 입력
   const onInput = useCallback(
     (e) => {
-      // 입력한 값이 공백이 아닌 경우에만
-      if (!regExpSpace.test(e.target.value)) {
-        setForm((form) => ({
-          ...form,
-          [e.target.name]: e.target.value,
-        }));
-      }
+      setForm((form) => ({
+        ...form,
+        [e.target.name]: e.target.value,
+      }));
     },
     [setForm],
   );
