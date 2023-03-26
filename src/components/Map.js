@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 
-mapboxgl.accessToken =
-  'pk.eyJ1Ijoic2lpOTA1OSIsImEiOiJjbGV2YnpsOWwwMTg1M3FxdzFlYXQwdGVzIn0.A7tzU3g39ILq54rHm_YEtA';
+mapboxgl.accessToken = process.env.REACT_APP_MAP_API_TOKEN;
+const mapboxStyle = process.env.REACT_APP_MAPP_STYLE;
 
 const Map = () => {
   const mapContainer = useRef();
@@ -20,13 +20,13 @@ const Map = () => {
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/sii9059/clfob778n000k01pdl47p7tlb',
+      style: mapboxStyle,
       center: [lng, lat],
       zoom: zoom,
       // pitch: 45,
       // bearing: -17.6,
       antialias: false,
-      //interactive: false, //드래그 & 줌 둘다 막힘
+      interactive: false, //드래그 & 줌 둘다 막힘
       dragPan: false,
     });
 

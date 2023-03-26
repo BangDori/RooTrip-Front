@@ -70,6 +70,7 @@ const config = {
         REACT_APP_MAP_API_TOKEN: JSON.stringify(
           process.env.REACT_APP_MAP_API_TOKEN,
         ),
+        REACT_APP_MAPP_STYLE: JSON.stringify(process.env.REACT_APP_MAPP_STYLE),
       },
     }),
 
