@@ -1,11 +1,7 @@
 button {
   cursor: pointer;
 }
-.map-container {
-  position: fixed !important;
-  height: 100vh !important;
-  width: 100vw !important;
-}
+
 .pages {
   box-shadow: 10px 10px 5px #aaa;
   right: 15%;
@@ -18,6 +14,8 @@ button {
 
   display: flex;
   flex-direction: column;
+
+  z-index: 1;
 
   .LoginPage {
     width: 100%;
