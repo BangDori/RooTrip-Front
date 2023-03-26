@@ -4,7 +4,7 @@ import LoginContainer from './LoginContainer';
 import LoginSocial from './LoginSocial';
 import '@styles/login/login.scss';
 import Account from './Account';
-import Map from '../../components/Map';
+import Map from '@components/Map';
 
 const Index = () => {
   return (
