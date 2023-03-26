@@ -1,0 +1,79 @@
+.map-container {
+  position: fixed !important;
+  height: 100vh !important;
+  width: 100vw !important;
+
+  .mapboxgl-marker {
+    width: 40px;
+    height: 40px;
+  }
+
+  .mapboxgl-canvas {
+    cursor: initial;
+  }
+
+  .mapboxgl-marker > div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .mapboxgl-marker > div > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid white;
+    cursor: initial;
+  }
+
+  .showMarker {
+    top: -31px !important;
+    left: -8px !important;
+  }
+
+  .clickedImage {
+    border: 3px solid red !important;
+  }
+
+  .bounce {
+    animation: bounce 2s ease-in-out infinite;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-8px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .mapboxgl-marker > div > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: initial;
+  }
+
+  .mapboxgl-marker > div > span {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    padding: 3px;
+    background-color: red;
+  }
+
+  .mapboxgl-ctrl-bottom-left {
+    display: none !important;
+  }
+}
