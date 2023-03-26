@@ -70,7 +70,9 @@ const config = {
         REACT_APP_MAP_API_TOKEN: JSON.stringify(
           process.env.REACT_APP_MAP_API_TOKEN,
         ),
-        REACT_APP_MAPP_STYLE: JSON.stringify(process.env.REACT_APP_MAPP_STYLE),
+        REACT_APP_MAP_API_STYLE: JSON.stringify(
+          process.env.REACT_APP_MAP_API_STYLE,
+        ),
       },
     }),
 
@@ -131,6 +133,7 @@ const config = {
       '@constants': path.resolve(__dirname, 'src/constants'),
       '@containers': path.resolve(__dirname, 'src/containers'),
       '@hooks': path.resolve(__dirname, 'src/hooks'),
+      '@jsons': path.resolve(__dirname, 'src/jsons'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@services': path.resolve(__dirname, 'src/services'),
       '@store': path.resolve(__dirname, 'src/store'),
@@ -139,6 +142,7 @@ const config = {
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
+  devtool: 'source-map',
 };
 
 module.exports = () => {

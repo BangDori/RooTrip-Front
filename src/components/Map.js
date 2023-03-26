@@ -1,111 +1,57 @@
-import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
+import React, { useCallback, useEffect, useState } from 'react';
+import ReactMapGL from 'react-map-gl';
+import CustomMarker from './map/CustomMarker';
+import CustomSource from './map/CustomSource';
+import '@styles/components/Map.scss';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
-mapboxgl.accessToken = process.env.REACT_APP_MAP_API_TOKEN;
-const mapboxStyle = process.env.REACT_APP_MAPP_STYLE;
+const MAP_TOKEN = process.env.REACT_APP_MAP_API_TOKEN;
+const MAP_STYLE = process.env.REACT_APP_MAP_API_STYLE;
 
 const Map = () => {
-  const mapContainer = useRef();
-  const map = useRef();
-  const [lng, setLng] = useState(130);
-  const [lat, setLat] = useState(36.2);
-  const [zoom, setZoom] = useState(5.99);
-  const geojson = {
-    type: 'FeatureCollection',
-    features: [],
-  };
-
-  useEffect(() => {
-    if (map.current) return; // initialize map only once
-
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: mapboxStyle,
-      center: [lng, lat],
-      zoom: zoom,
-      // pitch: 45,
-      // bearing: -17.6,
-      antialias: false,
-      interactive: false, //드래그 & 줌 둘다 막힘
-      dragPan: false,
-    });
-
-    /*map.current.on('load', () => {
-      // Insert the layer beneath any symbol layer.
-      const layers = map.getStyle().layers;
-      const labelLayerId = layers.find(
-        (layer) => layer.type === 'symbol' && layer.layout['text-field'],
-      ).id;
-
-      // The 'building' layer in the Mapbox Streets
-      // vector tileset contains building height data
-      // from OpenStreetMap.
-      map.addLayer(
-        {
-          id: 'add-3d-buildings',
-          source: 'composite',
-          'source-layer': 'building',
-          filter: ['==', 'extrude', 'true'],
-          type: 'fill-extrusion',
-          minzoom: 8,
-          paint: {
-            'fill-extrusion-color': '#aaa',
-
-            // Use an 'interpolate' expression to
-            // add a smooth transition effect to
-            // the buildings as the user zooms in.
-            'fill-extrusion-height': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              15,
-              0,
-              15.05,
-              ['get', 'height'],
-            ],
-            'fill-extrusion-base': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              15,
-              0,
-              15.05,
-              ['get', 'min_height'],
-            ],
-            'fill-extrusion-opacity': 0.6,
-          },
-        },
-        labelLayerId,
-      );
-    });*/
-
-    /*for (const marker of geojson.features) {
-      // Create a DOM element for each marker.
-      const el = document.createElement('div');
-      const width = marker.properties.iconSize[0];
-      const height = marker.properties.iconSize[1];
-      el.className = 'marker';
-      el.style.backgroundImage = `url(https://placekitten.com/g/${width}/${height}/)`;
-      el.style.width = `${width}px`;
-      el.style.height = `${height}px`;
-      el.style.backgroundSize = '100%';
-
-      // Add markers to the map.
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .addTo(map.current);
-    }*/
+  const [viewport, setViewport] = useState({
+    latitude: 36.637,
+    longitude: 130.22,
+    zoom: 6.1,
   });
 
+  const onPrevent = useCallback((e) => {
+    e.preventDefault();
+  }, []);
+
   return (
-    <div>
-      <div
-        style={{ zIndex: '-1' }}
-        ref={mapContainer}
-        onClick={function (e) {}}
-        className='map-container'
-      ></div>
-    </div>
+    <>
+      <ReactMapGL
+        {...viewport}
+        mapboxAccessToken={MAP_TOKEN}
+        mapStyle={MAP_STYLE}
+        onMouseDown={onPrevent}
+      >
+        <CustomSource />
+
+        <CustomMarker
+          lng={126.606}
+          lat={33.344}
+          zoom={viewport.zoom}
+          src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg'
+        />
+
+        <CustomMarker
+          lng={128.572}
+          lat={36.1}
+          zoom={viewport.zoom}
+          clicked={true}
+          src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/4.jpg'
+        />
+
+        <CustomMarker
+          lng={128.579}
+          lat={37.232}
+          zoom={viewport.zoom}
+          src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/3-1.jpg'
+        />
+      </ReactMapGL>
+    </>
   );
 };
 
