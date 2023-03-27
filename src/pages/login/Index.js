@@ -4,7 +4,9 @@ import LoginContainer from './LoginContainer';
 import LoginSocial from './LoginSocial';
 import '@styles/login/login.scss';
 import Account from './Account';
-import Map from '@components/Map';
+import loadable from '@loadable/component';
+
+const Map = loadable(() => import('@components/Map'));
 
 const Index = () => {
   return (
