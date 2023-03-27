@@ -13,6 +13,7 @@ import {
   INVALID_NICKNAME_ERROR,
   INVALID_PASSWORD_ERROR,
   UNKNOWN_ERROR,
+  INVALID_EMAIL_ADDRESS_ERROR_MESSAGE,
 } from '@constants/error';
 
 // 데이터 이름
@@ -47,6 +48,8 @@ export async function validate(type, data) {
       if (!(await findOne(type, data))) {
         isValid = false;
         error = DUPLICATED_EMAIL_ERROR;
+      } else {
+        error = INVALID_EMAIL_ADDRESS_ERROR_MESSAGE;
       }
 
       break;

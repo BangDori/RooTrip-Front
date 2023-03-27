@@ -8,12 +8,14 @@ export const INVALID_PASSWORD_ERROR = '유효하지 않은 비밀번호입니다
 export const DUPLICATED_EMAIL_ERROR = '이미 존재하는 이메일입니다.';
 export const DUPLICATED_NICKNAME_ERROR = '이미 존재하는 닉네임입니다.';
 
-// 회원가입 - 이메일 미인증 에러
-export const EMAIL_VERIFICATION_NOT_COMPLETED_ERROR =
-  '이메일 인증이 완료되지 않았습니다';
-
 // 회원가입 및 로그인 - 비밀번호 에러
 export const PASSWORD_MISMATCH_ERROR = '비밀번호가 일치하지 않습니다.';
+
+// 이메일 인증 관련
+export const EMAIL_VERIFICATION_NOT_COMPLETED_ERROR =
+  '이메일 인증이 완료되지 않았습니다';
+export const INVALID_EMAIL_ADDRESS_ERROR_MESSAGE =
+  '존재하지 않는 이메일입니다.';
 
 // 통신 에러
 export const USER_LOGIN_FAILED_ERROR = '로그인 정보가 일치하지 않습니다. ';
