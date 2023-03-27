@@ -84,7 +84,8 @@
     border: 1px solid red;
   }
 
-  .mapboxgl-ctrl-bottom-left {
+  .mapboxgl-ctrl-bottom-left,
+  .mapboxgl-ctrl-bottom-right {
     display: none !important;
   }
 }
