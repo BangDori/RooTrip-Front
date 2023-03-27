@@ -34,7 +34,7 @@ const LoginMarker = () => {
       {Markers.map((marker) => {
         return (
           <Marker
-            id={marker.id}
+            key={marker.id}
             longitude={marker.lng}
             latitude={marker.lat}
             anchor='bottom'
