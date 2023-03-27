@@ -4,11 +4,14 @@ import CustomMarker from './map/CustomMarker';
 import CustomSource from './map/CustomSource';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import LoginMarker from './map/LoginMarker';
+import { useSelector } from 'react-redux';
 
 const MAP_TOKEN = process.env.REACT_APP_MAP_API_TOKEN;
 const MAP_STYLE = process.env.REACT_APP_MAP_API_STYLE;
 
 const Map = () => {
+  const { accessToken } = useSelector((state) => state.accessToken.accessToken);
   const [viewport, setViewport] = useState({
     latitude: 36.637,
     longitude: 130.22,
@@ -29,7 +32,9 @@ const Map = () => {
       >
         <CustomSource />
 
-        <CustomMarker
+        {!accessToken ? <LoginMarker /> : <CustomMarker />}
+
+        {/* <CustomMarker
           lng={126.606}
           lat={33.344}
           zoom={viewport.zoom}
@@ -49,7 +54,7 @@ const Map = () => {
           lat={37.232}
           zoom={viewport.zoom}
           src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/3-1.jpg'
-        />
+        /> */}
       </ReactMapGL>
     </>
   );
