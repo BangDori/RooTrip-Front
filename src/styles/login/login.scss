@@ -5,7 +5,7 @@ button {
 .pages {
   box-shadow: 10px 10px 5px #aaa;
   right: 15%;
-  top: 20%;
+  top: 28%;
   position: absolute;
   width: 300px;
   max-height: 475px;
@@ -16,6 +16,7 @@ button {
   flex-direction: column;
 
   z-index: 1;
+  transform: scale(1.3);
 
   .LoginPage {
     width: 100%;
@@ -50,8 +51,8 @@ button {
         border-radius: 5px;
         width: 260px;
         height: 35px;
-        font-size: 16px;
-        background-color: rgb(132, 216, 227);
+        font-size: 17px;
+        background-color: #2743a6;
         margin: 8px;
       }
     }

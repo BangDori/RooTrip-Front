@@ -35,6 +35,13 @@
     left: -8px !important;
   }
 
+  .loginMarker {
+    top: -210px !important;
+    left: 155px !important;
+
+    border: none !important;
+  }
+
   .clickedImage {
     border: 3px solid red !important;
   }
@@ -62,6 +69,10 @@
     top: 0;
     left: 0;
     cursor: initial;
+
+    polygon {
+      border-radius: 50%;
+    }
   }
 
   .mapboxgl-marker > div > span {
@@ -70,7 +81,7 @@
     left: 0;
 
     padding: 3px;
-    background-color: red;
+    border: 1px solid red;
   }
 
   .mapboxgl-ctrl-bottom-left {
