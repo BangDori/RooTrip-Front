@@ -6,7 +6,6 @@ import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const CustomMarker = loadable(() => import('./map/CustomMarker'));
-const CustomSource = loadable(() => import('./map/CustomSource'));
 const LoginMarker = loadable(() => import('./map/LoginMarker'));
 
 const MAP_TOKEN = process.env.REACT_APP_MAP_API_TOKEN;
@@ -32,6 +31,7 @@ const Map = () => {
 
   return (
     <div className='map-container'>
+      <div className='ocean-container' />
       <ReactMapGL
         {...viewport}
         width={800}
@@ -41,8 +41,6 @@ const Map = () => {
         maxBounds={maxBounds}
         onMouseDown={onPrevent}
       >
-        <CustomSource />
-
         {!accessToken ? (
           <LoginMarker />
         ) : (

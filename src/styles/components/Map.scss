@@ -3,6 +3,18 @@
   height: 100vh !important;
   width: 100vw !important;
 
+  .ocean-container {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #658dc6;
+  }
+
+  .mapboxgl-map {
+    z-index: 5;
+  }
+
   .mapboxgl-marker {
     width: 40px;
     height: 40px;
@@ -10,6 +22,8 @@
 
   .mapboxgl-canvas {
     cursor: initial;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .mapboxgl-marker > div {
