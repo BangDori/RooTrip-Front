@@ -1,6 +1,7 @@
 import React from 'react';
 import '@styles/home/Write.scss';
 import WriteFirst from './WriteFirst';
+import WriteChoose from './WriteChoose';
 const WriteBase = ({ setModal }) => {
   const ModalClose = () => {
     setModal(false);
@@ -12,7 +13,8 @@ const WriteBase = ({ setModal }) => {
         x
       </button>
       <div className='Content_box'>
-        <WriteFirst />
+        {/* <WriteFirst /> */}
+        <WriteChoose />
       </div>
     </div>
   );
