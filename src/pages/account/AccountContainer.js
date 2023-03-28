@@ -5,14 +5,13 @@ import AccountForm from './AccountForm';
 const AccountContainer = () => {
   const navigate = useNavigate();
 
-  const onMove = useCallback(
-    (email) => {
-      navigate('./change', { state: email });
-    },
-    [navigate],
-  );
+  const changePassword = useCallback(() => {
+    alert('임시 비밀번호를 전송하였습니다.');
 
-  return <AccountForm onMove={onMove} />;
+    navigate('/');
+  }, [navigate]);
+
+  return <AccountForm changePassword={changePassword} />;
 };
 
 export default AccountContainer;

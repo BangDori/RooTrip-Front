@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import RegisterEmailAuth from '@pages/register/registerForm/RegisterEmailAuth';
 import styled from 'styled-components';
+import { sendPassword } from '@services/user';
 
 const StyledAccountForm = styled.form`
   display: flex;
@@ -34,9 +35,9 @@ const StyledAccountForm = styled.form`
   }
 `;
 
-const AccountForm = ({ onMove }) => {
+const AccountForm = ({ changePassword }) => {
   const [email, setEmail] = useState('');
-  const [validation, setValidation] = useState(true);
+  const [validation, setValidation] = useState(false);
 
   const onInput = useCallback((e) => {
     setEmail(e.target.value);
@@ -48,10 +49,12 @@ const AccountForm = ({ onMove }) => {
 
       // 페이지 이동
       if (validation) {
-        onMove(email);
+        // 임시 비밀번호 전송
+        sendPassword(email);
+        changePassword();
       }
     },
-    [onMove, email, validation],
+    [changePassword, email, validation],
   );
 
   return (
