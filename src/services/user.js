@@ -12,6 +12,7 @@ import {
   USER_SOCIAL_LOGIN_FAILED_ERROR,
   USER_LOGOUT_FAILED_ERROR,
   TOKEN_REISSUE_ERROR,
+  EMAIL_SEND_FAILURE,
 } from '@constants/error';
 
 /**
@@ -143,7 +144,31 @@ export async function socialLogin(provider, code) {
 }
 
 /**
+ * auth 임시 비밀번호 발급 함수
+ * @param {*} email 이메일
+ * @returns
+ */
+export async function sendPassword(email) {
+  try {
+    const status = await axios
+      .post(`${MAIN_SERVER}/api/email/verify/resetpassword`, {
+        email,
+      })
+      .then((res) => res.data);
+
+    if (!status) {
+      throw new Error(EMAIL_SEND_FAILURE);
+    }
+
+    return status;
+  } catch (e) {
+    throw new Error(EMAIL_SEND_FAILURE);
+  }
+}
+
+/**
  * auth token 재발급 함수
+ * @returns accessToken, expire
  */
 export async function reIssue() {
   try {
