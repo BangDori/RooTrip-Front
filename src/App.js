@@ -10,7 +10,7 @@ const FindAccount = loadable(() => import('@pages/account/Index'));
 const Register = loadable(() => import('@pages/register/Index'));
 const SocialAuth = loadable(() => import('@components/SocialAuth'));
 const NotFound = loadable(() => import('@components/NotFound'));
-
+const Fallow = loadable(() => import('@pages/Fallow/Fallow'));
 const App = () => {
   const { accessToken, expireTime } = useSelector((state) => state.accessToken);
 
@@ -27,6 +27,7 @@ const App = () => {
       <Route path='/register' element={<Register />} />
       <Route path='/oauth/:provider/*' element={<SocialAuth />} />
       <Route path='/*' element={<NotFound />} />
+      <Route path='/fallow' element={<Fallow />} />
     </Routes>
   );
 };
