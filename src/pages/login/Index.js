@@ -11,14 +11,16 @@ const Map = loadable(() => import('@components/Map'));
 const Index = () => {
   return (
     <div className='map-container'>
-      <div className='pages'>
-        <div className='LoginPage'>
-          <LoginTitle />
-          <LoginContainer />
-          <LoginSocial />
-        </div>
-        <div className='AccountPage'>
-          <Account />
+      <div className='whole_page'>
+        <div className='pages'>
+          <div className='LoginPage'>
+            <LoginTitle />
+            <LoginContainer />
+            <LoginSocial />
+          </div>
+          <div className='AccountPage'>
+            <Account />
+          </div>
         </div>
       </div>
       <Map />

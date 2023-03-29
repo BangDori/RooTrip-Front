@@ -2,7 +2,10 @@
   position: fixed !important;
   height: 100vh !important;
   width: 100vw !important;
-
+  @media only screen and (min-width: 1224px) {
+  }
+  @media only screen and (min-width: 1824px) {
+  }
   .ocean-container {
     position: absolute;
     z-index: 1;
@@ -16,8 +19,8 @@
   }
 
   .mapboxgl-marker {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .mapboxgl-canvas {

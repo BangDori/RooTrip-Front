@@ -16,7 +16,7 @@ const Map = () => {
   const [viewport, setViewport] = useState({
     latitude: 36.637,
     longitude: 130.22,
-    zoom: 5.7,
+    zoom: 6,
   });
 
   const maxBounds = [
