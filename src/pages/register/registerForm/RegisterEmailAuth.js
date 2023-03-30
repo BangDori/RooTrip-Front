@@ -77,6 +77,7 @@ const RegisterEmailAuth = ({
   email,
   onInput,
   setValidation,
+  setVerifyNumber,
 }) => {
   // 타이머
   const { time, isActive, isCompleted, startTimer, resetTimer } = useTimer();
@@ -181,6 +182,7 @@ const RegisterEmailAuth = ({
           ...validation,
           email: true,
         }));
+        if (setVerifyNumber) setVerifyNumber(number);
         setIsSend(false);
         resetTimer();
 

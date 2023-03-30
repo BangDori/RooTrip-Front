@@ -38,6 +38,7 @@ const StyledAccountForm = styled.form`
 const AccountForm = ({ changePassword }) => {
   const [email, setEmail] = useState('');
   const [validation, setValidation] = useState(false);
+  const [verifyNumber, setVerifyNumber] = useState('');
 
   const onInput = useCallback((e) => {
     setEmail(e.target.value);
@@ -50,11 +51,11 @@ const AccountForm = ({ changePassword }) => {
       // 페이지 이동
       if (validation) {
         // 임시 비밀번호 전송
-        sendPassword(email);
+        sendPassword(email, verifyNumber);
         changePassword();
       }
     },
-    [changePassword, email, validation],
+    [changePassword, email, verifyNumber, validation],
   );
 
   return (
@@ -64,6 +65,7 @@ const AccountForm = ({ changePassword }) => {
         email={email}
         onInput={onInput}
         setValidation={setValidation}
+        setVerifyNumber={setVerifyNumber}
       />
       <button
         type='submit'

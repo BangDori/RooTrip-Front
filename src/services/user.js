@@ -145,14 +145,15 @@ export async function socialLogin(provider, code) {
 
 /**
  * auth 임시 비밀번호 발급 함수
- * @param {*} email 이메일
+ * @param {*} email 이메일, 인증 번호
  * @returns
  */
-export async function sendPassword(email) {
+export async function sendPassword(email, verifyNumber) {
   try {
     const status = await axios
-      .post(`${MAIN_SERVER}/api/email/verify/resetpassword`, {
+      .post(`${MAIN_SERVER}/api/email/resetpassword`, {
         email,
+        verifyNumber,
       })
       .then((res) => res.data);
 
