@@ -7,7 +7,7 @@ const CustomMarker = ({ lng, lat, zoom, src, clicked }) => {
   const [isShowMarkers, setIsShowMarkers] = useState(false);
 
   useEffect(() => {
-    if (zoom >= 5.7) {
+    if (zoom >= 4.7) {
       if (isShowMarkers) return;
 
       setIsShowMarkers(true);

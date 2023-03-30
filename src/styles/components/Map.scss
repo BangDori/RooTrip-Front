@@ -15,8 +15,18 @@
   }
 
   .mapboxgl-marker {
-    width: 2.5rem;
-    height: 2.5rem;
+    @media only screen and (min-width: 768px) {
+      width: 1.3rem;
+      height: 1.3rem;
+    }
+    @media only screen and (min-width: 1025px) {
+      width: 1.9rem;
+      height: 1.9rem;
+    }
+    @media only screen and (min-width: 1681px) {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
   }
 
   .mapboxgl-canvas {
@@ -49,8 +59,18 @@
   }
 
   .loginMarker {
-    top: -210px !important;
-    left: 155px !important;
+    @media only screen and (min-width: 768px) {
+      top: -132px !important;
+      left: 90px !important;
+    }
+    @media only screen and (min-width: 1025px) {
+      top: -179px !important;
+      left: 122px !important;
+    }
+    @media only screen and (min-width: 1681px) {
+      top: -210px !important;
+      left: 155px !important;
+    }
 
     border: none !important;
   }
