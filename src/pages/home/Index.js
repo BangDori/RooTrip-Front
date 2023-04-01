@@ -1,22 +1,21 @@
 import React from 'react';
-import HomeNav from './HomeNav';
-import Article from './Article';
+import HomeGnb from './HomeGnb';
+import HomeArticle from './HomeArticle';
 import '@styles/home/Write.scss';
-import WriteBase from './Wrtie/WriteBase';
-import { useDispatch } from 'react-redux';
-import { remove } from '@store/accessToken';
 import loadable from '@loadable/component';
+import HomeTitle from './HomeTitle';
 
 const Map = loadable(() => import('@components/Map2'));
 
-const Index = ({ modal, setModal }) => {
+const Index = () => {
   return (
     <>
+      <HomeTitle />
+
+      <HomeGnb />
+      <HomeArticle />
+
       <Map />
-      <div>
-        <HomeNav />
-        <Article />
-      </div>
     </>
   );
 };
