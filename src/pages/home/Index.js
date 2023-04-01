@@ -1,40 +1,21 @@
 import React from 'react';
-import { logout } from '@services/user';
-import Nav from './Nav';
-import Article from './Article';
+import HomeGnb from './HomeGnb';
+import HomeArticle from './HomeArticle';
 import '@styles/home/Write.scss';
-import WriteBase from './Wrtie/WriteBase';
-import { useDispatch } from 'react-redux';
-import { remove } from '@store/accessToken';
 import loadable from '@loadable/component';
+import HomeTitle from './HomeTitle';
 
-const Map = loadable(() => import('@components/Map'));
+const Map = loadable(() => import('@components/Map2'));
 
-const Index = ({ modal, setModal }) => {
-  const dispatch = useDispatch();
-
-  const onRemove = async () => {
-    try {
-      await logout();
-      dispatch(remove());
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+const Index = () => {
   return (
     <>
+      <HomeTitle />
+
+      <HomeGnb />
+      <HomeArticle />
+
       <Map />
-      <div>
-        <button
-          onClick={onRemove}
-          style={{ position: 'relative', zIndex: '101' }}
-        >
-          로그아웃
-        </button>
-        <Nav />
-        <Article />
-      </div>
     </>
   );
 };

@@ -3,7 +3,7 @@ import '@styles/home/article.scss';
 import Profile from '@assets/태훈이 프사.jpg';
 import Test_Photo from '@assets/힘찬이 먹방.jpg';
 
-const Article = ({ modal, setModal }) => {
+const HomeArticle = () => {
   return (
     <div>
       <article>
@@ -39,4 +39,4 @@ const Article = ({ modal, setModal }) => {
   );
 };
 
-export default Article;
+export default HomeArticle;
