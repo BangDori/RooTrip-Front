@@ -73,6 +73,16 @@ const config = {
         REACT_APP_MAP_API_STYLE: JSON.stringify(
           process.env.REACT_APP_MAP_API_STYLE,
         ),
+        REACT_APP_AWS_ACCESS_KEY: JSON.stringify(
+          process.env.REACT_APP_AWS_ACCESS_KEY,
+        ),
+        REACT_APP_AWS_SECRET_ACCESS_KEY: JSON.stringify(
+          process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+        ),
+        REACT_APP_AWS_REGION: JSON.stringify(process.env.REACT_APP_AWS_REGION),
+        REACT_APP_AWS_S3_BUCKET: JSON.stringify(
+          process.env.REACT_APP_AWS_S3_BUCKET,
+        ),
       },
     }),
 
