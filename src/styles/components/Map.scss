@@ -14,65 +14,32 @@
     z-index: 5;
   }
 
-  .mapboxgl-marker {
-    @media only screen and (min-width: 768px) {
-      width: 1.3rem;
-      height: 1.3rem;
-    }
-    @media only screen and (min-width: 1025px) {
-      width: 1.9rem;
-      height: 1.9rem;
-    }
-    @media only screen and (min-width: 1681px) {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
-  }
-
   .mapboxgl-canvas {
     cursor: initial;
     width: 100% !important;
     height: 100% !important;
   }
 
-  .mapboxgl-marker > div {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  .map-marker-image {
+    position: absolute;
+    top: -24px;
+    left: -5px;
+
+    width: 36px;
+    height: 36px;
   }
 
-  .mapboxgl-marker > div > img {
-    position: absolute;
-    top: 0;
-    left: 0;
+  .mapboxgl-marker {
+    top: -34px !important;
+    left: -11px !important;
+  }
 
+  .map-marker-image > img {
     width: 100%;
     height: 100%;
     border-radius: 50%;
     border: 3px solid white;
     cursor: initial;
-  }
-
-  .showMarker {
-    top: -31px !important;
-    left: -8px !important;
-  }
-
-  .loginMarker {
-    @media only screen and (min-width: 768px) {
-      top: -132px !important;
-      left: 90px !important;
-    }
-    @media only screen and (min-width: 1025px) {
-      top: -179px !important;
-      left: 122px !important;
-    }
-    @media only screen and (min-width: 1681px) {
-      top: -210px !important;
-      left: 155px !important;
-    }
-
-    border: none !important;
   }
 
   .clickedImage {
@@ -97,7 +64,7 @@
     }
   }
 
-  .mapboxgl-marker > div > svg {
+  .mapboxgl-marker > svg {
     position: absolute;
     top: 0;
     left: 0;
