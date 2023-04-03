@@ -5,7 +5,7 @@ import '@styles/home/Write.scss';
 import loadable from '@loadable/component';
 import HomeTitle from './HomeTitle';
 
-const Map = loadable(() => import('@components/Map2'));
+const Map = loadable(() => import('@components/Map'));
 
 const Index = () => {
   return (

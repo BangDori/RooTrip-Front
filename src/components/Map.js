@@ -4,12 +4,10 @@ import { useSelector } from 'react-redux';
 import loadable from '@loadable/component';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useGetImages } from '../hooks/useGetImages';
+import { useGetImages } from '@hooks/useGetImages';
+import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 
 const CustomMarker = loadable(() => import('./map/CustomMarker'));
-
-const MAP_TOKEN = process.env.REACT_APP_MAP_API_TOKEN;
-const MAP_STYLE = process.env.REACT_APP_MAP_API_STYLE;
 
 const Map = () => {
   const mapContainer = useRef();
@@ -27,8 +25,8 @@ const Map = () => {
 
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      accessToken: MAP_TOKEN,
-      style: MAP_STYLE,
+      accessToken: MAP_API_TOKEN,
+      style: MAP_API_STYLE,
       center: [viewport.lng, viewport.lat],
       zoom: viewport.zoom,
       minZoom: 5.5,
