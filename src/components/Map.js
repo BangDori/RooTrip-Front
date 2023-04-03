@@ -1,173 +1,61 @@
-import React, { useCallback, useState } from 'react';
-import ReactMapGL from 'react-map-gl';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { useSelector } from 'react-redux';
 import loadable from '@loadable/component';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useMediaQuery } from 'react-responsive';
+import { useGetImages } from '../hooks/useGetImages';
+
 const CustomMarker = loadable(() => import('./map/CustomMarker'));
-const LoginMarker = loadable(() => import('./map/LoginMarker'));
 
 const MAP_TOKEN = process.env.REACT_APP_MAP_API_TOKEN;
 const MAP_STYLE = process.env.REACT_APP_MAP_API_STYLE;
 
 const Map = () => {
-  const isBig_PC = useMediaQuery({ query: '(min-width:1681px)' });
-  const isSmall_PC = useMediaQuery({
-    query: '(min-width:1025px) and (max-width: 1680px)',
-  });
-  const isTablet = useMediaQuery({
-    query: '(min-width:768px) and (max-width: 1024px)',
-  });
-
+  const mapContainer = useRef();
+  const map = useRef();
   const { accessToken } = useSelector((state) => state.accessToken);
-
-  const [viewport_BP, setViewport_BP] = useState({
-    latitude: 36.637,
-    longitude: 130.22,
-    zoom: 6,
+  const [viewport, setViewport] = useState({
+    lat: 36.4395,
+    lng: 131.1,
+    zoom: 5.5,
   });
-  const [viewport_SP, setViewport_SP] = useState({
-    latitude: 36.637,
-    longitude: 130.22,
-    zoom: 5.8,
-  });
-  const [viewport_TL, setViewport_TL] = useState({
-    latitude: 36.637,
-    longitude: 130.22,
-    zoom: 6,
-  });
+  const imageData = useGetImages(accessToken ? true : false);
 
-  const maxBounds = [
-    [118.4, 31.9], // 좌측 하단
-    [142, 41.1], // 우측 상단
-  ];
+  useEffect(() => {
+    if (map.current) return; // initialize map only once
 
-  const onPrevent = useCallback((e) => {
-    console.log(e);
-    e.preventDefault();
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      accessToken: MAP_TOKEN,
+      style: MAP_STYLE,
+      center: [viewport.lng, viewport.lat],
+      zoom: viewport.zoom,
+      minZoom: 5.5,
+      maxZoom: 10,
+      antialias: false,
+      interactive: !accessToken ? false : true, //드래그 & 줌 둘다 막힘
+    });
+  }, [accessToken, viewport]);
+
+  const onMarkerClick = useCallback(() => {
+    console.log('click');
   }, []);
 
   return (
     <div className='map-container'>
       <div className='ocean-container' />
-      {isBig_PC && (
-        <ReactMapGL
-          {...viewport_BP}
-          mapboxAccessToken={MAP_TOKEN}
-          width='100vw'
-          height='100vh'
-          mapStyle={MAP_STYLE}
-          maxBounds={maxBounds}
-          onMouseDown={onPrevent}
-        >
-          {!accessToken ? (
-            <LoginMarker />
-          ) : (
-            <>
-              <CustomMarker
-                lng={126.606}
-                lat={33.344}
-                zoom={viewport_BP.zoom}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg'
-              />
-
-              <CustomMarker
-                lng={128.572}
-                lat={36.1}
-                zoom={viewport_BP.zoom}
-                clicked={true}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/4.jpg'
-              />
-
-              <CustomMarker
-                lng={128.579}
-                lat={37.232}
-                zoom={viewport_BP.zoom}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/3-1.jpg'
-              />
-            </>
-          )}
-        </ReactMapGL>
-      )}
-      {isSmall_PC && (
-        <ReactMapGL
-          {...viewport_BP}
-          mapboxAccessToken={MAP_TOKEN}
-          mapStyle={MAP_STYLE}
-          width={800}
-          height={600}
-          maxBounds={maxBounds}
-          onMouseDown={onPrevent}
-        >
-          {!accessToken ? (
-            <LoginMarker />
-          ) : (
-            <>
-              <CustomMarker
-                lng={126.606}
-                lat={33.344}
-                zoom={viewport_SP.zoom}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg'
-              />
-
-              <CustomMarker
-                lng={128.572}
-                lat={36.1}
-                zoom={viewport_SP.zoom}
-                clicked={true}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/4.jpg'
-              />
-
-              <CustomMarker
-                lng={128.579}
-                lat={37.232}
-                zoom={viewport_SP.zoom}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/3-1.jpg'
-              />
-            </>
-          )}
-        </ReactMapGL>
-      )}
-      {isTablet && (
-        <ReactMapGL
-          {...viewport_TL}
-          mapboxAccessToken={MAP_TOKEN}
-          width={500}
-          height={300}
-          mapStyle={MAP_STYLE}
-          maxBounds={maxBounds}
-          onMouseDown={onPrevent}
-        >
-          {!accessToken ? (
-            <LoginMarker />
-          ) : (
-            <>
-              <CustomMarker
-                lng={126.606}
-                lat={33.344}
-                zoom={viewport_TL.zoom}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/8.jpg'
-              />
-
-              <CustomMarker
-                lng={128.572}
-                lat={36.1}
-                zoom={viewport_TL.zoom}
-                clicked={true}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/4.jpg'
-              />
-
-              <CustomMarker
-                lng={128.579}
-                lat={37.232}
-                zoom={viewport_TL.zoom}
-                src='https://news.samsungdisplay.com/wp-content/uploads/2018/08/3-1.jpg'
-              />
-            </>
-          )}
-        </ReactMapGL>
-      )}
+      <div ref={mapContainer} className='map-container'>
+        {imageData.map((data, index) => (
+          <CustomMarker
+            key={index}
+            map={map.current}
+            src={data.src}
+            metadata={data.metadata}
+            onMarkerClick={accessToken ? onMarkerClick : false}
+          />
+        ))}
+      </div>
     </div>
   );
 };

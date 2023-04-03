@@ -1,46 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Marker } from 'react-map-gl';
+import React, { useEffect, useRef } from 'react';
+import mapboxgl from 'mapbox-gl';
 import InvertedTriangle from './InvertedTriangle';
-import cn from 'classnames';
 
-const CustomMarker = ({ lng, lat, zoom, src, clicked }) => {
-  const [isShowMarkers, setIsShowMarkers] = useState(false);
+const CustomMarker = ({ map, src, metadata, onMarkerClick }) => {
+  const markerRef = useRef(null);
 
   useEffect(() => {
-    if (zoom >= 4.7) {
-      if (isShowMarkers) return;
+    if (markerRef.current) {
+      const marker = new mapboxgl.Marker(markerRef.current)
+        .setLngLat(metadata)
+        .addTo(map);
 
-      setIsShowMarkers(true);
+      // 마커 클릭 핸들러 등록
+      if (onMarkerClick)
+        markerRef.current.addEventListener('click', onMarkerClick);
 
-      const images = document.querySelectorAll('.targetImage');
-
-      images.forEach((image) => {
-        image.classList.add('showMarker');
-      });
-    } else {
-      if (!isShowMarkers) return;
-
-      setIsShowMarkers(false);
-
-      const images = document.querySelectorAll('.targetImage');
-
-      images.forEach((image) => {
-        image.classList.remove('showMarker');
-      });
+      // 컴포넌트 언마운트 시 마커 제거
+      return () => marker.remove();
     }
-  }, [isShowMarkers, zoom]);
+  }, [map, metadata, onMarkerClick]);
 
   return (
-    <Marker longitude={lng} latitude={lat} anchor='bottom'>
-      <div className={clicked ? 'bounce' : null}>
-        <InvertedTriangle isShow={isShowMarkers} />
+    <div ref={markerRef}>
+      <InvertedTriangle />
+      <div className='map-marker-image'>
         <img
-          className={cn('targetImage', 'showMarker', { clickedImage: clicked })}
           src={src}
-          alt='1'
+          alt='marker'
+          style={{ cursor: onMarkerClick ? 'pointer' : 'initial' }}
         />
       </div>
-    </Marker>
+    </div>
   );
 };
 
