@@ -21,10 +21,29 @@ const config = {
 
   // 압축된 파일 위치
   output: {
-    path: path.resolve(__dirname, 'build'),
+    // 출력 파일 이름 설정
+    filename: '[name].[contenthash].js',
+
+    // 출력 경로
+    path: path.resolve(__dirname, 'dist'),
 
     // 모든 요청에 대해서 루트 경로(/)를 기준으로 파일을 찾도록 수정
     publicPath: '/',
+
+    // 이전 빌드 결과물 삭제
+    clean: true,
+  },
+  optimization: {
+   runtimeChunk: 'single',
+   splitChunks: {
+     cacheGroups: {
+       vendor: {
+         test: /[\\/]node_modules[\\/]/,
+         name: 'vendors',
+         chunks: 'all',
+       },
+     },
+   },
   },
   devServer: {
     // dev server 구동 시 자동으로 chrome browser 오픈
@@ -43,6 +62,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       favicon: './public/favicon.ico',
+      title: 'Caching',
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
