@@ -12,18 +12,8 @@ const CustomMarker = loadable(() => import('./map/CustomMarker'));
 const Map = () => {
   const mapContainer = useRef();
   const map = useRef();
+  const hoveredStateId = useRef(null);
   const { accessToken } = useSelector((state) => state.accessToken);
-  const [viewport, setViewport] = useState({
-    lat: 36.4395,
-    lng: 131.1,
-    zoom: 5.5,
-  });
-  const [bounds, setBounds] = useState({
-    s: 30.4395,
-    n: 42.4395,
-    e: 137.1,
-    w: 122.1,
-});
   const imageData = useGetImages(accessToken ? true : false);
 
   useEffect(() => {
@@ -33,19 +23,99 @@ const Map = () => {
       container: mapContainer.current,
       accessToken: MAP_API_TOKEN,
       style: MAP_API_STYLE,
-      center: [viewport.lng, viewport.lat],
-      zoom: viewport.zoom,
+      center: [131.1, 36.4395],
+      zoom: 5.5,
       minZoom: 5.5,
       maxZoom: 10,
       antialias: false,
-      interactive: !accessToken ? false : true, //드래그 & 줌 둘다 막힘
-      //maxBounds: [[bounds.w, bounds.s],[bounds.e, bounds.n]],
+      doubleClickZoom: false,
+      dragRotate: false,
+      // interactive: !accessToken ? false : true, //드래그 & 줌 둘다 막힘
     });
-  }, [accessToken, viewport]);
 
-  const onMarkerClick = useCallback(() => {
-    console.log('click');
+    if (accessToken) {
+      map.current.on('load', onLoad);
+    } else {
+      map.current.setPaintProperty('korea-fill', 'fill-opacity', 1);
+    }
+
+    return () => {
+      map.current.off('load', onLoad);
+      map.current.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const onMapClick = useCallback(
+    (e) => {
+      const zoom = map.current.getZoom();
+      const { lngLat } = e;
+
+      map.current.flyTo({
+        essential: true,
+        center: lngLat,
+        zoom: zoom + 1,
+        speed: 1.25,
+        easing: (t) => t,
+      });
+    },
+    [map],
+  );
+
+  const onMapMove = useCallback((e) => {
+    map.current.getCanvas().style.cursor = 'pointer';
+
+    const { sourceLayer, id } = e.features[0];
+    console.log(sourceLayer);
+    map.current.setFeatureState(
+      {
+        source: 'composite',
+        sourceLayer: sourceLayer,
+        id: id,
+      },
+      { hover: true },
+    );
+
+    if (hoveredStateId.current !== id) {
+      map.current.setFeatureState(
+        {
+          source: 'composite',
+          sourceLayer: sourceLayer,
+          id: hoveredStateId.current,
+        },
+        { hover: false },
+      );
+    }
+
+    hoveredStateId.current = id;
+  }, []);
+
+  const onMapLeave = useCallback(() => {
+    map.current.getCanvas().style.cursor = 'initial';
+
+    if (hoveredStateId.current !== null) {
+      map.current.setFeatureState(
+        {
+          source: 'composite',
+          sourceLayer: 'Korea_Level1-72rlhs',
+          id: hoveredStateId.current,
+        },
+        { hover: false },
+      );
+    }
+  }, []);
+
+  const onLoad = useCallback(() => {
+    map.current.on('click', 'korea-fill', onMapClick);
+    map.current.on('mousemove', 'korea-fill', onMapMove);
+    map.current.on('mouseleave', 'korea-fill', onMapLeave);
+
+    return () => {
+      map.current.off('mousemove', 'korea-fill', onMapMove);
+      map.current.off('mouseleave', 'korea-fill', onMapLeave);
+      map.current.off('click', 'korea-fill', onMapClick);
+    };
+  }, [onMapClick, onMapMove, onMapLeave]);
 
   return (
     <div className='map-container'>
@@ -57,7 +127,7 @@ const Map = () => {
             map={map.current}
             src={data.src}
             metadata={data.metadata}
-            onMarkerClick={accessToken ? onMarkerClick : false}
+            accessToken={accessToken}
           />
         ))}
       </div>
