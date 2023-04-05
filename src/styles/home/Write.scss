@@ -1,7 +1,7 @@
 .Content_box {
   width: 500px;
-  height: 500px;
-  max-height: 500px;
+  height: 520px;
+  max-height: 700px;
   max-width: 500px;
   position: absolute;
   z-index: 999;
@@ -15,28 +15,41 @@
 
 .close_modal_btn {
   cursor: pointer;
-  color: black;
+  color: white;
   position: absolute;
   z-index: 999;
-  top: 12px;
-  right: 20px;
+  top: 30px;
+  right: 70px;
   font-size: 35px;
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
   font-weight: bold;
 }
+
 .Modal_head {
   text-align: center;
   font-size: 20px;
   border-bottom: 1px solid #ccc;
-  padding: 20px 0 20px 0;
+  padding: 10px 0 10px 0;
   font-weight: bold;
 }
+
+.MoveModal {
+  cursor: pointer;
+  border: 0px;
+  width: 60px;
+  background: white;
+  font-size: 17px;
+  color: rgb(72, 72, 196);
+  font-weight: bold;
+}
+
 .First_modal {
   .Modal_First_content {
     text-align: center;
     .Photo_logo {
       text-align: center;
+      height: 34vh;
       img {
         margin: 75px 0 40px 0;
         width: 175px;
@@ -44,6 +57,7 @@
     }
     .ChoosePhoto {
       button {
+        cursor: pointer;
         color: white;
         background-color: rgb(72, 72, 196);
         border: 1px solid rgb(72, 72, 196);
@@ -56,52 +70,90 @@
     }
   }
 }
-.Second_modal {
-  .Modal_head {
-    .MoveModal {
-      border: 0px;
-      width: 60px;
-      background: white;
-      font-size: 17px;
-      color: rgb(72, 72, 196);
-      font-weight: bold;
-    }
-  }
 
+.Second_modal {
   .Modal_content {
     border-bottom: 1px solid #ccc;
-    height: 52vh;
-
+    height: 45vh;
+    .Show_repre {
+      width: 100%;
+      display: flex;
+      height: 9vh;
+      border-bottom: 1px solid #ccc;
+      justify-content: center;
+      align-items: center;
+    }
     .ShowImg_Big {
       padding: 15px;
       display: flex;
+      overflow: hidden;
       justify-content: center;
       align-items: center;
       border-bottom: 1px solid #ccc;
       img {
-        width: 290px;
+        width: 240px;
         border-radius: 15px;
         padding: 0 7px 0 7px;
         object-fit: cover;
+      }
+      button {
+        cursor: pointer;
+        position: absolute;
+        top: 17.3%;
+        font-weight: bold;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        right: 22%;
+        border: 0;
+        // span{
+        //   top: -11px;
+        //   right: 9px;
+        //   position: absolute;
+        // }
+      }
+      .Cancle_btn {
+        background-color: rgb(237 65 65);
+        font-size: 41px;
+        color: white;
+      }
+      .Nchoose_order {
+        background-color: #ccc;
+        border: #ccc;
+      }
+      .Nchoose_order:hover {
+        background-color: #aaa;
+      }
+      .Choose_order {
+        background-color: #2743a6;
+        color: white;
+        font-size: 15px;
       }
     }
     .ShowImg_Small {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 11vh;
+      height: 9vh;
       img {
-        width: 40px;
+        width: 45px;
         height: 60px;
-        padding: 0 9px 0 9px;
+        margin-right: 13px;
         object-fit: cover;
       }
       button {
-        width: 40px;
+        width: 46px;
         height: 63px;
         background: white;
         font-size: 40px;
         border: 1px solid #232323;
+        cursor: pointer;
+        background-color: #ddd;
+        color: #6d6d6d;
+        border: 1px solid #ddd;
+      }
+      button:hover {
+        background-color: #ccc;
       }
     }
   }
@@ -110,8 +162,123 @@
     text-align: center;
     font-size: 19px;
     display: flex;
-    height: 8vh;
+    height: 5.3vh;
     align-items: center;
     justify-content: center;
+  }
+  .footer_text {
+    font-weight: bold;
+  }
+}
+
+.Order_repre {
+  width: 45px;
+  height: 60px;
+  background: #ddd;
+  border: 1px solid #ccc;
+  margin: 0 11px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #aaa;
+}
+
+.Last_modal {
+  .Modal_content {
+    .Show_repre {
+      width: 100%;
+      display: flex;
+      height: 9vh;
+      border-bottom: 1px solid #ccc;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .Write_content {
+      input {
+        background-color: #ddd;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 93%;
+        font-size: 15px;
+      }
+      textarea {
+        background-color: #ddd;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 93%;
+        font-size: 15px;
+      }
+
+      .Write_Title {
+        margin-top: 10px;
+        height: 5.5vh;
+        display: flex;
+        justify-content: center;
+        input {
+          padding-left: 10px;
+        }
+        input:focus {
+          outline: none;
+          border: 1px solid #aaa;
+        }
+      }
+
+      .Write_Main_content {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+        textarea {
+          height: 215px;
+          padding: 20px 0 0 10px;
+        }
+        textarea:focus {
+          border: 1px solid #aaa;
+          outline: none;
+        }
+      }
+    }
+  }
+
+  .footer {
+    border-top: 1px solid #ccc;
+    height: 5.6vh;
+    display: flex;
+    align-items: center;
+    .With_who {
+      padding-left: 20px;
+      span {
+        font-size: 20px;
+      }
+      input {
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid blue;
+        margin-left: 10px;
+        padding-left: 5px;
+        padding-bottom: 5px;
+        width: 160px;
+      }
+      input:focus {
+        outline: none;
+      }
+    }
+    button {
+      cursor: pointer;
+      width: 70px;
+      height: 30px;
+      border-radius: 5px;
+      border: 0;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    .choose_btn {
+      background-color: #2743a6;
+      color: white;
+    }
   }
 }

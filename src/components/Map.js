@@ -18,6 +18,12 @@ const Map = () => {
     lng: 131.1,
     zoom: 5.5,
   });
+  const [bounds, setBounds] = useState({
+    s: 30.4395,
+    n: 42.4395,
+    e: 137.1,
+    w: 122.1,
+});
   const imageData = useGetImages(accessToken ? true : false);
 
   useEffect(() => {
@@ -33,6 +39,7 @@ const Map = () => {
       maxZoom: 10,
       antialias: false,
       interactive: !accessToken ? false : true, //드래그 & 줌 둘다 막힘
+      //maxBounds: [[bounds.w, bounds.s],[bounds.e, bounds.n]],
     });
   }, [accessToken, viewport]);
 
