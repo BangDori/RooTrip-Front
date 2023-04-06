@@ -1,9 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import InvertedTriangle from './InvertedTriangle';
 
-const CustomMarker = ({ map, src, metadata, onMarkerClick }) => {
+const CustomMarker = ({ map, src, metadata, accessToken }) => {
   const markerRef = useRef(null);
+
+  /**
+   * Marker click event
+   * Marker active & load Article
+   */
+  const onMarkerClick = useCallback((e) => {
+    // console.log(metadata);
+  }, []);
 
   useEffect(() => {
     if (markerRef.current) {
@@ -12,13 +20,13 @@ const CustomMarker = ({ map, src, metadata, onMarkerClick }) => {
         .addTo(map);
 
       // 마커 클릭 핸들러 등록
-      if (onMarkerClick)
+      if (accessToken)
         markerRef.current.addEventListener('click', onMarkerClick);
 
       // 컴포넌트 언마운트 시 마커 제거
       return () => marker.remove();
     }
-  }, [map, metadata, onMarkerClick]);
+  }, [map, metadata, accessToken, onMarkerClick]);
 
   return (
     <div ref={markerRef}>
@@ -27,7 +35,7 @@ const CustomMarker = ({ map, src, metadata, onMarkerClick }) => {
         <img
           src={src}
           alt='marker'
-          style={{ cursor: onMarkerClick ? 'pointer' : 'initial' }}
+          style={{ cursor: accessToken ? 'pointer' : 'initial' }}
         />
       </div>
     </div>
