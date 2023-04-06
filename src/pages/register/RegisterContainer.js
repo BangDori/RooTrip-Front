@@ -12,7 +12,7 @@ const RegisterContainer = () => {
         await register(registerForm);
         navigate('/');
       } catch (e) {
-        console.log(e.message);
+        alert(e.message);
       }
     },
     [navigate],

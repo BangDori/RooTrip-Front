@@ -49,10 +49,14 @@ const AccountForm = ({ changePassword }) => {
       e.preventDefault();
 
       // 페이지 이동
-      if (validation) {
+      if (!validation) return;
+
+      try {
         // 임시 비밀번호 전송
         sendPassword(email, verifyNumber);
         changePassword();
+      } catch (e) {
+        alert(e.message);
       }
     },
     [changePassword, email, verifyNumber, validation],
