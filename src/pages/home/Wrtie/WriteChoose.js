@@ -1,8 +1,11 @@
 import React from 'react';
 import Modal_example from '@assets/Modal_example.png';
 import { useState } from 'react';
-
+import NotChoose from '../../../components/Write/NotChoose';
+import Choose from '../../../components/Write/Choose';
 const WriteChoose = ({ pagenum, setPagenum }) => {
+  const [choose, setChoose] = useState(0);
+
   return (
     <div className='Second_modal'>
       <div className='Modal_head'>
@@ -23,25 +26,34 @@ const WriteChoose = ({ pagenum, setPagenum }) => {
         </button>
       </div>
       <div className='Modal_content'>
-        <div className='Show_repre'>
-          <div style={{ display: 'flex' }}>
-            <div className='Order_repre'>1</div>
-            <div className='Order_repre'>2</div>
-            <div className='Order_repre'>3</div>
-            <div className='Order_repre'>4</div>
-            <div className='Order_repre'>5</div>
-            <div className='Order_repre'>6</div>
-            <div className='Order_repre' style={{ margin: 0 }}>
-              7
-            </div>
-          </div>
-        </div>
+        {/* 사진이 한장이라도 선택되면 Choose 컴포넌트 */}
+        {choose === 0 ? <NotChoose /> : <Choose />}
         <div className='ShowImg_Big'>
-          <img src={Modal_example} alt='' />
-          <img src={Modal_example} alt='' />
-          <img src={Modal_example} alt='' />
-          <img src={Modal_example} alt='' />
-          <img src={Modal_example} alt='' />
+          <img
+            src={Modal_example}
+            onClick={() => setChoose(choose + 1)}
+            alt=''
+          />
+          <img
+            src={Modal_example}
+            onClick={() => setChoose(choose + 1)}
+            alt=''
+          />
+          <img
+            src={Modal_example}
+            onClick={() => setChoose(choose + 1)}
+            alt=''
+          />
+          <img
+            src={Modal_example}
+            onClick={() => setChoose(choose + 1)}
+            alt=''
+          />
+          <img
+            src={Modal_example}
+            onClick={() => setChoose(choose + 1)}
+            alt=''
+          />
           {/* <button className='Cancle_btn' type='button'><span>-</span></button> */}
         </div>
         <div className='ShowImg_Small'>
