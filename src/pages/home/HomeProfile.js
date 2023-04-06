@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Profile from '@assets/태훈이 프사.jpg';
 import styled from 'styled-components';
-import ProfileMenu from '../profile/ProfileMenu';
+import ProfileMenu from './profile/ProfileMenu';
 
 const StyledProfile = styled.div`
   position: absolute;
