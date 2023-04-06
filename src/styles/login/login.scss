@@ -32,7 +32,7 @@ button {
     right: 215px;
     max-height: 450px;
   }
-  @media only screen and (min-width: 1601px) and (max-width: 1920px) {
+  @media only screen and (min-width: 1601px) {
     right: 288px;
     width: 300px;
     max-height: 500px;
@@ -49,7 +49,7 @@ button {
       @media only screen and (min-width: 1025px) and (max-width: 1600px) {
         width: 70px;
       }
-      @media only screen and (min-width: 1601px) and (max-width: 1920px) {
+      @media only screen and (min-width: 1601px) {
         width: 85px;
       }
     }
@@ -60,7 +60,7 @@ button {
         @media only screen and (min-width: 780px) and (max-width: 1024px) {
           font-size: 0.5rem;
         }
-        @media only screen and (min-width: 1025px) and (max-width: 1920px) {
+        @media only screen and (min-width: 1025px) {
           font-size: 0.8rem;
         }
       }
@@ -79,7 +79,7 @@ button {
       color: rgb(249, 63, 63);
       font-weight: bold;
       margin-bottom: 12px;
-      @media only screen and (min-width: 1601px) and (max-width: 1920px) {
+      @media only screen and (min-width: 1601px) {
         font-size: 16px;
       }
       @media only screen and (min-width: 1025px) and (max-width: 1600px) {
