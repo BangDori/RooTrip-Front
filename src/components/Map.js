@@ -36,7 +36,7 @@ const Map = () => {
     if (accessToken) {
       map.current.on('load', onLoad);
     } else {
-      map.current.setPaintProperty('korea-fill', 'fill-opacity', 1);
+      map.current.on('load', offLoad);
     }
 
     return () => {
@@ -116,6 +116,10 @@ const Map = () => {
       map.current.off('click', 'korea-fill', onMapClick);
     };
   }, [onMapClick, onMapMove, onMapLeave]);
+
+  const offLoad = useCallback(() => {
+    map.current.setPaintProperty('korea-fill', 'fill-opacity', 1);
+  }, []);
 
   return (
     <div className='map-container'>
