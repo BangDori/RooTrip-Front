@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Profile from '@assets/태훈이 프사.jpg';
 import styled from 'styled-components';
 import ProfileMenu from '../profile/ProfileMenu';
@@ -27,27 +27,13 @@ s`;
 
 const HomeProfile = () => {
   const [isActive, setIsActive] = useState(false);
-  const profileRef = useRef(null);
 
   const handleClick = useCallback(() => {
     setIsActive((isActive) => !isActive);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
-        setIsActive(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [profileRef]);
-
   return (
-    <StyledProfile isActive={isActive} ref={profileRef}>
+    <StyledProfile isActive={isActive}>
       <img src={Profile} alt='profile_image' onClick={handleClick} />
       <div className='profile-menu'>{isActive && <ProfileMenu />}</div>
     </StyledProfile>

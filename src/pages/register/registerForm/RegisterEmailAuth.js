@@ -123,8 +123,6 @@ const RegisterEmailAuth = ({
         alert(error);
         return;
       }
-
-      // console.log(status);
     }
 
     // 에러가 발생하지 않았다면,
@@ -193,7 +191,7 @@ const RegisterEmailAuth = ({
     } catch (e) {
       console.log(e);
     }
-  }, [email, setValidation, number, isCompleted, resetTimer]);
+  }, [email, setValidation, setVerifyNumber, number, isCompleted, resetTimer]);
 
   return (
     <StyledRegisterEmailAuth>
