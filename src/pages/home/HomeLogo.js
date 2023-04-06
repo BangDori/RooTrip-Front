@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from '@assets/Logo.png';
 import styled from 'styled-components';
 
-const StyledTitle = styled.div`
+const StyledLogo = styled.div`
   position: absolute;
   top: 15px;
   left: 15px;
@@ -16,12 +16,12 @@ const StyledTitle = styled.div`
   }
 `;
 
-const HomeTitle = () => {
+const HomeLogo = () => {
   return (
-    <StyledTitle className='Title'>
+    <StyledLogo className='Title'>
       <img src={Logo} alt='루트트립 로고' className='Logo' />
-    </StyledTitle>
+    </StyledLogo>
   );
 };
 
-export default HomeTitle;
+export default HomeLogo;
