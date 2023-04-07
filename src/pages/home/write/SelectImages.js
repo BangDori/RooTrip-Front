@@ -1,9 +1,10 @@
 import React from 'react';
 import Modal_example from '@assets/Modal_example.png';
 import { useState } from 'react';
-import NotChoose from '../../../components/Write/NotChoose';
-import Choose from '../../../components/Write/Choose';
-const WriteChoose = ({ pagenum, setPagenum }) => {
+import NotChoose from '@components/Write/NotChoose';
+import Choose from '@components/Write/Choose';
+
+const SelectImages = ({ photos, setPhotos, onPrevPage, onNextPage }) => {
   const [choose, setChoose] = useState(0);
 
   return (
@@ -12,7 +13,7 @@ const WriteChoose = ({ pagenum, setPagenum }) => {
         <button
           type='button'
           className='MoveModal F'
-          onClick={() => setPagenum(0)}
+          onClick={() => onPrevPage()}
         >
           이전
         </button>
@@ -20,7 +21,7 @@ const WriteChoose = ({ pagenum, setPagenum }) => {
         <button
           type='button'
           className='MoveModal Co'
-          onClick={() => setPagenum(2)}
+          onClick={() => onNextPage()}
         >
           다음
         </button>
@@ -74,4 +75,4 @@ const WriteChoose = ({ pagenum, setPagenum }) => {
   );
 };
 
-export default WriteChoose;
+export default SelectImages;
