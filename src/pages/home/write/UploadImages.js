@@ -41,6 +41,11 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
 
   const handleUploadPhotos = useCallback(
     async (e) => {
+      if (e.length > 10) {
+        alert('업로드 가능한 파일의 갯수는 10개입니다.');
+        return;
+      }
+
       const promises = [];
       const newPhotos = [];
 
@@ -69,7 +74,9 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: 'image/*',
+    accept: {
+      'image/*': ['.jpeg', '.png', '.gif'],
+    },
     multiple: true,
     onDrop: handleUploadPhotos,
   });
@@ -83,20 +90,12 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
         <div className='Photo_logo'>
           <img src={camera} alt='카메라 사진' />
         </div>
-        <div className='ChoosePhoto'>
-          <div
-            className={cn('upload-section', { isDragActive })}
-            {...getRootProps()}
-          >
-            <input {...getInputProps()} />
-            {isDragActive ? (
-              <p>사진을 올려주세요.</p>
-            ) : (
-              <button type='button' className='file-upload_button'>
-                사진을 선택하거나 올려주세요.
-              </button>
-            )}
-          </div>
+        <div
+          className={cn('upload-section', { isDragActive })}
+          {...getRootProps()}
+        >
+          <input {...getInputProps()} />
+          <p>이곳을 클릭하거나 사진을 올려주세요.</p>
         </div>
       </div>
     </div>
