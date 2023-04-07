@@ -1,17 +1,16 @@
 .Main_content {
-  width: 550px;
-  height: 700px;
+  width: 500px;
+  max-height: 700px;
   border: 1px solid #ccc;
   border-radius: 20px;
   position: absolute;
   top: 80px;
-  right: 250px;
-  box-shadow: 2px 2px 10px 1px #eee;
+  right: 390px; //20.3%
   background: white;
   z-index: 101;
 
   .article_head {
-    height: 6%;
+    height: 30px;
     display: flex;
     border-bottom: 1px solid #ccc;
     align-items: center;
@@ -22,19 +21,19 @@
     }
   }
   .Content {
-    height: 43%;
+    max-height: 285px;
     .Con_pro {
     }
     .Photo {
       img {
         width: 100%;
-        max-height: 300px;
+        max-height: 285px;
         object-fit: cover;
       }
     }
   }
   .addr {
-    height: 7%;
+    height: 40px;
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: center;
@@ -44,9 +43,9 @@
     }
   }
   .comment_section {
-    height: 43.7%;
+    height: 305px;
     .comment_container {
-      height: 85%;
+      height: 260px;
       text-align: center;
     }
     .comment_box {
@@ -65,10 +64,14 @@
       input {
         background: rgb(224, 224, 224);
         border-radius: 15px;
-        width: 350px;
-        height: 25px;
+        width: 400px;
+        height: 33px;
         border: 1px solid #ccc;
         padding-left: 15px;
+      }
+      input:focus {
+        outline: none;
+        border: 1px solid #aaa;
       }
     }
   }

@@ -21,7 +21,7 @@ const HomeArticle = () => {
             <span>경상북도 경산시 대학로 280 or (영남대 정문)</span>
           </div>
           <div className='comment_section'>
-            <div className='comment_container'>댓글</div>
+            <div className='comment_container'></div>
             <div className='comment_box'>
               <img src={Profile} alt='프로필 사진' />
               <input
