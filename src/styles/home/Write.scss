@@ -56,16 +56,30 @@
       }
     }
     .ChoosePhoto {
-      button {
-        cursor: pointer;
-        color: white;
-        background-color: rgb(72, 72, 196);
-        border: 1px solid rgb(72, 72, 196);
-        font-size: 20px;
-        width: 300px;
-        height: 50px;
-        box-shadow: 5px 5px 3px 1px #ccc;
-        cursor: pointer;
+      .upload-section {
+        display: flex;
+        height: 180px;
+        margin: 0 32px 8px;
+        justify-content: center;
+        align-items: center;
+
+        border: 3px dashed #ccc;
+
+        .file-upload_button {
+          cursor: pointer;
+          color: white;
+          background-color: rgb(72, 72, 196);
+          border: 1px solid rgb(72, 72, 196);
+          font-size: 20px;
+          width: 300px;
+          height: 50px;
+          box-shadow: 5px 5px 3px 1px #ccc;
+          cursor: pointer;
+        }
+      }
+
+      .isDragActive {
+        border-color: #4caf50 !important;
       }
     }
   }
