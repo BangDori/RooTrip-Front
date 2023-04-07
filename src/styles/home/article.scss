@@ -1,16 +1,36 @@
 .Main_content {
-  width: 500px;
-  max-height: 700px;
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 375px;
+    max-height: 500px;
+    right: 12.3%;
+  }
+  @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+    width: 375px;
+    max-height: 500px;
+    right: 20.3%;
+  }
+  @media only screen and (min-width: 1601px) {
+    width: 500px;
+    max-height: 700px;
+    right: 390px; //20.3%
+  }
   border: 1px solid #ccc;
   border-radius: 20px;
   position: absolute;
   top: 80px;
-  right: 390px; //20.3%
   background: white;
   z-index: 101;
 
   .article_head {
-    height: 30px;
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+      height: 23px;
+    }
+    @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+      height: 23px;
+    }
+    @media only screen and (min-width: 1601px) {
+      height: 30px;
+    }
     display: flex;
     border-bottom: 1px solid #ccc;
     align-items: center;
@@ -21,31 +41,83 @@
     }
   }
   .Content {
-    max-height: 285px;
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+      height: 212px;
+    }
+    @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+      height: 212px;
+    }
+    @media only screen and (min-width: 1601px) {
+      height: 285px;
+    }
     .Con_pro {
     }
     .Photo {
       img {
         width: 100%;
-        max-height: 285px;
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+          max-height: 212px;
+        }
+        @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+          max-height: 212px;
+        }
+        @media only screen and (min-width: 1601px) {
+          max-height: 285px;
+        }
         object-fit: cover;
       }
     }
   }
   .addr {
-    height: 40px;
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+      height: 28px;
+    }
+    @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+      height: 28px;
+    }
+    @media only screen and (min-width: 1601px) {
+      height: 40px;
+    }
     border-bottom: 1px solid #ccc;
     display: flex;
     align-items: center;
     justify-content: center;
     span {
-      font-size: 15px;
+      @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        font-size: 11px;
+      }
+      @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+        font-size: 12px;
+      }
+      @media only screen and (min-width: 1601px) {
+        font-size: 15px;
+      }
     }
   }
   .comment_section {
-    height: 305px;
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+      height: 236px;
+    }
+    @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+      height: 236px;
+    }
+    @media only screen and (min-width: 1601px) {
+      height: 305px;
+    }
     .comment_container {
-      height: 260px;
+      @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        height: 199px;
+        max-height: 199px;
+      }
+      @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+        height: 199px;
+        max-height: 199px;
+      }
+      @media only screen and (min-width: 1601px) {
+        height: 260px;
+        max-height: 260px;
+      }
+
       text-align: center;
     }
     .comment_box {
@@ -55,8 +127,18 @@
       align-items: center;
 
       img {
-        width: 25px;
-        height: 25px;
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+          width: 21px;
+          height: 21px;
+        }
+        @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+          width: 23px;
+          height: 23px;
+        }
+        @media only screen and (min-width: 1601px) {
+          width: 25px;
+          height: 25px;
+        }
         border-radius: 50%;
         margin-right: 5px;
         object-fit: cover;
@@ -64,8 +146,19 @@
       input {
         background: rgb(224, 224, 224);
         border-radius: 15px;
-        width: 400px;
-        height: 33px;
+        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+          width: 265px;
+          height: 20px;
+        }
+        @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+          width: 285px;
+          height: 23px;
+        }
+        @media only screen and (min-width: 1601px) {
+          width: 400px;
+          height: 33px;
+        }
+
         border: 1px solid #ccc;
         padding-left: 15px;
       }
