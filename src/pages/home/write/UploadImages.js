@@ -3,6 +3,7 @@ import camera from '@assets/camera.png';
 import EXIF from 'exif-js';
 import { getLocation } from '@utils/metadata';
 import { useDropzone } from 'react-dropzone';
+import cn from 'classnames';
 
 const UploadImages = ({ onNextPage, onUploadPhotos }) => {
   const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
@@ -43,10 +44,14 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
       const promises = [];
       const newPhotos = [];
 
-      for (const [idx, fileInfo] of Object.entries(e.target.files)) {
+      for (const [idx, fileInfo] of Object.entries(e)) {
         const promise = new Promise((resolve) => {
           EXIF.getData(fileInfo, () => {
-            const newPhoto = createNewPhoto(idx, fileInfo, fileInfo.exifdata);
+            const newPhoto = createNewPhoto(
+              idx + 1,
+              fileInfo,
+              fileInfo.exifdata,
+            );
             newPhotos.push(newPhoto);
             resolve();
           });
@@ -79,33 +84,16 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
           <img src={camera} alt='카메라 사진' />
         </div>
         <div className='ChoosePhoto'>
-          {/* <input
-            type='file'
-            multiple
-            onChange={handleUploadPhotos}
-            accept='image/*'
-          />
-          <button type='button' onClick={console.log('hi')}>
-            사진을 선택해주세요
-          </button> */}
-          {/* <label for='upload-input' class='custom-file-upload'>
-            사진을 선택해주세요.
-          </label>
-          <input
-            type='file'
-            id='upload-input'
-            multiple
-            onChange={handleUploadPhotos}
-            accept='image/*'
-          /> */}
-
-          <div {...getRootProps()}>
+          <div
+            className={cn('upload-section', { isDragActive })}
+            {...getRootProps()}
+          >
             <input {...getInputProps()} />
             {isDragActive ? (
               <p>사진을 올려주세요.</p>
             ) : (
               <button type='button' className='file-upload_button'>
-                사진을 선택해주세요.
+                사진을 선택하거나 올려주세요.
               </button>
             )}
           </div>
