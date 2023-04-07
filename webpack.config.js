@@ -34,20 +34,23 @@ const config = {
     clean: true,
   },
   optimization: {
-   runtimeChunk: 'single',
-   splitChunks: {
-     cacheGroups: {
-       vendor: {
-         test: /[\\/]node_modules[\\/]/,
-         name: 'vendors',
-         chunks: 'all',
-       },
-     },
-   },
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
   devServer: {
     // dev server 구동 시 자동으로 chrome browser 오픈
     open: true,
+
+    // 외부 IP 접속 허용
+    allowedHosts: 'all',
 
     // dev server의 DOMAIN IP
     host: process.env.REACT_APP_DOMAIN,
