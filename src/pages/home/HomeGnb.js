@@ -3,7 +3,7 @@ import menu_friend from '@assets/친구 게시글.png';
 import menu_Route from '@assets/Route.png';
 import menu_Trip from '@assets/Trip.png';
 import Article_input from '@assets/article_input.png';
-import WriteBase from './Wrtie/WriteBase';
+import Write from './write/Write';
 import ModalPortal from '@components/ModalPortal';
 import '@styles/home/Nav.scss';
 
@@ -52,7 +52,7 @@ const HomeGnb = () => {
       {modal && (
         <ModalPortal>
           <div className='modal_back' />
-          <WriteBase setModal={setModal} />
+          <Write setModal={setModal} />
         </ModalPortal>
       )}
     </nav>
