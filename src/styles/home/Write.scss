@@ -49,14 +49,15 @@
     .Photo_logo {
       text-align: center;
       img {
-        margin: 16px 0;
-        width: 175px;
+        margin-top: 16px;
+        width: 120px;
+        vertical-align: bottom;
       }
     }
     .upload-section {
       display: flex;
       height: 180px;
-      margin: 0 32px 8px;
+      margin: 0 32px 16px;
       justify-content: center;
       align-items: center;
 
