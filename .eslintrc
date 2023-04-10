@@ -1,0 +1,41 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "extends": [
+    "airbnb-base",
+    "plugin:import/recommended", // eslint가 제공하는 기본 설정
+    "plugin:prettier/recommended" // 한 줄 축약형, eslint에서 prettier 관련 기능을 끄고, prettier 오류를 lint의 rule로 적용해 lint 오류로 보여줌
+  ],
+  "plugins": ["import", "prettier"],
+  "rules": {
+    "import/no-unresolved": 0,
+    "import/no-extraneous-dependencies": 0,
+    "no-unused-vars": 0,
+    "no-alert": 0,
+    "no-restricted-syntax": 0
+    // "node/no-extraneous-import": 0
+  },
+  "ignorePatterns": ["dist", "node_modules"],
+  "settings": {
+    "import/resolver": {
+      "babel-module": {},
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}

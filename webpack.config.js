@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 // 환경변수 가져오기
 dotenv.config({ path: path.resolve(__dirname, '.env') });
@@ -16,7 +17,7 @@ const stylesHandler = isProduction
 
 // 설정
 const config = {
-  // 시작 엔트리
+  // 시작 엔트리 경로
   entry: './src/index.js',
 
   // 압축된 파일 위치
@@ -60,6 +61,8 @@ const config = {
 
     // 브라우저에서 요청한 URL에 대해 해당 URL 경로에 대한 파일이 없을 경우, 설정한 fallback 경로에 있는 파일을 제공하는 옵션
     historyApiFallback: true,
+
+    hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -112,6 +115,7 @@ const config = {
     // React 개발 과정에서, 수정된 모듈만 변경하기 위한 plugin
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
+    new ESLintPlugin(),
   ],
   module: {
     rules: [
@@ -120,30 +124,11 @@ const config = {
         test: /\.(js|jsx|ts|tsx)$/i,
         // babel을 적용하지 않을 폴더
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              ['@babel/preset-react', { runtime: 'automatic' }],
-              '@babel/preset-typescript',
-            ],
-            plugins: [
-              '@babel/plugin-proposal-class-properties',
-              'react-refresh/babel',
-              '@babel/syntax-dynamic-import',
-            ],
-          },
-        },
+        loader: 'babel-loader',
       },
       {
-        // css -> js 변환
-        test: /\.css$/i,
-        use: [stylesHandler, 'css-loader'],
-      },
-      {
-        // scss -> js 변환
-        test: /\.s[ac]ss$/i,
+        // css, scss -> js 변환
+        test: /\.(scss|css)$/,
         use: [stylesHandler, 'css-loader', 'sass-loader'],
       },
       {
