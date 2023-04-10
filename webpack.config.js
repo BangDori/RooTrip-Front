@@ -1,3 +1,4 @@
+const os = require('os');
 const path = require('path');
 const dotenv = require('dotenv');
 const webpack = require('webpack');
@@ -5,10 +6,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 // 환경변수 가져오기
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+const env = JSON.stringify(
+  dotenv.config({ path: path.resolve(__dirname, '.env') }).parsed,
+);
 
+// 번들링 모드 설정
 const isProduction = process.env.NODE_ENV === 'production';
 
 const stylesHandler = isProduction
@@ -17,133 +23,65 @@ const stylesHandler = isProduction
 
 // 설정
 const config = {
-  // 시작 엔트리 경로
+  // 엔트리 파일 설정
   entry: './src/index.js',
-
-  // 압축된 파일 위치
+  // 아웃풋 파일 출력 설정
   output: {
-    // 출력 파일 이름 설정
-    filename: '[name].[contenthash].js',
-
-    // 출력 경로
+    // 경로
     path: path.resolve(__dirname, 'dist'),
-
+    // 빌드(컴파일, 번들링 등) 결과 파일 브라우저 캐싱(Cachinig)
+    filename: '[name].[contenthash].js',
     // 모든 요청에 대해서 루트 경로(/)를 기준으로 파일을 찾도록 수정
     publicPath: '/',
-
     // 이전 빌드 결과물 삭제
     clean: true,
-  },
-  optimization: {
-    runtimeChunk: 'single',
-    splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      },
-    },
   },
   devServer: {
     // dev server 구동 시 자동으로 chrome browser 오픈
     open: true,
-
     // 외부 IP 접속 허용
     allowedHosts: 'all',
-
     // dev server의 DOMAIN IP
     host: process.env.REACT_APP_DOMAIN,
-
     // dev server의 PORt
     port: process.env.REACT_APP_PORT,
-
     // 브라우저에서 요청한 URL에 대해 해당 URL 경로에 대한 파일이 없을 경우, 설정한 fallback 경로에 있는 파일을 제공하는 옵션
     historyApiFallback: true,
-
+    // gzip 압축 활성화
+    compress: true,
+    // 핫 모듈 교체(HMR) 활성화 설정
     hot: true,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-      favicon: './public/favicon.ico',
-      title: 'Caching',
-    }),
-    new webpack.ProvidePlugin({
-      process: 'process/browser',
-    }),
-    new webpack.ProgressPlugin(),
-
-    // 환경변수 설정
-    new webpack.DefinePlugin({
-      'process.env': {
-        REACT_APP_DOMAIN: JSON.stringify(process.env.REACT_APP_DOMAIN),
-        REACT_APP_PORT: JSON.stringify(process.env.REACT_APP_PORT),
-        REACT_APP_MAIN_SERVER: JSON.stringify(
-          process.env.REACT_APP_MAIN_SERVER,
-        ),
-        REACT_APP_SUB_SERVER: JSON.stringify(process.env.REACT_APP_SUB_SERVER),
-        REACT_APP_KAKAO_AUTH_URL: JSON.stringify(
-          process.env.REACT_APP_KAKAO_AUTH_URL,
-        ),
-        REACT_APP_NAVER_AUTH_URL: JSON.stringify(
-          process.env.REACT_APP_NAVER_AUTH_URL,
-        ),
-        REACT_APP_GOOGLE_AUTH_URL: JSON.stringify(
-          process.env.REACT_APP_GOOGLE_AUTH_URL,
-        ),
-        REACT_APP_MAP_API_TOKEN: JSON.stringify(
-          process.env.REACT_APP_MAP_API_TOKEN,
-        ),
-        REACT_APP_MAP_API_STYLE: JSON.stringify(
-          process.env.REACT_APP_MAP_API_STYLE,
-        ),
-        REACT_APP_AWS_ACCESS_KEY: JSON.stringify(
-          process.env.REACT_APP_AWS_ACCESS_KEY,
-        ),
-        REACT_APP_AWS_SECRET_ACCESS_KEY: JSON.stringify(
-          process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-        ),
-        REACT_APP_AWS_REGION: JSON.stringify(process.env.REACT_APP_AWS_REGION),
-        REACT_APP_AWS_S3_BUCKET: JSON.stringify(
-          process.env.REACT_APP_AWS_S3_BUCKET,
-        ),
-      },
-    }),
-
-    // React 개발 과정에서, 수정된 모듈만 변경하기 위한 plugin
-    new webpack.HotModuleReplacementPlugin(),
-    new ReactRefreshWebpackPlugin(),
-    new ESLintPlugin(),
-  ],
   module: {
     rules: [
       {
-        // js, jsx, ts, tsx 의 경우 babel을 이용해 ES6 -> ES5 변환
+        // Babel 파일 로더 설정
         test: /\.(js|jsx|ts|tsx)$/i,
-        // babel을 적용하지 않을 폴더
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
       {
-        // css, scss -> js 변환
+        // CSS, SCSS 파일 로더 설정
         test: /\.(scss|css)$/,
         use: [stylesHandler, 'css-loader', 'sass-loader'],
       },
       {
-        // image -> js 변환
-        test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: 'asset',
-        generator: {
-          filename: 'assets/[name].[hash][ext]',
-        },
+        // 이미지 포멧: PNG, JP(E)G, GIF, SVG, WEBP
+        test: /\.(png|jpe?g|gif|svg|webp)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              name: 'assets/images/[name].[hash:8].[ext]',
+            },
+          },
+        ],
       },
     ],
   },
-
-  // alias 설정
   resolve: {
+    // 절대 경로 별칭 등록
     alias: {
       '@assets': path.resolve(__dirname, 'src/assets'),
       '@components': path.resolve(__dirname, 'src/components'),
@@ -158,18 +96,119 @@ const config = {
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@utils': path.resolve(__dirname, 'src/utils'),
     },
+
+    // 생략 가능한 확장자
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
   },
-  devtool: 'source-map',
+  plugins: [
+    // index.html 설정
+    new HtmlWebpackPlugin({
+      // 템플릿 설정
+      template: './public/index.html',
+      // 압축 설정
+      minify: true,
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+    new webpack.ProgressPlugin(),
+    // 환경변수 설정
+    new webpack.DefinePlugin({
+      'process.env': env,
+    }),
+    // 최소 번들 크기 설정
+    new webpack.optimize.MinChunkSizePlugin({
+      minChunkSize: 20000,
+    }),
+  ],
+  optimization: {
+    // 압축
+    minimize: isProduction,
+    // 모듈 ID 생성 방식
+    moduleIds: 'deterministic',
+    // 런타임 코드를 하나의 파일로 생성
+    runtimeChunk: 'single',
+    // 코드 분할을 설정하는 옵션
+    splitChunks: {
+      // 어떻게 분할할지에 대한 설정
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+    // 미니마이저
+    minimizer: [
+      // 플러그인 인스턴스 생성
+      new CssMinimizerPlugin({
+        // CPU 멀티 프로세서 병렬화 옵션 (기본 값: true)
+        parallel: os.cpus().length - 1,
+      }),
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            // 무손실 최적화 옵션
+            plugins: [
+              ['gifsicle', { interlaced: true }],
+              ['jpegtran', { progressive: true }],
+              ['optipng', { optimizationLevel: 5 }],
+              [
+                'svgo',
+                {
+                  plugins: [
+                    {
+                      name: 'preset-default',
+                      params: {
+                        overrides: {
+                          removeViewBox: false,
+                          addAttributesToSVGElement: {
+                            params: {
+                              attributes: [
+                                { xmlns: 'http://www.w3.org/2000/svg' },
+                              ],
+                            },
+                          },
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+      }),
+    ],
+  },
+  devtool: isProduction ? false : 'eval-source-map',
 };
 
+// CommonJS 방식의 모듈 내보내기
 module.exports = () => {
   if (isProduction) {
     config.mode = 'production';
 
-    config.plugins.push(new MiniCssExtractPlugin());
+    // CSS 코드를 별도의 파일로 분리시켜 추출하는 플러그인
+    config.plugins.push(
+      new MiniCssExtractPlugin({
+        linkType: false,
+        filename: 'assets/css/[name].[contenthash].css',
+        chunkFilename: 'assets/css/[id].[contenthash].css',
+      }),
+    );
   } else {
     config.mode = 'development';
+
+    // 변경된 모듈만 빠르게 교체하는 플러그인
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    // React 애플리케이션에서 모듈을 수정할 때, 수정된 모듈만 빠르게 재 렌더링 하기 위한 플러그인
+    config.plugins.push(new ReactRefreshWebpackPlugin());
+    // ESLint 연동을 위한 플러그인
+    config.plugins.push(new ESLintPlugin());
   }
+
   return config;
 };
