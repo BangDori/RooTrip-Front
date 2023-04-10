@@ -3,14 +3,14 @@ import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loade
 import { useSelector } from 'react-redux';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useGetImages } from '@hooks/useGetImages';
+import useGetImages from '@hooks/useGetImages';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import useMapEvents from '@hooks/useMapEvents';
 import CustomMarker from './map/CustomMarker';
 
 const Map = () => {
   const mapContainer = useRef();
-  const map = useRef();
+  const map = useRef(null);
   const { accessToken } = useSelector((state) => state.accessToken);
 
   // get image for custom marker
@@ -21,40 +21,36 @@ const Map = () => {
 
   // map initialize
   useEffect(() => {
-    if (map.current) return; // 맵이 생성되어 있다면,
-
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      accessToken: MAP_API_TOKEN,
-      style: MAP_API_STYLE,
-      center: [131.1, 36.4395],
-      zoom: 5.5,
-      minZoom: 5.5,
-      maxZoom: 10,
-      antialias: false,
-      doubleClickZoom: false,
-      dragRotate: false,
-      interactive: !!accessToken, // accessToken ? Interactive : NULL
-    });
-
-    return () => {
-      map.current.remove();
-    };
+    if (!map.current) {
+      map.current = new mapboxgl.Map({
+        container: mapContainer.current,
+        accessToken: MAP_API_TOKEN,
+        style: MAP_API_STYLE,
+        center: [131.1, 36.4395],
+        zoom: 5.5,
+        minZoom: 5.5,
+        maxZoom: 10,
+        antialias: false,
+        doubleClickZoom: false,
+        dragRotate: false,
+        interactive: !!accessToken, // accessToken ? Interactive : NULL
+      });
+    }
   }, [accessToken]);
 
   // event loading
   useEffect(() => {
-    if (map) {
-      accessToken
-        ? map.current.on('load', onMapLoad)
-        : map.current.on('load', onMapUnload);
+    if (map.current) {
+      if (accessToken) map.current.on('load', onMapLoad);
+      else map.current.on('load', onMapUnload);
 
       return () => {
-        accessToken
-          ? map.current.off('load', onMapLoad)
-          : map.current.off('load', onMapUnload);
+        if (accessToken) map.current.off('load', onMapLoad);
+        else map.current.off('load', onMapUnload);
       };
     }
+
+    return null;
   }, [map, accessToken, onMapLoad, onMapUnload]);
 
   return (

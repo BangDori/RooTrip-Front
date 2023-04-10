@@ -1,7 +1,7 @@
-import RegisterForm from './registerForm/RegisterForm';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { register } from '@services/user';
+import RegisterForm from './registerForm/RegisterForm';
 
 const RegisterContainer = () => {
   const navigate = useNavigate();

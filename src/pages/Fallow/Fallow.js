@@ -5,14 +5,17 @@ import '@styles/fallow/Fallowing.scss';
 const Fallow = () => {
   const [value, setValue] = useState(0);
   const [check, setCheck] = useState('CF');
-  const count_plus = () => {
+
+  const countPlus = () => {
     setValue(value + 1);
     setCheck('CF_true');
   };
-  const count_minus = () => {
+
+  const countMinus = () => {
     setValue(value - 1);
     setCheck('CF_false');
   };
+
   return (
     <div>
       <div>
@@ -24,7 +27,7 @@ const Fallow = () => {
           size='large'
           variant='elevated'
           className='fallowBtn'
-          onClick={count_plus}
+          onClick={countPlus}
         >
           팔로우
         </Button>
@@ -33,7 +36,7 @@ const Fallow = () => {
           size='large'
           variant='elevated'
           className='fallowBtn'
-          onClick={count_minus}
+          onClick={countMinus}
         >
           팔로우 해제
         </Button>

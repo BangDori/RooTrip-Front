@@ -1,7 +1,7 @@
 import React from 'react';
 import Title from '@components/account/Title';
-import AccountExplain from './AccountExplain';
 import TOC from '@components/account/TOC';
+import AccountExplain from './AccountExplain';
 import AccountContainer from './AccountContainer';
 
 const table = [

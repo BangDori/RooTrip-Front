@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import camera from '@assets/camera.png';
 import EXIF from 'exif-js';
 import { getLocation } from '@utils/metadata';
@@ -49,7 +49,7 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
       const promises = [];
       const newPhotos = [];
 
-      for (const [idx, fileInfo] of Object.entries(e)) {
+      Object.entries(e).forEach(([idx, fileInfo]) => {
         const promise = new Promise((resolve) => {
           EXIF.getData(fileInfo, () => {
             const newPhoto = createNewPhoto(
@@ -63,7 +63,7 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
         });
 
         promises.push(promise);
-      }
+      });
 
       await Promise.all(promises);
 

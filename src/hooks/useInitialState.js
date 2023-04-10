@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-export const useInitialState = (initialValue) => {
+const useInitialState = (initialValue) => {
   const [form, setForm] = useState(initialValue);
 
   const resetForm = useCallback(() => {
@@ -9,3 +9,5 @@ export const useInitialState = (initialValue) => {
 
   return [form, setForm, resetForm];
 };
+
+export default useInitialState;

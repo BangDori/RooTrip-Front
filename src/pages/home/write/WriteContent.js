@@ -1,6 +1,5 @@
-import React from 'react';
-import Modal_example from '@assets/Modal_example.png';
 import { useState } from 'react';
+import modalExample from '@assets/modalExample.png';
 
 const WriteContent = ({ pagenum, setPagenum }) => {
   const [show, setShow] = useState(0);

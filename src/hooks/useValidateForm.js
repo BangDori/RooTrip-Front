@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { validate } from '@utils/validation';
+import validate from '@utils/validation';
 
 const useValidateForm = (intialState) => {
   const [validation, setValidation] = useState(intialState);
@@ -11,8 +11,6 @@ const useValidateForm = (intialState) => {
       ...prevValidation,
       [type]: isValid,
     }));
-
-    return;
   }, []);
 
   return [validation, setValidation, validateForm];

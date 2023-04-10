@@ -17,7 +17,7 @@ const accessToken = handleActions(
       accessToken: token.accessToken,
       expireTime: (token.expire - 60) * 1000, // 원활한 통신을 위해 Client 만료 시간 14분으로 설정
     }),
-    [REMOVE]: (state, action) => ({ accessToken: '', expireTime: 0 }), // Token 초기화
+    [REMOVE]: () => ({ accessToken: '', expireTime: 0 }), // Token 초기화
   },
   accessTokenState,
 );

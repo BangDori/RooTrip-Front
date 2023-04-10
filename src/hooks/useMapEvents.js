@@ -2,6 +2,7 @@ import { useCallback, useRef } from 'react';
 
 const useMapEvents = ({ map }) => {
   const hoveredStateId = useRef(null);
+  const canvasRef = useRef(null);
 
   const onMapClick = useCallback(
     (e) => {
@@ -21,14 +22,15 @@ const useMapEvents = ({ map }) => {
 
   const onMapMove = useCallback(
     (e) => {
-      map.current.getCanvas().style.cursor = 'pointer';
+      canvasRef.current.style.cursor = 'pointer';
+      // map.current.getCanvas().style.cursor = 'pointer';
 
       const { sourceLayer, id } = e.features[0];
       map.current.setFeatureState(
         {
           source: 'composite',
-          sourceLayer: sourceLayer,
-          id: id,
+          sourceLayer,
+          id,
         },
         { hover: true },
       );
@@ -37,7 +39,7 @@ const useMapEvents = ({ map }) => {
         map.current.setFeatureState(
           {
             source: 'composite',
-            sourceLayer: sourceLayer,
+            sourceLayer,
             id: hoveredStateId.current,
           },
           { hover: false },
@@ -50,7 +52,8 @@ const useMapEvents = ({ map }) => {
   );
 
   const onMapLeave = useCallback(() => {
-    map.current.getCanvas().style.cursor = 'initial';
+    canvasRef.current.style.cursor = 'initial';
+    // map.current.getCanvas().style.cursor = 'initial';
 
     if (hoveredStateId.current !== null) {
       map.current.setFeatureState(
@@ -68,6 +71,8 @@ const useMapEvents = ({ map }) => {
     map.current.on('click', 'korea-fill', onMapClick);
     map.current.on('mousemove', 'korea-fill', onMapMove);
     map.current.on('mouseleave', 'korea-fill', onMapLeave);
+
+    canvasRef.current = map.current.getCanvas();
 
     return () => {
       map.current.off('click', 'korea-fill', onMapClick);

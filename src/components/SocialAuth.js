@@ -12,17 +12,13 @@ const Auth = () => {
 
   useEffect(() => {
     const getToken = async () => {
-      try {
-        const accessToken = await socialLogin(provider, code);
-        dispatch(issue(accessToken));
-        navigate('/');
-      } catch (e) {
-        console.log(e);
-      }
+      const accessToken = await socialLogin(provider, code);
+
+      if (accessToken) dispatch(issue(accessToken));
+      navigate('/');
     };
 
     getToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;

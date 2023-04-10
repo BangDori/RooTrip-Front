@@ -55,8 +55,8 @@ const AccountForm = ({ changePassword }) => {
         // 임시 비밀번호 전송
         sendPassword(email, verifyNumber);
         changePassword();
-      } catch (e) {
-        alert(e.message);
+      } catch (error) {
+        alert(error.message);
       }
     },
     [changePassword, email, verifyNumber, validation],

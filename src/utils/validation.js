@@ -22,7 +22,7 @@ const EMAIL = 'email';
 const NICKNAME = 'nickname';
 const PASSWORD = 'password';
 
-export async function validate(type, data) {
+async function validate(type, data) {
   let error = '';
   let isValid = true;
 
@@ -81,10 +81,11 @@ export async function validate(type, data) {
     default:
       isValid = false;
       error = UNKNOWN_ERROR;
-      console.log(error);
 
       break;
   }
 
   return { isValid, error, type };
 }
+
+export default validate;

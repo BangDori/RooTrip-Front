@@ -29,7 +29,7 @@ const HomeProfile = () => {
   const [isActive, setIsActive] = useState(false);
 
   const handleClick = useCallback(() => {
-    setIsActive((isActive) => !isActive);
+    setIsActive((prevIsActive) => !prevIsActive);
   }, []);
 
   return (

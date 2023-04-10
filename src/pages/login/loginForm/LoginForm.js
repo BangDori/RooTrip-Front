@@ -1,6 +1,6 @@
+import { useCallback } from 'react';
+import useInitialState from '@hooks/useInitialState';
 import LoginButton from './LoginButton';
-import React, { useCallback } from 'react';
-import { useInitialState } from '@hooks/useInitialState';
 
 const Login = ({ onLogin }) => {
   const [form, setForm, resetForm] = useInitialState({
@@ -12,8 +12,8 @@ const Login = ({ onLogin }) => {
   // form 상태 입력
   const onInput = useCallback(
     (e) => {
-      setForm((form) => ({
-        ...form,
+      setForm((prevForm) => ({
+        ...prevForm,
         [e.target.name]: e.target.value,
       }));
     },

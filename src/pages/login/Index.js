@@ -1,10 +1,10 @@
+import loadable from '@loadable/component';
 import React from 'react';
 import LoginTitle from './LoginTitle';
 import LoginContainer from './LoginContainer';
 import LoginSocial from './LoginSocial';
-import '@styles/login/login.scss';
 import Account from './Account';
-import loadable from '@loadable/component';
+import '@styles/login/login.scss';
 
 const Map = loadable(() => import('@components/Map'));
 

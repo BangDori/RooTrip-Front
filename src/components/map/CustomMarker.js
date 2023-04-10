@@ -24,9 +24,13 @@ const CustomMarker = ({ map, src, metadata, accessToken }) => {
         markerRef.current.addEventListener('click', onMarkerClick);
 
       // 컴포넌트 언마운트 시 마커 제거
-      return () => marker.remove();
+      return () => {
+        if (marker) marker.remove();
+      };
     }
-  }, [map, metadata, accessToken, onMarkerClick]);
+
+    return null;
+  }, []);
 
   return (
     <div ref={markerRef}>

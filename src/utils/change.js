@@ -13,7 +13,7 @@ const NICKNAME = 'nickname';
 const PASSWORD = 'password';
 const PASSWORD2 = 'password2';
 
-export function showError(errorType) {
+function showError(errorType) {
   let error = '';
   switch (errorType) {
     case NAME:
@@ -42,3 +42,5 @@ export function showError(errorType) {
 
   return error;
 }
+
+export default showError;

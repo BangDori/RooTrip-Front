@@ -45,7 +45,7 @@ const ProfileMenu = () => {
       await logout();
       dispatch(remove());
     } catch (e) {
-      console.log(e);
+      // error
     }
   }, [dispatch]);
 

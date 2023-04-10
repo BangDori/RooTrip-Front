@@ -4,7 +4,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import cn from 'classnames';
 import { sendVerifyNumber, authVerifyNumber } from '@services/user';
 import useTimer from '@hooks/useTimer';
-import { validate } from '@utils/validation';
+import validate from '@utils/validation';
 import styled from 'styled-components';
 import {
   INVALID_EMAIL_ERROR,
@@ -143,7 +143,7 @@ const RegisterEmailAuth = ({
         endEmail.current = true;
       }
     } catch (e) {
-      console.log(e);
+      // error
     }
   }, [validateCheck, email, startTimer]);
 
@@ -153,7 +153,9 @@ const RegisterEmailAuth = ({
       alert('재발신 횟수를 초과하였습니다.');
       isMaxCount.current = true;
       return;
-    } else setResendCount((resendCount) => resendCount + 1);
+    }
+
+    setResendCount((prevResendCount) => prevResendCount + 1);
 
     // 타이머 초기화
     resetTimer();
@@ -189,7 +191,7 @@ const RegisterEmailAuth = ({
         alert('인증번호가 일치하지 않습니다.');
       }
     } catch (e) {
-      console.log(e);
+      // error
     }
   }, [email, setValidation, setVerifyNumber, number, isCompleted, resetTimer]);
 

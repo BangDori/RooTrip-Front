@@ -1,8 +1,7 @@
-import React from 'react';
+import loadable from '@loadable/component';
 import HomeGnb from './HomeGnb';
 import HomeArticle from './HomeArticle';
 import '@styles/home/Write.scss';
-import loadable from '@loadable/component';
 import HomeLogo from './HomeLogo';
 import HomeProfile from './HomeProfile';
 
