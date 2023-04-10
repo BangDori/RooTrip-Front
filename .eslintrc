@@ -24,8 +24,8 @@
     "import/no-unresolved": 0,
     "import/no-extraneous-dependencies": 0,
     "no-unused-vars": 0,
-    "no-alert": 0,
-    "no-restricted-syntax": 0
+    "no-alert": 0
+    // "no-restricted-syntax": 0
     // "node/no-extraneous-import": 0
   },
   "ignorePatterns": ["dist", "node_modules"],
