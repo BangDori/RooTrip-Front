@@ -1,9 +1,8 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import '@styles/home/Write.scss';
 import UploadImages from './UploadImages';
 import SelectImages from './SelectImages';
 import WriteContent from './WriteContent';
-import { useState } from 'react';
 
 const Write = ({ setModal }) => {
   const [currentPage, setCurrentPage] = useState(0);

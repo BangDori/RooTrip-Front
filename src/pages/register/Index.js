@@ -1,7 +1,7 @@
 import React from 'react';
-import RegisterContainer from './RegisterContainer';
 import Title from '@components/account/Title';
 import TOC from '@components/account/TOC';
+import RegisterContainer from './RegisterContainer';
 
 const table = [
   {

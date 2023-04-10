@@ -29,7 +29,7 @@ export async function findOne(type, data) {
 
     return status;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
@@ -45,7 +45,7 @@ export async function sendVerifyNumber(email) {
 
     return data;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
@@ -64,7 +64,7 @@ export async function authVerifyNumber(email, verifyNumber) {
 
     return data;
   } catch (e) {
-    console.log(e);
+    return e;
   }
 }
 
@@ -80,9 +80,9 @@ export async function register(data) {
       .then((result) => {
         if (result.data.status) {
           return result.data.status;
-        } else {
-          throw new Error(result.data.message);
         }
+
+        throw new Error(result.data.message);
       });
   } catch (e) {
     throw new Error(e.message);
@@ -212,7 +212,7 @@ export async function logout() {
     const response = await axios
       .post(`${MAIN_SERVER}/api/auth/logout`, null, {
         headers: {
-          Authorization: 'Bearer ' + accessToken,
+          Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((res) => res.data);

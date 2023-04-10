@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import '@styles/register/register.scss';
 import cn from 'classnames';
 import Input from '@components/Input';
 import Button from '@components/Button';
-import { useInitialState } from '@hooks/useInitialState';
+import useInitialState from '@hooks/useInitialState';
 import { regExpSpace } from '@constants/regExp';
+import showError from '@utils/change';
+import useValidateForm from '@hooks/useValidateForm';
 import RegisterButton from './RegisterButton';
 import RegisterEmailAuth from './RegisterEmailAuth';
-import useValidateForm from '@hooks/useValidateForm';
-import { showError } from '@utils/change';
 
 const RegisterForm = ({ onRegister }) => {
   const [form, setForm, resetForm] = useInitialState({
@@ -30,8 +30,8 @@ const RegisterForm = ({ onRegister }) => {
   const onInput = useCallback(
     (e) => {
       if (!regExpSpace.test(e.target.value)) {
-        setForm((form) => ({
-          ...form,
+        setForm((prevForm) => ({
+          ...prevForm,
           [e.target.name]: e.target.value,
         }));
       }
@@ -44,8 +44,8 @@ const RegisterForm = ({ onRegister }) => {
       const prevPassword = document.querySelector('.password').value;
       const isConfirm = prevPassword === e.target.value;
 
-      setValidation((validation) => ({
-        ...validation,
+      setValidation((prevValidation) => ({
+        ...prevValidation,
         password2: isConfirm,
       }));
     },
@@ -74,8 +74,8 @@ const RegisterForm = ({ onRegister }) => {
 
         // form 상태 초기화
         resetForm();
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        // error
       }
     },
     [onRegister, validation, form, resetForm],

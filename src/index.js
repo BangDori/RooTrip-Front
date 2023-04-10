@@ -1,15 +1,14 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import rootReducer from '@store/index';
+import { createStore } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { legacy_createStore } from 'redux';
-import rootReducer from '@store/index';
-import { Provider } from 'react-redux';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const store = legacy_createStore(rootReducer, composeWithDevTools());
+const store = createStore(rootReducer, composeWithDevTools());
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(

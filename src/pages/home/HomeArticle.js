@@ -1,7 +1,7 @@
 import React from 'react';
 import '@styles/home/article.scss';
 import Profile from '@assets/태훈이 프사.jpg';
-import Test_Photo from '@assets/게시글EX.png';
+import testPhoto from '@assets/게시글EX.png';
 
 const HomeArticle = () => {
   return (
@@ -14,7 +14,7 @@ const HomeArticle = () => {
           <div className='Content'>
             <div className='Con_pro'></div>
             <div className='Photo'>
-              <img src={Test_Photo} alt='사진' />
+              <img src={testPhoto} alt='사진' />
             </div>
           </div>
           <div className='addr'>

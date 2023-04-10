@@ -10,25 +10,18 @@ const useAccessToken = (accessToken, expireTime) => {
 
   useEffect(() => {
     const tokenReIssue = async () => {
-      try {
-        const token = await reIssue();
-        dispatch(issue(token));
-      } catch (e) {
-        console.log(e);
-      }
+      const token = await reIssue();
+
+      if (token) dispatch(issue(token));
     };
 
     if (accessToken) {
       const timeout = setTimeout(() => {
         tokenReIssue();
       }, expireTime); // expireTime까지의 시간
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    } else if (refreshToken) {
-      tokenReIssue();
     }
+
+    if (refreshToken) tokenReIssue();
   }, [accessToken, dispatch, expireTime, refreshToken]);
 };
 

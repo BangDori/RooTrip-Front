@@ -7,7 +7,7 @@ import {
   AWS_S3_BUCKET,
 } from '@config/service';
 
-export const useGetImages = ({ type }) => {
+const useGetImages = ({ type }) => {
   const [imageData, setImageData] = useState([]);
 
   useEffect(() => {
@@ -22,24 +22,23 @@ export const useGetImages = ({ type }) => {
       Prefix: type ? 'home-' : 'login-',
     };
 
-    s3.listObjects(params, (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const objects = data.Contents;
+    s3.listObjects(params, (err, list) => {
+      if (!err) {
+        const objects = list.Contents;
 
         const getImageData = (obj) => {
-          s3.getObject({ Bucket: AWS_S3_BUCKET, Key: obj.Key }, (err, data) => {
-            if (err) {
-              console.log(err);
-            } else {
-              const imageSrc = `https://${AWS_S3_BUCKET}.s3.amazonaws.com/${obj.Key}`;
-              setImageData((prevImageData) => [
-                ...prevImageData,
-                { src: imageSrc, metadata: data.Metadata },
-              ]);
-            }
-          });
+          s3.getObject(
+            { Bucket: AWS_S3_BUCKET, Key: obj.Key },
+            (error, data) => {
+              if (!error) {
+                const imageSrc = `https://${AWS_S3_BUCKET}.s3.amazonaws.com/${obj.Key}`;
+                setImageData((prevImageData) => [
+                  ...prevImageData,
+                  { src: imageSrc, metadata: data.Metadata },
+                ]);
+              }
+            },
+          );
         };
 
         objects.forEach((obj) => getImageData(obj));
@@ -49,3 +48,5 @@ export const useGetImages = ({ type }) => {
 
   return imageData;
 };
+
+export default useGetImages;
