@@ -30,7 +30,7 @@ const CustomMarker = ({ map, src, metadata, accessToken }) => {
     }
 
     return null;
-  }, []);
+  }, [accessToken, map, metadata, onMarkerClick]);
 
   return (
     <div ref={markerRef}>
