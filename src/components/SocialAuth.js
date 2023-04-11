@@ -14,8 +14,10 @@ const Auth = () => {
     const getToken = async () => {
       const accessToken = await socialLogin(provider, code);
 
-      if (accessToken) dispatch(issue(accessToken));
-      navigate('/');
+      if (accessToken) {
+        dispatch(issue(accessToken));
+        navigate('/');
+      }
     };
 
     getToken();
