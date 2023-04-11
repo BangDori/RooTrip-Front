@@ -21,6 +21,9 @@ const Auth = () => {
     };
 
     getToken();
+
+    // 의존성 배열을 제거함으로써 두 번 발생하는 에러 해결
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return null;
