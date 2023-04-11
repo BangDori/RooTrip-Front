@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { reIssue } from '@services/user';
 import { issue } from '@store/accessToken';
@@ -7,6 +7,7 @@ import { getRefreshToken } from '@utils/authCookie';
 const useAccessToken = (accessToken, expireTime) => {
   const dispatch = useDispatch();
   const refreshToken = getRefreshToken();
+  const timer = useRef(null);
 
   useEffect(() => {
     const tokenReIssue = async () => {
@@ -16,12 +17,15 @@ const useAccessToken = (accessToken, expireTime) => {
     };
 
     if (accessToken) {
-      const timeout = setTimeout(() => {
+      timer.current = setTimeout(() => {
         tokenReIssue();
       }, expireTime); // expireTime까지의 시간
     }
 
-    if (refreshToken) tokenReIssue();
+    // 강제 렌더링
+    if (!accessToken && refreshToken) tokenReIssue();
+
+    return () => clearInterval(timer.current);
   }, [accessToken, dispatch, expireTime, refreshToken]);
 };
 
