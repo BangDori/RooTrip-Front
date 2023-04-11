@@ -15,16 +15,25 @@
     "ecmaVersion": "latest"
   },
   "extends": [
+    // airbnb eslint 설정
     "airbnb-base",
-    "plugin:import/recommended", // eslint가 제공하는 기본 설정
-    "plugin:prettier/recommended" // 한 줄 축약형, eslint에서 prettier 관련 기능을 끄고, prettier 오류를 lint의 rule로 적용해 lint 오류로 보여줌
+    // eslint가 제공하는 기본 설정
+    "plugin:import/recommended",
+    // 한 줄 축약형, eslint에서 prettier 관련 기능을 끄고, prettier 오류를 lint의 rule로 적용해 lint 오류로 보여줌
+    "plugin:prettier/recommended",
+    // eslint가 제공하는 react 기본 규칙
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime"
   ],
-  "plugins": ["import", "prettier"],
+  "plugins": ["import", "prettier", "react-hooks"],
   "rules": {
-    "import/no-unresolved": 0,
-    "import/no-extraneous-dependencies": 0,
-    "no-unused-vars": 0,
-    "no-alert": 0
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": "off",
+    "no-unused-vars": "off",
+    "no-alert": "off",
+    "react-hooks/exhaustive-deps": "warn", // 의존성 배열 규칙
+    "react-hooks/rules-of-hooks": "error", // react hook 사용 규칙
+    "react/prop-types": "off"
     // "no-restricted-syntax": 0
     // "node/no-extraneous-import": 0
   },
