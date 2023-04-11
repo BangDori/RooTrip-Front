@@ -18,7 +18,11 @@ const Map = () => {
 
   // map event initialize
   const { onMapLoad, onMapUnload } = useMapEvents({ map });
-
+  const bounds = [
+    // Southwest coordinates
+    [130.8, 36.1395],
+    [131.6, 36.8395], // Northeast coordinates
+  ];
   // map initialize
   useEffect(() => {
     if (!map.current) {
@@ -34,6 +38,10 @@ const Map = () => {
         doubleClickZoom: false,
         dragRotate: false,
         interactive: !!accessToken, // accessToken ? Interactive : NULL
+        maxBounds: [
+          [112.704171, 32.745446],
+          [145.046554, 41.038954],
+        ],
       });
     }
   }, [accessToken]);
