@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import modalExample from '@assets/modalExample.png';
-import NotChoose from '@components/Write/NotChoose';
-import Choose from '@components/Write/Choose';
+import exampleimg1 from '@assets/LoginMarker1.jpg';
+import exampleimg2 from '@assets/LoginMarker2.jpg';
+import exampleimg3 from '@assets/LoginMarker3.jpg';
+import ImgList from '../../../components/Write/ImgList';
 
 const SelectImages = ({ photos, setPhotos, onPrevPage, onNextPage }) => {
   const [choose, setChoose] = useState(0);
@@ -27,7 +28,7 @@ const SelectImages = ({ photos, setPhotos, onPrevPage, onNextPage }) => {
         >
           이전
         </button>
-        <span style={{ margin: '0 95px 0 95px' }}>새 게시글 작성하기</span>
+        <span style={{ margin: '0 88px 0 88px' }}>게시 순서 및 경로 설정</span>
         <button
           type='button'
           className='MoveModal Co'
@@ -36,30 +37,8 @@ const SelectImages = ({ photos, setPhotos, onPrevPage, onNextPage }) => {
           다음
         </button>
       </div>
-      <div className='Modal_content'>
-        {/* 사진이 한장이라도 선택되면 Choose 컴포넌트 */}
-        {check === false ? <NotChoose /> : <Choose />}
-        <div className='ShowImg_Big'>
-          <img src={modalExample} onClick={Choosehandle} alt='' />
-          <img src={modalExample} onClick={Choosehandle} alt='' />
-          <img src={modalExample} onClick={Choosehandle} alt='' />
-          <img src={modalExample} onClick={Choosehandle} alt='' />
-          <img src={modalExample} onClick={Choosehandle} alt='' />
-          {/* <button className='Cancle_btn' type='button'><span>-</span></button> */}
-        </div>
-        <div className='ShowImg_Small'>
-          {/* 여기는 리스트 보내서 찍어야 할거 같은데 아직 잘 못하겠음 */}
-          <img src={modalExample} alt='' />
-          <img src={modalExample} alt='' />
-          <img src={modalExample} alt='' />
-          <img src={modalExample} alt='' />
-          <img src={modalExample} alt='' />
-          <img src={modalExample} alt='' />
-          <button type='button'>+</button>
-        </div>
-      </div>
-      <div className='footer'>
-        <span>6 / 10</span>
+      <div className='Write_content'>
+        <ImgList></ImgList>
       </div>
     </div>
   );

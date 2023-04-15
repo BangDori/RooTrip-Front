@@ -5,7 +5,7 @@ import { getLocation } from '@utils/metadata';
 import { useDropzone } from 'react-dropzone';
 import cn from 'classnames';
 
-const UploadImages = ({ onNextPage, onUploadPhotos }) => {
+const UploadImages = ({ onNextPage, onUploadPhotos, setWrite, Write }) => {
   const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
     const newPhoto = {
       photoOrder: idx,
@@ -84,7 +84,17 @@ const UploadImages = ({ onNextPage, onUploadPhotos }) => {
   return (
     <div className='First_modal'>
       <div className='Modal_head'>
-        <span>새 게시글 작성하기</span>
+        <button
+          className='MoveModal'
+          type='button'
+          onClick={() => setWrite(false)}
+        >
+          취소
+        </button>
+        <span style={{ margin: '0 95px 0 95px' }}>새 게시글 작성하기</span>
+        <button style={{ color: 'white' }} className='MoveModal' type='button'>
+          ㅇㅇ
+        </button>
       </div>
       <div className='Modal_First_content'>
         <div className='Photo_logo'>

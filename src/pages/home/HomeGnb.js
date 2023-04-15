@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import MenuFriend from '@assets/친구 게시글.png';
 import menuTrip from '@assets/Trip.png';
 import menuRoute from '@assets/Route.png';
@@ -7,13 +7,7 @@ import ModalPortal from '@components/ModalPortal';
 import Write from './write/Write';
 import '@styles/home/Nav.scss';
 
-const HomeGnb = () => {
-  const [modal, setModal] = useState(false);
-
-  const showModal = useCallback(() => {
-    setModal(true);
-  }, []);
-
+const HomeGnb = ({ write, setWrite }) => {
   return (
     <nav className='side_nav'>
       <div className='menu'>
@@ -40,7 +34,7 @@ const HomeGnb = () => {
             <button type='button'>Log</button>
             <span>Log</span>
           </div>
-          <div className='icon_up' onClick={showModal}>
+          <div className='icon_up' onClick={() => setWrite(true)}>
             <button type='button'>
               <img src={articleInput} alt='게시글 작성' />
             </button>
@@ -48,13 +42,6 @@ const HomeGnb = () => {
           </div>
         </div>
       </div>
-
-      {modal && (
-        <ModalPortal>
-          <div className='modal_back' />
-          <Write setModal={setModal} />
-        </ModalPortal>
-      )}
     </nav>
   );
 };

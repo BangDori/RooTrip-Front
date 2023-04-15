@@ -19,20 +19,6 @@ const WriteContent = ({ pagenum, setPagenum }) => {
         </button>
       </div>
       <div className='Modal_content'>
-        <div className='Show_repre'>
-          <div style={{ display: 'flex' }}>
-            {/* 여기에 사진 있으면 img태그 없으면 div로 띄우기 class이름은 그대로 */}
-            <div className='Order_repre'>1</div>
-            <div className='Order_repre'>2</div>
-            <div className='Order_repre'>3</div>
-            <div className='Order_repre'>4</div>
-            <div className='Order_repre'>5</div>
-            <div className='Order_repre'>6</div>
-            <div className='Order_repre' style={{ margin: 0 }}>
-              7
-            </div>
-          </div>
-        </div>
         <div className='Write_content'>
           <div className='Write_Title'>
             <input type='text' placeholder='제목을 입력해주세요' />

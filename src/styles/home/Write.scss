@@ -1,28 +1,25 @@
-.Content_box {
-  width: 500px;
-  max-height: 700px;
-  max-width: 500px;
-  position: absolute;
-  z-index: 999;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+.Main_content {
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 375px;
+    max-height: 500px;
+    right: 12.3%;
+  }
+  @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+    width: 375px;
+    max-height: 500px;
+    right: 20.3%;
+  }
+  @media only screen and (min-width: 1601px) {
+    width: 500px;
+    max-height: 662px;
+    right: 390px; //20.3%
+  }
   border: 1px solid #ccc;
-  border-radius: 30px;
-}
-
-.close_modal_btn {
-  cursor: pointer;
-  color: white;
+  border-radius: 20px;
   position: absolute;
-  z-index: 999;
-  top: 30px;
-  right: 70px;
-  font-size: 35px;
-  background-color: rgba(0, 0, 0, 0);
-  border: 0px;
-  font-weight: bold;
+  top: 80px;
+  background: white;
+  z-index: 101;
 }
 
 .Modal_head {
@@ -31,6 +28,9 @@
   border-bottom: 1px solid #ccc;
   padding: 10px 0 10px 0;
   font-weight: bold;
+  span {
+    margin: 0 95px;
+  }
 }
 
 .MoveModal {
@@ -47,16 +47,19 @@
   .Modal_First_content {
     text-align: center;
     .Photo_logo {
-      text-align: center;
+      height: 360px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       img {
         margin: 16px 0;
-        width: 175px;
+        width: 220px;
       }
     }
     .upload-section {
       display: flex;
-      height: 180px;
-      margin: 0 32px 8px;
+      height: 220px;
+      margin: 0 32px 28px;
       justify-content: center;
       align-items: center;
 
@@ -81,88 +84,118 @@
 }
 
 .Second_modal {
-  .Modal_content {
-    border-bottom: 1px solid #ccc;
-    height: 46.5vh;
-    .Show_repre {
-      width: 100%;
-      display: flex;
-      height: 9vh;
-      border-bottom: 1px solid #ccc;
-      justify-content: center;
-      align-items: center;
+  .Modal_head {
+    border: 0;
+  }
+
+  .Write_content {
+    max-height: 615px;
+    overflow-y: overlay;
+    /* overflow-x: hidden; */
+    object-fit: cover;
+    margin-right: 5px;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.4);
     }
-    .ShowImg_Big {
-      padding: 15px;
-      display: flex;
-      overflow: hidden;
-      justify-content: center;
-      align-items: center;
-      border-bottom: 1px solid #ccc;
-      img {
-        width: 240px;
-        border-radius: 15px;
-        padding: 0 7px 0 7px;
-        object-fit: cover;
-      }
-      button {
-        cursor: pointer;
-        position: absolute;
-        top: 17.3%;
-        font-weight: bold;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        right: 22%;
-        border: 0;
-        // span{
-        //   top: -11px;
-        //   right: 9px;
-        //   position: absolute;
-        // }
-      }
-      .Cancle_btn {
-        background-color: rgb(237 65 65);
-        font-size: 41px;
-        color: white;
-      }
-      .Nchoose_order {
-        background-color: #ccc;
-        border: #ccc;
-      }
-      .Nchoose_order:hover {
-        background-color: #aaa;
-      }
-      .Choose_order {
-        background-color: #2743a6;
-        color: white;
-        font-size: 15px;
-      }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
     }
-    .ShowImg_Small {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 9vh;
-      img {
-        width: 45px;
-        height: 60px;
-        margin-right: 13px;
-        object-fit: cover;
+
+    .Write_list {
+      max-height: 653px;
+      .check_img {
+        width: 465px;
+        height: 120px;
+        background-color: rgba(63, 63, 63, 0.3);
+        margin: 0 15px 5px 15px;
+        border-radius: 5px;
+        display: flex;
+        padding-top: 10px;
       }
-      button {
-        width: 46px;
-        height: 63px;
-        background: white;
-        font-size: 40px;
-        border: 1px solid #232323;
-        cursor: pointer;
-        background-color: #ddd;
-        color: #6d6d6d;
-        border: 1px solid #ddd;
-      }
-      button:hover {
-        background-color: #ccc;
+
+      .List_piece {
+        width: 465px;
+        height: 120px;
+        margin: 0 15px 5px 15px;
+        background-color: #eee;
+        border-radius: 5px;
+        display: flex;
+        padding-top: 10px;
+
+        .img_box {
+          width: 160px;
+          height: 110px;
+          border: 1px solid #ccc;
+          display: flex;
+          align-items: center;
+          margin-left: 10px;
+          justify-content: center;
+          overflow: hidden;
+          position: relative;
+
+          .click_img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid white;
+            background-color: #152f8d;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: absolute;
+            z-index: 1;
+          }
+
+          img {
+            max-width: 160px;
+            max-height: 140px;
+          }
+        }
+
+        table {
+          max-height: 112px;
+          margin-left: 15px;
+        }
+
+        th {
+          color: rgb(72, 72, 196);
+          font-weight: bold;
+          font-size: 18px;
+          text-align: center;
+          margin-right: 10px;
+        }
+
+        td {
+          width: 125px;
+          margin: auto;
+          height: 51px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding-left: 20px;
+        }
+
+        button {
+          width: 120px;
+          height: 40px;
+          border: 0;
+          border-radius: 10px;
+          color: white;
+          font-weight: bold;
+          font-size: 18px;
+          background-color: #2743a6;
+        }
       }
     }
   }
@@ -175,6 +208,7 @@
     align-items: center;
     justify-content: center;
   }
+
   .footer_text {
     font-weight: bold;
   }
@@ -228,6 +262,7 @@
         justify-content: center;
         input {
           padding-left: 10px;
+          padding-top: 5px;
         }
         input:focus {
           outline: none;
@@ -241,7 +276,7 @@
         justify-content: center;
         margin-bottom: 15px;
         textarea {
-          height: 215px;
+          height: 464px;
           padding: 20px 0 0 10px;
         }
         textarea:focus {
@@ -254,13 +289,13 @@
 
   .footer {
     border-top: 1px solid #ccc;
-    height: 5.6vh;
+    height: 80px;
     display: flex;
     align-items: center;
     .With_who {
       padding-left: 20px;
       span {
-        font-size: 20px;
+        font-size: 22px;
       }
       input {
         border-top: 0;
