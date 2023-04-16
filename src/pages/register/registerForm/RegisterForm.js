@@ -69,6 +69,8 @@ const RegisterForm = ({ onRegister }) => {
       }
 
       try {
+        delete form.password2;
+
         // 상위 컴포넌트로 회원가입 정보 전달
         await onRegister(form);
 
