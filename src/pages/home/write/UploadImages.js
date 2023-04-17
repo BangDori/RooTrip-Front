@@ -9,10 +9,11 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
   // 메타 정보와 함께 사진 생성하기
   const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
     const newPhoto = {
-      photoOrder: idx,
+      feedOrder: idx,
       dateTime: '',
       latitude: '',
       longitude: '',
+      routeOrder: -1,
       url: URL.createObjectURL(fileInfo),
     };
 
@@ -43,6 +44,12 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
     return newPhoto;
   }, []);
 
+  // feed 순서대로 사진 정렬하기
+  const sort = useCallback(
+    (photos) => photos.sort((a, b) => a.feedOrder - b.feedOrder),
+    [],
+  );
+
   // 사진 업로드시 호출되는 함수
   const handleUploadPhotos = useCallback(
     async (e) => {
@@ -58,7 +65,7 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
         const promise = new Promise((resolve) => {
           EXIF.getData(fileInfo, () => {
             const newPhoto = createNewPhoto(
-              idx + 1,
+              Number(idx) + 1,
               fileInfo,
               fileInfo.exifdata,
             );
@@ -73,9 +80,10 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
       await Promise.all(promises);
 
       onUploadPhotos(newPhotos);
+      sort(newPhotos);
       onMovePage(1);
     },
-    [onMovePage, onUploadPhotos, createNewPhoto],
+    [onMovePage, onUploadPhotos, createNewPhoto, sort],
   );
 
   // Drag & Drop 기능
