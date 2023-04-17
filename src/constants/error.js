@@ -9,6 +9,7 @@ export const DUPLICATED_EMAIL_ERROR = '이미 존재하는 이메일입니다.';
 export const DUPLICATED_NICKNAME_ERROR = '이미 존재하는 닉네임입니다.';
 
 // 회원가입 및 로그인 - 비밀번호 에러
+export const PASSWORD_REQUIRED_ERROR = '비밀번호를 먼저 확인해주세요.';
 export const PASSWORD_MISMATCH_ERROR = '비밀번호가 일치하지 않습니다.';
 
 // 이메일 인증 관련
