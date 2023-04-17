@@ -25,7 +25,7 @@ const SelectImages = ({ photos, setPhotos, onMovePage }) => {
         >
           이전
         </button>
-        <span style={{ margin: '0 88px 0 88px' }}>게시 순서 및 경로 설정</span>
+        <span>게시 순서 및 경로 설정</span>
         <button
           type='button'
           className='MoveModal Co'

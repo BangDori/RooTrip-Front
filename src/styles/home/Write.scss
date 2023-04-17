@@ -1,36 +1,12 @@
-.Main_content {
-  @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    width: 375px;
-    max-height: 500px;
-    right: 12.3%;
-  }
-  @media only screen and (min-width: 1025px) and (max-width: 1600px) {
-    width: 375px;
-    max-height: 500px;
-    right: 20.3%;
-  }
-  @media only screen and (min-width: 1601px) {
-    width: 500px;
-    max-height: 662px;
-    right: 390px; //20.3%
-  }
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  position: absolute;
-  top: 80px;
-  background: white;
-  z-index: 101;
-}
-
 .Modal_head {
-  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+
   font-size: 20px;
   border-bottom: 1px solid #ccc;
   padding: 10px 0 10px 0;
   font-weight: bold;
-  span {
-    margin: 0 95px;
-  }
 }
 
 .MoveModal {
@@ -38,7 +14,7 @@
   border: 0px;
   width: 60px;
   background: white;
-  font-size: 17px;
+  font-size: 14px;
   color: rgb(72, 72, 196);
   font-weight: bold;
 }
@@ -47,19 +23,18 @@
   .Modal_First_content {
     text-align: center;
     .Photo_logo {
-      height: 360px;
       display: flex;
       justify-content: center;
       align-items: center;
       img {
         margin: 16px 0;
-        width: 220px;
+        width: 176px;
       }
     }
     .upload-section {
       display: flex;
       height: 220px;
-      margin: 0 32px 28px;
+      margin: 0 16px 16px;
       justify-content: center;
       align-items: center;
 
@@ -90,7 +65,11 @@
     max-height: 615px;
     overflow-y: overlay;
     object-fit: cover;
-    margin: 8px 5px 0 0;
+    margin: 8px 0 0;
+
+    @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+      max-height: 434px;
+    }
 
     &::-webkit-scrollbar {
       width: 8px;

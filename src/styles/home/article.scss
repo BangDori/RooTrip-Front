@@ -1,27 +1,31 @@
 .Main_content {
-  @media only screen and (min-width: 768px) and (max-width: 1024px) {
-    width: 375px;
-    max-height: 500px;
-    right: 12.3%;
-  }
-  @media only screen and (min-width: 1025px) and (max-width: 1600px) {
-    width: 375px;
-    max-height: 500px;
-    right: 20.3%;
-  }
-  @media only screen and (min-width: 1601px) {
-    width: 500px;
-    max-height: 700px;
-    right: 390px; //20.3%
-  }
   border: 1px solid #ccc;
   border-radius: 20px;
   position: absolute;
   top: 80px;
   background: white;
   z-index: 101;
+  right: 10%;
+
+  @media only screen and (min-width: 768px) and (max-width: 1024px) {
+    width: 375px;
+    max-height: 500px;
+  }
+  @media only screen and (min-width: 1025px) and (max-width: 1600px) {
+    width: 456px;
+    max-height: 500px;
+  }
+  @media only screen and (min-width: 1601px) {
+    width: 500px;
+    max-height: 700px;
+  }
 
   .article_head {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    align-items: center;
+    justify-content: center;
+
     @media only screen and (min-width: 768px) and (max-width: 1024px) {
       height: 23px;
     }
@@ -31,10 +35,7 @@
     @media only screen and (min-width: 1601px) {
       height: 30px;
     }
-    display: flex;
-    border-bottom: 1px solid #ccc;
-    align-items: center;
-    justify-content: center;
+
     .photo_page {
       font-weight: bold;
       color: rgb(165, 165, 165);
