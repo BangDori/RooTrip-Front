@@ -13,7 +13,7 @@ const useTimer = (initialTime = 180) => {
           const newTime = prevTime - 1;
 
           if (newTime === 0) {
-            setIsActive(false);
+            // setIsActive(false);
             setIsCompleted(true);
             clearInterval(intervalRef.current);
           }

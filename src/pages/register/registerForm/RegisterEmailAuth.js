@@ -173,6 +173,11 @@ const RegisterEmailAuth = ({
         return;
       }
 
+      if (number.length <= 0) {
+        alert('인증 번호를 입력해주세요.');
+        return;
+      }
+
       const status = await authVerifyNumber(email, number);
 
       // 인증이 확인되었다면,
