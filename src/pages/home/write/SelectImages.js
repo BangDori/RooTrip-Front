@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import exampleimg1 from '@assets/LoginMarker1.jpg';
-import exampleimg2 from '@assets/LoginMarker2.jpg';
-import exampleimg3 from '@assets/LoginMarker3.jpg';
-import ImgList from '../../../components/Write/ImgList';
+import ImgList from '@components/Write/ImgList';
 
-const SelectImages = ({ photos, setPhotos, onPrevPage, onNextPage }) => {
+const SelectImages = ({ photos, setPhotos, onMovePage }) => {
   const [choose, setChoose] = useState(0);
   const [check, setCheck] = useState(false);
 
@@ -24,7 +21,7 @@ const SelectImages = ({ photos, setPhotos, onPrevPage, onNextPage }) => {
         <button
           type='button'
           className='MoveModal F'
-          onClick={() => onPrevPage()}
+          onClick={() => onMovePage(-1)}
         >
           이전
         </button>
@@ -32,13 +29,13 @@ const SelectImages = ({ photos, setPhotos, onPrevPage, onNextPage }) => {
         <button
           type='button'
           className='MoveModal Co'
-          onClick={() => onNextPage()}
+          onClick={() => onMovePage(1)}
         >
           다음
         </button>
       </div>
       <div className='Write_content'>
-        <ImgList></ImgList>
+        <ImgList photos={photos}></ImgList>
       </div>
     </div>
   );
