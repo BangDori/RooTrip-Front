@@ -7,6 +7,10 @@ import useInitialState from '@hooks/useInitialState';
 import { regExpSpace } from '@constants/regExp';
 import showError from '@utils/change';
 import useValidateForm from '@hooks/useValidateForm';
+import {
+  PASSWORD_REQUIRED_ERROR,
+  PASSWORD_MISMATCH_ERROR,
+} from '@constants/error';
 import RegisterButton from './RegisterButton';
 import RegisterEmailAuth from './RegisterEmailAuth';
 
@@ -22,9 +26,9 @@ const RegisterForm = ({ onRegister }) => {
   const [validation, setValidation, validateForm] = useValidateForm({
     name: false,
     email: false,
-    nickname: false,
-    password: false,
-    password2: false,
+    nickname: '※ 한글, 영어, 숫자를 조합한 닉네임을 입력해주세요.',
+    password: '※ 숫자, 영어, 특수문자를 포함해 8~16자리로 입력해주세요.',
+    password2: '※ 위 입력한 비밀번호를 다시 입력해주세요.',
   });
 
   const onInput = useCallback(
@@ -41,15 +45,23 @@ const RegisterForm = ({ onRegister }) => {
 
   const confirmPassword = useCallback(
     (e) => {
-      const prevPassword = document.querySelector('.password').value;
-      const isConfirm = prevPassword === e.target.value;
+      const prevPassword = form.password;
 
-      setValidation((prevValidation) => ({
-        ...prevValidation,
-        password2: isConfirm,
-      }));
+      if (validation.password !== true) {
+        setValidation((prevValidation) => ({
+          ...prevValidation,
+          password2: PASSWORD_REQUIRED_ERROR,
+        }));
+      } else {
+        const isConfirm = prevPassword === e.target.value;
+
+        setValidation((prevValidation) => ({
+          ...prevValidation,
+          password2: isConfirm ? true : PASSWORD_MISMATCH_ERROR,
+        }));
+      }
     },
-    [setValidation],
+    [form.password, validation.password, setValidation],
   );
 
   const handleSubmit = useCallback(
@@ -130,7 +142,7 @@ const RegisterForm = ({ onRegister }) => {
             onChange={onInput}
             onBlur={validateForm}
             placeholder='닉네임을 입력해주세요'
-            message='※ 한글, 영어, 숫자를 조합한 닉네임을 입력해주세요.'
+            message={validation.nickname}
           />
         </div>
         <div className='input-register_form'>
@@ -142,7 +154,7 @@ const RegisterForm = ({ onRegister }) => {
             onChange={onInput}
             onBlur={validateForm}
             placeholder='비밀번호를 입력해주세요'
-            message='※ 숫자, 영어, 특수문자를 포함해 8~16자리로 입력해주세요.'
+            message={validation.password}
           />
         </div>
         <div className='input-register_form'>
@@ -154,7 +166,7 @@ const RegisterForm = ({ onRegister }) => {
             onChange={onInput}
             onBlur={confirmPassword}
             placeholder='비밀번호를 한번 더 입력해주세요'
-            message='※ 위 입력한 비밀번호를 다시 입력해주세요.'
+            message={validation.password2}
           />
         </div>
       </div>

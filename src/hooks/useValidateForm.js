@@ -5,11 +5,16 @@ const useValidateForm = (intialState) => {
   const [validation, setValidation] = useState(intialState);
 
   const validateForm = useCallback(async (e) => {
-    const { isValid, type } = await validate(e.target.name, e.target.value);
+    if (e.target.value <= 0) return;
+
+    const { isValid, error, type } = await validate(
+      e.target.name,
+      e.target.value,
+    );
 
     setValidation((prevValidation) => ({
       ...prevValidation,
-      [type]: isValid,
+      [type]: isValid ? true : error,
     }));
   }, []);
 
