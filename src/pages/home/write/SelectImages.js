@@ -1,19 +1,8 @@
-import { useState } from 'react';
-import ImgList from '@components/Write/ImgList';
+import Photo from '@components/Write/Photo';
+import { useCallback } from 'react';
 
 const SelectImages = ({ photos, setPhotos, onMovePage }) => {
-  const [choose, setChoose] = useState(0);
-  const [check, setCheck] = useState(false);
-
-  const Choosehandle = () => {
-    if (check === false) {
-      setChoose(choose + 1);
-      setCheck(true);
-    } else {
-      setChoose(choose - 1);
-      setCheck(false);
-    }
-  };
+  const setRoute = useCallback(() => {}, []);
 
   return (
     <div className='Second_modal'>
@@ -35,7 +24,11 @@ const SelectImages = ({ photos, setPhotos, onMovePage }) => {
         </button>
       </div>
       <div className='Write_content'>
-        <ImgList photos={photos}></ImgList>
+        <div className='Write_list'>
+          {photos.map((photo) => (
+            <Photo key={photo.feedOrder} photo={photo} setRoute={setRoute} />
+          ))}
+        </div>
       </div>
     </div>
   );
