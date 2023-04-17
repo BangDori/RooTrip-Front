@@ -9,11 +9,11 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
   // 메타 정보와 함께 사진 생성하기
   const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
     const newPhoto = {
+      id: idx,
       feedOrder: idx,
       dateTime: '',
       latitude: '',
       longitude: '',
-      routeOrder: -1,
       url: URL.createObjectURL(fileInfo),
     };
 
