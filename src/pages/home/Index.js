@@ -10,19 +10,20 @@ import Write from './write/Write';
 const Map = loadable(() => import('@components/Map'));
 
 const Index = () => {
-  const [write, setWrite] = useState(false);
+  const [writeMode, setWriteMode] = useState(false);
+
+  const onChangeMode = useCallback(() => {
+    setWriteMode((prevMode) => !prevMode);
+  }, []);
+
   return (
     <>
       <HomeLogo />
 
-      <HomeGnb write={write} setWrite={setWrite} />
+      <HomeGnb onChangeMode={onChangeMode} />
       <HomeProfile />
 
-      {write === true ? (
-        <Write write={write} setWrite={setWrite} />
-      ) : (
-        <HomeArticle />
-      )}
+      {writeMode ? <Write onChangeMode={onChangeMode} /> : <HomeArticle />}
 
       <Map />
     </>

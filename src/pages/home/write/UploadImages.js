@@ -5,7 +5,8 @@ import { getLocation } from '@utils/metadata';
 import { useDropzone } from 'react-dropzone';
 import cn from 'classnames';
 
-const UploadImages = ({ onNextPage, onUploadPhotos, setWrite, Write }) => {
+const UploadImages = ({ onMovePage, onUploadPhotos }) => {
+  // 메타 정보와 함께 사진 생성하기
   const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
     const newPhoto = {
       photoOrder: idx,
@@ -39,6 +40,7 @@ const UploadImages = ({ onNextPage, onUploadPhotos, setWrite, Write }) => {
     return newPhoto;
   }, []);
 
+  // 사진 업로드시 호출되는 함수
   const handleUploadPhotos = useCallback(
     async (e) => {
       if (e.length > 10) {
@@ -68,11 +70,12 @@ const UploadImages = ({ onNextPage, onUploadPhotos, setWrite, Write }) => {
       await Promise.all(promises);
 
       onUploadPhotos(newPhotos);
-      onNextPage();
+      onMovePage(1);
     },
-    [onNextPage, onUploadPhotos, createNewPhoto],
+    [onMovePage, onUploadPhotos, createNewPhoto],
   );
 
+  // Drag & Drop 기능
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: {
       'image/*': ['.jpeg', '.png', '.gif'],
@@ -87,14 +90,11 @@ const UploadImages = ({ onNextPage, onUploadPhotos, setWrite, Write }) => {
         <button
           className='MoveModal'
           type='button'
-          onClick={() => setWrite(false)}
+          onClick={() => onMovePage(-1)}
         >
           취소
         </button>
-        <span style={{ margin: '0 95px 0 95px' }}>새 게시글 작성하기</span>
-        <button style={{ color: 'white' }} className='MoveModal' type='button'>
-          ㅇㅇ
-        </button>
+        <span>새 게시글 작성하기</span>
       </div>
       <div className='Modal_First_content'>
         <div className='Photo_logo'>

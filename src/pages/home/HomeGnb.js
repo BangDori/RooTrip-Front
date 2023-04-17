@@ -4,10 +4,9 @@ import menuTrip from '@assets/Trip.png';
 import menuRoute from '@assets/Route.png';
 import articleInput from '@assets/article_input.png';
 import ModalPortal from '@components/ModalPortal';
-import Write from './write/Write';
 import '@styles/home/Nav.scss';
 
-const HomeGnb = ({ write, setWrite }) => {
+const HomeGnb = ({ onChangeMode }) => {
   return (
     <nav className='side_nav'>
       <div className='menu'>
@@ -34,7 +33,7 @@ const HomeGnb = ({ write, setWrite }) => {
             <button type='button'>Log</button>
             <span>Log</span>
           </div>
-          <div className='icon_up' onClick={() => setWrite(true)}>
+          <div className='icon_up' onClick={onChangeMode}>
             <button type='button'>
               <img src={articleInput} alt='게시글 작성' />
             </button>

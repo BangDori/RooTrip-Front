@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import modalExample from '@assets/modalExample.png';
 
-const WriteContent = ({ pagenum, setPagenum }) => {
+const WriteContent = ({ onMovePage }) => {
   const [show, setShow] = useState(0);
+
   return (
     <div className='Last_modal'>
       <div className='Modal_head'>
         <button
           type='button'
           className='MoveModal Ch'
-          onClick={() => setPagenum(1)}
+          onClick={() => onMovePage(-1)}
         >
           이전
         </button>
-        <span style={{ margin: '0 95px 0 95px' }}>새 게시글 작성하기</span>
+        <span>새 게시글 작성하기</span>
         <button type='button' className='MoveModal'>
           완료
         </button>
