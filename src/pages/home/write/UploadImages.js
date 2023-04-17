@@ -16,7 +16,10 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
       url: URL.createObjectURL(fileInfo),
     };
 
-    if (Object.keys(exifdata).length !== 0) {
+    if (
+      Object.keys(exifdata).includes('GPSLatitude') &&
+      Object.keys(exifdata).includes('GPSLongitude')
+    ) {
       const {
         DateTime,
         GPSLatitudeRef,
