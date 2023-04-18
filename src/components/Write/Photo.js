@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import getAddress from '@services/image';
+import { getAddress } from '@services/image';
 
 const Photo = ({ photo, addRoute, clicked }) => {
   const { feedOrder, url, latitude, longitude } = photo;
