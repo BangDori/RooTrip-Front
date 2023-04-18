@@ -10,6 +10,7 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
   const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
     const newPhoto = {
       id: idx,
+      fileName: `${Date.now()}-${fileInfo.name}`,
       feedOrder: idx,
       dateTime: '',
       latitude: '',
