@@ -107,6 +107,7 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
           취소
         </button>
         <span>새 게시글 작성하기</span>
+        <button type='button' className='MoveModal'></button>
       </div>
       <div className='Modal_First_content'>
         <div className='Photo_logo'>
