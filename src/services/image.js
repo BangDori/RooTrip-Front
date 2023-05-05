@@ -25,6 +25,7 @@ export async function getAddress(latitude, longitude) {
 
 /**
  * AWS S3 pre-signed url을 받아오기 위한 함수
+ * @param {*} fileNames 파일 이름
  * @returns pre-signed url
  */
 export async function getPreSignedUrl(fileNames) {
@@ -45,19 +46,14 @@ export async function getPreSignedUrl(fileNames) {
  * @param {*} preSignedUrl Pre-signed url
  * @returns 파일이 업로드된 주소
  */
-export async function uploadFileToS3(file, preSignedUrl) {
+export async function uploadFileToS3(formData, preSignedUrl) {
   try {
-    const res = await fetch(
-      new Request(preSignedUrl, {
-        method: 'PUT',
-        body: file,
-        headers: new Headers({
-          'Content-Type': 'image/jgeg',
-        }),
-      }),
-    );
+    const urls = await axios
+      .put(preSignedUrl, formData)
+      // eslint-disable-next-line no-console
+      .then((res) => res.request.responseURL);
 
-    return res;
+    return urls;
   } catch (e) {
     return e;
   }
