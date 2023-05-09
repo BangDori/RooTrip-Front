@@ -7,15 +7,20 @@ import ModalPortal from '@components/ModalPortal';
 import '@styles/home/Nav.scss';
 
 const HomeGnb = ({ onChangeMode }) => {
+  const [nowPage, setNowPage] = useState(0);
+
+  const movePage = useCallback(() => {
+    setNowPage(1);
+  }, []);
   return (
     <nav className='side_nav'>
       <div className='menu'>
         <div className='menu_Icon'>
-          <div className='icon_up'>
-            <button type='button'>
+          <div className={nowPage === 1 ? 'icon_up now_nav' : 'icon_up'}>
+            <button type='button' onClick={movePage}>
               <img src={MenuFriend} alt='친구 게시글' />
             </button>
-            <span>친구 게시글</span>
+            <span onClick={movePage}>친구 게시글</span>
           </div>
           <div className='icon_up' id='Trip_nav'>
             <button type='button'>
