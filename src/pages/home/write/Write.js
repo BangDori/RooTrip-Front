@@ -59,8 +59,8 @@ const Write = ({ onChangeMode }) => {
       );
 
       // 서버로 데이터 전송하기
-      const writing = {
-        photos: newPhotos,
+      const post = {
+        newPhotos,
         routes,
         article,
       };
@@ -68,7 +68,7 @@ const Write = ({ onChangeMode }) => {
       // eslint-disable-next-line no-console
       // console.log(writing);
 
-      const result = await createPost(writing);
+      const result = await createPost(post);
 
       // onChangeMode();
     },
