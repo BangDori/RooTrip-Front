@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import '@styles/register/register.scss';
 import cn from 'classnames';
 import Input from '@components/wrapper/Input';
 import Button from '@components/wrapper/Button';

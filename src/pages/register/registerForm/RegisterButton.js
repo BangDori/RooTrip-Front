@@ -17,10 +17,20 @@ const RegisterButton = () => {
 
   return (
     <div className='check_assign'>
-      <Input name='service' checked={service} onChange={onChecked}>
+      <Input
+        name='service'
+        checked={service}
+        onChange={onChecked}
+        type='checkbox'
+      >
         <span>(필수) 서비스 이용약관</span>
       </Input>
-      <Input name='marketing' checked={marketing} onChange={onChecked}>
+      <Input
+        name='marketing'
+        checked={marketing}
+        onChange={onChecked}
+        type='checkbox'
+      >
         <span>(선택) 개인정보 이용</span>
       </Input>
       <div className='signbtn'>

@@ -1,6 +1,8 @@
 import React from 'react';
 import Title from '@components/wrapper/Title';
 import TOC from '@components/wrapper/TOC';
+import '@styles/components/Title.scss';
+import '@styles/register/register.scss';
 import RegisterContainer from './RegisterContainer';
 
 const table = [
@@ -30,7 +32,9 @@ const table = [
 const Index = () => {
   return (
     <>
-      <Title title='JOIN MEMBERS' />
+      <Title title='JOIN MEMBERS' className='registerTitle'>
+        <h2>JOIN MEMBERS</h2>
+      </Title>
       <div className='Register_main'>
         <TOC table={table} />
         <RegisterContainer />
