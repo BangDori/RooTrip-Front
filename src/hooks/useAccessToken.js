@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { reIssue } from '@services/user';
+import { reIssue } from '@services/auth';
 import { issue } from '@store/accessToken';
 import { getRefreshToken } from '@utils/authCookie';
 
@@ -11,9 +11,12 @@ const useAccessToken = (accessToken, expireTime) => {
 
   useEffect(() => {
     const tokenReIssue = async () => {
-      const token = await reIssue();
-
-      if (token) dispatch(issue(token));
+      try {
+        const token = await reIssue(refreshToken);
+        dispatch(issue(token));
+      } catch (e) {
+        alert(e.message);
+      }
     };
 
     if (accessToken) {

@@ -4,7 +4,7 @@ import {
   regExpPassword,
   regExpNickname,
 } from '@constants/regExp';
-import { findOne } from '@services/user';
+import { findOne } from '@services/auth';
 import {
   DUPLICATED_EMAIL_ERROR,
   DUPLICATED_NICKNAME_ERROR,

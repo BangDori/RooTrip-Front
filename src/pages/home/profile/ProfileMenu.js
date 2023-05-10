@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { logout } from '@services/user';
+import { logout } from '@services/auth';
 import { remove } from '@store/accessToken';
 
 const StyledProfileMenu = styled.div`
@@ -39,15 +39,16 @@ const StyledProfileMenu = styled.div`
 
 const ProfileMenu = () => {
   const dispatch = useDispatch();
+  const { accessToken } = useSelector((state) => state.accessToken);
 
   const onLogout = useCallback(async () => {
     try {
-      await logout();
+      await logout(accessToken);
       dispatch(remove());
     } catch (e) {
-      // error
+      alert(e.message);
     }
-  }, [dispatch]);
+  }, [dispatch, accessToken]);
 
   return (
     <StyledProfileMenu isActive={true}>

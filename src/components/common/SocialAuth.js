@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { socialLogin } from '@services/user';
 import { useDispatch } from 'react-redux';
 import { issue } from '@store/accessToken';
+import { setRefreshToken } from '@utils/authCookie';
 
 const SocialAuth = () => {
   const dispatch = useDispatch();
@@ -12,16 +13,19 @@ const SocialAuth = () => {
 
   useEffect(() => {
     const getToken = async () => {
-      const accessToken = await socialLogin(provider, code);
+      try {
+        const token = await socialLogin(provider, code);
+        const { accessToken, expire, refreshToken } = token;
 
-      if (accessToken) {
-        dispatch(issue(accessToken));
+        setRefreshToken(refreshToken);
+        dispatch(issue({ accessToken, expire }));
         navigate('/');
+      } catch (e) {
+        alert(e.message);
       }
     };
 
     getToken();
-
     // 의존성 배열을 제거함으로써 두 번 발생하는 에러 해결
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
