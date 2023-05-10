@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import RegisterEmailAuth from '@pages/register/registerForm/RegisterEmailAuth';
 import styled from 'styled-components';
-import { sendPassword } from '@services/user';
+import { sendPassword } from '@services/email';
 
 const StyledAccountForm = styled.form`
   display: flex;

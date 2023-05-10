@@ -2,7 +2,7 @@ import Input from '@components/wrapper/Input';
 import Button from '@components/wrapper/Button';
 import React, { useCallback, useRef, useState } from 'react';
 import cn from 'classnames';
-import { sendVerifyNumber, authVerifyNumber } from '@services/user';
+import { sendVerifyNumber, authVerifyNumber } from '@services/email';
 import useTimer from '@hooks/useTimer';
 import validate from '@utils/validation';
 import styled from 'styled-components';

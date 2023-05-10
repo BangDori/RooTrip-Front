@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { socialLogin } from '@services/user';
+import { socialLogin } from '@services/auth';
 import { useDispatch } from 'react-redux';
 import { issue } from '@store/accessToken';
 import { setRefreshToken } from '@utils/authCookie';
