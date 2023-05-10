@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import '@styles/home/Write.scss';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
+import { createPost } from '@services/post';
 import UploadImages from './UploadImages';
 import SelectImages from './SelectImages';
 import WriteContent from './WriteContent';
@@ -59,17 +60,19 @@ const Write = ({ onChangeMode }) => {
 
       // 서버로 데이터 전송하기
       const writing = {
-        newPhotos,
+        photos: newPhotos,
         routes,
         article,
       };
 
       // eslint-disable-next-line no-console
-      console.log(writing);
+      // console.log(writing);
 
-      onChangeMode();
+      const result = await createPost(writing);
+
+      // onChangeMode();
     },
-    [onChangeMode, photos, routes],
+    [photos, routes],
   );
 
   return (

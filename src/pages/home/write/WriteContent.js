@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const WriteContent = ({ onMovePage, onSetArticle }) => {
+const WriteContent = ({ onMovePage, onUploadWrite }) => {
   const [article, setArticle] = useState({
     title: '',
     content: '',
@@ -15,10 +15,13 @@ const WriteContent = ({ onMovePage, onSetArticle }) => {
     }));
   }, []);
 
+  const handleClick = useCallback((e) => {
+    setShow(Number(e.target.name));
+  }, []);
+
   const onFinish = useCallback(() => {
-    onSetArticle(article);
-    onMovePage(1);
-  }, [article, onSetArticle, onMovePage]);
+    onUploadWrite(article);
+  }, [article, onUploadWrite]);
 
   return (
     <div className='Last_modal'>
@@ -61,20 +64,23 @@ const WriteContent = ({ onMovePage, onSetArticle }) => {
         </div>
         <div className='Show_who_btns'>
           <button
-            onClick={() => setShow(0)}
-            className={show === 0 && 'choose_btn'}
+            name='0'
+            onClick={handleClick}
+            className={show === 0 ? 'choose_btn' : ''}
           >
             공개
           </button>
           <button
-            onClick={() => setShow(1)}
-            className={show === 1 && 'choose_btn'}
+            name='1'
+            onClick={handleClick}
+            className={show === 1 ? 'choose_btn' : ''}
           >
             비공개
           </button>
           <button
-            onClick={() => setShow(2)}
-            className={show === 2 && 'choose_btn'}
+            name='2'
+            onClick={handleClick}
+            className={show === 2 ? 'choose_btn' : ''}
           >
             나만보기
           </button>
