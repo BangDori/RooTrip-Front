@@ -8,9 +8,10 @@ const Home = loadable(() => import('@pages/home/Index'));
 const Login = loadable(() => import('@pages/login/Index'));
 const FindAccount = loadable(() => import('@pages/account/Index'));
 const Register = loadable(() => import('@pages/register/Index'));
-const SocialAuth = loadable(() => import('@components/SocialAuth'));
-const NotFound = loadable(() => import('@components/NotFound'));
+const SocialAuth = loadable(() => import('@components/common/SocialAuth'));
+const NotFound = loadable(() => import('@components/common/NotFound'));
 const Fallow = loadable(() => import('@pages/Fallow/Fallow'));
+
 const App = () => {
   const { accessToken, expireTime } = useSelector((state) => state.accessToken);
 

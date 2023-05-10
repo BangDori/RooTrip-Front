@@ -32,13 +32,11 @@ const StyledTitle = styled.div`
   }
 `;
 
-const Title = ({ title }) => (
-  <StyledTitle>
-    <Link to='/' className='Go_before_page'>
-      <img className='logo' src={Logo} alt='로고사진' />
-      <span className='content'>{title}</span>
-    </Link>
-  </StyledTitle>
+const Title = ({ titleClass, imgClass, children }) => (
+  <Link to='/' className={titleClass}>
+    <img className={imgClass} src={Logo} alt='로고사진' />
+    {children}
+  </Link>
 );
 
 export default Title;

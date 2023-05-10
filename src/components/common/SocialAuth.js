@@ -4,7 +4,7 @@ import { socialLogin } from '@services/user';
 import { useDispatch } from 'react-redux';
 import { issue } from '@store/accessToken';
 
-const Auth = () => {
+const SocialAuth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { provider } = useParams();
@@ -29,4 +29,4 @@ const Auth = () => {
   return null;
 };
 
-export default Auth;
+export default SocialAuth;

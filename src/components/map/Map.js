@@ -6,7 +6,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import useGetImages from '@hooks/useGetImages';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import useMapEvents from '@hooks/useMapEvents';
-import CustomMarker from './map/CustomMarker';
+import CustomMarker from './CustomMarker';
 
 const Map = () => {
   const mapContainer = useRef();

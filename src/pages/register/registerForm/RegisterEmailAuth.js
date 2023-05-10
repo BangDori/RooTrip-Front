@@ -1,5 +1,5 @@
-import Input from '@components/Input';
-import Button from '@components/Button';
+import Input from '@components/wrapper/Input';
+import Button from '@components/wrapper/Button';
 import React, { useCallback, useRef, useState } from 'react';
 import cn from 'classnames';
 import { sendVerifyNumber, authVerifyNumber } from '@services/user';

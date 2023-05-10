@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import RegisterCheckBox from '@components/account/RegisterCheckBox';
+import Input from '@components/wrapper/Input';
 
 const RegisterButton = () => {
   const [checkBox, setCheckBox] = useState({
@@ -17,16 +17,12 @@ const RegisterButton = () => {
 
   return (
     <div className='check_assign'>
-      <RegisterCheckBox name='service' checked={service} onChange={onChecked}>
+      <Input name='service' checked={service} onChange={onChecked}>
         <span>(필수) 서비스 이용약관</span>
-      </RegisterCheckBox>
-      <RegisterCheckBox
-        name='marketing'
-        checked={marketing}
-        onChange={onChecked}
-      >
+      </Input>
+      <Input name='marketing' checked={marketing} onChange={onChecked}>
         <span>(선택) 개인정보 이용</span>
-      </RegisterCheckBox>
+      </Input>
       <div className='signbtn'>
         <button
           type='submit'

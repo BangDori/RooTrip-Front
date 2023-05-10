@@ -6,7 +6,7 @@ import LoginSocial from './LoginSocial';
 import Account from './Account';
 import '@styles/login/login.scss';
 
-const Map = loadable(() => import('@components/Map'));
+const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
   return (

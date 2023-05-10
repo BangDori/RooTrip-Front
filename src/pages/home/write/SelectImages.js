@@ -1,4 +1,4 @@
-import Photo from '@components/Write/Photo';
+import Photo from '@components/wrapper/Photo';
 import { useCallback, useReducer } from 'react';
 
 function routeReducer(routes, action) {

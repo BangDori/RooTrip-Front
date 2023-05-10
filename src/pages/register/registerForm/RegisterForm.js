@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import '@styles/register/register.scss';
 import cn from 'classnames';
-import Input from '@components/Input';
-import Button from '@components/Button';
+import Input from '@components/wrapper/Input';
+import Button from '@components/wrapper/Button';
 import useInitialState from '@hooks/useInitialState';
 import { regExpSpace } from '@constants/regExp';
 import showError from '@utils/change';

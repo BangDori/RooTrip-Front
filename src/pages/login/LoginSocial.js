@@ -6,7 +6,7 @@ import naver from '@assets/naver.png';
 import kakao from '@assets/kakao.png';
 import google from '@assets/google.png';
 
-const SocialAuth = loadable(() => import('@components/SocialAuth'));
+const SocialAuth = loadable(() => import('@components/common/SocialAuth'));
 
 const LoginSocial = () => {
   const onAuthLoad = () => SocialAuth.preload();

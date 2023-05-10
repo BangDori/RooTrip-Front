@@ -3,7 +3,6 @@ import MenuFriend from '@assets/친구 게시글.png';
 import menuTrip from '@assets/Trip.png';
 import menuRoute from '@assets/Route.png';
 import articleInput from '@assets/article_input.png';
-import ModalPortal from '@components/ModalPortal';
 import '@styles/home/Nav.scss';
 
 const HomeGnb = ({ onChangeMode }) => {
