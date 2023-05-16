@@ -1,39 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import RegisterEmailAuth from '@pages/register/registerForm/RegisterEmailAuth';
-import styled from 'styled-components';
 import { sendPassword } from '@services/email';
-
-const StyledAccountForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 8px 0 0 30px;
-
-  gap: 32px;
-  .check_btn {
-    cursor: pointer;
-    background-color: rgb(72, 72, 196);
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    border: 1px solid rgb(45, 45, 254);
-    width: 150px;
-    height: 50px;
-    box-shadow: 4px 4px 2px 2px #ccc;
-    margin-left: 64px;
-  }
-  .Ncheck_btn {
-    cursor: default;
-    background-color: rgb(172, 172, 254);
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    border: 1px solid rgb(172, 172, 254);
-    width: 150px;
-    height: 50px;
-    box-shadow: 4px 4px 2px 2px #ccc;
-    margin-left: 64px;
-  }
-`;
+import '@styles/account/account.scss';
 
 const AccountForm = ({ changePassword }) => {
   const [email, setEmail] = useState('');
@@ -63,7 +31,7 @@ const AccountForm = ({ changePassword }) => {
   );
 
   return (
-    <StyledAccountForm onSubmit={handleSubmit}>
+    <div className='account-form' onSubmit={handleSubmit}>
       <RegisterEmailAuth
         validateCheck={false}
         email={email}
@@ -78,7 +46,7 @@ const AccountForm = ({ changePassword }) => {
       >
         변경하기
       </button>
-    </StyledAccountForm>
+    </div>
   );
 };
 
