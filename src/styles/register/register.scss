@@ -2,7 +2,6 @@
   .User_data {
     display: flex;
     flex-direction: column;
-    margin-top: 75px;
     margin-left: 390px;
   }
 
@@ -55,7 +54,8 @@
       border: 1px solid #ccc;
       background-color: #efefef;
     }
-    span {
+    p {
+      display: inline-block;
       letter-spacing: -1px;
       margin: 15px;
       font-weight: bold;

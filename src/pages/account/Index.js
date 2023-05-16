@@ -1,8 +1,8 @@
 import React from 'react';
 import Title from '@components/wrapper/Title';
 import TOC from '@components/wrapper/TOC';
-import AccountExplain from './AccountExplain';
 import AccountContainer from './AccountContainer';
+import '@styles/components/Title.scss';
 
 const table = [
   {
@@ -18,11 +18,10 @@ const table = [
 const FindAccount = () => {
   return (
     <>
-      <Title title='Find Password' />
+      <Title className='registerTitle'>
+        <h2>Find Password</h2>
+      </Title>
       <div>
-        <AccountExplain>
-          비밀번호 재설정을 위해, 이메일 인증을 진행해 주세요.
-        </AccountExplain>
         <TOC table={table} />
         <AccountContainer />
       </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '@assets/Logo.png';
-import styled from 'styled-components';
 
 const Title = ({ className, children }) => (
   <Link to='/' className={className}>
