@@ -15,7 +15,7 @@ const useAccessToken = (accessToken, expireTime) => {
         const token = await reIssue(refreshToken);
         dispatch(issue(token));
       } catch (e) {
-        alert(e.message);
+        // 토근 발급 실패시에는 경고 메시지 X
       }
     };
 
