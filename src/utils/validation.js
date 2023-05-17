@@ -6,14 +6,11 @@ import {
 } from '@constants/regExp';
 import { findOne } from '@services/auth';
 import {
-  DUPLICATED_EMAIL_ERROR,
-  DUPLICATED_NICKNAME_ERROR,
   INVALID_NAME_ERROR,
   INVALID_EMAIL_ERROR,
   INVALID_NICKNAME_ERROR,
   INVALID_PASSWORD_ERROR,
   UNKNOWN_ERROR,
-  INVALID_EMAIL_ADDRESS_ERROR_MESSAGE,
 } from '@constants/error';
 
 // 데이터 이름
@@ -53,10 +50,10 @@ async function validate(type, data) {
       }
 
       // 닉네임 중복 검사
-      if (!(await findOne(type, data))) {
+      await findOne(type, data).catch((e) => {
         isValid = false;
-        error = DUPLICATED_NICKNAME_ERROR;
-      }
+        error = e.message;
+      });
 
       break;
     case PASSWORD:

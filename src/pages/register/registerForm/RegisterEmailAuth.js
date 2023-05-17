@@ -6,10 +6,6 @@ import { sendVerifyNumber, authVerifyNumber } from '@services/email';
 import useTimer from '@hooks/useTimer';
 import validate from '@utils/validation';
 import styled from 'styled-components';
-import {
-  INVALID_EMAIL_ERROR,
-  INVALID_EMAIL_ADDRESS_ERROR_MESSAGE,
-} from '@constants/error';
 
 const StyledRegisterEmailAuth = styled.div`
   .input-register_form {
@@ -106,10 +102,7 @@ const RegisterEmailAuth = ({
     // 유효성 검사
     const { error } = await validate('email', email);
 
-    if (
-      error === INVALID_EMAIL_ERROR ||
-      error === INVALID_EMAIL_ADDRESS_ERROR_MESSAGE
-    ) {
+    if (error) {
       alert(error);
       return;
     }
