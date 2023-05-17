@@ -12,8 +12,8 @@ const AccountForm = ({ changePassword }) => {
     setEmail(e.target.value);
   }, []);
 
-  const handleSubmit = useCallback(
-    (e) => {
+  const handleChangePassword = useCallback(
+    async (e) => {
       e.preventDefault();
 
       // 페이지 이동
@@ -21,8 +21,11 @@ const AccountForm = ({ changePassword }) => {
 
       try {
         // 임시 비밀번호 전송
-        sendPassword(email, verifyNumber);
-        changePassword();
+        await sendPassword(email, verifyNumber);
+        await changePassword();
+
+        setEmail('');
+        setValidation('');
       } catch (error) {
         alert(error.message);
       }
@@ -31,9 +34,9 @@ const AccountForm = ({ changePassword }) => {
   );
 
   return (
-    <div className='account-form' onSubmit={handleSubmit}>
+    <div className='account-form'>
       <RegisterEmailAuth
-        validateCheck={false}
+        type={'account'}
         email={email}
         onInput={onInput}
         setValidation={setValidation}
@@ -43,6 +46,7 @@ const AccountForm = ({ changePassword }) => {
         type='submit'
         className={validation ? 'check_btn' : 'Ncheck_btn'}
         disabled={!validation}
+        onClick={handleChangePassword}
       >
         변경하기
       </button>

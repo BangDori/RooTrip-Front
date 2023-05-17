@@ -129,7 +129,7 @@ const RegisterForm = ({ onRegister }) => {
           </div>
         </div>
         <RegisterEmailAuth
-          validateCheck={true}
+          type={'register'}
           email={form.email}
           onInput={onInput}
           setValidation={setValidation}
@@ -141,8 +141,9 @@ const RegisterForm = ({ onRegister }) => {
             onChange={onInput}
             onBlur={validateForm}
             placeholder='닉네임을 입력해주세요'
-            message={validation.nickname}
-          />
+          >
+            <p>{validation.nickname}</p>
+          </Input>
         </div>
         <div className='input-register_form'>
           <Input
@@ -153,8 +154,9 @@ const RegisterForm = ({ onRegister }) => {
             onChange={onInput}
             onBlur={validateForm}
             placeholder='비밀번호를 입력해주세요'
-            message={validation.password}
-          />
+          >
+            <p>{validation.password}</p>
+          </Input>
         </div>
         <div className='input-register_form'>
           <Input
@@ -165,8 +167,9 @@ const RegisterForm = ({ onRegister }) => {
             onChange={onInput}
             onBlur={confirmPassword}
             placeholder='비밀번호를 한번 더 입력해주세요'
-            message={validation.password2}
-          />
+          >
+            <p>{validation.password2}</p>
+          </Input>
         </div>
       </div>
 

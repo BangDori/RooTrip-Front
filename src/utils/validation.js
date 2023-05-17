@@ -44,16 +44,7 @@ async function validate(type, data) {
         break;
       }
 
-      // 이메일 중복 검사
-      if (!(await findOne(type, data))) {
-        isValid = false;
-        error = DUPLICATED_EMAIL_ERROR;
-      } else {
-        error = INVALID_EMAIL_ADDRESS_ERROR_MESSAGE;
-      }
-
       break;
-
     case NICKNAME:
       // 닉네임 유효성 검사
       if (!regExpNickname.test(data)) {
@@ -68,7 +59,6 @@ async function validate(type, data) {
       }
 
       break;
-
     case PASSWORD:
       // 비밀번호 유효성 검사
       if (!regExpPassword.test(data)) {
@@ -77,7 +67,6 @@ async function validate(type, data) {
       }
 
       break;
-
     default:
       isValid = false;
       error = UNKNOWN_ERROR;

@@ -73,7 +73,7 @@ const StyledRegisterEmailAuth = styled.div`
 `;
 
 const RegisterEmailAuth = ({
-  validateCheck,
+  type,
   email,
   onInput,
   setValidation,
@@ -103,31 +103,20 @@ const RegisterEmailAuth = ({
 
   // 인증 번호 발신
   const sendEmail = useCallback(async () => {
-    // 이메일 유효성 검사 및 중복 검사
-    if (validateCheck) {
-      const { isValid, error } = await validate('email', email);
+    // 유효성 검사
+    const { error } = await validate('email', email);
 
-      // 에러가 발생했다면,
-      if (!isValid) {
-        // 에러 출력
-        alert(error);
-        return;
-      }
-    } else {
-      const { error } = await validate('email', email);
-
-      if (
-        error === INVALID_EMAIL_ERROR ||
-        error === INVALID_EMAIL_ADDRESS_ERROR_MESSAGE
-      ) {
-        alert(error);
-        return;
-      }
+    if (
+      error === INVALID_EMAIL_ERROR ||
+      error === INVALID_EMAIL_ADDRESS_ERROR_MESSAGE
+    ) {
+      alert(error);
+      return;
     }
 
     // 에러가 발생하지 않았다면,
     try {
-      const status = sendVerifyNumber(email);
+      const status = await sendVerifyNumber(type, email);
 
       // 이메일 전송이 완료되었다면,
       if (status) {
@@ -144,8 +133,9 @@ const RegisterEmailAuth = ({
       }
     } catch (e) {
       // error
+      alert(e.message);
     }
-  }, [validateCheck, email, startTimer]);
+  }, [type, email, startTimer]);
 
   // 인증 번호 재발신
   const resendEmail = useCallback(() => {
@@ -178,25 +168,19 @@ const RegisterEmailAuth = ({
         return;
       }
 
-      const status = await authVerifyNumber(email, number);
+      await authVerifyNumber(email, number);
 
-      // 인증이 확인되었다면,
-      if (status) {
-        alert('인증번호가 확인되었습니다.');
-        setValidation((validation) => ({
-          ...validation,
-          email: true,
-        }));
-        if (setVerifyNumber) setVerifyNumber(number);
-        setIsSend(false);
-        resetTimer();
-
-        // 인증에 실패했다면,
-      } else {
-        alert('인증번호가 일치하지 않습니다.');
-      }
+      // 성공 시
+      alert('인증번호가 확인되었습니다.');
+      setValidation((validation) => ({
+        ...validation,
+        email: true,
+      }));
+      if (setVerifyNumber) setVerifyNumber(number);
+      setIsSend(false);
+      resetTimer();
     } catch (e) {
-      // error
+      alert('인증번호가 일치하지 않습니다.');
     }
   }, [email, setValidation, setVerifyNumber, number, isCompleted, resetTimer]);
 
