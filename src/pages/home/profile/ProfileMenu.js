@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { logout } from '@services/auth';
 import { remove } from '@store/accessToken';
+import { removeRefreshToken } from '@utils/authCookie';
 
 const StyledProfileMenu = styled.div`
   display: flex;
@@ -44,6 +45,7 @@ const ProfileMenu = () => {
   const onLogout = useCallback(async () => {
     try {
       await logout(accessToken);
+      removeRefreshToken();
       dispatch(remove());
     } catch (e) {
       alert(e.message);
