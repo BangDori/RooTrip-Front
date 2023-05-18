@@ -10,24 +10,22 @@ export async function selectPost() {
 
 /**
  * 게시글 생성
- * @param {*} accessToken
- * @param {*} post 사진, 경로 순서, 게시글 내용
+ * @param {String} accessToken
+ * @param {Object} post 사진, 경로 순서, 게시글 내용
  * @returns
  */
 export async function createPost(accessToken, post) {
-  try {
-    const { status, message } = await axios
-      .post(`${MAIN_SERVER}/api/post`, post, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => res.data);
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/post`, post, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-    return status ? message : new Error(message);
-  } catch (e) {
-    throw new Error(e.message);
-  }
+  if (!status) throw new Error(message);
+  return { status, message };
 }
 
 export async function deletePost(postId) {

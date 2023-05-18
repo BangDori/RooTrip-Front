@@ -1,16 +1,18 @@
 import React, { useCallback, useState } from 'react';
-import '@styles/home/Write.scss';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
+import { useSelector } from 'react-redux';
 import UploadImages from './UploadImages';
 import SelectImages from './SelectImages';
 import WriteContent from './WriteContent';
+import '@styles/home/Write.scss';
 
 const Write = ({ onChangeMode }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
+  const { accessToken } = useSelector((state) => state.accessToken);
 
   const onMovePage = useCallback(
     async (move) => {
@@ -65,14 +67,15 @@ const Write = ({ onChangeMode }) => {
         article,
       };
 
-      // eslint-disable-next-line no-console
-      // console.log(writing);
-
-      const result = await createPost(post);
-
-      // onChangeMode();
+      try {
+        const { message } = await createPost(accessToken, post);
+        alert(message);
+        onChangeMode();
+      } catch (e) {
+        alert(e.message);
+      }
     },
-    [photos, routes],
+    [onChangeMode, accessToken, photos, routes],
   );
 
   return (
