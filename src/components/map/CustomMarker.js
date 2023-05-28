@@ -17,7 +17,7 @@ const InvertedTriangle = () => (
   </svg>
 );
 
-const CustomMarker = ({ map, src, metadata, accessToken }) => {
+const CustomMarker = ({ map, src, coordinate, accessToken }) => {
   const markerRef = useRef(null);
 
   /**
@@ -25,13 +25,14 @@ const CustomMarker = ({ map, src, metadata, accessToken }) => {
    * Marker active & load Article
    */
   const onMarkerClick = useCallback((e) => {
-    // console.log(metadata);
+    // eslint-disable-next-line no-console
+    console.log('Click', e);
   }, []);
 
   useEffect(() => {
     if (markerRef.current) {
       const marker = new mapboxgl.Marker(markerRef.current)
-        .setLngLat(metadata)
+        .setLngLat(coordinate)
         .addTo(map);
 
       // 마커 클릭 핸들러 등록
@@ -45,7 +46,7 @@ const CustomMarker = ({ map, src, metadata, accessToken }) => {
     }
 
     return null;
-  }, [accessToken, map, metadata, onMarkerClick]);
+  }, [src, accessToken, map, coordinate, onMarkerClick]);
 
   return (
     <div ref={markerRef}>

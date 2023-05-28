@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { useSelector } from 'react-redux';
 import '@styles/components/Map.scss';
@@ -8,13 +8,14 @@ import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import useMapEvents from '@hooks/useMapEvents';
 import CustomMarker from './CustomMarker';
 
-const Map = () => {
+const Map = ({ markers }) => {
   const mapContainer = useRef();
   const map = useRef(null);
   const { accessToken } = useSelector((state) => state.accessToken);
+  const [isLoading, setIsLoading] = useState(false);
 
-  // get image for custom marker
-  const imageData = useGetImages(!!accessToken);
+  // // get image for custom marker
+  // const imageData = useGetImages(!!accessToken);
 
   // map event initialize
   const { onMapLoad, onMapUnload } = useMapEvents({ map });
@@ -25,6 +26,8 @@ const Map = () => {
   ];
   // map initialize
   useEffect(() => {
+    setIsLoading(false);
+
     if (!map.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
@@ -44,6 +47,8 @@ const Map = () => {
         ],
       });
     }
+
+    map.current.on('load', () => setIsLoading(true));
   }, [accessToken]);
 
   // event loading
@@ -65,15 +70,25 @@ const Map = () => {
     <div className='map-container'>
       <div className='ocean-container' />
       <div ref={mapContainer} className='map-container'>
-        {imageData.map((data, index) => (
-          <CustomMarker
-            key={index}
-            map={map.current}
-            src={data.src}
-            metadata={data.metadata}
-            accessToken={accessToken}
-          />
-        ))}
+        {isLoading &&
+          markers.length > 0 &&
+          markers.map((marker) => {
+            const coordinateString = marker.coordinate
+              .replace('POINT(', '')
+              .replace(')', '');
+
+            const [lng, lat] = coordinateString.split(' ');
+
+            return (
+              <CustomMarker
+                key={marker.id}
+                map={map.current}
+                src={marker.imageUrl}
+                coordinate={[lat, lng]}
+                accessToken={accessToken}
+              />
+            );
+          })}
       </div>
     </div>
   );
