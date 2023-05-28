@@ -71,8 +71,11 @@ const Map = ({ markers }) => {
       <div className='ocean-container' />
       <div ref={mapContainer} className='map-container'>
         {isLoading &&
+          accessToken &&
           markers.length > 0 &&
           markers.map((marker) => {
+            if (!marker.coordinate) return null;
+
             const coordinateString = marker.coordinate
               .replace('POINT(', '')
               .replace(')', '');
