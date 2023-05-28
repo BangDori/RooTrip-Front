@@ -9,15 +9,12 @@
 
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     width: 375px;
-    max-height: 500px;
   }
   @media only screen and (min-width: 1025px) and (max-width: 1600px) {
     width: 456px;
-    max-height: 600px;
   }
   @media only screen and (min-width: 1601px) {
     width: 500px;
-    max-height: 700px;
   }
 
   .article_head {
@@ -42,6 +39,8 @@
     }
   }
   .Content {
+    position: relative;
+
     @media only screen and (min-width: 768px) and (max-width: 1024px) {
       height: 212px;
     }
@@ -52,6 +51,31 @@
       height: 285px;
     }
     .Con_pro {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+
+      position: absolute;
+      top: 12px;
+      left: 12px;
+
+      .profile_image {
+        display: inline;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: pink;
+        border: 1px solid #ccc;
+      }
+
+      .profile_name {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding-bottom: 4px;
+      }
     }
     .Photo {
       img {
@@ -95,30 +119,53 @@
       }
     }
   }
-  .comment_section {
-    @media only screen and (min-width: 768px) and (max-width: 1024px) {
-      height: 236px;
-    }
-    @media only screen and (min-width: 1025px) and (max-width: 1600px) {
-      height: 285px;
-    }
-    @media only screen and (min-width: 1601px) {
-      height: 305px;
-    }
-    .comment_container {
-      @media only screen and (min-width: 768px) and (max-width: 1024px) {
-        height: 199px;
-        max-height: 199px;
-      }
-      @media only screen and (min-width: 1025px) and (max-width: 1600px) {
-        height: 245px;
-        max-height: 245px;
-      }
-      @media only screen and (min-width: 1601px) {
-        height: 260px;
-        max-height: 260px;
+  .article {
+    display: flex;
+    flex-direction: column;
+
+    .header-bar {
+      font-size: 16px;
+      margin: 8px 0;
+      padding: 0 8px 8px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      border-bottom: 1px solid #ccc;
+
+      .title {
+        margin: 0;
+        font-size: 18px;
       }
 
+      .side-bar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+
+        img {
+          cursor: pointer;
+
+          width: 36px;
+          height: 36px;
+          object-fit: contain;
+        }
+      }
+    }
+
+    .content {
+      margin: 0;
+      padding: 8px;
+
+      overflow-y: auto;
+      height: 205px;
+    }
+  }
+  .comment_section {
+    padding: 8px 0;
+    .comment_container {
       text-align: center;
     }
     .comment_box {
@@ -137,8 +184,8 @@
           height: 23px;
         }
         @media only screen and (min-width: 1601px) {
-          width: 25px;
-          height: 25px;
+          width: 30px;
+          height: 30px;
         }
         border-radius: 50%;
         margin-right: 5px;
