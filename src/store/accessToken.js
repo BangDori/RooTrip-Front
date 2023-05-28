@@ -8,7 +8,7 @@ export const remove = createAction(REMOVE);
 
 const accessTokenState = {
   accessToken: '',
-  expireTime: 14 * 60 * 1000, // Client = 14m, Server = 15m
+  expireTime: 14 * 60 * 1000, // Client(Default) = 14m, Server = 15m
 };
 
 const accessToken = handleActions(
