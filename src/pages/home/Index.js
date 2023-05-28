@@ -1,4 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import useProimse from '@hooks/usePromise';
+import { MAIN_SERVER } from '@config/setting';
+
 import loadable from '@loadable/component';
 import HomeGnb from './HomeGnb';
 import HomeArticle from './HomeArticle';
@@ -11,10 +16,34 @@ const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
   const [writeMode, setWriteMode] = useState(false);
+  const { accessToken } = useSelector((state) => state.accessToken);
+  const [loading, response, error] = useProimse(
+    () =>
+      axios.get(`${MAIN_SERVER}/api/post`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }),
+    [accessToken],
+  );
+
+  const { data: markers } = response;
 
   const onChangeMode = useCallback(() => {
     setWriteMode((prevMode) => !prevMode);
   }, []);
+
+  if (loading) {
+    return <p>대기 중...</p>;
+  }
+
+  if (!markers) {
+    return null;
+  }
+
+  if (error) {
+    alert('서버 에러 발생!');
+  }
 
   return (
     <>
@@ -22,9 +51,10 @@ const Index = () => {
 
       <HomeGnb onChangeMode={onChangeMode} />
       <HomeProfile />
-      {writeMode ? <Write onChangeMode={onChangeMode} /> : <HomeArticle />}
+      {writeMode && <Write onChangeMode={onChangeMode} />}
+      {/* <HomeArticle /> */}
 
-      <Map />
+      <Map markers={markers.data} />
     </>
   );
 };

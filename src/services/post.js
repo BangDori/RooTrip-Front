@@ -1,11 +1,19 @@
 import axios from 'axios';
 import { MAIN_SERVER } from '@config/setting';
 
-export async function selectPost() {
-  // post 조회
-  const posts = axios.get(`${MAIN_SERVER}/api/post`);
+/**
+ * 선택한 마커의 게시글 가져오기
+ * @param {String} postId 게시글 아이디
+ * @returns
+ */
+export async function getOnePost(postId) {
+  const { status, data, message } = await axios
+    .get(`${MAIN_SERVER}/api/post/496f08eb-27bf-46f5-a63b-d07a6f3a1704`)
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-  return posts;
+  if (!status) throw new Error(message);
+  return data;
 }
 
 /**
