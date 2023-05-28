@@ -23,19 +23,11 @@ const useMapEvents = ({ map }) => {
   const onMapMove = useCallback(
     (e) => {
       canvasRef.current.style.cursor = 'pointer';
-      // map.current.getCanvas().style.cursor = 'pointer';
+
+      if (e.features.length <= 0) return;
 
       const { sourceLayer, id } = e.features[0];
-      map.current.setFeatureState(
-        {
-          source: 'composite',
-          sourceLayer,
-          id,
-        },
-        { hover: true },
-      );
-
-      if (hoveredStateId.current !== id) {
+      if (hoveredStateId.current !== null) {
         map.current.setFeatureState(
           {
             source: 'composite',
@@ -46,6 +38,15 @@ const useMapEvents = ({ map }) => {
         );
       }
 
+      map.current.setFeatureState(
+        {
+          source: 'composite',
+          sourceLayer,
+          id,
+        },
+        { hover: true },
+      );
+
       hoveredStateId.current = id;
     },
     [map],
@@ -53,7 +54,6 @@ const useMapEvents = ({ map }) => {
 
   const onMapLeave = useCallback(() => {
     canvasRef.current.style.cursor = 'initial';
-    // map.current.getCanvas().style.cursor = 'initial';
 
     if (hoveredStateId.current !== null) {
       map.current.setFeatureState(
