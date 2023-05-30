@@ -4,8 +4,8 @@ import React from 'react';
 
 const Photos = ({ photos }) => {
   return (
-    <div className='article_head'>
-      <span className='photo_page'>1 / {photos.length}</span>
+    <div className='Photo'>
+      <img src={photos[0].imageUrl} alt='사진' />
     </div>
   );
 };
