@@ -36,8 +36,7 @@ const Map = ({ markers }) => {
         antialias: false,
         doubleClickZoom: false,
         dragRotate: false,
-        interactive: false,
-        // interactive: !!accessToken, // accessToken ? Interactive : NULL
+        interactive: !!accessToken, // accessToken ? Interactive : NULL
         maxBounds: [
           [112.704171, 32.745446],
           [145.046554, 41.038954],
@@ -49,17 +48,17 @@ const Map = ({ markers }) => {
   }, [accessToken]);
 
   // event loading
-  useEffect(() => {
-    if (!map.current) return null;
+  // useEffect(() => {
+  //   if (!map.current) return null;
 
-    if (accessToken) map.current.on('load', onMapLoad);
-    else map.current.on('load', onMapUnload);
+  //   if (accessToken) map.current.on('load', onMapLoad);
+  //   else map.current.on('load', onMapUnload);
 
-    return () => {
-      if (accessToken) map.current.off('load', onMapLoad);
-      else map.current.off('load', onMapUnload);
-    };
-  }, [map, accessToken, onMapLoad, onMapUnload]);
+  //   return () => {
+  //     if (accessToken) map.current.off('load', onMapLoad);
+  //     else map.current.off('load', onMapUnload);
+  //   };
+  // }, [map, accessToken, onMapLoad, onMapUnload]);
 
   return (
     <div className='map-container'>
