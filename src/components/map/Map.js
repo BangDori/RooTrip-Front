@@ -64,26 +64,27 @@ const Map = ({ markers }) => {
     <div className='map-container'>
       <div className='ocean-container' />
       <div ref={mapContainer} className='map-container'>
-        {map.current &&
-          markers.map((marker) => {
-            if (!marker.coordinate) return null;
+        {markers && map.current
+          ? markers.map((marker) => {
+              if (!marker.coordinate) return null;
 
-            const coordinateString = marker.coordinate
-              .replace('POINT(', '')
-              .replace(')', '');
-            const [lng, lat] = coordinateString.split(' ');
+              const coordinateString = marker.coordinate
+                .replace('POINT(', '')
+                .replace(')', '');
+              const [lng, lat] = coordinateString.split(' ');
 
-            return (
-              <CustomMarker
-                key={marker.id}
-                id={marker.postId}
-                map={map.current}
-                src={marker.imageUrl}
-                coordinate={[lat, lng]}
-                accessToken={accessToken}
-              />
-            );
-          })}
+              return (
+                <CustomMarker
+                  key={marker.id}
+                  id={marker.postId}
+                  map={map.current}
+                  src={marker.imageUrl}
+                  coordinate={[lat, lng]}
+                  accessToken={accessToken}
+                />
+              );
+            })
+          : null}
       </div>
     </div>
   );
