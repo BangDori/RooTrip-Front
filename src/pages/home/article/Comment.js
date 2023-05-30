@@ -1,9 +1,11 @@
 // 댓글 관리를 위한 컴포넌트
 
-import React from 'react';
+import React, { useState } from 'react';
 import Profile from '@assets/태훈이 프사.jpg';
 
 const Comment = () => {
+  const [comment, setComment] = useState('');
+
   return (
     <div className='comment_section'>
       <div className='comment_container'></div>
@@ -13,7 +15,7 @@ const Comment = () => {
           className='comment_input'
           type='text'
           name='comment'
-          value=''
+          value={comment}
           placeholder='댓글을 입력하세요.'
         ></input>
       </div>
