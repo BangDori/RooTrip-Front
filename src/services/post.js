@@ -3,17 +3,22 @@ import { MAIN_SERVER } from '@config/setting';
 
 /**
  * 선택한 마커의 게시글 가져오기
+ * @param {String} accessToken accessToken
  * @param {String} postId 게시글 아이디
  * @returns
  */
-export async function getOnePost(postId) {
+export async function getOnePost(accessToken, postId) {
   const { status, data, message } = await axios
-    .get(`${MAIN_SERVER}/api/post/496f08eb-27bf-46f5-a63b-d07a6f3a1704`)
+    .get(`${MAIN_SERVER}/api/post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
     .then((res) => res.data)
     .catch((e) => new Error(e.message));
 
   if (!status) throw new Error(message);
-  return data;
+  return data.post;
 }
 
 /**
