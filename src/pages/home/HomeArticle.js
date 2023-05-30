@@ -3,11 +3,12 @@ import { getOnePost } from '@services/post';
 
 import NAVIGATE_IMAGE from '@assets/navigate_image.png';
 import LIKE_IMAGE from '@assets/like_image.png';
+import DefaultProfile from '@assets/태훈이 프사.jpg';
 import Photos from './article/Photos';
 import '@styles/home/article.scss';
 import Comment from './article/Comment';
 
-const HomeArticle = () => {
+const HomeArticle = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [article, setArticle] = useState(null);
 
@@ -16,8 +17,8 @@ const HomeArticle = () => {
       setIsLoading(false);
       const getLoad = async () => {
         try {
-          const data = await getOnePost('496f08eb-27bf-46f5-a63b-d07a6f3a1704');
-          setArticle(data);
+          const post = await getOnePost(accessToken, id);
+          setArticle(post);
         } catch (e) {
           alert(e.message);
         }
@@ -28,27 +29,35 @@ const HomeArticle = () => {
     } catch (e) {
       alert(e);
     }
-  }, [isLoading]);
+  }, [accessToken, id, isLoading]);
 
   if (!isLoading) return null;
 
   if (!article) return null;
 
-  const { user, photos, title, content, thumbnailImage } = article.post;
+  const { id: postId, user, photos, title, content, comments } = article;
+  const { profileImage, name } = user;
 
   return (
     <div>
       <article>
-        <div className='Main_content'>
-          <Photos photos={photos} />
+        <div id={postId} className='Main_content'>
+          <div className='article_head'>
+            <span className='photo_page'>1 / {photos.length}</span>
+          </div>
           <div className='Content'>
             <div className='Con_pro'>
-              <div className='profile_image'></div>
-              <h5 className='profile_name'>{user}</h5>
+              <div className='profile_image'>
+                <img
+                  src={
+                    profileImage.length === 0 ? DefaultProfile : profileImage
+                  }
+                  alt='user profile image'
+                />
+              </div>
+              <h5 className='profile_name'>{name}</h5>
             </div>
-            <div className='Photo'>
-              <img src={thumbnailImage} alt='사진' />
-            </div>
+            <Photos photos={photos} />
           </div>
           {/* <div className='addr'>
             <span>경상북도 경산시 대학로 280 or (영남대 정문)</span>
@@ -63,7 +72,7 @@ const HomeArticle = () => {
             </div>
             <p className='content'>{content}</p>
           </div>
-          <Comment />
+          <Comment comments={comments} />
         </div>
       </article>
     </div>

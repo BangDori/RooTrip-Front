@@ -26,6 +26,7 @@ const Index = () => {
       }),
     [accessToken],
   );
+  const { id } = useSelector((state) => state.article);
 
   const { data: markers } = response;
 
@@ -52,7 +53,7 @@ const Index = () => {
       <HomeGnb onChangeMode={onChangeMode} />
       <HomeProfile />
       {writeMode && <Write onChangeMode={onChangeMode} />}
-      {/* <HomeArticle /> */}
+      {id && <HomeArticle id={id} accessToken={accessToken} />}
 
       <Map markers={markers.data} />
     </>

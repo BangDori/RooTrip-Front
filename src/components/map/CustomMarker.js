@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
+import { useDispatch } from 'react-redux';
+import { load } from '@store/article';
 
 const InvertedTriangle = () => (
   <svg
@@ -17,17 +19,18 @@ const InvertedTriangle = () => (
   </svg>
 );
 
-const CustomMarker = ({ map, src, coordinate, accessToken }) => {
+const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
   const markerRef = useRef(null);
+  const dispatch = useDispatch();
 
   /**
    * Marker click event
    * Marker active & load Article
    */
-  const onMarkerClick = useCallback((e) => {
-    // eslint-disable-next-line no-console
-    console.log('Click', e);
-  }, []);
+  const onMarkerClick = useCallback(
+    () => dispatch(load({ id })),
+    [id, dispatch],
+  );
 
   useEffect(() => {
     if (markerRef.current) {
