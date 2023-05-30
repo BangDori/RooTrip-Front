@@ -15,21 +15,20 @@ function routeReducer(routes, action) {
 const SelectImages = ({ photos, setRoutes, onMovePage }) => {
   const [routes, dispatch] = useReducer(routeReducer, []);
 
-  const onInsert = useCallback((route) => {
-    dispatch({ type: 'INSERT', route });
-  }, []);
+  const onInsert = useCallback(
+    (route) => dispatch({ type: 'INSERT', route }),
+    [],
+  );
 
-  const onRemove = useCallback((route) => {
-    dispatch({ type: 'REMOVE', route });
-  }, []);
+  const onRemove = useCallback(
+    (route) => dispatch({ type: 'REMOVE', route }),
+    [],
+  );
 
   const addRoute = useCallback(
     (route) => {
-      if (routes.includes(route)) {
-        onRemove(route);
-      } else {
-        onInsert(route);
-      }
+      if (routes.includes(route)) onRemove(route);
+      else onInsert(route);
     },
     [onInsert, onRemove, routes],
   );

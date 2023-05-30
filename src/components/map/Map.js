@@ -11,7 +11,6 @@ const Map = ({ markers }) => {
   const mapContainer = useRef();
   const map = useRef(null);
   const { accessToken } = useSelector((state) => state.accessToken);
-  const [isLoading, setIsLoading] = useState(false);
 
   // map event initialize
   const { onMapLoad, onMapUnload } = useMapEvents({ map });
@@ -22,8 +21,6 @@ const Map = ({ markers }) => {
   ];
   // map initialize
   useEffect(() => {
-    setIsLoading(false);
-
     if (!map.current) {
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
@@ -43,8 +40,6 @@ const Map = ({ markers }) => {
         ],
       });
     }
-
-    map.current.on('load', () => setIsLoading(true));
   }, [accessToken]);
 
   // event loading
@@ -63,27 +58,29 @@ const Map = ({ markers }) => {
   return (
     <div className='map-container'>
       <div className='ocean-container' />
-      <div ref={mapContainer} className='map-container'></div>
-      {markers &&
-        markers.map((marker) => {
-          if (!marker.coordinate) return null;
+      <div ref={mapContainer} className='map-container'>
+        {map.current &&
+          markers &&
+          markers.map((marker) => {
+            if (!marker.coordinate) return null;
 
-          const coordinateString = marker.coordinate
-            .replace('POINT(', '')
-            .replace(')', '');
+            const coordinateString = marker.coordinate
+              .replace('POINT(', '')
+              .replace(')', '');
 
-          const [lng, lat] = coordinateString.split(' ');
+            const [lng, lat] = coordinateString.split(' ');
 
-          return (
-            <CustomMarker
-              key={marker.id}
-              map={map.current}
-              src={marker.imageUrl}
-              coordinate={[lat, lng]}
-              accessToken={accessToken}
-            />
-          );
-        })}
+            return (
+              <CustomMarker
+                key={marker.id}
+                map={map.current}
+                src={marker.imageUrl}
+                coordinate={[lat, lng]}
+                accessToken={accessToken}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };

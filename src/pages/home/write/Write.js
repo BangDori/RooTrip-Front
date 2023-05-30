@@ -44,19 +44,13 @@ const Write = ({ onChangeMode }) => {
           const formData = new FormData();
           formData.append('file', file);
 
-          try {
-            const signedUrl = await uploadFileToS3(
-              formData.get('file'),
-              urls[index],
-            );
+          await uploadFileToS3(formData.get('file'), urls[index]).catch(
+            // eslint-disable-next-line no-console
+            (e) => console.log(e.message),
+          );
 
-            return {
-              ...photo,
-              url: photo.url !== signedUrl ? signedUrl : photo.url,
-            };
-          } catch (e) {
-            return null;
-          }
+          const { url, ...newPhoto } = photo;
+          return newPhoto;
         }),
       );
 

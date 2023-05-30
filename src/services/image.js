@@ -8,53 +8,48 @@ import axios from 'axios';
  * @returns 행정구역
  */
 export async function getAddress(latitude, longitude) {
-  try {
-    const point = await axios
-      .get(
-        `${MAIN_SERVER}/api/photo/reverse?latitude=${latitude}&longitude=${longitude}`,
-      )
-      .then((res) => {
-        return `${res.data.city} ${res.data.first}`;
-      });
+  const {
+    status,
+    data: address,
+    message,
+  } = await axios
+    .get(
+      `${MAIN_SERVER}/api/photo/reverse?latitude=${latitude}&longitude=${longitude}`,
+    )
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-    return point;
-  } catch (e) {
-    return e;
-  }
+  if (!status) throw new Error(message);
+  return `${address.city} ${address.first}`;
 }
 
 /**
  * AWS S3 pre-signed url을 받아오기 위한 함수
- * @param {*} fileNames 파일 이름
- * @returns pre-signed url
+ * @param {String} fileNames 파일 이름
+ * @returns preSignedUrl
  */
 export async function getPreSignedUrl(fileNames) {
-  try {
-    const url = await axios
-      .post(`${MAIN_SERVER}/api/photo/signed`, fileNames)
-      .then((res) => res.data);
+  const {
+    status,
+    data: url,
+    message,
+  } = await axios
+    .post(`${MAIN_SERVER}/api/photo/signed`, fileNames)
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-    return url;
-  } catch (e) {
-    return e;
-  }
+  if (!status) throw new Error(message);
+  return url;
 }
 
 /**
  * Pre-signed Url에 파일 업로드하기
- * @param {*} file 파일
- * @param {*} preSignedUrl Pre-signed url
- * @returns 파일이 업로드된 주소
+ * @param {Object} file 파일
+ * @param {String} preSignedUrl Pre-signed url
  */
 export async function uploadFileToS3(formData, preSignedUrl) {
-  try {
-    const urls = await axios
-      .put(preSignedUrl, formData)
-      // eslint-disable-next-line no-console
-      .then((res) => res.request.responseURL);
-
-    return urls;
-  } catch (e) {
-    return e;
-  }
+  await axios
+    .put(preSignedUrl, formData)
+    .then((res) => res.request.responseURL)
+    .catch((e) => new Error(e.message));
 }
