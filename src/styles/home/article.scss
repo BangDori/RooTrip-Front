@@ -18,10 +18,11 @@
   }
 
   .article_head {
+    position: relative;
     display: flex;
-    border-bottom: 1px solid #ccc;
     align-items: center;
     justify-content: center;
+    margin: 4px 0;
 
     @media only screen and (min-width: 768px) and (max-width: 1024px) {
       height: 23px;
@@ -36,10 +37,30 @@
     .photo_page {
       font-weight: bold;
       color: rgb(165, 165, 165);
+      letter-spacing: 15px;
+    }
+
+    .close_button {
+      position: absolute;
+      top: 0;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      border: 1px solid #ccc;
+      background: none;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 50%;
+    }
+
+    .close_button:hover {
+      background: #ccc;
     }
   }
   .Content {
     position: relative;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 
     @media only screen and (min-width: 768px) and (max-width: 1024px) {
       height: 212px;
@@ -58,13 +79,13 @@
       gap: 4px;
 
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 8px;
+      left: 8px;
 
       .profile_image {
         display: inline;
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
 
         img {
           width: 100%;
@@ -76,14 +97,17 @@
 
       .profile_name {
         margin: 0;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 700;
         padding-bottom: 4px;
       }
     }
     .Photo {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
       img {
-        width: 100%;
         @media only screen and (min-width: 768px) and (max-width: 1024px) {
           max-height: 212px;
         }
@@ -93,7 +117,7 @@
         @media only screen and (min-width: 1601px) {
           max-height: 285px;
         }
-        object-fit: cover;
+        object-fit: contain;
       }
     }
   }
@@ -135,8 +159,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid #f0f0f0;
 
       .title {
         margin: 0;
