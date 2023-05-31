@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getOnePost } from '@services/post';
+import { exit } from '@store/article';
+import { useDispatch } from 'react-redux';
 
 import NAVIGATE_IMAGE from '@assets/navigate_image.png';
 import LIKE_IMAGE from '@assets/like_image.png';
@@ -11,6 +13,7 @@ import Comment from './article/Comment';
 const HomeArticle = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [article, setArticle] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
@@ -31,6 +34,10 @@ const HomeArticle = ({ id, accessToken }) => {
     }
   }, [accessToken, id, isLoading]);
 
+  const onCloseArticle = useCallback(() => {
+    dispatch(exit());
+  }, [dispatch]);
+
   if (!isLoading) return null;
 
   if (!article) return null;
@@ -43,7 +50,10 @@ const HomeArticle = ({ id, accessToken }) => {
       <article>
         <div id={postId} className='Main_content'>
           <div className='article_head'>
-            <span className='photo_page'>1 / {photos.length}</span>
+            <span className='photo_page'>{`1/${photos.length}`}</span>
+            <button className='close_button' onClick={onCloseArticle}>
+              X
+            </button>
           </div>
           <div className='Content'>
             <div className='Con_pro'>

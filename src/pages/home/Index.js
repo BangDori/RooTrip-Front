@@ -35,7 +35,7 @@ const Index = () => {
   }, []);
 
   if (loading) {
-    return <p>대기 중...</p>;
+    return null;
   }
 
   if (!markers) {
@@ -43,7 +43,7 @@ const Index = () => {
   }
 
   if (error) {
-    alert('서버 에러 발생!');
+    alert(error);
   }
 
   return (
