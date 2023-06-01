@@ -46,6 +46,13 @@ export async function deletePost(postId) {
   const result = axios.delete(`${MAIN_SERVER}/api/post/${postId}`);
 }
 
+/**
+ * 댓글 생성
+ * @param {String} accessToken accessToken
+ * @param {Numebr} postId 게시글 아이디
+ * @param {String} comment 댓글 내용
+ * @returns
+ */
 export async function createComment(accessToken, postId, comment) {
   const { status, message } = await axios
     .post(
@@ -57,6 +64,20 @@ export async function createComment(accessToken, postId, comment) {
         },
       },
     )
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+
+  if (!status) throw new Error(message);
+  return status;
+}
+
+export async function likePost(accessToken, postId) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/post/${postId}/like`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
     .then((res) => res.data)
     .catch((e) => new Error(e.message));
 

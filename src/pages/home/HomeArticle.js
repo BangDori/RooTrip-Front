@@ -4,11 +4,11 @@ import { exit } from '@store/article';
 import { useDispatch } from 'react-redux';
 
 import NAVIGATE_IMAGE from '@assets/navigate_image.png';
-import LIKE_IMAGE from '@assets/like_image.png';
 import DefaultProfile from '@assets/태훈이 프사.jpg';
 import Photos from './article/Photos';
 import '@styles/home/article.scss';
 import Comment from './article/Comment';
+import LikeButton from './article/LikeButton';
 
 const HomeArticle = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -88,8 +88,10 @@ const HomeArticle = ({ id, accessToken }) => {
             <div className='header-bar'>
               <h4 className='title'>{title}</h4>
               <div className='side-bar'>
-                <img src={NAVIGATE_IMAGE} alt='NAVIGATE_IMAGE' />
-                <img src={LIKE_IMAGE} alt='LIKE_IMAGE' />
+                <button type='button'>
+                  <img src={NAVIGATE_IMAGE} alt='NAVIGATE_IMAGE' />
+                </button>
+                <LikeButton accessToken={accessToken} postId={postId} />
               </div>
             </div>
             <p className='content'>{content}</p>
