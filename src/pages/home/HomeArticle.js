@@ -13,6 +13,7 @@ import Comment from './article/Comment';
 const HomeArticle = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [article, setArticle] = useState(null);
+  const [currentPhoto, setCurrentPhoto] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const HomeArticle = ({ id, accessToken }) => {
         try {
           const post = await getOnePost(accessToken, id);
           setArticle(post);
+          setCurrentPhoto(0);
         } catch (e) {
           alert(e.message);
         }
@@ -33,6 +35,10 @@ const HomeArticle = ({ id, accessToken }) => {
       alert(e);
     }
   }, [accessToken, id, isLoading]);
+
+  const onChangePhoto = useCallback((move) => {
+    setCurrentPhoto((prevPhoto) => prevPhoto + move);
+  }, []);
 
   const onCloseArticle = useCallback(() => {
     dispatch(exit());
@@ -50,7 +56,9 @@ const HomeArticle = ({ id, accessToken }) => {
       <article>
         <div id={postId} className='Main_content'>
           <div className='article_head'>
-            <span className='photo_page'>{`1/${photos.length}`}</span>
+            <span className='photo_page'>{`${currentPhoto + 1}/${
+              photos.length
+            }`}</span>
             <button className='close_button' onClick={onCloseArticle}>
               X
             </button>
@@ -67,7 +75,11 @@ const HomeArticle = ({ id, accessToken }) => {
               </div>
               <h5 className='profile_name'>{name}</h5>
             </div>
-            <Photos photos={photos} />
+            <Photos
+              photos={photos}
+              current={currentPhoto}
+              onChangePhoto={onChangePhoto}
+            />
           </div>
           {/* <div className='addr'>
             <span>경상북도 경산시 대학로 280 or (영남대 정문)</span>
