@@ -45,3 +45,21 @@ export async function deletePost(postId) {
   // post 삭제
   const result = axios.delete(`${MAIN_SERVER}/api/post/${postId}`);
 }
+
+export async function createComment(accessToken, postId, comment) {
+  const { status, message } = await axios
+    .post(
+      `${MAIN_SERVER}/api/post/${postId}/comment`,
+      { comment },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+
+  if (!status) throw new Error(message);
+  return status;
+}
