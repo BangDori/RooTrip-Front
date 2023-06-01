@@ -195,14 +195,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 8px;
 
-        img {
-          cursor: pointer;
+        button {
+          border: none;
+          background: white;
 
-          width: 36px;
-          height: 36px;
-          object-fit: contain;
+          img {
+            cursor: pointer;
+
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+          }
         }
       }
     }
