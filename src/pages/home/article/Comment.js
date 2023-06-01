@@ -1,24 +1,89 @@
 // 댓글 관리를 위한 컴포넌트
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Profile from '@assets/태훈이 프사.jpg';
+import { createComment } from '@services/post';
+import EmojiPicker, { Emoji } from 'emoji-picker-react';
 
-const Comment = () => {
+import Modal from '@components/wrapper/Modal';
+
+const Comment = ({ accessToken, postId, comments }) => {
   const [comment, setComment] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+
+  const onChangeCommentHandler = useCallback((e) => {
+    setComment(e.target.value);
+  }, []);
+
+  const onSubmitCommentHandler = useCallback(
+    async (e) => {
+      e.preventDefault();
+      try {
+        await createComment(accessToken, postId, comment);
+        setComment('');
+      } catch (error) {
+        alert(error);
+      }
+    },
+    [accessToken, postId, comment],
+  );
+
+  const onClickEmojiPickerHandler = useCallback(() => {
+    setShowEmojiPicker((prev) => !prev);
+  }, []);
+
+  const handleEmojiClick = useCallback(
+    (param) => {
+      setComment(comment + param.emoji);
+      setShowEmojiPicker(false);
+    },
+    [comment],
+  );
 
   return (
     <div className='comment_section'>
-      <div className='comment_container'></div>
-      <div className='comment_box'>
+      <form className='comment_box' onSubmit={onSubmitCommentHandler}>
         <img src={Profile} alt='프로필 사진' />
-        <input
-          className='comment_input'
-          type='text'
-          name='comment'
-          value={comment}
-          placeholder='댓글을 입력하세요.'
-        ></input>
-      </div>
+        <div className='comment_input_box'>
+          <input
+            className='comment_input'
+            type='text'
+            name='comment'
+            value={comment}
+            onChange={onChangeCommentHandler}
+            placeholder='댓글을 입력하세요.'
+          ></input>
+          {comment && (
+            <button type='submit' className='submit-comment_button'>
+              게시
+            </button>
+          )}
+        </div>
+        <button
+          type='button'
+          className='emoji_picker_button'
+          onClick={onClickEmojiPickerHandler}
+        >
+          <svg
+            aria-label='이모티콘'
+            className='emoticon_button'
+            color='rgb(115, 115, 115)'
+            fill='rgb(115, 115, 115)'
+            height='13'
+            role='img'
+            viewBox='0 0 24 24'
+            width='13'
+          >
+            <title>이모티콘</title>
+            <path d='M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z'></path>
+          </svg>
+        </button>
+        {showEmojiPicker && (
+          <Modal>
+            <EmojiPicker onEmojiClick={handleEmojiClick} />
+          </Modal>
+        )}
+      </form>
     </div>
   );
 };

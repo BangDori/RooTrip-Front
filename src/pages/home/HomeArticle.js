@@ -94,7 +94,11 @@ const HomeArticle = ({ id, accessToken }) => {
             </div>
             <p className='content'>{content}</p>
           </div>
-          <Comment comments={comments} />
+          <Comment
+            accessToken={accessToken}
+            postId={postId}
+            comments={comments}
+          />
         </div>
       </article>
     </div>
