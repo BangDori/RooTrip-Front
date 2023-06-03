@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import Profile from '@assets/태훈이 프사.jpg';
+import Profile from '@assets/DefaultProfileImage.png';
 import styled from 'styled-components';
 import ProfileMenu from './profile/ProfileMenu';
 
