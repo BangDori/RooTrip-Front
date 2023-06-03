@@ -3,16 +3,19 @@ import { getOnePost } from '@services/post';
 import { exit } from '@store/article';
 import { useDispatch } from 'react-redux';
 
+import Modal from '@components/wrapper/Modal';
 import NAVIGATE_IMAGE from '@assets/navigate_image.png';
-import DefaultProfile from '@assets/태훈이 프사.jpg';
+import DefaultProfile from '@assets/DefaultProfileImage.png';
 import Photos from './article/Photos';
-import '@styles/home/article.scss';
 import Comment from './article/Comment';
 import LikeButton from './article/LikeButton';
+import Content from './article/Content';
+import '@styles/home/article.scss';
 
 const HomeArticle = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLikedPost, setIsLikedPost] = useState(false);
+  const [isPostModal, setIsPostModal] = useState(false);
   const [article, setArticle] = useState(null);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const dispatch = useDispatch();
@@ -49,6 +52,10 @@ const HomeArticle = ({ id, accessToken }) => {
   const onCloseArticle = useCallback(() => {
     dispatch(exit());
   }, [dispatch]);
+
+  const onClickPostModalHandler = useCallback(() => {
+    setIsPostModal((prevState) => !prevState);
+  }, []);
 
   if (!isLoading) return null;
 
@@ -105,6 +112,12 @@ const HomeArticle = ({ id, accessToken }) => {
               </div>
             </div>
             <p className='content'>{content}</p>
+            <button
+              className='content-more-button'
+              onClick={onClickPostModalHandler}
+            >
+              댓글 {comments.length}개 모두 보기
+            </button>
           </div>
           <Comment
             accessToken={accessToken}
@@ -113,6 +126,11 @@ const HomeArticle = ({ id, accessToken }) => {
           />
         </div>
       </article>
+      {isPostModal && (
+        <Modal>
+          <Content post={article} onClose={onClickPostModalHandler} />
+        </Modal>
+      )}
     </div>
   );
 };
