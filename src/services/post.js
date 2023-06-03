@@ -18,7 +18,7 @@ export async function getOnePost(accessToken, postId) {
     .catch((e) => new Error(e.message));
 
   if (!status) throw new Error(message);
-  return data.post;
+  return data;
 }
 
 /**
@@ -71,9 +71,35 @@ export async function createComment(accessToken, postId, comment) {
   return status;
 }
 
+/**
+ * 추천 기능
+ * @param {String} accessToken accessToken
+ * @param {String} postId 게시글 ID
+ * @returns
+ */
 export async function likePost(accessToken, postId) {
   const { status, message } = await axios
     .post(`${MAIN_SERVER}/api/post/${postId}/like`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+
+  if (!status) throw new Error(message);
+  return status;
+}
+
+/**
+ * 추천 취소 기능
+ * @param {String} accessToken  accessToken
+ * @param {String} postId 게시글 ID
+ * @returns
+ */
+export async function unLikePost(accessToken, postId) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/post/${postId}/unLike`, null, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

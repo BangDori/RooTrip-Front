@@ -12,6 +12,7 @@ import LikeButton from './article/LikeButton';
 
 const HomeArticle = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLikedPost, setIsLikedPost] = useState(false);
   const [article, setArticle] = useState(null);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const dispatch = useDispatch();
@@ -21,8 +22,13 @@ const HomeArticle = ({ id, accessToken }) => {
       setIsLoading(false);
       const getLoad = async () => {
         try {
-          const post = await getOnePost(accessToken, id);
+          const { postViews, post, isLiked } = await getOnePost(
+            accessToken,
+            id,
+          );
+
           setArticle(post);
+          setIsLikedPost(isLiked);
           setCurrentPhoto(0);
         } catch (e) {
           alert(e.message);
@@ -91,7 +97,11 @@ const HomeArticle = ({ id, accessToken }) => {
                 <button type='button'>
                   <img src={NAVIGATE_IMAGE} alt='NAVIGATE_IMAGE' />
                 </button>
-                <LikeButton accessToken={accessToken} postId={postId} />
+                <LikeButton
+                  accessToken={accessToken}
+                  postId={postId}
+                  isLikedPost={isLikedPost}
+                />
               </div>
             </div>
             <p className='content'>{content}</p>
