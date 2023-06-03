@@ -173,6 +173,7 @@
     }
   }
   .article {
+    position: relative;
     display: flex;
     flex-direction: column;
 
@@ -199,6 +200,7 @@
         button {
           border: none;
           background: white;
+          padding: 0;
 
           img {
             cursor: pointer;
@@ -217,6 +219,22 @@
 
       overflow-y: auto;
       height: 205px;
+    }
+
+    .content-more-button {
+      position: absolute;
+      bottom: 0;
+      left: 5px;
+
+      display: inline-block;
+      border: none;
+      background: none;
+      color: #ccc;
+      font-size: 12px;
+    }
+
+    .content-more:hover {
+      color: #737373;
     }
   }
   .comment_section {
@@ -263,7 +281,7 @@
             height: 20px;
           }
           @media only screen and (min-width: 1025px) and (max-width: 1600px) {
-            width: 340px;
+            width: 370px;
             height: 25px;
           }
           @media only screen and (min-width: 1601px) {
@@ -297,5 +315,88 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+.modal-post {
+  display: flex;
+  flex-direction: row;
+
+  .modal-left {
+    border-right: 1px solid #ccc;
+
+    .modal-photos {
+      width: 432px;
+      margin: 12px;
+
+      .modal-photo {
+        width: 100%;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .modal-right {
+    position: relative;
+
+    .modal-user {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin: 12px 0 0 12px;
+
+      img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: contain;
+        line-height: 12px;
+      }
+
+      .profile_name {
+        margin: 0;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+    }
+
+    .modal-main-content {
+      width: 456px;
+      padding: 8px 12px;
+
+      .modal-article {
+        height: 280px;
+        border-bottom: 1px solid #ccc;
+
+        .modal-title {
+          margin: 4px 0;
+          font-size: 18px;
+        }
+
+        .modal-content {
+          font-size: 16px;
+        }
+      }
+      .modal-comments {
+      }
+    }
+  }
+
+  .modal-post-close-button {
+    border: none;
+    background: none;
+
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
   }
 }
