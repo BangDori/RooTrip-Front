@@ -1,6 +1,6 @@
 // 사진 배열 관리를 위한 컴포넌트
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 
 const Photos = ({ photos, current, onChangePhoto }) => {
   const width = photos.length * 456;
@@ -11,9 +11,6 @@ const Photos = ({ photos, current, onChangePhoto }) => {
   const nextPhotoHandler = useCallback(() => {
     onChangePhoto(1);
   }, [onChangePhoto]);
-
-  // eslint-disable-next-line no-console
-  console.log(current);
 
   return (
     <div className='photo-list'>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import useProimse from '@hooks/usePromise';
