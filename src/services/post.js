@@ -110,3 +110,23 @@ export async function unLikePost(accessToken, postId) {
   if (!status) throw new Error(message);
   return status;
 }
+
+/**
+ * 댓글 받아오기
+ * @param {String} accessToken accessToken
+ * @param {String} postId 게시글 ID
+ * @returns
+ */
+export async function getComments(accessToken, postId) {
+  const { status, data, message } = await axios
+    .get(`${MAIN_SERVER}/api/post/${postId}/comment`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+
+  if (!status) throw new Error(message);
+  return data;
+}

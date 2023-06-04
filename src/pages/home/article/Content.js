@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getComments } from '@services/post';
 import Profile from '@assets/DefaultProfileImage.png';
 
-const Content = ({ post, onClose }) => {
-  const { user, photos, title, content, comments } = post;
+const Content = ({ accessToken, postId, post, onClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [comments, setComments] = useState([]);
+  const { user, photos, title, content } = post;
   const { profileImage, name } = user;
+
+  useEffect(() => {
+    const loadComments = async () => {
+      try {
+        setIsLoading(true);
+        const comment = await getComments(accessToken, postId);
+
+        setComments(comment);
+        setIsLoading(false);
+      } catch (e) {
+        alert(e);
+      }
+    };
+
+    loadComments();
+  }, [accessToken, postId]);
+
+  if (isLoading) return null;
 
   return (
     <div className='modal-post'>

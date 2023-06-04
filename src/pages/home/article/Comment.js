@@ -1,44 +1,42 @@
 // 댓글 관리를 위한 컴포넌트
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Profile from '@assets/DefaultProfileImage.png';
 import { createComment } from '@services/post';
 import EmojiPicker, { Emoji } from 'emoji-picker-react';
 
 import Modal from '@components/wrapper/Modal';
 
-const Comment = ({ accessToken, postId, comments }) => {
-  const [comment, setComment] = useState('');
+const Comment = ({ accessToken, postId, onAddComment }) => {
+  const [inputComment, setInputComment] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   const onChangeCommentHandler = useCallback((e) => {
-    setComment(e.target.value);
+    setInputComment(e.target.value);
   }, []);
 
   const onSubmitCommentHandler = useCallback(
     async (e) => {
       e.preventDefault();
       try {
-        await createComment(accessToken, postId, comment);
-        setComment('');
+        await createComment(accessToken, postId, inputComment);
+        setInputComment('');
+        onAddComment();
       } catch (error) {
         alert(error);
       }
     },
-    [accessToken, postId, comment],
+    [accessToken, postId, inputComment, onAddComment],
   );
 
   const onClickEmojiPickerHandler = useCallback(() => {
     setShowEmojiPicker((prev) => !prev);
   }, []);
 
-  const handleEmojiClick = useCallback(
-    (param) => {
-      setComment(comment + param.emoji);
-      setShowEmojiPicker(false);
-    },
-    [comment],
-  );
+  const handleEmojiClick = useCallback((param) => {
+    setInputComment((prevComment) => prevComment + param.emoji);
+    setShowEmojiPicker(false);
+  }, []);
 
   return (
     <div className='comment_section'>
@@ -49,11 +47,11 @@ const Comment = ({ accessToken, postId, comments }) => {
             className='comment_input'
             type='text'
             name='comment'
-            value={comment}
+            value={inputComment}
             onChange={onChangeCommentHandler}
             placeholder='댓글을 입력하세요.'
           ></input>
-          {comment && (
+          {inputComment && (
             <button type='submit' className='submit-comment_button'>
               게시
             </button>

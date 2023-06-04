@@ -17,6 +17,7 @@ const HomeArticle = ({ id, accessToken }) => {
   const [isLikedPost, setIsLikedPost] = useState(false);
   const [isPostModal, setIsPostModal] = useState(false);
   const [article, setArticle] = useState(null);
+  const [commentsCount, setCommentsCount] = useState([]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const dispatch = useDispatch();
 
@@ -25,13 +26,14 @@ const HomeArticle = ({ id, accessToken }) => {
       setIsLoading(false);
       const getLoad = async () => {
         try {
-          const { postViews, post, isLiked } = await getOnePost(
+          const { postViews, post, isLiked, commentCount } = await getOnePost(
             accessToken,
             id,
           );
 
           setArticle(post);
           setIsLikedPost(isLiked);
+          setCommentsCount(commentCount);
           setCurrentPhoto(0);
         } catch (e) {
           alert(e.message);
@@ -57,11 +59,15 @@ const HomeArticle = ({ id, accessToken }) => {
     setIsPostModal((prevState) => !prevState);
   }, []);
 
+  const onAddCommentHandler = useCallback(() => {
+    setCommentsCount((prevState) => prevState + 1);
+  }, []);
+
   if (!isLoading) return null;
 
   if (!article) return null;
 
-  const { id: postId, user, photos, title, content, comments } = article;
+  const { id: postId, user, photos, title, content } = article;
   const { profileImage, name } = user;
 
   return (
@@ -116,19 +122,24 @@ const HomeArticle = ({ id, accessToken }) => {
               className='content-more-button'
               onClick={onClickPostModalHandler}
             >
-              댓글 {comments.length}개 모두 보기
+              댓글 {commentsCount}개 모두 보기
             </button>
           </div>
           <Comment
             accessToken={accessToken}
             postId={postId}
-            comments={comments}
+            onAddComment={onAddCommentHandler}
           />
         </div>
       </article>
       {isPostModal && (
         <Modal>
-          <Content post={article} onClose={onClickPostModalHandler} />
+          <Content
+            accessToken={accessToken}
+            postId={postId}
+            post={article}
+            onClose={onClickPostModalHandler}
+          />
         </Modal>
       )}
     </div>
