@@ -2,6 +2,8 @@
 
 import React, { useCallback } from 'react';
 
+import '@styles/home/photo.scss';
+
 const Photos = ({ photos, current, onChangePhoto }) => {
   const width = photos.length * 456;
 

@@ -1,0 +1,42 @@
+.photo-list {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  .move-button {
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+  }
+
+  .prev_move {
+    left: 10%;
+  }
+
+  .next_move {
+    right: 10%;
+  }
+
+  .photo-slide {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    right: 0;
+
+    transition: all 0.3s ease;
+    height: 100%;
+
+    .photo {
+      width: 100%;
+      height: 100%;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+  }
+}

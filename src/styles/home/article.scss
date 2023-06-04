@@ -103,48 +103,6 @@
         padding-bottom: 4px;
       }
     }
-    .photo-list {
-      position: relative;
-      overflow: hidden;
-      margin: 0;
-      padding: 0;
-      height: 100%;
-
-      .move-button {
-        position: absolute;
-        top: 50%;
-        z-index: 5;
-      }
-
-      .prev_move {
-        left: 10%;
-      }
-
-      .next_move {
-        right: 10%;
-      }
-
-      .photo-slide {
-        display: flex;
-        flex-direction: row;
-        position: relative;
-        right: 0;
-
-        transition: all 0.3s ease;
-        height: 100%;
-
-        .photo {
-          width: 100%;
-          height: 100%;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-          }
-        }
-      }
-    }
   }
   .addr {
     @media only screen and (min-width: 768px) and (max-width: 1024px) {
@@ -367,11 +325,12 @@
 
     .modal-main-content {
       width: 456px;
-      padding: 8px 12px;
+      margin: 8px 0;
 
       .modal-article {
         height: 280px;
         border-bottom: 1px solid #ccc;
+        padding: 0 8px;
 
         .modal-title {
           margin: 4px 0;
@@ -382,7 +341,76 @@
           font-size: 16px;
         }
       }
+
       .modal-comments {
+        overflow-y: auto;
+
+        .modal-comments-tot-count-box {
+          margin: 4px 4px 12px;
+          padding: 8px 0;
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .modal-comment {
+          position: relative;
+          border-bottom: 1px solid #f0f0f0;
+          padding-bottom: 4px;
+
+          .modal-comment-user {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+
+            position: absolute;
+            top: 4px;
+            left: 8px;
+
+            img {
+              width: 24px;
+            }
+
+            .profile_name {
+              margin: 0;
+              font-size: 0.8rem;
+              font-weight: 700;
+            }
+
+            .modal-comment-createAt {
+              font-size: 10px;
+              color: #ccc;
+            }
+          }
+
+          .modal-comment-box {
+            width: 396px;
+            padding: 36px 12px 0;
+
+            .modal-comment-content {
+              margin: 0;
+              font-size: 14px;
+              word-wrap: break-word;
+              padding: 4px 0;
+            }
+          }
+
+          .modal-comment-like {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            position: absolute;
+            right: 15px;
+            bottom: 2px;
+
+            img {
+              width: 16px;
+            }
+            span {
+              font-size: 12px;
+            }
+          }
+        }
       }
     }
   }
