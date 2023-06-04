@@ -3,7 +3,6 @@ import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loade
 import { useSelector } from 'react-redux';
 
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
-import useMapEvents from '@hooks/useMapEvents';
 import CustomMarker from './CustomMarker';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -15,7 +14,6 @@ const Map = ({ markers }) => {
   const { accessToken } = useSelector((state) => state.accessToken);
 
   // map event initialize
-  const { onMapLoad, onMapUnload } = useMapEvents({ map });
   const bounds = [
     [130.8, 36.1395], // Southwest coordinates
     [131.6, 36.8395], // Northeast coordinates
@@ -46,19 +44,6 @@ const Map = ({ markers }) => {
 
     map.current.on('load', () => setIsLoading(false));
   }, [accessToken]);
-
-  // event loading
-  // useEffect(() => {
-  //   if (!map.current) return null;
-
-  //   if (accessToken) map.current.on('load', onMapLoad);
-  //   else map.current.on('load', onMapUnload);
-
-  //   return () => {
-  //     if (accessToken) map.current.off('load', onMapLoad);
-  //     else map.current.off('load', onMapUnload);
-  //   };
-  // }, [map, accessToken, onMapLoad, onMapUnload]);
 
   return (
     <div className='map-container'>
