@@ -1,45 +1,47 @@
-import React, { useState, useCallback } from 'react';
-import MenuFriend from '@assets/친구 게시글.png';
-import menuTrip from '@assets/Trip.png';
-import menuRoute from '@assets/Route.png';
+import React from 'react';
+import MenuFriend from '@assets/MenuFriend.png';
+import MenuTrip from '@assets/MenuTrip.png';
+import MenuRoute from '@assets/MenuRoute.png';
+import MenuHot from '@assets/MenuHot.png';
 import articleInput from '@assets/article_input.png';
 import '@styles/home/Nav.scss';
 
 const HomeGnb = ({ onChangeMode }) => {
-  const [nowPage, setNowPage] = useState(0);
-
-  const movePage = useCallback(() => {
-    setNowPage(1);
-  }, []);
   return (
     <nav className='side_nav'>
       <div className='menu'>
         <div className='menu_Icon'>
-          <div className={nowPage === 1 ? 'icon_up now_nav' : 'icon_up'}>
-            <button type='button' onClick={movePage}>
+          <div className='icon_up'>
+            <button type='button'>
               <img src={MenuFriend} alt='친구 게시글' />
             </button>
-            <span onClick={movePage}>친구 게시글</span>
+            <span>친구 게시글</span>
           </div>
-          <div className='icon_up' id='Trip_nav'>
+          <div className='icon_up selected'>
             <button type='button'>
-              <img src={menuTrip} alt='Trip' />
+              <img src={MenuTrip} alt='Menu Trip' />
             </button>
             <span>Trip</span>
           </div>
           <div className='icon_up'>
             <button type='button'>
-              <img src={menuRoute} alt='Route' />
+              <img src={MenuRoute} alt='Menu Route' />
             </button>
             <span>Route</span>
           </div>
           <div className='icon_up'>
-            <button type='button'>Log</button>
+            <button type='button'>
+              <img src={MenuHot} alt='Menu Hot' style={{ width: '26px' }} />
+            </button>
             <span>Log</span>
           </div>
           <div className='icon_up' onClick={onChangeMode}>
             <button type='button'>
-              <img src={articleInput} alt='게시글 작성' />
+              <img
+                src={articleInput}
+                alt='게시글 작성'
+                style={{ width: '28px' }}
+              />
             </button>
             <span>게시글 작성</span>
           </div>

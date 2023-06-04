@@ -19,43 +19,38 @@
   .menu {
     display: flex;
     flex-direction: column;
+    width: 48px;
+    overflow: hidden;
+    animation: all 0.5s ease;
 
     .menu_Icon {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       gap: 16px;
+      width: 167px;
 
-      #Trip_nav {
-        border: 1px solid #ccc;
-        padding: 5px;
-        border-radius: 15px;
-        background: #eeeef9;
-      }
-      .now_nav {
-        border: 1px solid #ccc;
-        padding: 5px;
-        border-radius: 15px;
-        background: #eeeef9;
-      }
       .icon_up {
         display: flex;
         align-items: center;
+
         span {
           cursor: pointer;
           font-weight: 800;
           font-size: 20px;
           letter-spacing: 1px;
-          -webkit-transition: all 0.2s ease-in-out;
           margin-left: 15px;
         }
       }
-      .icon_up:hover {
-        -webkit-transition: all 0.3s ease;
-        transition: all 0.3s ease;
-        -webkit-transform: translateY(-5px);
-        transform: translateY(-5px);
-        -ms-transform: translateY(-5px);
+
+      .selected {
+        button {
+          background: lightskyblue;
+        }
+
+        span {
+          color: lightskyblue;
+        }
       }
 
       button {
@@ -64,15 +59,19 @@
         width: 40px;
         height: 40px;
         border-radius: 10px;
-        border: 1px solid #ccc;
+        border: none;
         cursor: pointer;
-        box-shadow: 2px 2px 5px 0px #ccc;
-        font-size: 15px;
-        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+
         img {
-          width: 34px;
+          width: 36px;
+          vertical-align: bottom;
         }
       }
     }
+  }
+
+  .menu:hover {
+    width: 167px;
   }
 }
