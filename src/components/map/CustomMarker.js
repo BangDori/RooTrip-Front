@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { load } from '@store/article';
+import Menu from '@constants/menu';
 
 const InvertedTriangle = ({ isClick }) => (
   <svg
@@ -24,6 +26,7 @@ const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
   const markerRef = useRef(null);
   const dispatch = useDispatch();
   const { id: clickedId } = useSelector((state) => state.article);
+  const clickedMenu = useSelector((state) => state.menu);
   const isClick = id === clickedId;
 
   /**
@@ -35,8 +38,9 @@ const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
     [id, dispatch],
   );
 
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (markerRef.current) {
+    if (markerRef.current && clickedMenu === Menu.TRIP) {
       const marker = new mapboxgl.Marker(markerRef.current)
         .setLngLat(coordinate)
         .addTo(map);
@@ -50,9 +54,7 @@ const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
         if (marker) marker.remove();
       };
     }
-
-    return null;
-  }, [src, accessToken, map, coordinate, onMarkerClick]);
+  }, [accessToken, map, coordinate, clickedMenu, onMarkerClick]);
 
   return (
     <div ref={markerRef}>
