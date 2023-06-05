@@ -11,6 +11,7 @@ import Comment from './post/Comment';
 import LikeButton from './post/LikeButton';
 import Content from './post/Content';
 import '@styles/home/article.scss';
+import '@styles/components/modalPost.scss';
 
 const Post = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -133,7 +134,7 @@ const Post = ({ id, accessToken }) => {
         </div>
       </article>
       {isPostModal && (
-        <Modal>
+        <Modal className='modal-post-more'>
           <Content
             accessToken={accessToken}
             postId={postId}
