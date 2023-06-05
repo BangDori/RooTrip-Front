@@ -6,6 +6,7 @@ import { createComment } from '@services/post';
 import EmojiPicker, { Emoji } from 'emoji-picker-react';
 
 import Modal from '@components/wrapper/Modal';
+import '@styles/home/comment.scss';
 
 const Comment = ({ accessToken, postId, onAddComment }) => {
   const [inputComment, setInputComment] = useState('');
