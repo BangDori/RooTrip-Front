@@ -12,8 +12,8 @@ function routeReducer(routes, action) {
   }
 }
 
-const SelectImages = ({ photos, setRoutes, onMovePage }) => {
-  const [routes, dispatch] = useReducer(routeReducer, []);
+const SecondWritePage = ({ photos, prevRoutes, setRoutes, onMovePage }) => {
+  const [routes, dispatch] = useReducer(routeReducer, prevRoutes);
 
   const onInsert = useCallback(
     (route) => dispatch({ type: 'INSERT', route }),
@@ -69,4 +69,4 @@ const SelectImages = ({ photos, setRoutes, onMovePage }) => {
   );
 };
 
-export default SelectImages;
+export default SecondWritePage;

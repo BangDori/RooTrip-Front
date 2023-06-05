@@ -1,30 +1,27 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
 import { useSelector } from 'react-redux';
-import UploadImages from './UploadImages';
-import SelectImages from './SelectImages';
-import WriteContent from './WriteContent';
+
+import Menu from '@constants/menu';
+import FirstWritePage from './FirstWritePage';
+import SecondWritePage from './SecondWritePage';
+import ThirdWritePage from './ThirdWritePage';
 import '@styles/home/Write.scss';
 
-const Write = ({ onChangeMode }) => {
+const Write = ({ onClose }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
   const { accessToken } = useSelector((state) => state.accessToken);
 
-  const onMovePage = useCallback(
-    async (move) => {
-      if (currentPage + move === -1) {
-        onChangeMode();
-        return;
-      }
+  useEffect(() => {
+    if (currentPage === 0) setRoutes([]);
+  }, [currentPage]);
 
-      setCurrentPage((prevPage) => prevPage + move);
-    },
-    [currentPage, onChangeMode],
-  );
+  const onMovePage = useCallback(async (move) => {
+    setCurrentPage((prevPage) => prevPage + move);
+  }, []);
 
   const uploadWriteHandler = useCallback(
     async (article) => {
@@ -63,36 +60,46 @@ const Write = ({ onChangeMode }) => {
 
       try {
         const { message } = await createPost(accessToken, post);
-        alert(message);
-        onChangeMode();
+        onClose(Menu.TRIP, message);
       } catch (e) {
         alert(e.message);
       }
     },
-    [onChangeMode, accessToken, photos, routes],
+    [onClose, accessToken, photos, routes],
   );
+
+  let content = '';
+  switch (Number(currentPage)) {
+    case 0:
+      content = (
+        <FirstWritePage onMovePage={onMovePage} onUploadPhotos={setPhotos} />
+      );
+      break;
+    case 1:
+      content = (
+        <SecondWritePage
+          photos={photos}
+          prevRoutes={routes}
+          setRoutes={setRoutes}
+          onMovePage={onMovePage}
+        />
+      );
+      break;
+    case 2:
+      content = (
+        <ThirdWritePage
+          onMovePage={onMovePage}
+          onUploadWrite={uploadWriteHandler}
+        />
+      );
+      break;
+    default:
+      break;
+  }
 
   return (
     <div className='Main_content'>
-      <div className='Content_box'>
-        {currentPage === 0 && (
-          <UploadImages onMovePage={onMovePage} onUploadPhotos={setPhotos} />
-        )}
-        {currentPage === 1 && (
-          <SelectImages
-            photos={photos}
-            setRoutes={setRoutes}
-            setPhotos={setPhotos}
-            onMovePage={onMovePage}
-          />
-        )}
-        {currentPage === 2 && (
-          <WriteContent
-            onMovePage={onMovePage}
-            onUploadWrite={uploadWriteHandler}
-          />
-        )}
-      </div>
+      <div className='Content_box'>{content}</div>
     </div>
   );
 };

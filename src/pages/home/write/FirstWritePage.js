@@ -5,7 +5,7 @@ import { getLocation } from '@utils/metadata';
 import { useDropzone } from 'react-dropzone';
 import cn from 'classnames';
 
-const UploadImages = ({ onMovePage, onUploadPhotos }) => {
+const FirstWritePage = ({ onMovePage, onUploadPhotos }) => {
   // 메타 정보와 함께 사진 생성하기
   const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
     const newPhoto = {
@@ -80,8 +80,8 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
 
       await Promise.all(promises);
 
-      onUploadPhotos(newPhotos);
       sort(newPhotos);
+      onUploadPhotos(newPhotos);
       onMovePage(1);
     },
     [onMovePage, onUploadPhotos, createNewPhoto, sort],
@@ -99,15 +99,7 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
   return (
     <div className='First_modal'>
       <div className='Modal_head'>
-        <button
-          className='MoveModal'
-          type='button'
-          onClick={() => onMovePage(-1)}
-        >
-          취소
-        </button>
         <span>새 게시글 작성하기</span>
-        <button type='button' className='MoveModal'></button>
       </div>
       <div className='Modal_First_content'>
         <div className='Photo_logo'>
@@ -125,4 +117,4 @@ const UploadImages = ({ onMovePage, onUploadPhotos }) => {
   );
 };
 
-export default UploadImages;
+export default FirstWritePage;
