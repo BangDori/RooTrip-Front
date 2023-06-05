@@ -70,10 +70,11 @@
         }
 
         .modal-comments {
+          height: 246px;
           overflow-y: auto;
 
           .modal-comments-tot-count-box {
-            margin: 4px 4px 12px;
+            margin: 4px 4px 8px;
             padding: 8px 0;
             font-size: 12px;
             font-weight: 700;
