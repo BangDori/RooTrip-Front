@@ -1,40 +1,34 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { likePost, unLikePost } from '@services/post';
 
 import Like from '@assets/Like.png';
 import NotLike from '@assets/NotLike.png';
 
-const LikeButton = ({ accessToken, postId, isLikedPost }) => {
-  const [isLike, setIsLike] = useState(false);
-
-  useEffect(() => {
-    setIsLike(isLikedPost);
-  }, [isLikedPost]);
-
+const LikeButton = ({ accessToken, postId, isLikedPost, setIsLikedPost }) => {
   const onClickLikeHandler = useCallback(async () => {
     try {
       await likePost(accessToken, postId);
-      setIsLike(true);
+      setIsLikedPost(true);
     } catch (e) {
       alert(e.message);
     }
-  }, [accessToken, postId]);
+  }, [accessToken, postId, setIsLikedPost]);
 
   const onClickUnlikeHandler = useCallback(async () => {
     try {
       await unLikePost(accessToken, postId);
-      setIsLike(false);
+      setIsLikedPost(false);
     } catch (e) {
       alert(e.message);
     }
-  }, [accessToken, postId]);
+  }, [accessToken, postId, setIsLikedPost]);
 
   return (
     <button
       type='button'
-      onClick={isLike ? onClickUnlikeHandler : onClickLikeHandler}
+      onClick={isLikedPost ? onClickUnlikeHandler : onClickLikeHandler}
     >
-      <img src={isLike ? Like : NotLike} alt='LIKE_IMAGE' />
+      <img src={isLikedPost ? Like : NotLike} alt='LIKE_IMAGE' />
     </button>
   );
 };

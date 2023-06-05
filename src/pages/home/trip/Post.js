@@ -115,6 +115,7 @@ const Post = ({ id, accessToken }) => {
                   accessToken={accessToken}
                   postId={postId}
                   isLikedPost={isLikedPost}
+                  setIsLikedPost={setIsLikedPost}
                 />
               </div>
             </div>
