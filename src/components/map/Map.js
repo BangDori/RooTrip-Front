@@ -7,11 +7,12 @@ import CustomMarker from './CustomMarker';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
-const Map = ({ markers }) => {
+const Map = () => {
   const [isLoading, setIsLoading] = useState(false);
   const mapContainer = useRef();
   const map = useRef(null);
   const { accessToken } = useSelector((state) => state.accessToken);
+  const markers = useSelector((state) => state.marker);
 
   // map event initialize
   const bounds = [

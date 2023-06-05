@@ -22,6 +22,25 @@ export async function getOnePost(accessToken, postId) {
 }
 
 /**
+ * 마커 정보 받기
+ * @param {*} accessToken accessToken
+ * @returns
+ */
+export async function getPosts(accessToken) {
+  const { status, data, message } = await axios
+    .get(`${MAIN_SERVER}/api/post`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+
+  if (!status) throw new Error(message);
+  return data;
+}
+
+/**
  * 게시글 생성
  * @param {String} accessToken
  * @param {Object} post 사진, 경로 순서, 게시글 내용
