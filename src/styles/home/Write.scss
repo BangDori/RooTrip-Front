@@ -6,6 +6,7 @@
   border-bottom: 1px solid #ccc;
   padding: 10px 0 10px 0;
   font-weight: bold;
+
   @media only screen and (min-width: 768px) and (max-width: 1024px) {
     font-size: 16px;
   }
@@ -330,10 +331,11 @@
   }
 
   .footer {
-    border-top: 1px solid #ccc;
-    height: 80px;
     display: flex;
+    justify-content: flex-end;
     align-items: center;
+    margin: 12px;
+
     .With_who {
       @media only screen and (min-width: 768px) and (max-width: 1024px) {
         padding-left: 15px;
