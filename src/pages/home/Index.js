@@ -1,22 +1,24 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import loadable from '@loadable/component';
 
+import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import useProimse from '@hooks/usePromise';
 import { MAIN_SERVER } from '@config/setting';
-import HomeGnb from './HomeGnb';
+import HomeMenu from './HomeMenu';
 import HomeArticle from './HomeArticle';
 import HomeLogo from './HomeLogo';
 import HomeProfile from './HomeProfile';
 import Write from './write/Write';
-import '@styles/home/Write.scss';
+import '@styles/components/modalMessage.scss';
 
 const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
   const [selectedMenu, setSelectedMenu] = useState(Menu.TRIP);
+  const [showMessage, setShowMessage] = useState('');
   const { accessToken } = useSelector((state) => state.accessToken);
   const [loading, response, error] = useProimse(
     () =>
@@ -31,7 +33,18 @@ const Index = () => {
 
   const { data: markers } = response;
 
-  const onClickMenuHandler = useCallback((clickedMenu) => {
+  // 메시지 애니메이션
+  useEffect(() => {
+    if (showMessage) {
+      setTimeout(() => {
+        setShowMessage('');
+      }, 1000);
+    }
+  }, [showMessage]);
+
+  const onClickMenuHandler = useCallback((clickedMenu, message) => {
+    if (message) setShowMessage(message);
+
     setSelectedMenu(clickedMenu);
   }, []);
 
@@ -42,13 +55,13 @@ const Index = () => {
   let content = '';
   switch (selectedMenu) {
     case Menu.TRIP:
-      content = 'Trip';
+      content = '';
       break;
     case Menu.ROUTE:
-      content = 'Route';
+      content = '';
       break;
     case Menu.LOG:
-      content = 'Log';
+      content = '';
       break;
     case Menu.WRITE:
       content = <Write onClose={onClickMenuHandler} />;
@@ -61,12 +74,20 @@ const Index = () => {
     <>
       <HomeLogo />
 
-      <HomeGnb selectedMenu={selectedMenu} onClickMenu={onClickMenuHandler} />
+      <HomeMenu selectedMenu={selectedMenu} onClickMenu={onClickMenuHandler} />
       <HomeProfile />
       {content}
       {id && <HomeArticle id={id} accessToken={accessToken} />}
 
       <Map markers={markers.data} />
+
+      {showMessage && (
+        <Modal className='modal'>
+          <div className='modal-message'>
+            <p>{showMessage}</p>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
