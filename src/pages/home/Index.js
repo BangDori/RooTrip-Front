@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { change } from '@store/menu';
 import { exit } from '@store/article';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
@@ -15,10 +16,10 @@ import '@styles/components/modalMessage.scss';
 const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
-  const [selectedMenu, setSelectedMenu] = useState(Menu.TRIP);
+  const selectedMenu = useSelector((state) => state.menu);
   const [showMessage, setShowMessage] = useState('');
-  const dispatch = useDispatch();
   const { id } = useSelector((state) => state.article);
+  const dispatch = useDispatch();
 
   // 메시지 애니메이션
   useEffect(() => {
@@ -33,7 +34,7 @@ const Index = () => {
     (clickedMenu, message) => {
       if (message) setShowMessage(message);
 
-      setSelectedMenu(clickedMenu);
+      dispatch(change(clickedMenu));
       if (id) dispatch(exit());
     },
     [dispatch, id],
