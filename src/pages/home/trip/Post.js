@@ -6,18 +6,18 @@ import { useDispatch } from 'react-redux';
 import Modal from '@components/wrapper/Modal';
 import NAVIGATE_IMAGE from '@assets/navigate_image.png';
 import DefaultProfile from '@assets/DefaultProfileImage.png';
-import Photos from './article/Photos';
-import Comment from './article/Comment';
-import LikeButton from './article/LikeButton';
-import Content from './article/Content';
+import Photos from './post/Photos';
+import Comment from './post/Comment';
+import LikeButton from './post/LikeButton';
+import Content from './post/Content';
 import '@styles/home/article.scss';
 
-const HomeArticle = ({ id, accessToken }) => {
+const Post = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLikedPost, setIsLikedPost] = useState(false);
   const [isPostModal, setIsPostModal] = useState(false);
   const [article, setArticle] = useState(null);
-  const [commentsCount, setCommentsCount] = useState([]);
+  const [commentsCount, setCommentsCount] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const dispatch = useDispatch();
 
@@ -146,4 +146,4 @@ const HomeArticle = ({ id, accessToken }) => {
   );
 };
 
-export default HomeArticle;
+export default Post;

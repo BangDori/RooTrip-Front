@@ -5,11 +5,13 @@ import Profile from '@assets/DefaultProfileImage.png';
 import Like from '@assets/Like.png';
 import NotLike from '@assets/NotLike.png';
 import Photos from './Photos';
+import Comment from './Comment';
 
 const Content = ({ accessToken, postId, post, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [commentsCount, setCommentsCount] = useState(0);
 
   const { user, photos, title, content } = post;
   const { profileImage, name } = user;
@@ -32,6 +34,10 @@ const Content = ({ accessToken, postId, post, onClose }) => {
 
   const onChangePhoto = useCallback((move) => {
     setCurrentPhoto((prevPhoto) => prevPhoto + move);
+  }, []);
+
+  const onAddCommentHandler = useCallback(() => {
+    setCommentsCount((prevState) => prevState + 1);
   }, []);
 
   if (isLoading) return null;
@@ -94,6 +100,11 @@ const Content = ({ accessToken, postId, post, onClose }) => {
               </div>
             ))}
           </div>
+          <Comment
+            accessToken={accessToken}
+            postId={postId}
+            onAddComment={onAddCommentHandler}
+          />
         </div>
       </div>
 
