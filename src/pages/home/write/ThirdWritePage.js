@@ -4,21 +4,24 @@ const VisibleModes = [
   {
     id: 1,
     label: '전체공개',
+    name: 'public',
   },
   {
     id: 2,
     label: '친구공개',
+    name: 'friend',
   },
   {
     id: 3,
     label: '나만보기',
+    name: 'private',
   },
 ];
 
 const WriteContent = ({ onMovePage, onUploadWrite }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [selectedMode, setSelectedMode] = useState(VisibleModes[0].label);
+  const [visibility, setVisibility] = useState(VisibleModes[0].name);
 
   const onChangeTitleHandler = useCallback((e) => setTitle(e.target.value), []);
   const onChangeContentHandler = useCallback(
@@ -27,12 +30,12 @@ const WriteContent = ({ onMovePage, onUploadWrite }) => {
   );
 
   const handleClick = useCallback((mode) => {
-    setSelectedMode(mode);
+    setVisibility(mode);
   }, []);
 
   const onClickSubmitPostHandler = useCallback(() => {
-    onUploadWrite({ title, content, selectedMode });
-  }, [title, content, selectedMode, onUploadWrite]);
+    onUploadWrite({ title, content, visibility });
+  }, [title, content, visibility, onUploadWrite]);
 
   return (
     <div className='Last_modal'>
@@ -79,8 +82,8 @@ const WriteContent = ({ onMovePage, onUploadWrite }) => {
           {VisibleModes.map((VisibleMode) => (
             <button
               key={VisibleMode.id}
-              onClick={() => handleClick(VisibleMode.label)}
-              className={selectedMode === VisibleMode.label ? 'choose_btn' : ''}
+              onClick={() => handleClick(VisibleMode.name)}
+              className={visibility === VisibleMode.name ? 'choose_btn' : ''}
             >
               {VisibleMode.label}
             </button>
