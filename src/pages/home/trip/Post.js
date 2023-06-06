@@ -68,7 +68,7 @@ const Post = ({ id, accessToken }) => {
 
   if (!article) return null;
 
-  const { id: postId, user, photos, title, content } = article;
+  const { id: postId, user, photos, title, content, like } = article;
   const { profileImage, name } = user;
 
   return (
@@ -88,7 +88,8 @@ const Post = ({ id, accessToken }) => {
               <div className='profile_image'>
                 <img
                   src={
-                    profileImage.length === 0 ? DefaultProfile : profileImage
+                    DefaultProfile
+                    // profileImage.length === 0 ? DefaultProfile : profileImage
                   }
                   alt='user profile image'
                 />
@@ -115,6 +116,7 @@ const Post = ({ id, accessToken }) => {
                   accessToken={accessToken}
                   postId={postId}
                   isLikedPost={isLikedPost}
+                  like={like}
                   setIsLikedPost={setIsLikedPost}
                 />
               </div>

@@ -151,6 +151,7 @@
       }
 
       .side-bar {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -166,6 +167,13 @@
             width: 36px;
             height: 36px;
             object-fit: contain;
+          }
+
+          .like_count {
+            position: absolute;
+            bottom: 14px;
+            right: 15px;
+            font-weight: 700;
           }
         }
       }
