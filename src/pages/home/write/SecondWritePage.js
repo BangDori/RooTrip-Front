@@ -12,7 +12,13 @@ function routeReducer(routes, action) {
   }
 }
 
-const SecondWritePage = ({ photos, prevRoutes, setRoutes, onMovePage }) => {
+const SecondWritePage = ({
+  photos,
+  prevRoutes,
+  setRoutes,
+  onMovePage,
+  updateCoordinate,
+}) => {
   const [routes, dispatch] = useReducer(routeReducer, prevRoutes);
 
   const onInsert = useCallback(
@@ -61,6 +67,7 @@ const SecondWritePage = ({ photos, prevRoutes, setRoutes, onMovePage }) => {
               photo={photo}
               addRoute={addRoute}
               clicked={routes.indexOf(photo.id) + 1}
+              updateCoordinate={updateCoordinate}
             />
           ))}
         </div>

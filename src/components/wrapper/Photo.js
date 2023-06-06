@@ -1,14 +1,45 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAddress } from '@services/image';
 
+import { setLocation, finishLocation } from '@store/location';
 import Modal from './Modal';
 import '@styles/components/modalMessage.scss';
 
-const Photo = ({ photo, addRoute, clicked }) => {
-  const { feedOrder, url, latitude, longitude } = photo;
+const Photo = ({ photo, addRoute, clicked, updateCoordinate }) => {
+  const { id, feedOrder, url, latitude, longitude } = photo;
   const [loading, setLoading] = useState(false);
   const [addressPoint, setAddressPint] = useState(undefined);
   const [isShowMessage, setIsShowMessage] = useState('');
+  const dispatch = useDispatch();
+  const {
+    id: updatedId,
+    latitude: updatedLatitude,
+    longitude: updatedLongitude,
+  } = useSelector((state) => state.location);
+
+  useEffect(() => {
+    if (!updatedLatitude) return;
+
+    const update = async () => {
+      const updatedInfo = {
+        updatedId,
+        updatedLatitude,
+        updatedLongitude,
+      };
+      await updateCoordinate(updatedInfo);
+      await dispatch(finishLocation());
+    };
+
+    if (id === updatedId) update();
+  }, [
+    dispatch,
+    updateCoordinate,
+    id,
+    updatedId,
+    updatedLatitude,
+    updatedLongitude,
+  ]);
 
   useEffect(() => {
     // 좌표 정보 주소로 변환 받기
@@ -27,11 +58,12 @@ const Photo = ({ photo, addRoute, clicked }) => {
   }, [photo, addRoute]);
 
   const onClickLocationHandler = useCallback(() => {
+    dispatch(setLocation(id));
     setIsShowMessage('지도에 위치를 설정해주세요!');
     setTimeout(() => {
       setIsShowMessage('');
     }, 3000);
-  }, []);
+  }, [dispatch, id]);
 
   if (!loading) {
     return <li className='List_piece'></li>;
@@ -45,25 +77,30 @@ const Photo = ({ photo, addRoute, clicked }) => {
           {clicked > 0 && <div className='click_img'>{clicked}</div>}
         </div>
         <table>
-          <tr>
-            <th>{feedOrder}번 사진</th>
-            <td>
-              {latitude ? (
-                <button type='button' onClick={handleClick}>
-                  경로 표시
-                </button>
-              ) : (
-                <button type='button' onClick={onClickLocationHandler}>
-                  위치 설정
-                </button>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td colSpan='2' style={{ color: `${!addressPoint && 'red'}` }}>
-              {addressPoint ? `${addressPoint}` : '위치를 설정해주세요!'}
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <th>{feedOrder}번 사진</th>
+              <td>
+                {latitude ? (
+                  <button type='button' onClick={handleClick}>
+                    경로 표시
+                  </button>
+                ) : (
+                  <button type='button' onClick={onClickLocationHandler}>
+                    위치 설정
+                  </button>
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td
+                colSpan='2'
+                style={{ color: `${addressPoint ? 'green' : 'red'}` }}
+              >
+                {addressPoint ? `${addressPoint}` : '위치를 설정해주세요!'}
+              </td>
+            </tr>
+          </tbody>
         </table>
       </li>
       {isShowMessage && (

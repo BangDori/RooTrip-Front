@@ -16,7 +16,10 @@ const Write = ({ onClose }) => {
   const { accessToken } = useSelector((state) => state.accessToken);
 
   useEffect(() => {
-    if (currentPage === 0) setRoutes([]);
+    if (currentPage === 0) {
+      setPhotos([]);
+      setRoutes([]);
+    }
   }, [currentPage]);
 
   const onMovePage = useCallback(async (move) => {
@@ -68,6 +71,26 @@ const Write = ({ onClose }) => {
     [onClose, accessToken, photos, routes],
   );
 
+  const updateCoordinateHandler = useCallback(
+    (newPhoto) => {
+      const { updatedId, updatedLatitude, updatedLongitude } = newPhoto;
+      const updatedPhotos = photos.map((photo) =>
+        photo.id === updatedId
+          ? { ...photo, latitude: updatedLatitude, longitude: updatedLongitude }
+          : photo,
+      );
+
+      // eslint-disable-next-line no-console
+      console.log(updatedId, updatedLatitude, updatedLongitude);
+
+      // eslint-disable-next-line no-console
+      console.log(updatedPhotos);
+
+      setPhotos(updatedPhotos);
+    },
+    [photos],
+  );
+
   let content = '';
   switch (Number(currentPage)) {
     case 0:
@@ -82,6 +105,7 @@ const Write = ({ onClose }) => {
           prevRoutes={routes}
           setRoutes={setRoutes}
           onMovePage={onMovePage}
+          updateCoordinate={updateCoordinateHandler}
         />
       );
       break;

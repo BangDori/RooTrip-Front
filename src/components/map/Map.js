@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { updateLocation } from '@store/location';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import CustomMarker from './CustomMarker';
 import '@styles/components/Map.scss';
@@ -13,12 +14,25 @@ const Map = () => {
   const map = useRef(null);
   const { accessToken } = useSelector((state) => state.accessToken);
   const markers = useSelector((state) => state.marker);
+  const { isSetLocation } = useSelector((state) => state.location);
+  const dispatch = useDispatch();
 
-  // map event initialize
-  const bounds = [
-    [130.8, 36.1395], // Southwest coordinates
-    [131.6, 36.8395], // Northeast coordinates
-  ];
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (isSetLocation && map.current) {
+      const handleClick = (e) => {
+        const { lat, lng } = e.lngLat;
+        dispatch(updateLocation({ lat, lng }));
+      };
+
+      map.current.on('click', handleClick);
+
+      return () => {
+        map.current.off('click', handleClick);
+      };
+    }
+  }, [dispatch, isSetLocation]);
+
   // map initialize
   useEffect(() => {
     setIsLoading(true);
