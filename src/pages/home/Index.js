@@ -26,7 +26,7 @@ const Index = () => {
     if (showMessage) {
       setTimeout(() => {
         setShowMessage('');
-      }, 1000);
+      }, 3000);
     }
   }, [showMessage]);
 
