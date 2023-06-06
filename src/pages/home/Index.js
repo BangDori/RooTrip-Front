@@ -12,6 +12,7 @@ import HomeProfile from './HomeProfile';
 import Write from './write/Write';
 import Trip from './trip/Trip';
 import '@styles/components/modalMessage.scss';
+import Route from './route/Route';
 
 const Map = loadable(() => import('@components/map/Map'));
 
@@ -46,7 +47,7 @@ const Index = () => {
       content = <Trip />;
       break;
     case Menu.ROUTE:
-      content = '';
+      content = <Route />;
       break;
     case Menu.LOG:
       content = '';
