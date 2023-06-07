@@ -4,13 +4,7 @@ import { likePost, unLikePost } from '@services/post';
 import Like from '@assets/Like.png';
 import NotLike from '@assets/NotLike.png';
 
-const LikeButton = ({
-  accessToken,
-  postId,
-  isLikedPost,
-  like,
-  setIsLikedPost,
-}) => {
+const LikeButton = ({ accessToken, postId, isLikedPost, setIsLikedPost }) => {
   const onClickLikeHandler = useCallback(async () => {
     try {
       await likePost(accessToken, postId);
@@ -35,7 +29,6 @@ const LikeButton = ({
       onClick={isLikedPost ? onClickUnlikeHandler : onClickLikeHandler}
     >
       <img src={isLikedPost ? Like : NotLike} alt='LIKE_IMAGE' />
-      <span className='like_count'>{like}</span>
     </button>
   );
 };

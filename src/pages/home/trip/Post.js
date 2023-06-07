@@ -17,6 +17,7 @@ const Post = ({ id, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLikedPost, setIsLikedPost] = useState(false);
   const [isPostModal, setIsPostModal] = useState(false);
+  const [postView, setPostView] = useState(0);
   const [article, setArticle] = useState(null);
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState(0);
@@ -36,6 +37,7 @@ const Post = ({ id, accessToken }) => {
           setIsLikedPost(isLiked);
           setCommentsCount(commentCount);
           setCurrentPhoto(0);
+          setPostView(postViews);
         } catch (e) {
           alert(e.message);
         }
@@ -107,7 +109,13 @@ const Post = ({ id, accessToken }) => {
           </div> */}
           <div className='article'>
             <div className='header-bar'>
-              <h4 className='title'>{title}</h4>
+              <div className='left-bar'>
+                <h4 className='title'>{title}</h4>
+                <div className='other-info'>
+                  <span>조회수 {postView}</span>
+                  <span>좋아요 {isLikedPost ? like + 1 : like}</span>
+                </div>
+              </div>
               <div className='side-bar'>
                 <button type='button'>
                   <img src={NAVIGATE_IMAGE} alt='NAVIGATE_IMAGE' />
@@ -116,7 +124,6 @@ const Post = ({ id, accessToken }) => {
                   accessToken={accessToken}
                   postId={postId}
                   isLikedPost={isLikedPost}
-                  like={like}
                   setIsLikedPost={setIsLikedPost}
                 />
               </div>

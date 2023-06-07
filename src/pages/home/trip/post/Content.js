@@ -42,9 +42,6 @@ const Content = ({ accessToken, postId, post, onClose }) => {
 
   if (isLoading) return null;
 
-  // eslint-disable-next-line no-console
-  console.log(comments);
-
   return (
     <div className='modal-post'>
       <div className='modal-left'>

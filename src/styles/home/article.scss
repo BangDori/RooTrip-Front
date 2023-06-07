@@ -145,9 +145,24 @@
       align-items: center;
       border-bottom: 1px solid #f0f0f0;
 
-      .title {
-        margin: 0;
-        font-size: 18px;
+      .left-bar {
+        display: flex;
+        flex-direction: column;
+
+        .title {
+          margin: 0;
+          font-size: 18px;
+        }
+
+        .other-info {
+          display: flex;
+          flex-direction: row;
+
+          gap: 16px;
+
+          font-size: 12px;
+          color: #ccc;
+        }
       }
 
       .side-bar {
@@ -167,13 +182,6 @@
             width: 36px;
             height: 36px;
             object-fit: contain;
-          }
-
-          .like_count {
-            position: absolute;
-            bottom: 14px;
-            right: 15px;
-            font-weight: 700;
           }
         }
       }
