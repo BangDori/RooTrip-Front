@@ -6,8 +6,8 @@ import { setLocation, finishLocation } from '@store/location';
 import Modal from './Modal';
 import '@styles/components/modalMessage.scss';
 
-const Photo = ({ photo, addRoute, clicked, updateCoordinate }) => {
-  const { id, feedOrder, url, latitude, longitude } = photo;
+const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
+  const { url, latitude, longitude } = photo;
   const [loading, setLoading] = useState(false);
   const [addressPoint, setAddressPint] = useState(undefined);
   const [isShowMessage, setIsShowMessage] = useState('');
@@ -54,8 +54,8 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate }) => {
   }, [latitude, longitude]);
 
   const handleClick = useCallback(() => {
-    addRoute(photo.id);
-  }, [photo, addRoute]);
+    addRoute(id);
+  }, [id, addRoute]);
 
   const onClickLocationHandler = useCallback(() => {
     dispatch(setLocation(id));
@@ -71,7 +71,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate }) => {
 
   return (
     <>
-      <li className='List_piece' key={feedOrder}>
+      <li className='List_piece'>
         <div className='img_box'>
           <img src={url} alt='img' />
           {clicked > 0 && <div className='click_img'>{clicked}</div>}
@@ -79,7 +79,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate }) => {
         <table>
           <tbody>
             <tr>
-              <th>{feedOrder}번 사진</th>
+              <th>{id}번 사진</th>
               <td>
                 {latitude ? (
                   <button type='button' onClick={handleClick}>

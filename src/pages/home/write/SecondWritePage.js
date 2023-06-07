@@ -61,12 +61,13 @@ const SecondWritePage = ({
       </div>
       <div className='Write_content'>
         <div className='Write_list'>
-          {photos.map((photo) => (
+          {photos.map((photo, idx) => (
             <Photo
-              key={photo.feedOrder}
+              key={idx}
+              id={idx + 1}
               photo={photo}
               addRoute={addRoute}
-              clicked={routes.indexOf(photo.id) + 1}
+              clicked={routes.indexOf(idx + 1) + 1}
               updateCoordinate={updateCoordinate}
             />
           ))}

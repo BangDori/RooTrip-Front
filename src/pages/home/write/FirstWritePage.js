@@ -7,11 +7,9 @@ import cn from 'classnames';
 
 const FirstWritePage = ({ onMovePage, onUploadPhotos }) => {
   // 메타 정보와 함께 사진 생성하기
-  const createNewPhoto = useCallback((idx, fileInfo, exifdata) => {
+  const createNewPhoto = useCallback((fileInfo, exifdata) => {
     const newPhoto = {
-      id: idx,
       fileName: `${Date.now()}-${fileInfo.name}`,
-      feedOrder: idx,
       dateTime: '',
       latitude: '',
       longitude: '',
@@ -47,7 +45,7 @@ const FirstWritePage = ({ onMovePage, onUploadPhotos }) => {
 
   // feed 순서대로 사진 정렬하기
   const sort = useCallback(
-    (photos) => photos.sort((a, b) => a.feedOrder - b.feedOrder),
+    (photos) => photos.sort((a, b) => String(a.dateTime) - String(b.dateTime)),
     [],
   );
 
@@ -65,11 +63,7 @@ const FirstWritePage = ({ onMovePage, onUploadPhotos }) => {
       Object.entries(e).forEach(([idx, fileInfo]) => {
         const promise = new Promise((resolve) => {
           EXIF.getData(fileInfo, () => {
-            const newPhoto = createNewPhoto(
-              Number(idx) + 1,
-              fileInfo,
-              fileInfo.exifdata,
-            );
+            const newPhoto = createNewPhoto(fileInfo, fileInfo.exifdata);
             newPhotos.push(newPhoto);
             resolve();
           });
