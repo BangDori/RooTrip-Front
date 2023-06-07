@@ -1,5 +1,9 @@
 import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import getRecommendPost from '@services/route';
+import LikeImage from '@assets/route-like.png';
+import CommentImage from '@assets/route-comment.png';
 import City from './City';
 import '@styles/home/route.scss';
 
@@ -14,23 +18,23 @@ const cities = [
   },
   {
     id: 3,
-    name: '충청북도',
+    name: '경기도',
   },
   {
     id: 4,
-    name: '인천',
+    name: '경상남도',
   },
   {
     id: 5,
-    name: '대구',
-  },
-  {
-    id: 6,
     name: '경상북도',
   },
   {
+    id: 6,
+    name: '광주',
+  },
+  {
     id: 7,
-    name: '경상남도',
+    name: '대구',
   },
   {
     id: 8,
@@ -38,23 +42,39 @@ const cities = [
   },
   {
     id: 9,
-    name: '전라북도',
-  },
-  {
-    id: 10,
-    name: '광주',
-  },
-  {
-    id: 11,
     name: '부산',
   },
   {
-    id: 12,
+    id: 10,
+    name: '세종',
+  },
+  {
+    id: 11,
     name: '울산',
   },
   {
+    id: 12,
+    name: '전라남도',
+  },
+  {
     id: 13,
+    name: '전라북도',
+  },
+  {
+    id: 14,
     name: '제주도',
+  },
+  {
+    id: 15,
+    name: '충청남도',
+  },
+  {
+    id: 16,
+    name: '충청북도',
+  },
+  {
+    id: 17,
+    name: '인천',
   },
 ];
 
@@ -62,6 +82,8 @@ const Route = () => {
   const [isAddCity, setIsAddCity] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [searchCity, setSearchCity] = useState([]);
+  const { accessToken } = useSelector((state) => state.accessToken);
+  const [searchList, setSearchList] = useState([]);
 
   const onClickAddCityHandler = useCallback(() => {
     setIsAddCity((prevState) => !prevState);
@@ -82,9 +104,23 @@ const Route = () => {
     [searchCity],
   );
 
-  const onClickSearchHandler = useCallback(() => {
+  const onClickSearchHandler = useCallback(async () => {
+    if (searchCity.length === 0) {
+      alert('하나 이상 정해주세요.');
+      return;
+    }
+    setIsAddCity(false);
     setIsSearch(true);
-  }, []);
+
+    try {
+      const data = await getRecommendPost(accessToken, searchCity);
+
+      setSearchList(data);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e.message);
+    }
+  }, [accessToken, searchCity]);
 
   return (
     <div className='route-content'>
@@ -97,7 +133,12 @@ const Route = () => {
             <div className='route-search-city'>
               {searchCity.map((city) => `${city} `)}
             </div>
-            <button className='route-search-button'>검색</button>
+            <button
+              className='route-search-button'
+              onClick={onClickSearchHandler}
+            >
+              검색
+            </button>
           </div>
         </div>
         <div className={`route-search-selectBox ${isAddCity ? 'open' : ''}`}>
@@ -137,6 +178,48 @@ const Route = () => {
             )}
           </button>
         </div>
+      </div>
+      <div className='route-search-list'>
+        {searchList.map((item) => {
+          const { id, imageUrl, post, commentCount } = item;
+          const { title, createdAt, like } = post;
+
+          return (
+            <div key={id} className='search-item'>
+              <div className='item-image'>
+                <button>
+                  <img src={imageUrl} alt='thumbnail image' />
+                </button>
+              </div>
+              <div className='item-content'>
+                <div className='item-title'>
+                  <h3>{title}</h3>
+                </div>
+                <div className='item-date'>
+                  <p>{createdAt}</p>
+                </div>
+                <div className='item-count-box'>
+                  <div className='item-like-count'>
+                    <img
+                      src={LikeImage}
+                      alt='like image'
+                      style={{ width: '36px' }}
+                    />
+                    <span>{like}</span>
+                  </div>
+                  <div className='item-comment-count'>
+                    <img
+                      src={CommentImage}
+                      alt='comment image'
+                      style={{ width: '32px' }}
+                    />
+                    <span>{commentCount}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
