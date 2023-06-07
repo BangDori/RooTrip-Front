@@ -21,7 +21,7 @@ const ChooseTheme = () => {
     setClickChooseTheme(false);
     setClickChoose(false);
   };
-  log - content;
+
   return (
     <div className='log-content'>
       <div className='content'>
