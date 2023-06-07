@@ -1,4 +1,5 @@
 import React from 'react';
+import '@styles/components/modalChooseTheme.scss';
 
 const ModalTheme = ({ closeModal }) => {
   return (

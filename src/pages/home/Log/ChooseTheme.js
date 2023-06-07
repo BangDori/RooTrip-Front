@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '@styles/home/log.scss';
+
 import Modal from '../../../components/wrapper/Modal';
 import ModalLocation from './ModalLocation';
 import ModalTheme from './ModalTheme';
