@@ -12,7 +12,7 @@ const Trip = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (marker.length > 0) return;
+    if (marker) return;
 
     const posts = async () => {
       try {
