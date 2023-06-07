@@ -11,7 +11,7 @@ import HomeLogo from './HomeLogo';
 import HomeProfile from './HomeProfile';
 import Write from './write/Write';
 import Trip from './trip/Trip';
-import Log from './Log/ChooseTheme';
+import Log from './log/ChooseTheme';
 import '@styles/components/modalMessage.scss';
 import '@styles/home/log.scss';
 import Route from './route/Route';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Modal from '../../../components/wrapper/Modal';
+import Modal from '@components/wrapper/Modal';
 import ModalLocation from './ModalLocation';
 import ModalTheme from './ModalTheme';
 
@@ -21,8 +21,9 @@ const ChooseTheme = () => {
     setClickChooseTheme(false);
     setClickChoose(false);
   };
+  log - content;
   return (
-    <>
+    <div className='log-content'>
       <div className='content'>
         <div className='title'>
           <span>실시간 인기 명소</span>
@@ -64,7 +65,7 @@ const ChooseTheme = () => {
           )}
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 
