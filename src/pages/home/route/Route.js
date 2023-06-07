@@ -1,72 +1,60 @@
 import React, { useCallback, useState } from 'react';
 
+import City from './City';
 import '@styles/home/route.scss';
 
 const cities = [
   {
     id: 1,
     name: '서울',
-    isSelected: false,
   },
   {
     id: 2,
     name: '강원도',
-    isSelected: false,
   },
   {
     id: 3,
     name: '충청북도',
-    isSelected: false,
   },
   {
     id: 4,
     name: '인천',
-    isSelected: false,
   },
   {
     id: 5,
     name: '대구',
-    isSelected: false,
   },
   {
     id: 6,
     name: '경상북도',
-    isSelected: false,
   },
   {
     id: 7,
     name: '경상남도',
-    isSelected: false,
   },
   {
     id: 8,
     name: '대전',
-    isSelected: false,
   },
   {
     id: 9,
     name: '전라북도',
-    isSelected: false,
   },
   {
     id: 10,
     name: '광주',
-    isSelected: false,
   },
   {
     id: 11,
     name: '부산',
-    isSelected: false,
   },
   {
     id: 12,
     name: '울산',
-    isSelected: false,
   },
   {
     id: 13,
     name: '제주도',
-    isSelected: false,
   },
 ];
 
@@ -79,9 +67,20 @@ const Route = () => {
     setIsAddCity((prevState) => !prevState);
   }, []);
 
-  const onClickSearchCityHandler = useCallback((e) => {
-    setSearchCity((prev) => [...prev, e.target.name]);
-  }, []);
+  const addSearchCityHandler = useCallback(
+    (cityName) => {
+      if (searchCity.includes(cityName)) {
+        const updatedSearchCity = searchCity.filter(
+          (city) => city !== cityName,
+        );
+
+        setSearchCity(updatedSearchCity);
+      } else {
+        setSearchCity((prevCities) => [...prevCities, cityName]);
+      }
+    },
+    [searchCity],
+  );
 
   const onClickSearchHandler = useCallback(() => {
     setIsSearch(true);
@@ -104,14 +103,12 @@ const Route = () => {
         <div className={`route-search-selectBox ${isAddCity ? 'open' : ''}`}>
           <div className='select-city-name'>
             {cities.map((city) => (
-              <button
+              <City
                 key={city.id}
-                onClick={onClickSearchCityHandler}
-                name={city.name}
-                // style={{ background: }}
-              >
-                {city.name}
-              </button>
+                city={city}
+                addSearchCity={addSearchCityHandler}
+                isMax={searchCity.length === 3}
+              />
             ))}
           </div>
         </div>
