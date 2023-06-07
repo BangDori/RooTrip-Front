@@ -60,9 +60,23 @@ export async function createPost(accessToken, post) {
   return { status, message };
 }
 
-export async function deletePost(postId) {
-  // post 삭제
-  const result = axios.delete(`${MAIN_SERVER}/api/post/${postId}`);
+/**
+ * 게시글 삭제
+ * @param {String} accessToken accessToekn
+ * @param {String} postId 게시글 Id
+ * @returns
+ */
+export async function deletePost(accessToken, postId) {
+  const { status, message } = axios
+    .delete(`${MAIN_SERVER}/api/post/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+
+  return status;
 }
 
 /**

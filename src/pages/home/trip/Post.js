@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getOnePost } from '@services/post';
 import { exit } from '@store/article';
+import { remove } from '@store/marker';
 import { useDispatch } from 'react-redux';
+import { getOnePost, deletePost } from '@services/post';
 
 import Modal from '@components/wrapper/Modal';
 import NAVIGATE_IMAGE from '@assets/navigate_image.png';
@@ -18,6 +19,7 @@ const Post = ({ id, accessToken }) => {
   const [isLikedPost, setIsLikedPost] = useState(false);
   const [isPostModal, setIsPostModal] = useState(false);
   const [postView, setPostView] = useState(0);
+  const [photos, setPhotos] = useState([]);
   const [article, setArticle] = useState(null);
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState(0);
@@ -28,11 +30,15 @@ const Post = ({ id, accessToken }) => {
       setIsLoading(false);
       const getLoad = async () => {
         try {
-          const { postViews, post, isLiked, commentCount } = await getOnePost(
-            accessToken,
-            id,
-          );
+          const {
+            postViews,
+            post,
+            photos: photosArray,
+            isLiked,
+            commentCount,
+          } = await getOnePost(accessToken, id);
 
+          setPhotos(photosArray);
           setArticle(post);
           setIsLikedPost(isLiked);
           setCommentsCount(commentCount);
@@ -66,18 +72,30 @@ const Post = ({ id, accessToken }) => {
     setCommentsCount((prevState) => prevState + 1);
   }, []);
 
+  const onClickDeleteHandler = useCallback(async () => {
+    try {
+      const status = await deletePost(accessToken, id);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log(e);
+    }
+  }, [accessToken, id]);
+
   if (!isLoading) return null;
 
   if (!article) return null;
 
-  const { id: postId, user, photos, title, content, like } = article;
+  const { user, title, content, like } = article;
   const { profileImage, name } = user;
 
   return (
     <div>
       <article>
-        <div id={postId} className='Main_content'>
+        <div id={id} className='Main_content'>
           <div className='article_head'>
+            <button className='delete-button' onClick={onClickDeleteHandler}>
+              게시글 삭제
+            </button>
             <span className='photo_page'>{`${currentPhoto + 1}/${
               photos.length
             }`}</span>
@@ -122,7 +140,7 @@ const Post = ({ id, accessToken }) => {
                 </button>
                 <LikeButton
                   accessToken={accessToken}
-                  postId={postId}
+                  postId={id}
                   isLikedPost={isLikedPost}
                   setIsLikedPost={setIsLikedPost}
                 />
@@ -138,7 +156,7 @@ const Post = ({ id, accessToken }) => {
           </div>
           <Comment
             accessToken={accessToken}
-            postId={postId}
+            postId={id}
             onAddComment={onAddCommentHandler}
           />
         </div>
@@ -147,7 +165,7 @@ const Post = ({ id, accessToken }) => {
         <Modal className='modal-post-more'>
           <Content
             accessToken={accessToken}
-            postId={postId}
+            postId={id}
             post={article}
             onClose={onClickPostModalHandler}
           />
