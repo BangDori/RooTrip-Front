@@ -11,7 +11,9 @@ import HomeLogo from './HomeLogo';
 import HomeProfile from './HomeProfile';
 import Write from './write/Write';
 import Trip from './trip/Trip';
+import Log from './Log/ChooseTheme';
 import '@styles/components/modalMessage.scss';
+import '@styles/home/log.scss';
 import Route from './route/Route';
 
 const Map = loadable(() => import('@components/map/Map'));
@@ -50,7 +52,7 @@ const Index = () => {
       content = <Route />;
       break;
     case Menu.LOG:
-      content = '';
+      content = <Log />;
       break;
     case Menu.WRITE:
       content = <Write onClose={onClickMenuHandler} />;

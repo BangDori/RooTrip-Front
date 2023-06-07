@@ -1,4 +1,5 @@
 import React from 'react';
+import '@styles/components/modalChooseLocation.scss';
 
 const ModalLocation = ({ closeModal }) => {
   return (
