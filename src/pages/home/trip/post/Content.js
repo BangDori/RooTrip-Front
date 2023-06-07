@@ -80,7 +80,7 @@ const Content = ({ accessToken, postId, post, onClose }) => {
               <div key={comment.id} className='modal-comment'>
                 <div className='modal-comment-user'>
                   <img src={profileImage || Profile} alt='profile image' />
-                  <h5 className='profile_name'>{name}</h5>
+                  <h5 className='profile_name'>{comment.name}</h5>
                   <span className='modal-comment-createAt'>
                     {comment.createdAt}
                   </span>
