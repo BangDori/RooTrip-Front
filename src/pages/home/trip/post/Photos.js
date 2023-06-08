@@ -4,8 +4,8 @@ import React, { useCallback } from 'react';
 
 import '@styles/home/photo.scss';
 
-const Photos = ({ photos, current, onChangePhoto }) => {
-  const width = photos.length * 456;
+const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
+  const width = photos.length * photoWidth;
 
   const prevPhotoHandler = useCallback(() => {
     onChangePhoto(-1);
