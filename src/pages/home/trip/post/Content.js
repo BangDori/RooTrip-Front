@@ -2,18 +2,19 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { getComments } from '@services/post';
 
 import Profile from '@assets/DefaultProfileImage.png';
+import Navigation from '@assets/navigate_image.png';
 import Like from '@assets/Like.png';
 import NotLike from '@assets/NotLike.png';
 import Photos from './Photos';
 import Comment from './Comment';
 
-const Content = ({ accessToken, postId, post, onClose }) => {
+const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  const [commentsCount, setCommentsCount] = useState(0);
+  const { postView, like, commentsCount } = others;
 
-  const { user, photos, title, content } = post;
+  const { user, title, content } = post;
   const { profileImage, name } = user;
 
   useEffect(() => {
@@ -36,8 +37,8 @@ const Content = ({ accessToken, postId, post, onClose }) => {
     setCurrentPhoto((prevPhoto) => prevPhoto + move);
   }, []);
 
-  const onAddCommentHandler = useCallback(() => {
-    setCommentsCount((prevState) => prevState + 1);
+  const onAddCommentHandler = useCallback((comment) => {
+    setComments((prev) => [...prev, comment]);
   }, []);
 
   if (isLoading) return null;
@@ -47,18 +48,26 @@ const Content = ({ accessToken, postId, post, onClose }) => {
       <div className='modal-left'>
         <div className='modal-photos'>
           <Photos
+            photoWidth={432}
             photos={photos}
             current={currentPhoto}
             onChangePhoto={onChangePhoto}
           />
-          {/* {photos.map((photo) => (
-            <div key={photo.id} className='modal-photo'>
-              <img
-                src={photo.imageUrl}
-                alt={photo.city + photo.first + photo.second}
-              />
-            </div>
-          ))} */}
+        </div>
+        <div className='modal-other-info'>
+          <div className='modal-other-left'>
+            <span>조회수 {postView}</span>
+            <span>좋아요 {like}</span>
+            <span>댓글 {commentsCount}</span>
+          </div>
+          <div className='modal-other-right'>
+            <button>
+              <img src={Navigation} alt='navigation image' />
+            </button>
+            <button>
+              <img src={Like} alt='like image' />
+            </button>
+          </div>
         </div>
       </div>
       <div className='modal-right'>
@@ -74,7 +83,7 @@ const Content = ({ accessToken, postId, post, onClose }) => {
           </div>
           <div className='modal-comments'>
             <div className='modal-comments-tot-count-box'>
-              좋아요 {comments.length}개
+              댓글 {commentsCount}개
             </div>
             {comments.map((comment) => (
               <div key={comment.id} className='modal-comment'>

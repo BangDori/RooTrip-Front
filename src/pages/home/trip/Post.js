@@ -88,6 +88,8 @@ const Post = ({ id, accessToken }) => {
   const { user, title, content, like } = article;
   const { profileImage, name } = user;
 
+  const others = { postView, like, commentsCount };
+
   return (
     <div>
       <article>
@@ -117,6 +119,7 @@ const Post = ({ id, accessToken }) => {
               <h5 className='profile_name'>{name}</h5>
             </div>
             <Photos
+              photoWidth={456}
               photos={photos}
               current={currentPhoto}
               onChangePhoto={onChangePhoto}
@@ -167,6 +170,8 @@ const Post = ({ id, accessToken }) => {
             accessToken={accessToken}
             postId={id}
             post={article}
+            photos={photos}
+            others={others}
             onClose={onClickPostModalHandler}
           />
         </Modal>

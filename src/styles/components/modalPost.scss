@@ -7,11 +7,14 @@
     flex-direction: row;
 
     .modal-left {
+      display: flex;
+      flex-direction: column;
       border-right: 1px solid #ccc;
 
       .modal-photos {
         width: 432px;
-        margin: 12px;
+        height: 592px;
+        margin: 12px 12px 4px;
 
         .modal-photo {
           width: 100%;
@@ -23,10 +26,46 @@
           }
         }
       }
+
+      .modal-other-info {
+        height: 36px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 12px;
+
+        .modal-other-left {
+          display: flex;
+
+          gap: 12px;
+
+          span {
+            font-size: 12px;
+          }
+        }
+
+        .modal-other-right {
+          display: flex;
+
+          button {
+            border: none;
+            background: none;
+            padding: 0 2px;
+
+            img {
+              width: 32px;
+              object-fit: cover;
+              vertical-align: middle;
+            }
+          }
+        }
+      }
     }
 
     .modal-right {
       position: relative;
+      display: flex;
+      flex-direction: column;
 
       .modal-user {
         display: inline-flex;
@@ -50,9 +89,14 @@
       }
 
       .modal-main-content {
+        flex-grow: 1;
+
         position: relative;
         width: 456px;
         margin: 8px 0;
+
+        display: flex;
+        flex-direction: column;
 
         .modal-article {
           height: 280px;
@@ -70,7 +114,7 @@
         }
 
         .modal-comments {
-          height: 246px;
+          flex-grow: 1;
           overflow-y: auto;
 
           .modal-comments-tot-count-box {
@@ -138,6 +182,10 @@
                 font-size: 12px;
               }
             }
+          }
+
+          .comment-section {
+            padding: 8px 0 0;
           }
         }
       }
