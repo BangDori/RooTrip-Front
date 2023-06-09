@@ -92,7 +92,7 @@ const Post = ({ id, accessToken }) => {
   const { user, title, content, like } = article;
   const { profileImage, name } = user;
 
-  const others = { postView, like, commentsCount };
+  const others = { postView, isLikedPost, like, commentsCount };
 
   return (
     <div>

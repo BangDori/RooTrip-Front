@@ -12,7 +12,7 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  const { postView, like, commentsCount } = others;
+  const { postView, isLikedPost, like, commentsCount } = others;
 
   const { user, title, content } = post;
   const { profileImage, name } = user;
@@ -65,7 +65,7 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
               <img src={Navigation} alt='navigation image' />
             </button>
             <button>
-              <img src={Like} alt='like image' />
+              <img src={isLikedPost ? Like : NotLike} alt='like image' />
             </button>
           </div>
         </div>

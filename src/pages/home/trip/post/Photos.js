@@ -25,7 +25,7 @@ const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
       )}
       <div
         className='photo-slide'
-        style={{ width, right: `${current * 456}px` }}
+        style={{ width, right: `${current * photoWidth}px` }}
       >
         {photos.map((photo) => (
           <div key={photo.id} className='photo'>
