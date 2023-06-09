@@ -47,7 +47,7 @@ export async function getPosts(accessToken) {
  * @returns
  */
 export async function createPost(accessToken, post) {
-  const { status, message } = await axios
+  const { status, data, message } = await axios
     .post(`${MAIN_SERVER}/api/post`, post, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -57,7 +57,7 @@ export async function createPost(accessToken, post) {
     .catch((e) => new Error(e.message));
 
   if (!status) throw new Error(message);
-  return { status, message };
+  return { status, data, message };
 }
 
 /**
@@ -67,7 +67,7 @@ export async function createPost(accessToken, post) {
  * @returns
  */
 export async function deletePost(accessToken, postId) {
-  const { status, message } = axios
+  const { status, message } = await axios
     .delete(`${MAIN_SERVER}/api/post/${postId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -76,6 +76,7 @@ export async function deletePost(accessToken, postId) {
     .then((res) => res.data)
     .catch((e) => new Error(e.message));
 
+  if (!status) throw new Error(message);
   return status;
 }
 

@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
-import { useSelector } from 'react-redux';
+import { insert } from '@store/marker';
 
 import Menu from '@constants/menu';
 import FirstWritePage from './FirstWritePage';
@@ -14,6 +15,7 @@ const Write = ({ onClose }) => {
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
   const { accessToken } = useSelector((state) => state.accessToken);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (currentPage === 0) {
@@ -62,13 +64,14 @@ const Write = ({ onClose }) => {
       };
 
       try {
-        const { message } = await createPost(accessToken, post);
+        const { data, message } = await createPost(accessToken, post);
+        dispatch(insert(data));
         onClose(Menu.TRIP, message);
       } catch (e) {
         alert(e.message);
       }
     },
-    [onClose, accessToken, photos, routes],
+    [dispatch, onClose, accessToken, photos, routes],
   );
 
   const updateCoordinateHandler = useCallback(
