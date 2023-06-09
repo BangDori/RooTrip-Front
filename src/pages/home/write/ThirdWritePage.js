@@ -34,6 +34,11 @@ const WriteContent = ({ onMovePage, onUploadWrite }) => {
   }, []);
 
   const onClickSubmitPostHandler = useCallback(() => {
+    if (title.trim().length === 0 || content.trim().length === 0) {
+      alert('입력하세요.');
+      return;
+    }
+
     onUploadWrite({ title, content, visibility });
   }, [title, content, visibility, onUploadWrite]);
 
