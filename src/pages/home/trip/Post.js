@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { exit } from '@store/article';
-import { mapRemove } from '@store/marker';
+import { removeOnMap } from '@store/marker';
 import { useDispatch } from 'react-redux';
 import { getOnePost, deletePost } from '@services/post';
 
@@ -78,7 +78,7 @@ const Post = ({ id, accessToken }) => {
 
       if (confirm) {
         const status = await deletePost(accessToken, id);
-        if (status) dispatch(mapRemove({ id }));
+        if (status) dispatch(removeOnMap({ id }));
       }
     } catch (e) {
       alert(e.message);

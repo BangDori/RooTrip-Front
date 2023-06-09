@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { load } from '@store/article';
+import { load, exit } from '@store/article';
 import Menu from '@constants/menu';
 
 const InvertedTriangle = ({ isClick }) => (
@@ -26,8 +26,16 @@ const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
   const markerRef = useRef(null);
   const dispatch = useDispatch();
   const { id: clickedId } = useSelector((state) => state.article);
+  const { removeID } = useSelector((state) => state.marker);
   const clickedMenu = useSelector((state) => state.menu);
   const isClick = id === clickedId;
+
+  useEffect(() => {
+    if (id === removeID) {
+      markerRef.current = null;
+      dispatch(exit());
+    }
+  }, [dispatch, removeID, id]);
 
   /**
    * Marker click event

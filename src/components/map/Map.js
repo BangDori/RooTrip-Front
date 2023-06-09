@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateLocation } from '@store/location';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
+import { removeOnStorem, removeAll } from '@store/marker';
 import CustomMarker from './CustomMarker';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -13,7 +14,7 @@ const Map = () => {
   const mapContainer = useRef();
   const map = useRef(null);
   const { accessToken } = useSelector((state) => state.accessToken);
-  const markers = useSelector((state) => state.marker);
+  const { markers } = useSelector((state) => state.marker);
   const { isSetLocation } = useSelector((state) => state.location);
   const dispatch = useDispatch();
 
@@ -60,9 +61,28 @@ const Map = () => {
     map.current.on('load', () => setIsLoading(false));
   }, [accessToken]);
 
+  const removeAllMarkerHandler = useCallback(
+    (id) => {
+      dispatch(removeAll());
+    },
+    [dispatch],
+  );
+
   return (
     <div className='map-container'>
       <div className='ocean-container' />
+      <button
+        style={{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          cursor: 'pointer',
+          zIndex: '9999',
+        }}
+        onClick={removeAllMarkerHandler}
+      >
+        전체 삭제
+      </button>
       <div ref={mapContainer} className='map-container'>
         {markers && map.current
           ? markers.map((marker) => {
@@ -81,6 +101,7 @@ const Map = () => {
                   src={marker.imageUrl}
                   coordinate={[lat, lng]}
                   accessToken={accessToken}
+                  // onRemove={removeMarkerHandler}
                 />
               );
             })
