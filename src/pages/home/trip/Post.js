@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { exit } from '@store/article';
-import { remove } from '@store/marker';
+import { mapRemove } from '@store/marker';
 import { useDispatch } from 'react-redux';
 import { getOnePost, deletePost } from '@services/post';
 
@@ -74,12 +74,16 @@ const Post = ({ id, accessToken }) => {
 
   const onClickDeleteHandler = useCallback(async () => {
     try {
-      const status = await deletePost(accessToken, id);
+      const confirm = window.confirm('정말 삭제하시겠습니까?');
+
+      if (confirm) {
+        const status = await deletePost(accessToken, id);
+        if (status) dispatch(mapRemove({ id }));
+      }
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e);
+      alert(e.message);
     }
-  }, [accessToken, id]);
+  }, [dispatch, accessToken, id]);
 
   if (!isLoading) return null;
 
@@ -95,17 +99,6 @@ const Post = ({ id, accessToken }) => {
       <article>
         <div id={id} className='Main_content'>
           <div className='article_head'>
-            <button className='delete-button' onClick={onClickDeleteHandler}>
-              게시글 삭제
-            </button>
-            <span className='photo_page'>{`${currentPhoto + 1}/${
-              photos.length
-            }`}</span>
-            <button className='close_button' onClick={onCloseArticle}>
-              X
-            </button>
-          </div>
-          <div className='Content'>
             <div className='Con_pro'>
               <div className='profile_image'>
                 <img
@@ -118,6 +111,18 @@ const Post = ({ id, accessToken }) => {
               </div>
               <h5 className='profile_name'>{name}</h5>
             </div>
+
+            <button className='delete-button' onClick={onClickDeleteHandler}>
+              게시글 삭제
+            </button>
+            <span className='photo_page'>{`${currentPhoto + 1}/${
+              photos.length
+            }`}</span>
+            <button className='close_button' onClick={onCloseArticle}>
+              X
+            </button>
+          </div>
+          <div className='Content'>
             <Photos
               photoWidth={456}
               photos={photos}

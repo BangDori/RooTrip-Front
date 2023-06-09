@@ -2,6 +2,8 @@
 
 import React, { useCallback } from 'react';
 
+import LeftDirection from '@assets/left-direction.png';
+import RightDirection from '@assets/right-direction.png';
 import '@styles/home/photo.scss';
 
 const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
@@ -18,7 +20,7 @@ const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
     <div className='photo-list'>
       {current > 0 && (
         <button className='move-button prev_move' onClick={prevPhotoHandler}>
-          prev
+          <img src={LeftDirection} alt='left direction image' />
         </button>
       )}
       <div
@@ -33,7 +35,7 @@ const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
       </div>
       {current < photos.length - 1 && (
         <button className='move-button next_move' onClick={nextPhotoHandler}>
-          next
+          <img src={RightDirection} alt='right direction image' />
         </button>
       )}
     </div>
