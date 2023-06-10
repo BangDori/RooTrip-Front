@@ -7,13 +7,13 @@ import Modal from './Modal';
 import '@styles/components/modalMessage.scss';
 
 const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
-  const { url, latitude, longitude } = photo;
+  const { fileName, url, latitude, longitude } = photo;
   const [loading, setLoading] = useState(false);
   const [addressPoint, setAddressPint] = useState(undefined);
   const [isShowMessage, setIsShowMessage] = useState('');
   const dispatch = useDispatch();
   const {
-    id: updatedId,
+    fileName: updatedFileName,
     latitude: updatedLatitude,
     longitude: updatedLongitude,
   } = useSelector((state) => state.location);
@@ -23,7 +23,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
 
     const update = async () => {
       const updatedInfo = {
-        updatedId,
+        updatedFileName,
         updatedLatitude,
         updatedLongitude,
       };
@@ -31,12 +31,12 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
       await dispatch(finishLocation());
     };
 
-    if (id === updatedId) update();
+    if (fileName === updatedFileName) update();
   }, [
     dispatch,
     updateCoordinate,
-    id,
-    updatedId,
+    fileName,
+    updatedFileName,
     updatedLatitude,
     updatedLongitude,
   ]);
@@ -58,12 +58,12 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
   }, [id, addRoute]);
 
   const onClickLocationHandler = useCallback(() => {
-    dispatch(setLocation(id));
+    dispatch(setLocation(fileName));
     setIsShowMessage('지도에 위치를 설정해주세요!');
     setTimeout(() => {
       setIsShowMessage('');
     }, 3000);
-  }, [dispatch, id]);
+  }, [dispatch, fileName]);
 
   if (!loading) {
     return <li className='List_piece'></li>;
