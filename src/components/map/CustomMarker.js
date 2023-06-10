@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { removeOnStore } from '@store/marker';
 import { load, exit } from '@store/article';
 import Menu from '@constants/menu';
 
@@ -22,7 +23,15 @@ const InvertedTriangle = ({ isClick }) => (
   </svg>
 );
 
-const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
+const CustomMarker = ({
+  map,
+  id,
+  src,
+  coordinate,
+  accessToken,
+  addMarkerToMap,
+  removeMarkerFromMap,
+}) => {
   const markerRef = useRef(null);
   const dispatch = useDispatch();
   const { id: clickedId } = useSelector((state) => state.article);
@@ -32,8 +41,9 @@ const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
 
   useEffect(() => {
     if (id === removeID) {
-      markerRef.current = null;
+      // markerRef.current = null;
       dispatch(exit());
+      // dispatch(removeOnStore({ id }));
     }
   }, [dispatch, removeID, id]);
 
@@ -47,22 +57,41 @@ const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
   );
 
   // eslint-disable-next-line consistent-return
-  useEffect(() => {
-    if (markerRef.current && clickedMenu === Menu.TRIP) {
-      const marker = new mapboxgl.Marker(markerRef.current)
-        .setLngLat(coordinate)
-        .addTo(map);
+  useEffect(
+    // eslint-disable-next-line consistent-return
+    () => {
+      if (markerRef.current && clickedMenu === Menu.TRIP) {
+        const marker = new mapboxgl.Marker(markerRef.current)
+          .setLngLat(coordinate)
+          .addTo(map);
 
-      // 마커 클릭 핸들러 등록
-      if (accessToken)
-        markerRef.current.addEventListener('click', onMarkerClick);
+        // 마커 클릭 핸들러 등록
+        if (accessToken)
+          markerRef.current.addEventListener('click', onMarkerClick);
 
-      // 컴포넌트 언마운트 시 마커 제거
-      return () => {
-        if (marker) marker.remove();
-      };
-    }
-  }, [accessToken, map, coordinate, clickedMenu, onMarkerClick]);
+        // 컴포넌트 마운트 시 마커를 Map 컴포넌트에 추가
+        addMarkerToMap({ id, markerRef });
+
+        // 컴포넌트 언마운트 시 마커 제거
+        return () => {
+          removeMarkerFromMap(id);
+
+          if (marker) marker.remove();
+        };
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      // accessToken,
+      // map,
+      // coordinate,
+      // clickedMenu,
+      // onMarkerClick,
+      // addMarkerToMap,
+      // removeMarkerFromMap,
+      // id,
+    ],
+  );
 
   return (
     <div ref={markerRef}>

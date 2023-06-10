@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +18,18 @@ const Map = () => {
   const { markers } = useSelector((state) => state.marker);
   const { isSetLocation } = useSelector((state) => state.location);
   const dispatch = useDispatch();
+
+  const [markersOnMap, setMarkersOnMap] = useState([]);
+
+  const addMarkerToMap = useCallback((marker) => {
+    setMarkersOnMap((prevMarkers) => [...prevMarkers, marker]);
+  }, []);
+
+  const removeMarkerFromMap = useCallback((markerId) => {
+    setMarkersOnMap((prevMarkers) =>
+      prevMarkers.filter((marker) => marker.id !== markerId),
+    );
+  }, []);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -61,12 +74,14 @@ const Map = () => {
     map.current.on('load', () => setIsLoading(false));
   }, [accessToken]);
 
-  const removeAllMarkerHandler = useCallback(
-    (id) => {
+  const removeAllMarkerHandler = useCallback(() => {
+    if (window.confirm('모두 삭제?')) {
+      markersOnMap.forEach((state) => {
+        state.markerRef.remove();
+      });
       dispatch(removeAll());
-    },
-    [dispatch],
-  );
+    }
+  }, [dispatch, markersOnMap]);
 
   return (
     <div className='map-container'>
@@ -101,7 +116,8 @@ const Map = () => {
                   src={marker.imageUrl}
                   coordinate={[lat, lng]}
                   accessToken={accessToken}
-                  // onRemove={removeMarkerHandler}
+                  addMarkerToMap={addMarkerToMap}
+                  removeMarkerFromMap={removeMarkerFromMap}
                 />
               );
             })
