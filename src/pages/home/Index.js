@@ -2,8 +2,9 @@ import { useState, useCallback, useEffect } from 'react';
 import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { change } from '@store/menu';
+import { getPosts } from '@services/post';
 import { exit } from '@store/article';
+import { load, removeAll } from '@store/marker';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import HomeMenu from './HomeMenu';
@@ -19,8 +20,10 @@ import '@styles/home/log.scss';
 const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
-  const selectedMenu = useSelector((state) => state.menu);
+  const [selectedMenu, setSelectedMenu] = useState(Menu.TRIP);
   const [showMessage, setShowMessage] = useState('');
+
+  const { accessToken } = useSelector((state) => state.accessToken);
   const { id } = useSelector((state) => state.article);
   const dispatch = useDispatch();
 
@@ -33,11 +36,22 @@ const Index = () => {
     }
   }, [showMessage]);
 
+  useEffect(() => {
+    dispatch(removeAll());
+
+    const getMarkers = async () => {
+      const data = await getPosts(accessToken);
+      dispatch(load({ data }));
+    };
+
+    if (selectedMenu === Menu.TRIP) getMarkers();
+  }, [dispatch, accessToken, selectedMenu]);
+
   const onClickMenuHandler = useCallback(
     (clickedMenu, message) => {
       if (message) setShowMessage(message);
 
-      dispatch(change(clickedMenu));
+      setSelectedMenu(clickedMenu);
       if (id) dispatch(exit());
     },
     [dispatch, id],
