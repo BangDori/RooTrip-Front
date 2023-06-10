@@ -11,6 +11,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
   const [loading, setLoading] = useState(false);
   const [addressPoint, setAddressPint] = useState(undefined);
   const [isShowMessage, setIsShowMessage] = useState('');
+  const [isSelectLocation, setIsSelectLocation] = useState(false);
   const dispatch = useDispatch();
   const {
     fileName: updatedFileName,
@@ -29,6 +30,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
       };
       await updateCoordinate(updatedInfo);
       await dispatch(finishLocation());
+      setIsSelectLocation(false);
     };
 
     if (fileName === updatedFileName) update();
@@ -58,12 +60,15 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
   }, [id, addRoute]);
 
   const onClickLocationHandler = useCallback(() => {
+    if (isSelectLocation) return;
+
+    setIsSelectLocation(true);
     dispatch(setLocation(fileName));
     setIsShowMessage('지도에 위치를 설정해주세요!');
     setTimeout(() => {
       setIsShowMessage('');
-    }, 3000);
-  }, [dispatch, fileName]);
+    }, 2000);
+  }, [dispatch, isSelectLocation, fileName]);
 
   if (!loading) {
     return <li className='List_piece'></li>;
@@ -86,7 +91,12 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
                     경로 표시
                   </button>
                 ) : (
-                  <button type='button' onClick={onClickLocationHandler}>
+                  <button
+                    type='button'
+                    onClick={onClickLocationHandler}
+                    disabled={isSelectLocation}
+                    className={isSelectLocation ? 'select-location' : ''}
+                  >
                     위치 설정
                   </button>
                 )}
@@ -104,7 +114,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
         </table>
       </li>
       {isShowMessage && (
-        <Modal className='modal'>
+        <Modal className='modal' background='white'>
           <div className='modal-message'>
             <p>{isShowMessage}</p>
           </div>
