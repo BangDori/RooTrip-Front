@@ -8,11 +8,11 @@ import Post from './Post';
 const Trip = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { accessToken } = useSelector((state) => state.accessToken);
-  const { markers } = useSelector((state) => state.marker);
+  const marker = useSelector((state) => state.marker);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (markers.length > 0) return;
+    if (marker.length > 0) return;
 
     const posts = async () => {
       try {
@@ -28,7 +28,7 @@ const Trip = () => {
     };
 
     posts();
-  }, [accessToken, markers, dispatch]);
+  }, [accessToken, marker, dispatch]);
 
   const { postId } = useSelector((state) => state.article);
 
