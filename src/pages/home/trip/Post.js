@@ -173,7 +173,7 @@ const Post = ({ postId, accessToken }) => {
         </div>
       </article>
       {isPostModal && (
-        <Modal className='modal-post-more'>
+        <Modal className='modal-post-more' onClose={onClickPostModalHandler}>
           <Content
             accessToken={accessToken}
             postId={postId}

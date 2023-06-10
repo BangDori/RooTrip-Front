@@ -11,10 +11,10 @@ import HomeLogo from './HomeLogo';
 import HomeProfile from './HomeProfile';
 import Write from './write/Write';
 import Trip from './trip/Trip';
+import Route from './route/Route';
 import Log from './log/ChooseTheme';
 import '@styles/components/modalMessage.scss';
 import '@styles/home/log.scss';
-import Route from './route/Route';
 
 const Map = loadable(() => import('@components/map/Map'));
 
@@ -29,7 +29,7 @@ const Index = () => {
     if (showMessage) {
       setTimeout(() => {
         setShowMessage('');
-      }, 3000);
+      }, 2000);
     }
   }, [showMessage]);
 
@@ -73,10 +73,8 @@ const Index = () => {
       <Map />
 
       {showMessage && (
-        <Modal className='modal'>
-          <div className='modal-message'>
-            <p>{showMessage}</p>
-          </div>
+        <Modal className='modal-message' background='white'>
+          <p>{showMessage}</p>
         </Modal>
       )}
     </>

@@ -2,8 +2,8 @@ import ReactDOM from 'react-dom';
 
 import '@styles/components/Modal.scss';
 
-const Backdrop = ({ onClose }) => (
-  <div className='backdrop' onClick={onClose} />
+const Backdrop = ({ background, onClose }) => (
+  <div className={`backdrop ${background}`} onClick={onClose} />
 );
 
 const ModalOverlay = ({ className, children }) => (
@@ -12,16 +12,17 @@ const ModalOverlay = ({ className, children }) => (
 
 const portalElement = document.getElementById('overlays');
 
-const Modal = ({ className, onClose, children }) => {
-  return (
-    <>
-      {ReactDOM.createPortal(<Backdrop onClose={onClose} />, portalElement)}
-      {ReactDOM.createPortal(
-        <ModalOverlay className={className}>{children}</ModalOverlay>,
-        portalElement,
-      )}
-    </>
-  );
-};
+const Modal = ({ background, className, onClose, children }) => (
+  <>
+    {ReactDOM.createPortal(
+      <Backdrop background={background} onClose={onClose} />,
+      portalElement,
+    )}
+    {ReactDOM.createPortal(
+      <ModalOverlay className={className}>{children}</ModalOverlay>,
+      portalElement,
+    )}
+  </>
+);
 
 export default Modal;
