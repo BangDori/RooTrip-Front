@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -23,15 +23,7 @@ const InvertedTriangle = ({ isClick }) => (
   </svg>
 );
 
-const CustomMarker = ({
-  map,
-  id,
-  src,
-  coordinate,
-  accessToken,
-  addMarkerToMap,
-  removeMarkerFromMap,
-}) => {
+const CustomMarker = ({ map, id, src, coordinate, accessToken }) => {
   const markerRef = useRef(null);
   const dispatch = useDispatch();
   const { id: clickedId } = useSelector((state) => state.article);
@@ -43,7 +35,7 @@ const CustomMarker = ({
     if (id === removeID) {
       // markerRef.current = null;
       dispatch(exit());
-      // dispatch(removeOnStore({ id }));
+      dispatch(removeOnStore({ id }));
     }
   }, [dispatch, removeID, id]);
 
@@ -56,41 +48,23 @@ const CustomMarker = ({
     [id, dispatch],
   );
 
-  // eslint-disable-next-line consistent-return
   useEffect(
     // eslint-disable-next-line consistent-return
     () => {
       if (markerRef.current && clickedMenu === Menu.TRIP) {
-        const marker = new mapboxgl.Marker(markerRef.current)
-          .setLngLat(coordinate)
-          .addTo(map);
+        const marker = new mapboxgl.Marker().setLngLat(coordinate).addTo(map);
 
         // 마커 클릭 핸들러 등록
         if (accessToken)
-          markerRef.current.addEventListener('click', onMarkerClick);
-
-        // 컴포넌트 마운트 시 마커를 Map 컴포넌트에 추가
-        addMarkerToMap({ id, markerRef });
+          marker.getElement().addEventListener('click', onMarkerClick);
 
         // 컴포넌트 언마운트 시 마커 제거
         return () => {
-          removeMarkerFromMap(id);
-
           if (marker) marker.remove();
         };
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [
-      // accessToken,
-      // map,
-      // coordinate,
-      // clickedMenu,
-      // onMarkerClick,
-      // addMarkerToMap,
-      // removeMarkerFromMap,
-      // id,
-    ],
+    [accessToken, map, coordinate, clickedMenu, onMarkerClick],
   );
 
   return (

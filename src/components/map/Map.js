@@ -1,11 +1,10 @@
-/* eslint-disable no-console */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl'; // eslint-disable-line import/no-webpack-loader-syntax
 import { useDispatch, useSelector } from 'react-redux';
 
 import { updateLocation } from '@store/location';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
-import { removeOnStorem, removeAll } from '@store/marker';
+import { removeAll } from '@store/marker';
 import CustomMarker from './CustomMarker';
 import '@styles/components/Map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -18,18 +17,6 @@ const Map = () => {
   const { markers } = useSelector((state) => state.marker);
   const { isSetLocation } = useSelector((state) => state.location);
   const dispatch = useDispatch();
-
-  const [markersOnMap, setMarkersOnMap] = useState([]);
-
-  const addMarkerToMap = useCallback((marker) => {
-    setMarkersOnMap((prevMarkers) => [...prevMarkers, marker]);
-  }, []);
-
-  const removeMarkerFromMap = useCallback((markerId) => {
-    setMarkersOnMap((prevMarkers) =>
-      prevMarkers.filter((marker) => marker.id !== markerId),
-    );
-  }, []);
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -76,12 +63,33 @@ const Map = () => {
 
   const removeAllMarkerHandler = useCallback(() => {
     if (window.confirm('모두 삭제?')) {
-      markersOnMap.forEach((state) => {
-        state.markerRef.remove();
-      });
       dispatch(removeAll());
     }
-  }, [dispatch, markersOnMap]);
+  }, [dispatch]);
+
+  let markerComponent = null;
+
+  if (markers && map.current) {
+    markerComponent = markers.map((marker) => {
+      if (!marker.coordinate) return null;
+
+      const coordinateString = marker.coordinate
+        .replace('POINT(', '')
+        .replace(')', '');
+      const [lng, lat] = coordinateString.split(' ');
+
+      return (
+        <CustomMarker
+          key={marker.id}
+          id={marker.postId}
+          map={map.current}
+          src={marker.imageUrl}
+          coordinate={[lat, lng]}
+          accessToken={accessToken}
+        />
+      );
+    });
+  }
 
   return (
     <div className='map-container'>
@@ -99,29 +107,7 @@ const Map = () => {
         전체 삭제
       </button>
       <div ref={mapContainer} className='map-container'>
-        {markers && map.current
-          ? markers.map((marker) => {
-              if (!marker.coordinate) return null;
-
-              const coordinateString = marker.coordinate
-                .replace('POINT(', '')
-                .replace(')', '');
-              const [lng, lat] = coordinateString.split(' ');
-
-              return (
-                <CustomMarker
-                  key={marker.id}
-                  id={marker.postId}
-                  map={map.current}
-                  src={marker.imageUrl}
-                  coordinate={[lat, lng]}
-                  accessToken={accessToken}
-                  addMarkerToMap={addMarkerToMap}
-                  removeMarkerFromMap={removeMarkerFromMap}
-                />
-              );
-            })
-          : null}
+        {markerComponent}
       </div>
     </div>
   );
