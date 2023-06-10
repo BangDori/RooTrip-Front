@@ -59,10 +59,54 @@
         border-bottom: 1px solid #aaa;
       }
     }
+<<<<<<< HEAD
     .searchBox {
       margin: 30px 0;
       display: flex;
       justify-content: center;
+=======
+    .buttonLocation {
+      width: 75px;
+      height: 30px;
+      position: absolute;
+      right: 30px;
+      background-color: #0095f6;
+      color: white;
+      border: 0;
+      border-radius: 15px;
+    }
+    .chooseLocation {
+      padding: 10px 15px;
+      margin: 0 20px;
+      border-bottom: 1px solid #aaa;
+      display: flex;
+      align-items: center;
+      .cityName {
+        margin-left: 15px;
+        color: #6d6d6d;
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+    .chooseTheme {
+      padding: 10px 15px;
+      margin: 0 20px;
+      border-bottom: 1px solid #aaa;
+      display: flex;
+      align-items: center;
+      .themeNames {
+        margin-left: 15px;
+        color: #6d6d6d;
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+  .searchBox {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+>>>>>>> 8214a09 ([Feat] Log : Api를 사용한 지역과 테마 표시 기능)
 
       .searchButton {
         width: 70px;

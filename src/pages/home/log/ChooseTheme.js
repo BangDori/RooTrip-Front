@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import Modal from '@components/wrapper/Modal';
 import ModalLocation from './ModalLocation';
@@ -8,6 +8,11 @@ const ChooseTheme = () => {
   const [clickChoose, setClickChoose] = useState(false);
   const [clickChooseLocation, setClickChooseLocation] = useState(false);
   const [clickChooseTheme, setClickChooseTheme] = useState(false);
+  const [cityTemp, setCityTemp] = useState(null);
+  const [smallCityTemp, setSmallCityTemp] = useState({ code: null });
+  const [bigThemeTemp, setBigThemeTemp] = useState({ code: null });
+  const [middleThemeTemp, setMiddleThemeTemp] = useState({ code: null });
+  const [smallThemeTemp, setSmallThemeTemp] = useState({ code: null });
   const openModalLocation = () => {
     setClickChooseLocation(true);
     setClickChoose(true);
@@ -31,6 +36,11 @@ const ChooseTheme = () => {
         <div className='chooseBox'>
           <div className='chooseLocation'>
             <span>지역</span>
+            {cityTemp != null ? (
+              <span className='cityName'>{cityTemp.name}</span>
+            ) : (
+              ''
+            )}
             <button
               className='buttonLocation'
               type='button'
@@ -41,6 +51,16 @@ const ChooseTheme = () => {
           </div>
           <div className='chooseTheme'>
             <span>테마</span>
+            {bigThemeTemp.code != null &&
+            middleThemeTemp.code != null &&
+            smallThemeTemp.code != null ? (
+              <span className='themeNames'>
+                대분류 : {bigThemeTemp.name}, 중분류 : {middleThemeTemp.name},
+                소분류 : {smallThemeTemp.name}
+              </span>
+            ) : (
+              ''
+            )}
             <button
               className='buttonLocation'
               type='button'
@@ -59,9 +79,22 @@ const ChooseTheme = () => {
       {clickChoose && (
         <Modal>
           {clickChooseLocation ? (
-            <ModalLocation closeModal={closeModal} />
+            <ModalLocation
+              closeModal={closeModal}
+              cityTemp={cityTemp}
+              setCityTemp={setCityTemp}
+              smallCityTemp={smallCityTemp}
+              setSmallCityTemp={setSmallCityTemp}
+            />
           ) : (
-            <ModalTheme closeModal={closeModal} />
+            <ModalTheme
+              closeModal={closeModal}
+              setBigThemeTemp={setBigThemeTemp}
+              bigThemeTemp={bigThemeTemp}
+              middleThemeTemp={middleThemeTemp}
+              setMiddleThemeTemp={setMiddleThemeTemp}
+              setSmallThemeTemp={setSmallThemeTemp}
+            />
           )}
         </Modal>
       )}
