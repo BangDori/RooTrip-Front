@@ -7,15 +7,15 @@ export const load = createAction(LOAD);
 export const exit = createAction(EXIT);
 
 const articleState = {
-  id: '',
+  postId: '',
 };
 
 const article = handleActions(
   {
     [LOAD]: (state, { payload }) => ({
-      id: payload.id,
+      postId: payload.postId,
     }),
-    [EXIT]: (state, action) => ({ id: '' }),
+    [EXIT]: (state, action) => ({ postId: '' }),
   },
   articleState,
 );

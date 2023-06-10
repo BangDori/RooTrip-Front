@@ -1,12 +1,13 @@
 // 댓글 관리를 위한 컴포넌트
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import Profile from '@assets/DefaultProfileImage.png';
 import { createComment } from '@services/post';
 import EmojiPicker, { Emoji } from 'emoji-picker-react';
 
 import Modal from '@components/wrapper/Modal';
 import '@styles/home/comment.scss';
+import '@styles/components/modalEmoji.scss';
 
 const Comment = ({ accessToken, postId, onAddComment }) => {
   const [inputComment, setInputComment] = useState('');
@@ -78,7 +79,11 @@ const Comment = ({ accessToken, postId, onAddComment }) => {
           </svg>
         </button>
         {showEmojiPicker && (
-          <Modal>
+          <Modal
+            className='emoji-container'
+            onClose={handleEmojiClick}
+            background='white'
+          >
             <EmojiPicker onEmojiClick={handleEmojiClick} />
           </Modal>
         )}

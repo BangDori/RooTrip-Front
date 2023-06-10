@@ -26,33 +26,31 @@ const menuItems = [
   },
 ];
 
-const HomeGnb = ({ selectedMenu, onClickMenu }) => {
-  return (
-    <nav className='side_nav'>
-      <div className='menu'>
-        <div className='menu_Icon'>
-          {menuItems.map((menuItem) => (
-            <div
-              key={menuItem.id}
-              className={`icon_up ${
-                selectedMenu === menuItem.id ? 'selected' : ''
-              }`}
-              onClick={() => onClickMenu(menuItem.id)}
-            >
-              <button type='button'>
-                <img
-                  src={menuItem.icon}
-                  alt={menuItem.label}
-                  style={{ width: menuItem.iconWidth }}
-                />
-              </button>
-              <span>{menuItem.label}</span>
-            </div>
-          ))}
-        </div>
+const HomeGnb = ({ selectedMenu, onClickMenu }) => (
+  <nav className='side_nav'>
+    <div className='menu'>
+      <div className='menu_Icon'>
+        {menuItems.map((menuItem) => (
+          <div
+            key={menuItem.id}
+            className={`icon_up ${
+              selectedMenu === menuItem.id ? 'selected' : ''
+            }`}
+            onClick={() => onClickMenu(menuItem.id)}
+          >
+            <button type='button'>
+              <img
+                src={menuItem.icon}
+                alt={menuItem.label}
+                style={{ width: menuItem.iconWidth }}
+              />
+            </button>
+            <span>{menuItem.label}</span>
+          </div>
+        ))}
       </div>
-    </nav>
-  );
-};
+    </div>
+  </nav>
+);
 
 export default HomeGnb;

@@ -2,8 +2,9 @@ import { useState, useCallback, useEffect } from 'react';
 import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { change } from '@store/menu';
+import { getPosts } from '@services/post';
 import { exit } from '@store/article';
+import { load, removeAll } from '@store/marker';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import HomeMenu from './HomeMenu';
@@ -11,16 +12,18 @@ import HomeLogo from './HomeLogo';
 import HomeProfile from './HomeProfile';
 import Write from './write/Write';
 import Trip from './trip/Trip';
+import Route from './route/Route';
 import Log from './log/ChooseTheme';
 import '@styles/components/modalMessage.scss';
 import '@styles/home/log.scss';
-import Route from './route/Route';
 
 const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
-  const selectedMenu = useSelector((state) => state.menu);
+  const [selectedMenu, setSelectedMenu] = useState(Menu.TRIP);
   const [showMessage, setShowMessage] = useState('');
+
+  const { accessToken } = useSelector((state) => state.accessToken);
   const { id } = useSelector((state) => state.article);
   const dispatch = useDispatch();
 
@@ -29,15 +32,26 @@ const Index = () => {
     if (showMessage) {
       setTimeout(() => {
         setShowMessage('');
-      }, 3000);
+      }, 2000);
     }
   }, [showMessage]);
+
+  useEffect(() => {
+    dispatch(removeAll());
+
+    const getMarkers = async () => {
+      const data = await getPosts(accessToken);
+      dispatch(load({ data }));
+    };
+
+    if (selectedMenu === Menu.TRIP) getMarkers();
+  }, [dispatch, accessToken, selectedMenu]);
 
   const onClickMenuHandler = useCallback(
     (clickedMenu, message) => {
       if (message) setShowMessage(message);
 
-      dispatch(change(clickedMenu));
+      setSelectedMenu(clickedMenu);
       if (id) dispatch(exit());
     },
     [dispatch, id],
@@ -73,10 +87,8 @@ const Index = () => {
       <Map />
 
       {showMessage && (
-        <Modal className='modal'>
-          <div className='modal-message'>
-            <p>{showMessage}</p>
-          </div>
+        <Modal className='modal-message' background='white'>
+          <p>{showMessage}</p>
         </Modal>
       )}
     </>

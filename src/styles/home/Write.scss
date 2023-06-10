@@ -187,33 +187,37 @@
         table {
           flex-grow: 1;
           max-height: 112px;
-        }
 
-        th {
-          color: rgb(72, 72, 196);
-          font-weight: bold;
-          font-size: 18px;
-          text-align: center;
-          margin-right: 10px;
-        }
+          th {
+            color: rgb(72, 72, 196);
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            margin-right: 10px;
+          }
 
-        td {
-          width: 160px;
-          margin: auto;
-          height: 51px;
-          text-align: center;
-          font-weight: 700;
-        }
+          td {
+            width: 160px;
+            margin: auto;
+            height: 51px;
+            text-align: center;
+            font-weight: 700;
 
-        button {
-          width: 120px;
-          height: 40px;
-          border: 0;
-          border-radius: 10px;
-          color: white;
-          font-weight: bold;
-          font-size: 18px;
-          background-color: #2743a6;
+            button {
+              width: 120px;
+              height: 40px;
+              border: 0;
+              border-radius: 10px;
+              color: white;
+              font-weight: bold;
+              font-size: 18px;
+              background-color: #2743a6;
+            }
+          }
+
+          .select-location {
+            opacity: 0.5;
+          }
         }
       }
     }

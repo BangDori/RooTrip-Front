@@ -76,18 +76,12 @@ const Write = ({ onClose }) => {
 
   const updateCoordinateHandler = useCallback(
     (newPhoto) => {
-      const { updatedId, updatedLatitude, updatedLongitude } = newPhoto;
+      const { updatedFileName, updatedLatitude, updatedLongitude } = newPhoto;
       const updatedPhotos = photos.map((photo) =>
-        photo.id === updatedId
+        photo.fileName === updatedFileName
           ? { ...photo, latitude: updatedLatitude, longitude: updatedLongitude }
           : photo,
       );
-
-      // eslint-disable-next-line no-console
-      console.log(updatedId, updatedLatitude, updatedLongitude);
-
-      // eslint-disable-next-line no-console
-      console.log(updatedPhotos);
 
       setPhotos(updatedPhotos);
     },

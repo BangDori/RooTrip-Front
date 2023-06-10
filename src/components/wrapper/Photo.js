@@ -7,13 +7,14 @@ import Modal from './Modal';
 import '@styles/components/modalMessage.scss';
 
 const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
-  const { url, latitude, longitude } = photo;
+  const { fileName, url, latitude, longitude } = photo;
   const [loading, setLoading] = useState(false);
   const [addressPoint, setAddressPint] = useState(undefined);
   const [isShowMessage, setIsShowMessage] = useState('');
+  const [isSelectLocation, setIsSelectLocation] = useState(false);
   const dispatch = useDispatch();
   const {
-    id: updatedId,
+    fileName: updatedFileName,
     latitude: updatedLatitude,
     longitude: updatedLongitude,
   } = useSelector((state) => state.location);
@@ -23,20 +24,21 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
 
     const update = async () => {
       const updatedInfo = {
-        updatedId,
+        updatedFileName,
         updatedLatitude,
         updatedLongitude,
       };
       await updateCoordinate(updatedInfo);
       await dispatch(finishLocation());
+      setIsSelectLocation(false);
     };
 
-    if (id === updatedId) update();
+    if (fileName === updatedFileName) update();
   }, [
     dispatch,
     updateCoordinate,
-    id,
-    updatedId,
+    fileName,
+    updatedFileName,
     updatedLatitude,
     updatedLongitude,
   ]);
@@ -58,12 +60,15 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
   }, [id, addRoute]);
 
   const onClickLocationHandler = useCallback(() => {
-    dispatch(setLocation(id));
+    if (isSelectLocation) return;
+
+    setIsSelectLocation(true);
+    dispatch(setLocation(fileName));
     setIsShowMessage('지도에 위치를 설정해주세요!');
     setTimeout(() => {
       setIsShowMessage('');
-    }, 3000);
-  }, [dispatch, id]);
+    }, 2000);
+  }, [dispatch, isSelectLocation, fileName]);
 
   if (!loading) {
     return <li className='List_piece'></li>;
@@ -86,7 +91,12 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
                     경로 표시
                   </button>
                 ) : (
-                  <button type='button' onClick={onClickLocationHandler}>
+                  <button
+                    type='button'
+                    onClick={onClickLocationHandler}
+                    disabled={isSelectLocation}
+                    className={isSelectLocation ? 'select-location' : ''}
+                  >
                     위치 설정
                   </button>
                 )}
@@ -104,7 +114,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
         </table>
       </li>
       {isShowMessage && (
-        <Modal className='modal'>
+        <Modal className='modal' background='white'>
           <div className='modal-message'>
             <p>{isShowMessage}</p>
           </div>

@@ -9,7 +9,7 @@ export const updateLocation = createAction(UPDATE);
 export const finishLocation = createAction(FINISH);
 
 const initialLocation = {
-  id: '',
+  fileName: '',
   isSetLocation: false,
   latitude: '',
   longitude: '',
@@ -17,9 +17,9 @@ const initialLocation = {
 
 const location = handleActions(
   {
-    [SET]: (state, { payload: id }) => ({
+    [SET]: (state, { payload: fileName }) => ({
       ...state,
-      id,
+      fileName,
       isSetLocation: true,
     }),
     [UPDATE]: (state, { payload: coordinate }) => ({
