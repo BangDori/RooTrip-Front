@@ -14,7 +14,7 @@ import Content from './post/Content';
 import '@styles/home/article.scss';
 import '@styles/components/modalPost.scss';
 
-const Post = ({ id, accessToken }) => {
+const Post = ({ postId, accessToken }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLikedPost, setIsLikedPost] = useState(false);
   const [isPostModal, setIsPostModal] = useState(false);
@@ -36,7 +36,7 @@ const Post = ({ id, accessToken }) => {
             photos: photosArray,
             isLiked,
             commentCount,
-          } = await getOnePost(accessToken, id);
+          } = await getOnePost(accessToken, postId);
 
           setPhotos(photosArray);
           setArticle(post);
@@ -54,7 +54,7 @@ const Post = ({ id, accessToken }) => {
     } catch (e) {
       alert(e);
     }
-  }, [accessToken, id, isLoading]);
+  }, [accessToken, postId, isLoading]);
 
   const onChangePhoto = useCallback((move) => {
     setCurrentPhoto((prevPhoto) => prevPhoto + move);
@@ -77,13 +77,13 @@ const Post = ({ id, accessToken }) => {
       const confirm = window.confirm('정말 삭제하시겠습니까?');
 
       if (confirm) {
-        const status = await deletePost(accessToken, id);
-        if (status) dispatch(removeOnMap({ id }));
+        const status = await deletePost(accessToken, postId);
+        if (status) dispatch(removeOnMap({ postId }));
       }
     } catch (e) {
       alert(e.message);
     }
-  }, [dispatch, accessToken, id]);
+  }, [dispatch, accessToken, postId]);
 
   if (!isLoading) return null;
 
@@ -97,7 +97,7 @@ const Post = ({ id, accessToken }) => {
   return (
     <div>
       <article>
-        <div id={id} className='Main_content'>
+        <div id={postId} className='Main_content'>
           <div className='article_head'>
             <div className='Con_pro'>
               <div className='profile_image'>
@@ -148,7 +148,7 @@ const Post = ({ id, accessToken }) => {
                 </button>
                 <LikeButton
                   accessToken={accessToken}
-                  postId={id}
+                  postId={postId}
                   isLikedPost={isLikedPost}
                   setIsLikedPost={setIsLikedPost}
                 />
@@ -164,7 +164,7 @@ const Post = ({ id, accessToken }) => {
           </div>
           <Comment
             accessToken={accessToken}
-            postId={id}
+            postId={postId}
             onAddComment={onAddCommentHandler}
           />
         </div>
@@ -173,7 +173,7 @@ const Post = ({ id, accessToken }) => {
         <Modal className='modal-post-more'>
           <Content
             accessToken={accessToken}
-            postId={id}
+            postId={postId}
             post={article}
             photos={photos}
             others={others}

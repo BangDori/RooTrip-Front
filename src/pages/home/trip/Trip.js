@@ -30,13 +30,13 @@ const Trip = () => {
     posts();
   }, [accessToken, markers, dispatch]);
 
-  const { id } = useSelector((state) => state.article);
+  const { postId } = useSelector((state) => state.article);
 
-  if (isLoading || !id) {
+  if (isLoading || !postId) {
     return null;
   }
 
-  return <Post id={id} accessToken={accessToken} />;
+  return <Post postId={postId} accessToken={accessToken} />;
 };
 
 export default Trip;
