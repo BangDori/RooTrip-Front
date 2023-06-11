@@ -15,7 +15,7 @@ const article = handleActions(
     [LOAD]: (state, { payload }) => ({
       postId: payload.postId,
     }),
-    [EXIT]: (state, action) => ({ postId: '' }),
+    [EXIT]: (state, action) => articleState,
   },
   articleState,
 );

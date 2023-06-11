@@ -24,7 +24,7 @@ const Index = () => {
   const [showMessage, setShowMessage] = useState('');
 
   const { accessToken } = useSelector((state) => state.accessToken);
-  const { id } = useSelector((state) => state.article);
+  const { postId } = useSelector((state) => state.article);
   const dispatch = useDispatch();
 
   // 메시지 애니메이션
@@ -38,6 +38,7 @@ const Index = () => {
 
   useEffect(() => {
     dispatch(removeAll());
+    dispatch(exit());
 
     const getMarkers = async () => {
       const data = await getPosts(accessToken);
@@ -52,9 +53,9 @@ const Index = () => {
       if (message) setShowMessage(message);
 
       setSelectedMenu(clickedMenu);
-      if (id) dispatch(exit());
+      if (postId) dispatch(exit());
     },
-    [dispatch, id],
+    [dispatch, postId],
   );
 
   let content = '';
