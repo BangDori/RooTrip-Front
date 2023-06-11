@@ -88,8 +88,8 @@ const Index = () => {
       <Map />
 
       {showMessage && (
-        <Modal className='modal-message' background='white'>
-          <div className='modal-meesage'>
+        <Modal background='white'>
+          <div className='modal-message'>
             <p>{showMessage}</p>
           </div>
         </Modal>
