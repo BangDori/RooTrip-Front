@@ -21,3 +21,11 @@ export function getLocation(
 
   return [latitude, longitude];
 }
+
+export function changeQueryBounds({ _sw, _ne }) {
+  const { lat: lat1, lng: lng1 } = _sw;
+  const { lat: lat2, lng: lng2 } = _ne;
+
+  const polygon = `Polygon((${lat1} ${lng1}, ${lat2} ${lng2}, ${lat2} ${lng1}, ${lat1} ${lng1}))`;
+  return polygon;
+}
