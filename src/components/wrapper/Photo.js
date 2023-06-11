@@ -56,8 +56,8 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
   }, [latitude, longitude]);
 
   const handleClick = useCallback(() => {
-    addRoute(id);
-  }, [id, addRoute]);
+    addRoute(id, photo);
+  }, [id, addRoute, photo]);
 
   const onClickLocationHandler = useCallback(() => {
     if (isSelectLocation) return;
@@ -87,7 +87,11 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
               <th>{id}번 사진</th>
               <td>
                 {latitude ? (
-                  <button type='button' onClick={handleClick}>
+                  <button
+                    type='button'
+                    onClick={handleClick}
+                    className={clicked ? 'select-location' : ''}
+                  >
                     경로 표시
                   </button>
                 ) : (

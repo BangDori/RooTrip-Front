@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
-import { removeAll } from '@store/marker';
 import { updateLocation } from '@store/location';
 import CustomMarker from './CustomMarker';
 import '@styles/components/Map.scss';
@@ -33,15 +32,6 @@ const Map = () => {
     [dispatch],
   );
 
-  const removeAllMarkerHandler = useCallback(() => {
-    if (window.confirm('모두 삭제?')) {
-      dispatch(removeAll());
-    }
-  }, [dispatch]);
-
-  // eslint-disable-next-line no-console
-  console.log(marker);
-
   let markers = null;
 
   if (marker && accessToken) {
@@ -61,6 +51,7 @@ const Map = () => {
           lat={lat}
           lng={lng}
           imageURl={mark.imageUrl}
+          order={mark.order}
         />
       );
     });
@@ -80,18 +71,6 @@ const Map = () => {
       >
         {markers}
       </MapGL>
-      <button
-        style={{
-          position: 'absolute',
-          top: '0',
-          left: '0',
-          cursor: 'pointer',
-          zIndex: '9999',
-        }}
-        onClick={removeAllMarkerHandler}
-      >
-        전체 삭제
-      </button>
       <div className='ocean-container'></div>
     </div>
   );

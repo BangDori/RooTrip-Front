@@ -16,8 +16,15 @@ const marker = handleActions(
   {
     [LOAD]: (state, { payload: markers }) => markers.data,
     [INSERT]: (state, { payload: data }) => state.concat(data),
-    [REMOVE]: (state, { payload }) =>
-      state.filter((m) => m.postId !== payload.postId),
+    [REMOVE]: (state, { payload }) => {
+      const removedMarker = state.filter((m) => m.id === payload.id);
+
+      return state
+        .filter((m) => m.id !== payload.id)
+        .map((m) =>
+          m.order > removedMarker[0].order ? { ...m, order: m.order - 1 } : m,
+        );
+    },
     [REOMVE_ALL]: (state, { payload }) => initialMarkersState,
   },
   initialMarkersState,

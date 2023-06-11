@@ -1,12 +1,15 @@
 import Photo from '@components/wrapper/Photo';
 import { useCallback, useReducer } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { insert, remove, removeAll } from '@store/marker';
 
 function routeReducer(routes, action) {
   switch (action.type) {
     case 'INSERT':
-      return routes.concat(action.route);
+      return routes.concat(action.id);
     case 'REMOVE':
-      return routes.filter((route) => route !== action.route);
+      return routes.filter((route) => route !== action.id);
     default:
       return routes;
   }
@@ -19,27 +22,41 @@ const SecondWritePage = ({
   onMovePage,
   updateCoordinate,
 }) => {
-  const [routes, dispatch] = useReducer(routeReducer, prevRoutes);
+  const [routes, dispatchRoute] = useReducer(routeReducer, prevRoutes);
+  const dispatch = useDispatch();
 
   const onInsert = useCallback(
-    (route) => dispatch({ type: 'INSERT', route }),
-    [],
+    (id, photo) => {
+      const { url: imageUrl, longitude, latitude } = photo;
+      const coordinate = `POINT(${latitude} ${longitude})`;
+      dispatchRoute({ type: 'INSERT', id });
+      dispatch(insert({ coordinate, imageUrl, id, order: routes.length + 1 }));
+    },
+    [dispatch, routes],
   );
 
   const onRemove = useCallback(
-    (route) => dispatch({ type: 'REMOVE', route }),
-    [],
+    (id) => {
+      dispatchRoute({ type: 'REMOVE', id });
+      dispatch(remove({ id }));
+    },
+    [dispatch],
   );
 
   const addRoute = useCallback(
-    (route) => {
-      if (routes.includes(route)) onRemove(route);
-      else onInsert(route);
+    (id, photo) => {
+      if (routes.includes(id)) onRemove(id);
+      else onInsert(id, photo);
     },
     [onInsert, onRemove, routes],
   );
 
-  const onNextPage = useCallback(() => {
+  const onPrevPageHandler = useCallback(() => {
+    onMovePage(-1);
+    dispatch(removeAll());
+  }, [dispatch, onMovePage]);
+
+  const onNextPageHandler = useCallback(() => {
     onMovePage(1);
     setRoutes(routes);
   }, [routes, onMovePage, setRoutes]);
@@ -50,12 +67,16 @@ const SecondWritePage = ({
         <button
           type='button'
           className='MoveModal F'
-          onClick={() => onMovePage(-1)}
+          onClick={onPrevPageHandler}
         >
           이전
         </button>
         <span>게시 순서 및 경로 설정</span>
-        <button type='button' className='MoveModal Co' onClick={onNextPage}>
+        <button
+          type='button'
+          className='MoveModal Co'
+          onClick={onNextPageHandler}
+        >
           다음
         </button>
       </div>
