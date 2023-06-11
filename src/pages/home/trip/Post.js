@@ -72,22 +72,6 @@ const Post = ({ postId, accessToken }) => {
     setCommentsCount((prevState) => prevState + 1);
   }, []);
 
-  const onClickDeleteHandler = useCallback(async () => {
-    try {
-      const confirm = window.confirm('정말 삭제하시겠습니까?');
-
-      if (confirm) {
-        const status = await deletePost(accessToken, postId);
-        if (status) {
-          dispatch(exit({ postId }));
-          dispatch(remove({ postId }));
-        }
-      }
-    } catch (e) {
-      alert(e.message);
-    }
-  }, [dispatch, accessToken, postId]);
-
   if (!isLoading) return null;
 
   if (!article) return null;
@@ -115,9 +99,6 @@ const Post = ({ postId, accessToken }) => {
               <h5 className='profile_name'>{name}</h5>
             </div>
 
-            <button className='delete-button' onClick={onClickDeleteHandler}>
-              게시글 삭제
-            </button>
             <span className='photo_page'>{`${currentPhoto + 1}/${
               photos.length
             }`}</span>
