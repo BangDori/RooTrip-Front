@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
-import { insert } from '@store/marker';
 
 import Menu from '@constants/menu';
 import FirstWritePage from './FirstWritePage';
@@ -69,7 +68,6 @@ const Write = ({ onClose }) => {
 
       try {
         const { data, message } = await createPost(accessToken, post);
-        dispatch(insert(data));
         onClose(Menu.TRIP, message);
       } catch (e) {
         alert(e.message);
@@ -77,7 +75,7 @@ const Write = ({ onClose }) => {
         setIsUpload(false);
       }
     },
-    [dispatch, onClose, isUpload, accessToken, photos, routes],
+    [onClose, isUpload, accessToken, photos, routes],
   );
 
   const updateCoordinateHandler = useCallback(
