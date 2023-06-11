@@ -11,6 +11,7 @@ import ThirdWritePage from './ThirdWritePage';
 import '@styles/home/Write.scss';
 
 const Write = ({ onClose }) => {
+  const [isUpload, setIsUpload] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
@@ -30,6 +31,9 @@ const Write = ({ onClose }) => {
 
   const uploadWriteHandler = useCallback(
     async (article) => {
+      if (isUpload) return;
+
+      setIsUpload(true);
       // url 받아오기
       const fileNames = photos.map((photo) => photo.fileName);
       const urls = await getPreSignedUrl(fileNames);
@@ -69,9 +73,11 @@ const Write = ({ onClose }) => {
         onClose(Menu.TRIP, message);
       } catch (e) {
         alert(e.message);
+      } finally {
+        setIsUpload(false);
       }
     },
-    [dispatch, onClose, accessToken, photos, routes],
+    [dispatch, onClose, isUpload, accessToken, photos, routes],
   );
 
   const updateCoordinateHandler = useCallback(
