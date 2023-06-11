@@ -26,13 +26,16 @@ export async function getOnePost(accessToken, postId) {
  * @param {*} accessToken accessToken
  * @returns
  */
-export async function getPosts(accessToken) {
+export async function getPosts(accessToken, viewType, polygon, markerCount) {
   const { status, data, message } = await axios
-    .get(`${MAIN_SERVER}/api/post`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    .get(
+      `${MAIN_SERVER}/api/post?viewType=${viewType}&polygon=${polygon}&markerCount=${markerCount}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    })
+    )
     .then((res) => res.data)
     .catch((e) => new Error(e.message));
 

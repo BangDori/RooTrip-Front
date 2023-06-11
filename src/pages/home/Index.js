@@ -25,6 +25,7 @@ const Index = () => {
 
   const { accessToken } = useSelector((state) => state.accessToken);
   const { postId } = useSelector((state) => state.article);
+  const { viewType, markerCount, polygon } = useSelector((state) => state.map);
   const dispatch = useDispatch();
 
   // 메시지 애니메이션
@@ -41,12 +42,12 @@ const Index = () => {
     dispatch(exit());
 
     const getMarkers = async () => {
-      const data = await getPosts(accessToken);
+      const data = await getPosts(accessToken, viewType, polygon, markerCount);
       dispatch(load({ data }));
     };
 
     if (selectedMenu === Menu.TRIP) getMarkers();
-  }, [dispatch, accessToken, selectedMenu]);
+  }, [dispatch, selectedMenu, accessToken, viewType, polygon, markerCount]);
 
   const onClickMenuHandler = useCallback(
     (clickedMenu, message) => {
