@@ -7,6 +7,7 @@ import RouteIcon from '@assets/menu/route.png';
 import LogIcon from '@assets/menu/log.png';
 import WriteIcon from '@assets/menu/write.png';
 import '@styles/home/Nav.scss';
+import { useSelector } from 'react-redux';
 
 const menuItems = [
   { id: Menu.FRIEND, label: '친구 게시글', icon: FriendIcon },
@@ -26,31 +27,33 @@ const menuItems = [
   },
 ];
 
-const HomeGnb = ({ selectedMenu, onClickMenu }) => (
-  <nav className='side_nav'>
-    <div className='menu'>
-      <div className='menu_Icon'>
-        {menuItems.map((menuItem) => (
-          <div
-            key={menuItem.id}
-            className={`icon_up ${
-              selectedMenu === menuItem.id ? 'selected' : ''
-            }`}
-            onClick={() => onClickMenu(menuItem.id)}
-          >
-            <button type='button'>
-              <img
-                src={menuItem.icon}
-                alt={menuItem.label}
-                style={{ width: menuItem.iconWidth }}
-              />
-            </button>
-            <span>{menuItem.label}</span>
-          </div>
-        ))}
+const HomeGnb = ({ onClickMenu }) => {
+  const menu = useSelector((state) => state.marker.menu);
+
+  return (
+    <nav className='side_nav'>
+      <div className='menu'>
+        <div className='menu_Icon'>
+          {menuItems.map((menuItem) => (
+            <div
+              key={menuItem.id}
+              className={`icon_up ${menu === menuItem.id ? 'selected' : ''}`}
+              onClick={() => onClickMenu(menuItem.id)}
+            >
+              <button type='button'>
+                <img
+                  src={menuItem.icon}
+                  alt={menuItem.label}
+                  style={{ width: menuItem.iconWidth }}
+                />
+              </button>
+              <span>{menuItem.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </nav>
-);
+    </nav>
+  );
+};
 
 export default HomeGnb;

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getPosts } from '@services/post';
 import { exit } from '@store/article';
-import { load, removeAll } from '@store/marker';
+import { change, load } from '@store/marker';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import HomeMenu from './HomeMenu';
@@ -20,10 +20,10 @@ import '@styles/home/log.scss';
 const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
-  const [selectedMenu, setSelectedMenu] = useState(Menu.TRIP);
   const [showMessage, setShowMessage] = useState('');
 
   const { accessToken } = useSelector((state) => state.accessToken);
+  const menu = useSelector((state) => state.marker.menu);
   const { postId } = useSelector((state) => state.article);
   const { viewType, markerCount, polygon } = useSelector((state) => state.map);
   const dispatch = useDispatch();
@@ -38,7 +38,6 @@ const Index = () => {
   }, [showMessage]);
 
   useEffect(() => {
-    dispatch(removeAll());
     dispatch(exit());
 
     const getMarkers = async () => {
@@ -46,21 +45,21 @@ const Index = () => {
       dispatch(load({ data }));
     };
 
-    if (selectedMenu === Menu.TRIP) getMarkers();
-  }, [dispatch, selectedMenu, accessToken, viewType, polygon, markerCount]);
+    if (menu === Menu.TRIP) getMarkers();
+  }, [dispatch, menu, accessToken, viewType, polygon, markerCount]);
 
   const onClickMenuHandler = useCallback(
     (clickedMenu, message) => {
       if (message) setShowMessage(message);
 
-      setSelectedMenu(clickedMenu);
+      dispatch(change({ clickedMenu }));
       if (postId) dispatch(exit());
     },
     [dispatch, postId],
   );
 
   let content = '';
-  switch (selectedMenu) {
+  switch (menu) {
     case Menu.TRIP:
       content = <Trip />;
       break;
@@ -81,7 +80,7 @@ const Index = () => {
     <>
       <HomeLogo />
 
-      <HomeMenu selectedMenu={selectedMenu} onClickMenu={onClickMenuHandler} />
+      <HomeMenu onClickMenu={onClickMenuHandler} />
       <HomeProfile />
 
       {content}

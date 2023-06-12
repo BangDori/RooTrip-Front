@@ -2,8 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import getRecommendPost from '@services/route';
-import LikeImage from '@assets/route-like.png';
-import CommentImage from '@assets/route-comment.png';
+import SearchItem from './SearchItem';
 import City from './City';
 import '@styles/home/route.scss';
 
@@ -84,6 +83,7 @@ const Route = () => {
   const [searchCity, setSearchCity] = useState([]);
   const { accessToken } = useSelector((state) => state.accessToken);
   const [searchList, setSearchList] = useState([]);
+  const [message, setMessage] = useState('');
 
   const onClickAddCityHandler = useCallback(() => {
     setIsAddCity((prevState) => !prevState);
@@ -116,9 +116,10 @@ const Route = () => {
       const data = await getRecommendPost(accessToken, searchCity);
 
       setSearchList(data);
+      setMessage('');
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e.message);
+      setSearchList([]);
+      setMessage(e.message);
     }
   }, [accessToken, searchCity]);
 
@@ -180,46 +181,10 @@ const Route = () => {
         </div>
       </div>
       <div className='route-search-list'>
-        {searchList.map((item) => {
-          const { id, imageUrl, post, commentCount } = item;
-          const { title, createdAt, like } = post;
-
-          return (
-            <div key={id} className='search-item'>
-              <div className='item-image'>
-                <button>
-                  <img src={imageUrl} alt='thumbnail image' />
-                </button>
-              </div>
-              <div className='item-content'>
-                <div className='item-title'>
-                  <h3>{title}</h3>
-                </div>
-                <div className='item-date'>
-                  <p>{createdAt}</p>
-                </div>
-                <div className='item-count-box'>
-                  <div className='item-like-count'>
-                    <img
-                      src={LikeImage}
-                      alt='like image'
-                      style={{ width: '36px' }}
-                    />
-                    <span>{like}</span>
-                  </div>
-                  <div className='item-comment-count'>
-                    <img
-                      src={CommentImage}
-                      alt='comment image'
-                      style={{ width: '32px' }}
-                    />
-                    <span>{commentCount}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {searchList.map((item) => (
+          <SearchItem key={item.id} item={item} />
+        ))}
+        {message && <p className='no-list-message'>{message}</p>}
       </div>
     </div>
   );
