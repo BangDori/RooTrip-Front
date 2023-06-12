@@ -33,6 +33,7 @@
     border-radius: 50%;
 
     overflow: hidden;
+    cursor: initial;
 
     img {
       width: 100%;
@@ -59,6 +60,10 @@
     }
   }
 
+  .no-effect-marker {
+    border: 3px solid white !important;
+  }
+
   .mapboxgl-marker {
     top: -34px !important;
     left: -11px !important;
@@ -78,10 +83,6 @@
       border: 3px solid red !important;
       fill: red !important;
     }
-  }
-
-  .order-marker {
-    border: 3px solid white !important;
   }
 
   .mapboxgl-marker:hover {
