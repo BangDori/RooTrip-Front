@@ -83,7 +83,7 @@
     .route-search-selectBox {
       height: 0;
       transition: all 0.5s ease;
-      overflow: hidden;
+      overflow-y: auto;
 
       .select-city-name {
         margin: 8px 0;
@@ -127,6 +127,7 @@
     display: flex;
     flex-direction: column;
     height: 450px;
+    overflow-y: auto;
 
     .search-item {
       display: flex;
@@ -136,7 +137,6 @@
 
       .item-image {
         text-align: center;
-        width: 144px;
         height: 128px;
         padding: 8px 12px;
 
@@ -156,6 +156,9 @@
       }
 
       .item-content {
+        flex-grow: 1;
+        padding-top: 12px;
+
         display: flex;
         flex-direction: column;
 
@@ -163,7 +166,10 @@
           margin: 8px 0;
           h3 {
             margin: 0;
-            font-size: 20px;
+            font-size: 18px;
+            font-weight: 700;
+
+            cursor: pointer;
           }
         }
 
@@ -192,6 +198,10 @@
           }
         }
       }
+    }
+
+    .no-list-message {
+      text-align: center;
     }
   }
 }
