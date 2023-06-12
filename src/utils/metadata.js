@@ -126,6 +126,8 @@ export function changeCityToCoordinate(cities) {
     zoom = 7; // 중간 범위일 때
   } else {
     zoom = 8 + (cities.length === 1 ? 0.5 : 0); // 좁은 범위일 때
+
+    if (cities[0].endsWith('도')) zoom -= 0.5;
     weight = 0.5;
   }
 
