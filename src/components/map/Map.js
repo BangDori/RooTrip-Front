@@ -1,5 +1,5 @@
-import MapGL, { Marker } from 'react-map-gl';
-import { useCallback, useEffect } from 'react';
+import MapGL from 'react-map-gl';
+import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { exit } from '@store/article';
@@ -22,10 +22,29 @@ const zoom = {
 };
 
 const Map = () => {
+  const MapGLRef = useRef();
+
   const { accessToken } = useSelector((state) => state.accessToken);
   const { isSetLocation } = useSelector((state) => state.location);
-  const marker = useSelector((state) => state.marker);
+  const changeCenter = useSelector((state) => state.map.center);
+  const changeZoom = useSelector((state) => state.map.zoom);
+  const marker = useSelector((state) => state.marker.marker);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!MapGLRef.current || changeCenter.length === 0) return;
+
+    MapGLRef.current.flyTo({
+      center: changeCenter,
+      zoom: changeZoom,
+      speed: 1.5,
+      curve: 1.25,
+      essential: true,
+      easing(t) {
+        return t;
+      },
+    });
+  }, [changeCenter, changeZoom]);
 
   const setLocationHandler = useCallback(
     (e) => {
@@ -123,6 +142,7 @@ const Map = () => {
   return (
     <div className='map-container'>
       <MapGL
+        ref={MapGLRef}
         initialViewState={viewport}
         style={{ width: '100vw', height: '100vh' }}
         mapStyle={MAP_API_STYLE}

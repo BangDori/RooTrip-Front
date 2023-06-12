@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getPosts } from '@services/post';
 import { exit } from '@store/article';
+import { resetMap } from '@store/map';
 import { change, load } from '@store/marker';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
@@ -53,6 +54,7 @@ const Index = () => {
       if (message) setShowMessage(message);
 
       dispatch(change({ clickedMenu }));
+      dispatch(resetMap());
       if (postId) dispatch(exit());
     },
     [dispatch, postId],
