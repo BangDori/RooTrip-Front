@@ -1,8 +1,10 @@
 import Photo from '@components/wrapper/Photo';
-import { useCallback, useReducer } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import { resetMap, setChangeCoordinate } from '@store/map';
 import { insert, remove, removeAll } from '@store/marker';
+import { changeCityToCoordinate } from '@utils/metadata';
 
 function routeReducer(routes, action) {
   switch (action.type) {
@@ -23,7 +25,18 @@ const SecondWritePage = ({
   updateCoordinate,
 }) => {
   const [routes, dispatchRoute] = useReducer(routeReducer, prevRoutes);
+  const [routesOnMap, setRoutesOnMap] = useState([]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (routesOnMap.length === 0) {
+      dispatch(resetMap());
+      return;
+    }
+
+    const data = changeCityToCoordinate(routesOnMap);
+    dispatch(setChangeCoordinate({ data }));
+  }, [dispatch, routesOnMap]);
 
   const onInsert = useCallback(
     (id, photo) => {
@@ -31,6 +44,10 @@ const SecondWritePage = ({
       const coordinate = `POINT(${latitude} ${longitude})`;
       dispatchRoute({ type: 'INSERT', id });
       dispatch(insert({ coordinate, imageUrl, id, order: routes.length + 1 }));
+      setRoutesOnMap((prevState) => [
+        ...prevState,
+        { id, coordinate: [longitude, latitude] },
+      ]);
     },
     [dispatch, routes],
   );
@@ -39,8 +56,11 @@ const SecondWritePage = ({
     (id) => {
       dispatchRoute({ type: 'REMOVE', id });
       dispatch(remove({ id }));
+
+      const updatedRoutesOnMap = routesOnMap.filter((cur) => cur.id !== id);
+      setRoutesOnMap(updatedRoutesOnMap);
     },
-    [dispatch],
+    [dispatch, routesOnMap],
   );
 
   const addRoute = useCallback(
