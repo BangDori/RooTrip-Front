@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { changeCityToCoordinate } from '@utils/metadata';
-import { setChangeCenter } from '@store/map';
+import { setChangeCoordinate } from '@store/map';
 import getRecommendPost from '@services/route';
 import SearchItem from './SearchItem';
 import City from './City';
@@ -12,87 +12,87 @@ const cities = [
   {
     id: 1,
     name: '서울',
-    center: [126.978, 37.5665],
+    coordinate: [126.978, 37.5665],
   },
   {
     id: 2,
     name: '강원도',
-    center: [128.2092, 37.5555],
+    coordinate: [128.2092, 37.5555],
   },
   {
     id: 3,
     name: '경기도',
-    center: [127.5183, 37.4138],
+    coordinate: [127.5183, 37.4138],
   },
   {
     id: 4,
     name: '경상남도',
-    center: [128.6921, 35.2383],
+    coordinate: [128.6921, 35.2383],
   },
   {
     id: 5,
     name: '경상북도',
-    center: [128.8889, 36.4919],
+    coordinate: [128.8889, 36.4919],
   },
   {
     id: 6,
     name: '광주',
-    center: [126.8526, 35.1595],
+    coordinate: [126.8526, 35.1595],
   },
   {
     id: 7,
     name: '대구',
-    center: [128.6014, 35.8714],
+    coordinate: [128.6014, 35.8714],
   },
   {
     id: 8,
     name: '대전',
-    center: [127.3845, 36.3504],
+    coordinate: [127.3845, 36.3504],
   },
   {
     id: 9,
     name: '부산',
-    center: [129.0756, 35.1796],
+    coordinate: [129.0756, 35.1796],
   },
   {
     id: 10,
     name: '세종',
-    center: [127.2892, 36.4808],
+    coordinate: [127.2892, 36.4808],
   },
   {
     id: 11,
     name: '울산',
-    center: [129.3114, 35.5384],
+    coordinate: [129.3114, 35.5384],
   },
   {
     id: 12,
     name: '전라남도',
-    center: [126.991, 34.8679],
+    coordinate: [126.991, 34.8679],
   },
   {
     id: 13,
     name: '전라북도',
-    center: [127.153, 35.7175],
+    coordinate: [127.153, 35.7175],
   },
   {
     id: 14,
     name: '제주도',
-    center: [126.5312, 33.4996],
+    coordinate: [126.5312, 33.4996],
   },
   {
     id: 15,
     name: '충청남도',
-    center: [126.8, 36.5184],
+    coordinate: [126.8, 36.5184],
   },
   {
     id: 16,
     name: '충청북도',
-    center: [127.9295, 36.6282],
+    coordinate: [127.9295, 36.6282],
   },
   {
     id: 17,
     name: '인천',
-    center: [126.7052, 37.4563],
+    coordinate: [126.7052, 37.4563],
   },
 ];
 
@@ -111,15 +111,15 @@ const Route = () => {
   }, []);
 
   const addSearchCityHandler = useCallback(
-    (cityName) => {
-      if (searchCity.includes(cityName)) {
+    (city) => {
+      if (searchCity.includes(city)) {
         const updatedSearchCity = searchCity.filter(
-          (city) => city !== cityName,
+          (currentCity) => currentCity.name !== city.name,
         );
 
         setSearchCity(updatedSearchCity);
       } else {
-        setSearchCity((prevCities) => [...prevCities, cityName]);
+        setSearchCity((prevCities) => [...prevCities, city]);
       }
     },
     [searchCity],
@@ -135,10 +135,11 @@ const Route = () => {
     setIsSearch(true);
 
     const data = changeCityToCoordinate(searchCity);
-    dispatch(setChangeCenter({ data }));
+    dispatch(setChangeCoordinate({ data }));
 
     try {
-      const post = await getRecommendPost(accessToken, searchCity);
+      const searchCityList = searchCity.map((city) => city.name);
+      const post = await getRecommendPost(accessToken, searchCityList);
 
       setSearchList(post);
       setMessage('');
@@ -157,7 +158,7 @@ const Route = () => {
           </div>
           <div className='route-search-box'>
             <div className='route-search-city'>
-              {searchCity.map((city) => `${city} `)}
+              {searchCity.map((city) => `${city.name} `)}
             </div>
             <button
               className='route-search-button'

@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 
 const City = ({ addSearchCity, city, isMax }) => {
   const [isSelected, setIsSelected] = useState(false);
-  const { name } = city;
 
   const onClickHandler = useCallback(() => {
     if (isMax && !isSelected) {
@@ -11,15 +10,15 @@ const City = ({ addSearchCity, city, isMax }) => {
     }
 
     setIsSelected((prevSelected) => !prevSelected);
-    addSearchCity(name);
-  }, [addSearchCity, name, isMax, isSelected]);
+    addSearchCity(city);
+  }, [addSearchCity, city, isMax, isSelected]);
 
   return (
     <button
       onClick={onClickHandler}
       style={{ background: isSelected ? '#777777' : '#ccc' }}
     >
-      {name}
+      {city.name}
     </button>
   );
 };

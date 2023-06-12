@@ -5,7 +5,7 @@ const CHANGE = 'MAP/CHANGE';
 const RESET = 'MAP/RESET';
 
 export const setCoordinatesOnMap = createAction(SET);
-export const setChangeCenter = createAction(CHANGE);
+export const setChangeCoordinate = createAction(CHANGE);
 export const resetMap = createAction(RESET);
 
 const initialCoordinatesOnMap = {
