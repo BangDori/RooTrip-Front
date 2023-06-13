@@ -9,6 +9,7 @@ const Login = loadable(() => import('@pages/login/Index'));
 const FindAccount = loadable(() => import('@pages/account/Index'));
 const Register = loadable(() => import('@pages/register/Index'));
 const SocialAuth = loadable(() => import('@components/common/SocialAuth'));
+const Mypage = loadable(() => import('@pages/mypage/Index'));
 const NotFound = loadable(() => import('@components/common/NotFound'));
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
       <Route path='/account' element={<FindAccount />} />
       <Route path='/register' element={<Register />} />
       <Route path='/oauth/:provider/*' element={<SocialAuth />} />
+      <Route path='/mypage' element={<Mypage />} />
       <Route path='/*' element={<NotFound />} />
     </Routes>
   );
