@@ -38,8 +38,8 @@ content{
             }
         }
         .selected{
-            border-right: 3px solid blue;
-            border-left: 3px solid blue;
+            border-right: 3px solid #2743a6;
+            border-left: 3px solid #2743a6;
             font-weight: bold;
         }
     }
@@ -84,12 +84,14 @@ content{
                     border: 1px solid #868686;
                     background: #eee;
                     margin: 0 15px;
+                    padding-left: 15px;
+                    font-size: 16px;
                 }
                 button{
                     height: 34px;
                     border-radius: 7px;
                     width: 80px;
-                    background: blue;
+                    background: #2743a6;
                     color: white;
                     border: 0;
                     cursor: pointer;
@@ -102,7 +104,7 @@ content{
                     span{
                         font-size: 17px;
                         letter-spacing: 5px;
-                        color: blue;
+                        color: #2743a6;
                     }
                     span:hover{
                         text-decoration: underline
@@ -185,7 +187,7 @@ content{
     display: flex;
     flex-direction: column;
     h2{
-        color: blue;
+        color: #2743a6;
         font-weight: bold;
     }
 
@@ -208,6 +210,13 @@ content{
         width: 250px;
         height: 250px;
         background: #ccc;
+        border: 1px solid #ccc;
+        margin: 0 15px 15px 0;
+    }
+    .recommended{
+        width: 250px;
+        height: 250px;
+        background: white;
         border: 1px solid #ccc;
         margin: 0 15px 15px 0;
     }

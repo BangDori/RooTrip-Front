@@ -12,6 +12,7 @@ import Modify from './Modify';
 import MyTrip from './MyTrip';
 import LikedTrip from './LikedTrip';
 import SavedTrip from './SavedTrip';
+import Unsigned from './Unsigned';
 
 const Index = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ const Index = () => {
       break;
     case MypageMenu.SAVEDTRIP:
       content = <SavedTrip />;
+      break;
+    case MypageMenu.UNSIGNED:
+      content = <Unsigned />;
       break;
     default:
       content = '';
