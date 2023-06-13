@@ -12,7 +12,7 @@ const Search = ({
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://apis.data.go.kr/B551011/KorService1/areaBasedList1?serviceKey=fj89xEX4jKk9mI39GALZWh4r7r%2Bl46iciXx0MOPKSv7ksqrCfg3BO17CfSmt9iE6LscgSQpDAhGvog9h1nIrXg%3D%3D&numOfRows=50&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&areaCode=${cityTemp.code}&cat1=${bigThemeTemp.code}`,
+          `https://apis.data.go.kr/B551011/KorService1/areaBasedList1?numOfRows=50&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&areaCode=${cityTemp.code}&cat1=${bigThemeTemp.code}&cat2=${middleThemeTemp.code}&cat3=${smallThemeTemp.code}&serviceKey=fj89xEX4jKk9mI39GALZWh4r7r%2Bl46iciXx0MOPKSv7ksqrCfg3BO17CfSmt9iE6LscgSQpDAhGvog9h1nIrXg%3D%3D`,
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
