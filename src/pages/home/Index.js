@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState, useCallback, useEffect } from 'react';
 import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,6 +22,7 @@ const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
   const [showMessage, setShowMessage] = useState('');
+  const [prevMenu, setPrevMenu] = useState('');
 
   const { accessToken } = useSelector((state) => state.accessToken);
   const menu = useSelector((state) => state.marker.menu);
@@ -38,15 +40,17 @@ const Index = () => {
   }, [showMessage]);
 
   useEffect(() => {
-    dispatch(exit());
-
     const getMarkers = async () => {
       const data = await getPosts(accessToken, viewType, polygon, markerCount);
       dispatch(load({ data }));
+      setPrevMenu(menu);
     };
 
-    if (menu === Menu.TRIP) getMarkers();
-  }, [dispatch, menu, accessToken, viewType, polygon, markerCount]);
+    if (menu === Menu.TRIP && prevMenu !== Menu.ORDER) {
+      dispatch(exit());
+      getMarkers();
+    }
+  }, [dispatch, menu, accessToken, viewType, polygon, markerCount, prevMenu]);
 
   const onClickMenuHandler = useCallback(
     (clickedMenu, message) => {

@@ -1,4 +1,5 @@
 const Menu = {
+  ORDER: ' ORDER',
   FRIEND: 'FRIEND',
   TRIP: 'TRIP',
   ROUTE: 'ROUTE',

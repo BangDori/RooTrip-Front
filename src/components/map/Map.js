@@ -2,6 +2,7 @@ import MapGL from 'react-map-gl';
 import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import Menu from '@constants/menu';
 import { exit } from '@store/article';
 import { setCoordinatesOnMap } from '@store/map';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
@@ -29,6 +30,7 @@ const Map = () => {
   const changeCenter = useSelector((state) => state.map.center);
   const changeZoom = useSelector((state) => state.map.zoom);
   const marker = useSelector((state) => state.marker.marker);
+  const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -72,7 +74,7 @@ const Map = () => {
 
   const fetchData = useCallback(
     async (e) => {
-      if (marker[0].order) return;
+      if (menu === Menu.ORDER) return;
 
       const currentZoom = e.target.getZoom();
       let viewType = 'region';
@@ -96,7 +98,7 @@ const Map = () => {
         }),
       );
     },
-    [dispatch, marker],
+    [dispatch, menu],
   );
 
   const onZoomEndHandler = useCallback(
