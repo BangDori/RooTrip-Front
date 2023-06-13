@@ -176,20 +176,39 @@ content{
         }
 
         .myTripBox{
-            .myTripTitle{
-                display: flex;
-                flex-direction: column;
-                h2{
-                    color: blue;
-                    font-weight: bold;
-                }
 
-                span{
-                    color: #aaa;
-                    font-size: 15px;
-
-                }
-            }
         }
+    }
+}
+
+.tripTitle{
+    display: flex;
+    flex-direction: column;
+    h2{
+        color: blue;
+        font-weight: bold;
+    }
+
+    span{
+        color: #aaa;
+        font-size: 15px;
+
+    }
+}
+
+.tripContent{
+    margin-top: 30px;
+    width: 850px;
+    max-height: 515px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: overlay;
+    object-fit: cover;
+    .article{
+        width: 250px;
+        height: 250px;
+        background: #ccc;
+        border: 1px solid #ccc;
+        margin: 0 15px 15px 0;
     }
 }
