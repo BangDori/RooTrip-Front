@@ -1,7 +1,56 @@
-import React from 'react';
+import { useCallback } from 'react';
+import useInitialState from '@hooks/useInitialState';
 import ProfileTest from '@assets/naver.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { issue } from '@store/accessToken';
+import { changeNickname } from '@services/auth';
 
 const Modify = () => {
+  const [form, setForm, resetForm] = useInitialState({
+    nickname: '',
+  });
+  const { nickname } = form;
+  const { accessToken } = useSelector((state) => state.accessToken);
+
+  // form 상태 입력
+  const onInput = useCallback(
+    (e) => {
+      setForm((prevForm) => ({
+        ...prevForm,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    [setForm],
+  );
+
+  const dispatch = useDispatch();
+
+  const nicknameChange = useCallback(
+    async (nicknameForm) => {
+      try {
+        const nicknameToken = await changeNickname(nicknameForm, accessToken);
+        alert('닉네임 변경 성공');
+      } catch (e) {
+        alert('닉네임 변경 실패');
+      }
+    },
+    [accessToken],
+  );
+
+  const handleSubmitNickname = useCallback(
+    (e) => {
+      // 페이지 이동 막기
+      e.preventDefault();
+
+      // changeNickName함수로 전달
+      nicknameChange(form);
+
+      // form 상태 초기화
+      resetForm();
+    },
+    [form, nicknameChange, resetForm],
+  );
+
   return (
     <>
       <div className='modifyBox'>
@@ -10,10 +59,18 @@ const Modify = () => {
             <img src={ProfileTest} alt='Test' />
           </div>
           <div className='modifyContent'>
-            <div>
+            <div style={{ display: 'flex' }}>
               <span>닉네임</span>
-              <input type='text' name='' className='inputNickName' />
-              <button type='button'>변경</button>
+              <form method='post' onSubmit={handleSubmitNickname}>
+                <input
+                  type='text'
+                  name='nickname'
+                  className='inputNickName'
+                  value={nickname}
+                  onChange={onInput}
+                />
+                <button type='submit'>변경</button>
+              </form>
             </div>
             <div className='changeProfile'>
               <span>프로필 사진 변경</span>

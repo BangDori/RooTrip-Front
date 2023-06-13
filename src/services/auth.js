@@ -102,3 +102,22 @@ export async function socialLogin(provider, code) {
   if (!status) throw new Error(message);
   return token.data;
 }
+
+/**
+ * 닉네임 변경
+ * @param {Object} nicknameForm 변경할 닉네임
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
+ */
+export async function changeNickname(nicknameForm, accessToken) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/mypage/account/edit/nickname`, nicknameForm, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+  return status;
+}

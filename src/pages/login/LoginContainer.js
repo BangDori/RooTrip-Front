@@ -16,7 +16,6 @@ const LoginContainer = () => {
       try {
         const token = await login(loginForm);
         const { accessToken, expire, refreshToken } = token;
-
         setRefreshToken(refreshToken);
         dispatch(issue({ accessToken, expire }));
       } catch (e) {
