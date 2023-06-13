@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { exit } from '@store/article';
-import { remove } from '@store/marker';
-import { useDispatch } from 'react-redux';
-import { getOnePost, deletePost } from '@services/post';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getOnePost } from '@services/post';
+import { setChangeCoordinate, resetMap } from '@store/map';
+import { exit } from '@store/article';
+import { load, removeAll } from '@store/marker';
+import { changeCityToCoordinate } from '@utils/metadata';
 import Modal from '@components/wrapper/Modal';
 import NAVIGATE_IMAGE from '@assets/navigate_image.png';
 import DefaultProfile from '@assets/DefaultProfileImage.png';
@@ -23,6 +25,10 @@ const Post = ({ postId, accessToken }) => {
   const [article, setArticle] = useState(null);
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState(0);
+  const [isRouting, setIsRouting] = useState(false);
+  const [prevMarkers, setPrevMarkers] = useState([]);
+
+  const marker = useSelector((state) => state.marker.marker);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,6 +65,61 @@ const Post = ({ postId, accessToken }) => {
   const onChangePhoto = useCallback((move) => {
     setCurrentPhoto((prevPhoto) => prevPhoto + move);
   }, []);
+
+  const onClickNavigationHandler = useCallback(() => {
+    if (isRouting) {
+      setIsRouting(false);
+      dispatch(removeAll());
+      dispatch(resetMap());
+      dispatch(load({ prevMarkers }));
+      setPrevMarkers([]);
+      return;
+    }
+
+    const { routes } = article;
+    if (routes.length === 0) return;
+
+    dispatch(removeAll());
+    setPrevMarkers(marker);
+    const updateMarker = () => {
+      const data = photos.map((photo) =>
+        routes.includes(String(photo.order + 1))
+          ? {
+              id: photo.id,
+              imageUrl: photo.imageUrl,
+              coordinate: photo.coordinate,
+              order: routes.indexOf(String(photo.order + 1)) + 1,
+            }
+          : null,
+      );
+      dispatch(load({ data }));
+    };
+
+    const updateCoordinate = () => {
+      const movedPoint = photos.map((photo) => {
+        if (!photo.coordinate || !routes.includes(String(photo.order + 1)))
+          return null;
+
+        const coordinateString = photo.coordinate
+          .replace('POINT(', '')
+          .replace(')', '');
+
+        const [lng, lat] = coordinateString.split(' ');
+
+        return {
+          id: photo.id,
+          name: photo.city,
+          coordinate: [Number(lat), Number(lng)],
+        };
+      });
+      const data = changeCityToCoordinate(movedPoint);
+      dispatch(setChangeCoordinate({ data }));
+    };
+
+    updateMarker();
+    updateCoordinate();
+    setIsRouting(true);
+  }, [dispatch, article, photos, isRouting, prevMarkers, marker]);
 
   const onCloseArticle = useCallback(() => {
     dispatch(exit());
@@ -127,7 +188,7 @@ const Post = ({ postId, accessToken }) => {
                 </div>
               </div>
               <div className='side-bar'>
-                <button type='button'>
+                <button type='button' onClick={onClickNavigationHandler}>
                   <img src={NAVIGATE_IMAGE} alt='NAVIGATE_IMAGE' />
                 </button>
                 <LikeButton

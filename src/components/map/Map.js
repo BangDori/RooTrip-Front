@@ -72,6 +72,8 @@ const Map = () => {
 
   const fetchData = useCallback(
     async (e) => {
+      if (marker[0].order) return;
+
       const currentZoom = e.target.getZoom();
       let viewType = 'region';
       let markerCount = 8;
@@ -94,7 +96,7 @@ const Map = () => {
         }),
       );
     },
-    [dispatch],
+    [dispatch, marker],
   );
 
   const onZoomEndHandler = useCallback(

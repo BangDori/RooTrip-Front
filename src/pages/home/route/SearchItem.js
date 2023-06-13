@@ -7,7 +7,7 @@ import CommentImage from '@assets/route-comment.png';
 
 const SearchItem = ({ item }) => {
   const { id, imageUrl, post, coordinate, commentCount } = item;
-  const { id: postId, title, createdAt, like } = post;
+  const { id: postId, title, createdAt, like, routes } = post;
 
   const dispatch = useDispatch();
 
@@ -19,7 +19,12 @@ const SearchItem = ({ item }) => {
     };
   }, [dispatch, id, postId, imageUrl, coordinate]);
 
-  const onClickPostHandler = useCallback(() => {}, []);
+  const onClickPostHandler = useCallback(() => {
+    // eslint-disable-next-line no-console
+    console.log(item);
+    // eslint-disable-next-line no-console
+    console.log(routes);
+  }, [item, routes]);
 
   return (
     <div className='search-item'>
