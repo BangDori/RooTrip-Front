@@ -3,6 +3,7 @@ import React, { useCallback, useState } from 'react';
 import Modal from '@components/wrapper/Modal';
 import ModalLocation from './ModalLocation';
 import ModalTheme from './ModalTheme';
+import Search from './Search';
 
 const ChooseTheme = () => {
   const [clickChoose, setClickChoose] = useState(false);
@@ -13,6 +14,7 @@ const ChooseTheme = () => {
   const [bigThemeTemp, setBigThemeTemp] = useState({ code: null });
   const [middleThemeTemp, setMiddleThemeTemp] = useState({ code: null });
   const [smallThemeTemp, setSmallThemeTemp] = useState({ code: null });
+  const [clickSearch, setClickSearch] = useState(false);
   const openModalLocation = () => {
     setClickChooseLocation(true);
     setClickChoose(true);
@@ -26,7 +28,11 @@ const ChooseTheme = () => {
     setClickChooseTheme(false);
     setClickChoose(false);
   };
-
+  const SearchTourism = () => {
+    if (cityTemp != null || bigThemeTemp != null) {
+      setClickSearch(true);
+    }
+  };
   return (
     <div className='log-content'>
       <div className='content'>
@@ -71,9 +77,24 @@ const ChooseTheme = () => {
           </div>
         </div>
         <div className='searchBox'>
-          <button className='searchButton' type='button'>
+          <button
+            className='searchButton'
+            type='button'
+            onClick={SearchTourism}
+          >
             검색
           </button>
+        </div>
+        <div className='showBox'>
+          {clickSearch && (
+            <Search
+              cityTemp={cityTemp}
+              smallCityTemp={smallCityTemp}
+              bigThemeTemp={bigThemeTemp}
+              middleThemeTemp={middleThemeTemp}
+              smallThemeTemp={smallThemeTemp}
+            />
+          )}
         </div>
       </div>
       {clickChoose && (
