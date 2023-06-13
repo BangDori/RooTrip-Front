@@ -1,30 +1,36 @@
 import { useCallback } from 'react';
 import useInitialState from '@hooks/useInitialState';
 import ProfileTest from '@assets/naver.png';
-import { useDispatch, useSelector } from 'react-redux';
-import { issue } from '@store/accessToken';
-import { changeNickname } from '@services/auth';
+import { changeNickname, changeSex } from '@services/auth';
 
-const Modify = () => {
-  const [form, setForm, resetForm] = useInitialState({
+const Modify = ({ accessToken }) => {
+  const [nickForm, setNickForm, resetNickForm] = useInitialState({
     nickname: '',
   });
-  const { nickname } = form;
-  const { accessToken } = useSelector((state) => state.accessToken);
-
+  const { nickname } = nickForm;
+  const [sexForm, setSexForm, resetSexForm] = useInitialState({
+    gender: '',
+  });
+  const { gender } = sexForm;
   // form 상태 입력
   const onInput = useCallback(
     (e) => {
-      setForm((prevForm) => ({
+      setNickForm((prevForm) => ({
         ...prevForm,
         [e.target.name]: e.target.value,
       }));
     },
-    [setForm],
+    [setNickForm],
   );
-
-  const dispatch = useDispatch();
-
+  const onSex = useCallback(
+    (e) => {
+      setSexForm((prevForm) => ({
+        ...prevForm,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    [setSexForm],
+  );
   const nicknameChange = useCallback(
     async (nicknameForm) => {
       try {
@@ -36,6 +42,17 @@ const Modify = () => {
     },
     [accessToken],
   );
+  const sexChange = useCallback(
+    async (sexform) => {
+      try {
+        const nicknameToken = await changeSex(sexform, accessToken);
+        alert('성별 변경 성공');
+      } catch (e) {
+        alert('성별 변경 실패');
+      }
+    },
+    [accessToken],
+  );
 
   const handleSubmitNickname = useCallback(
     (e) => {
@@ -43,14 +60,27 @@ const Modify = () => {
       e.preventDefault();
 
       // changeNickName함수로 전달
-      nicknameChange(form);
+      nicknameChange(nickForm);
 
       // form 상태 초기화
-      resetForm();
+      resetNickForm();
     },
-    [form, nicknameChange, resetForm],
+    [nickForm, nicknameChange, resetNickForm],
   );
 
+  const handleSubmitSex = useCallback(
+    (e) => {
+      // 페이지 이동 막기
+      e.preventDefault();
+
+      // sexChange함수로 전달
+      sexChange(sexForm);
+
+      // form 상태 초기화
+      resetSexForm();
+    },
+    [sexForm, sexChange, resetSexForm],
+  );
   return (
     <>
       <div className='modifyBox'>
@@ -89,20 +119,29 @@ const Modify = () => {
           <div className='modifyTitle'>
             <span>성별</span>
           </div>
-          <div className='modifyContent'>
-            <input type='radio' name='check' value='MAN' className='radioBtn' />
+          <form
+            method='post'
+            onSubmit={handleSubmitSex}
+            className='modifyContent'
+          >
+            <input
+              type='radio'
+              name='gender'
+              value='M'
+              className='radioBtn'
+              onClick={onSex}
+            />
             <label>남자</label>
             <input
               type='radio'
-              name='check'
-              value='WOMAN'
+              name='gender'
+              value='G'
               className='radioBtn'
+              onClick={onSex}
             />
             <label>여자</label>
-            <input type='radio' name='check' value='ETC' className='radioBtn' />
-            <label>기타</label>
-            <input type='text' name='ETC_Input' className='etcInput' />
-          </div>
+            <button type='submit'>변경</button>
+          </form>
         </div>
         <div className='modifyPw'>
           <div className='modifyTitle'>
