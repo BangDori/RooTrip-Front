@@ -10,7 +10,6 @@ import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import HomeMenu from './HomeMenu';
 import HomeLogo from './HomeLogo';
-import HomeProfile from './HomeProfile';
 import Write from './write/Write';
 import Trip from './trip/Trip';
 import Route from './route/Route';
@@ -83,7 +82,6 @@ const Index = () => {
       <HomeLogo />
 
       <HomeMenu onClickMenu={onClickMenuHandler} />
-      <HomeProfile />
 
       {content}
 
