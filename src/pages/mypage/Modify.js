@@ -1,18 +1,32 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import useInitialState from '@hooks/useInitialState';
 import ProfileTest from '@assets/naver.png';
 import { changeNickname, changeSex } from '@services/auth';
 
 const Modify = ({ accessToken }) => {
+  // 닉네임
   const [nickForm, setNickForm, resetNickForm] = useInitialState({
     nickname: '',
   });
   const { nickname } = nickForm;
+  // 성별
   const [sexForm, setSexForm, resetSexForm] = useInitialState({
     gender: '',
   });
   const { gender } = sexForm;
-  // form 상태 입력
+  // 비밀번호 변경
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordFrom, setPasswordForm, resetPasswordForm] = useInitialState({
+    password: 'password',
+  });
+  setPassword(passwordFrom);
+  // 비밀번호 일치 상태 검사 메세지
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
+  // 비밀번호 유호성 검사
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+
+  // 닉네임 입력
   const onInput = useCallback(
     (e) => {
       setNickForm((prevForm) => ({
@@ -22,6 +36,7 @@ const Modify = ({ accessToken }) => {
     },
     [setNickForm],
   );
+  // 성별 입력
   const onSex = useCallback(
     (e) => {
       setSexForm((prevForm) => ({
@@ -31,6 +46,7 @@ const Modify = ({ accessToken }) => {
     },
     [setSexForm],
   );
+  // 닉네임 form 통신
   const nicknameChange = useCallback(
     async (nicknameForm) => {
       try {
@@ -42,6 +58,7 @@ const Modify = ({ accessToken }) => {
     },
     [accessToken],
   );
+  // 성별 form 통신
   const sexChange = useCallback(
     async (sexform) => {
       try {
@@ -53,7 +70,7 @@ const Modify = ({ accessToken }) => {
     },
     [accessToken],
   );
-
+  // 닉네임 form 상태 입력
   const handleSubmitNickname = useCallback(
     (e) => {
       // 페이지 이동 막기
@@ -67,7 +84,7 @@ const Modify = ({ accessToken }) => {
     },
     [nickForm, nicknameChange, resetNickForm],
   );
-
+  // 성별 form 상태 입력
   const handleSubmitSex = useCallback(
     (e) => {
       // 페이지 이동 막기
