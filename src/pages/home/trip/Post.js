@@ -8,8 +8,8 @@ import { change, load, removeAll } from '@store/marker';
 import { changeCityToCoordinate } from '@utils/metadata';
 import Menu from '@constants/menu';
 import Modal from '@components/wrapper/Modal';
-import NAVIGATE_IMAGE from '@assets/navigate_image.png';
-import DefaultProfile from '@assets/DefaultProfileImage.png';
+import NavigationImage from '@assets/navigation.png';
+import DefaultImage from '@assets/user/default.png';
 import Photos from './post/Photos';
 import Comment from './post/Comment';
 import LikeButton from './post/LikeButton';
@@ -154,7 +154,7 @@ const Post = ({ postId, accessToken }) => {
               <div className='profile_image'>
                 <img
                   src={
-                    DefaultProfile
+                    DefaultImage
                     // profileImage.length === 0 ? DefaultProfile : profileImage
                   }
                   alt='user profile image'
@@ -192,7 +192,7 @@ const Post = ({ postId, accessToken }) => {
               </div>
               <div className='side-bar'>
                 <button type='button' onClick={onClickNavigationHandler}>
-                  <img src={NAVIGATE_IMAGE} alt='NAVIGATE_IMAGE' />
+                  <img src={NavigationImage} alt='NAVIGATE_IMAGE' />
                 </button>
                 <LikeButton
                   accessToken={accessToken}

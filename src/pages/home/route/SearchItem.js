@@ -2,8 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { insert, remove } from '@store/marker';
-import LikeImage from '@assets/route-like.png';
-import CommentImage from '@assets/route-comment.png';
+import LikeImage from '@assets/route/like.png';
+import CommentImage from '@assets/route/comment.png';
 
 const SearchItem = ({ item }) => {
   const { id, imageUrl, post, coordinate, commentCount } = item;

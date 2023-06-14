@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '@assets/Logo.png';
+import LogoImage from '@assets/rooTrip/logo.png';
 import styled from 'styled-components';
 
 const StyledLogo = styled.div`
@@ -19,7 +19,7 @@ const StyledLogo = styled.div`
 const HomeLogo = () => {
   return (
     <StyledLogo className='Title'>
-      <img src={Logo} alt='루트트립 로고' className='Logo' />
+      <img src={LogoImage} alt='루트트립 로고' className='Logo' />
     </StyledLogo>
   );
 };

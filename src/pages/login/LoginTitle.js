@@ -1,11 +1,11 @@
 import React from 'react';
-import Logo from '@assets/Logo.png';
+import LogoImage from '@assets/rooTrip/logo.png';
 
 const Title = () => {
   return (
     <>
       <div>
-        <img className='Login_logo' src={Logo} alt='로고 사진' />
+        <img className='Login_logo' src={LogoImage} alt='로고 사진' />
       </div>
       <span className='Logotext'>
         <span className='text1'>여행의 재미를 더하는 </span>

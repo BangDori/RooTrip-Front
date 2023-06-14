@@ -1,7 +1,7 @@
 // 댓글 관리를 위한 컴포넌트
 
 import React, { useState, useCallback } from 'react';
-import Profile from '@assets/DefaultProfileImage.png';
+import DefaultImage from '@assets/user/default.png';
 import { createComment } from '@services/post';
 import EmojiPicker, { Emoji } from 'emoji-picker-react';
 
@@ -43,7 +43,7 @@ const Comment = ({ accessToken, postId, onAddComment }) => {
   return (
     <div className='comment_section'>
       <form className='comment_box' onSubmit={onSubmitCommentHandler}>
-        <img src={Profile} alt='프로필 사진' />
+        <img src={DefaultImage} alt='프로필 사진' />
         <div className='comment_input_box'>
           <input
             className='comment_input'

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import useInitialState from '@hooks/useInitialState';
-import ProfileTest from '@assets/naver.png';
+import ProfileTest from '@assets/social/naver.png';
 import { changeNickname, changeSex, changePassword } from '@services/auth';
 
 const Modify = ({ accessToken }) => {
