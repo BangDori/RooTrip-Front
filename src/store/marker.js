@@ -52,7 +52,10 @@ const marker = handleActions(
         marker: state.marker.filter((m) => m.postId !== payload.postId),
       };
     },
-    [REOMVE_ALL]: (state, { payload }) => initialMarkersState,
+    [REOMVE_ALL]: (state, { payload }) => ({
+      ...state,
+      marker: [],
+    }),
   },
   initialMarkersState,
 );

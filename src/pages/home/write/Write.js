@@ -4,6 +4,7 @@ import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
 
 import Menu from '@constants/menu';
+import { resetMap } from '@store/map';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';
 import ThirdWritePage from './ThirdWritePage';
@@ -14,6 +15,7 @@ const Write = ({ onClose }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
+
   const { accessToken } = useSelector((state) => state.accessToken);
   const dispatch = useDispatch();
 
@@ -21,10 +23,11 @@ const Write = ({ onClose }) => {
     if (currentPage === 0) {
       setPhotos([]);
       setRoutes([]);
+      dispatch(resetMap());
     }
-  }, [currentPage]);
+  }, [dispatch, currentPage]);
 
-  const onMovePage = useCallback(async (move) => {
+  const onMovePage = useCallback((move) => {
     setCurrentPage((prevPage) => prevPage + move);
   }, []);
 
