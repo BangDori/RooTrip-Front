@@ -142,6 +142,25 @@ export async function changeSex(sexForm, accessToken) {
 }
 
 /**
+ * 비밀번호 변경
+ * @param {Object} passwordForm 변경할 닉네임
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
+ */
+export async function changePassword(passwordForm, accessToken) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/mypage/account/edit/gender`, passwordForm, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+  return status;
+}
+
+/**
  * 좋아요 게시글 가져오기
  * @param {String} accessToken client 측의 accessToken
  * @returns message (message or Error)

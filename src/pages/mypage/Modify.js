@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import useInitialState from '@hooks/useInitialState';
 import ProfileTest from '@assets/naver.png';
-import { changeNickname, changeSex } from '@services/auth';
+import { changeNickname, changeSex, changePassword } from '@services/auth';
 
 const Modify = ({ accessToken }) => {
   // 닉네임
@@ -14,13 +14,21 @@ const Modify = ({ accessToken }) => {
     gender: '',
   });
   const { gender } = sexForm;
-  // 비밀번호 변경
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [passwordFrom, setPasswordForm, resetPasswordForm] = useInitialState({
+  // 비밀번호 확인
+  const [
+    passwordConfirmForm,
+    setPasswordConfirmForm,
+    resetPasswordConfirmForm,
+  ] = useInitialState({
+    passwordConfirm: 'passwordConfirm',
+  });
+  // 비민번호
+  const [passwordForm, setPasswordForm, resetPasswordForm] = useInitialState({
     password: 'password',
   });
-  setPassword(passwordFrom);
+  const { password } = passwordForm;
+  const { passwordConfirm } = passwordConfirmForm;
+
   // 비밀번호 일치 상태 검사 메세지
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
   // 비밀번호 유호성 검사
@@ -46,6 +54,32 @@ const Modify = ({ accessToken }) => {
     },
     [setSexForm],
   );
+  // 비밀 번호 입력
+  const onPassword = useCallback(
+    (e) => {
+      setPasswordForm((prevForm) => ({
+        ...prevForm,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    [setPasswordForm],
+  );
+  // 비밀번호 확인 입력
+  const onPasswordConfirm = useCallback(
+    (e) => {
+      const passwordConfirmCurrent = e.target.value;
+      setPasswordConfirmForm(passwordConfirmCurrent);
+
+      if (password === passwordConfirmCurrent) {
+        setPasswordConfirmMessage('비밀번호가 일치합니다!');
+        setIsPasswordConfirm(true);
+      } else {
+        setPasswordConfirmMessage('비밀번호가 다릅니다!');
+        setIsPasswordConfirm(false);
+      }
+    },
+    [password, setPasswordConfirmForm],
+  );
   // 닉네임 form 통신
   const nicknameChange = useCallback(
     async (nicknameForm) => {
@@ -62,10 +96,22 @@ const Modify = ({ accessToken }) => {
   const sexChange = useCallback(
     async (sexform) => {
       try {
-        const nicknameToken = await changeSex(sexform, accessToken);
+        const sexToken = await changeSex(sexform, accessToken);
         alert('성별 변경 성공');
       } catch (e) {
         alert('성별 변경 실패');
+      }
+    },
+    [accessToken],
+  );
+  // 비밀번호 form 통신
+  const passwordChange = useCallback(
+    async (passwordform) => {
+      try {
+        const passwordToken = await changePassword(passwordform, accessToken);
+        alert('비밀번호 변경 성공');
+      } catch (e) {
+        alert('비밀번호 변경 실패');
       }
     },
     [accessToken],
@@ -97,6 +143,20 @@ const Modify = ({ accessToken }) => {
       resetSexForm();
     },
     [sexForm, sexChange, resetSexForm],
+  );
+  // 비밀번호 form 상태 입력
+  const handleSubmitPassword = useCallback(
+    (e) => {
+      // 페이지 이동 막기
+      e.preventDefault();
+
+      // sexChange함수로 전달
+      passwordChange(passwordForm);
+
+      // form 상태 초기화
+      resetSexForm();
+    },
+    [passwordForm, passwordChange, resetSexForm],
   );
   return (
     <>
@@ -164,25 +224,43 @@ const Modify = ({ accessToken }) => {
           <div className='modifyTitle'>
             <span>비밀번호 변경</span>
           </div>
-          <div className='modifyContent'>
-            <input type='text' name='nowPw' placeholder='현재 비밀번호' />
+          <form
+            className='modifyContent'
+            method='post'
+            onSubmit={handleSubmitPassword}
+          >
             <input
-              type='text'
-              name='newPw'
+              type='password'
+              name='password'
               placeholder='새로운 비밀번호'
               style={{ marginTop: '15px' }}
+              onChange={onPassword}
             />
             <div style={{ marginTop: '15px' }}>
               <input
-                type='text'
-                name='newPwCheck'
+                type='password'
+                name='passwordConfirm'
                 placeholder='새로운 비밀번호 검사'
+                onChange={onPasswordConfirm}
               />
-              <button type='button' style={{ marginLeft: '20px' }}>
+              <button
+                type='submit'
+                style={{ marginLeft: '20px' }}
+                disabled={`${isPasswordConfirm ? '' : 'true'}`}
+              >
                 변경
               </button>
+              {passwordConfirmForm.length > 0 && (
+                <span
+                  className={`message ${
+                    isPasswordConfirm ? 'success' : 'error'
+                  }`}
+                >
+                  {passwordConfirmMessage}
+                </span>
+              )}
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </>

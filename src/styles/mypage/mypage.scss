@@ -159,7 +159,7 @@ content{
                 display: flex;
                 flex-direction: row;
                 .modifyContent{
-                    padding-top: 53px;
+                    padding-top: 30px;
                     flex-direction: column;
                     justify-content: center;
                     align-items: flex-start;
@@ -172,6 +172,17 @@ content{
                         border-radius: 7px;
                         font-size: 15px;
                         padding-left: 15px;
+                    }
+
+                    .message{
+                        display: inline-block;
+                        font-size: 17px;
+                    }
+                    .success{
+                        color: #2743a6;
+                    }
+                    .error{
+                        color: red;
                     }
                 }
             }

@@ -5,7 +5,7 @@ const SavedTrip = ({ accessToken }) => {
   const onSavedArticle = useCallback(async () => {
     try {
       const savedArticleToken = await savedArticle(accessToken);
-      console.log(savedArticleToken);
+      // console.log(savedArticleToken);
     } catch (e) {
       alert('저장된 게시글 가져오기 실패!');
     }

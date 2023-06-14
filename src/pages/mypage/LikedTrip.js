@@ -5,6 +5,7 @@ const LikedTrip = ({ accessToken }) => {
   const onLikedArticle = useCallback(async () => {
     try {
       const likedArticleToken = await likedArticle(accessToken);
+      console.log(likedArticleToken);
     } catch (e) {
       alert('좋아요 게시글 가져오기 실패!');
     }
@@ -20,16 +21,6 @@ const LikedTrip = ({ accessToken }) => {
           </button>
         </div>
         <div className='tripContent'>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
-          <div className='article'></div>
           <div className='article'></div>
           <div className='article'></div>
         </div>
