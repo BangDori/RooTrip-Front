@@ -71,8 +71,8 @@ const Post = ({ postId, accessToken }) => {
     if (isRouting) {
       setIsRouting(false);
       dispatch(change({ clickedMenu: Menu.TRIP }));
-      dispatch(removeAll());
       dispatch(resetMap());
+      dispatch(removeAll());
       dispatch(load({ prevMarkers }));
       setPrevMarkers([]);
       return;

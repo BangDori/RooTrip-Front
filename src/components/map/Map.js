@@ -88,7 +88,6 @@ const Map = () => {
       const bounds = e.target.getBounds();
       const polygon = changeQueryBounds(bounds);
 
-      dispatch(exit());
       dispatch(
         setCoordinatesOnMap({
           viewType,
