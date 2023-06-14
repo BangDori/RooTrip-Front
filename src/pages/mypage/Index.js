@@ -72,7 +72,7 @@ const Index = () => {
     [dispatch, onLikedArticle, onMyTripArticle, onSavedArticle, postId],
   );
 
-  let content = <Modify />;
+  let content = '';
   switch (mypageMenu) {
     case MypageMenu.MODIFY:
       content = <Modify accessToken={accessToken} />;
@@ -90,7 +90,7 @@ const Index = () => {
       content = <Unsigned accessToken={accessToken} />;
       break;
     default:
-      content = '';
+      content = <Modify accessToken={accessToken} />;
       break;
   }
   return (

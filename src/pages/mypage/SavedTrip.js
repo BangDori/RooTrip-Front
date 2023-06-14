@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React from 'react';
 
 const SavedTrip = ({ articleData }) => {
   return (

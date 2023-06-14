@@ -217,3 +217,22 @@ export async function myTripArticle(accessToken) {
   if (!status) throw new Error(message);
   return token.data;
 }
+
+/**
+ * 회원탈퇴
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
+ */
+export async function goUnsigned(accessToken) {
+  const { status, message, ...token } = await axios
+    .post(`${MAIN_SERVER}/api/mypage/account/personal-info/withdrawal`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+
+  return status;
+}
