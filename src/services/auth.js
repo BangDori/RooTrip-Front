@@ -149,11 +149,15 @@ export async function changeSex(sexForm, accessToken) {
  */
 export async function changePassword(passwordForm, accessToken) {
   const { status, message } = await axios
-    .post(`${MAIN_SERVER}/api/mypage/account/edit/gender`, passwordForm, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    .post(
+      `${MAIN_SERVER}/api/mypage/account/personal-info/change-password`,
+      passwordForm,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    })
+    )
     .then((res) => res.data)
     .catch((e) => new Error(e.message));
   if (!status) throw new Error(message);

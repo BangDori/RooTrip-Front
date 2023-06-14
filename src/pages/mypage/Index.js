@@ -7,7 +7,7 @@ import { change } from '@store/marker';
 import Logo from '@assets/Logo.png';
 import '@styles/mypage/mypage.scss';
 import MypageMenu from '@constants/mypageMenu';
-import { likedArticle } from '@services/auth';
+import { likedArticle, myTripArticle, savedArticle } from '@services/auth';
 import Nav from './Nav';
 import Modify from './Modify';
 import MyTrip from './MyTrip';
@@ -20,14 +20,56 @@ const Index = () => {
   const dispatch = useDispatch();
   const mypageMenu = useSelector((state) => state.marker.menu);
   const { postId } = useSelector((state) => state.article);
+  const [myArticleData, setMyArticleData] = useState(null);
+  const [likedArticleData, setLikedArticleData] = useState(null);
+  const [savedArticleData, setsavedArticleData] = useState(null);
+
+  // 내가 올린 게시글 불러오기
+  const onMyTripArticle = useCallback(async () => {
+    try {
+      const myTripArticleToken = await myTripArticle(accessToken);
+      setMyArticleData(myTripArticleToken);
+    } catch (e) {
+      alert('저장된 게시글 가져오기 실패!');
+    }
+  }, [accessToken]);
+  // 좋아요 누른 게시글 불러오기
+  const onLikedArticle = useCallback(async () => {
+    try {
+      const likedArticleToken = await likedArticle(accessToken);
+      setLikedArticleData(likedArticleToken);
+    } catch (e) {
+      alert('좋아요 게시글 가져오기 실패!');
+    }
+  }, [accessToken]);
+  // 저장된 게시글 불러오기
+  const onSavedArticle = useCallback(async () => {
+    try {
+      const savedArticleToken = await savedArticle(accessToken);
+      setsavedArticleData(savedArticleToken);
+      // console.log(savedArticleToken);
+    } catch (e) {
+      alert('저장된 게시글 가져오기 실패!');
+    }
+  }, [accessToken]);
 
   const onClickMenuHandler = useCallback(
     (clickedMenu) => {
       dispatch(change({ clickedMenu }));
       dispatch(resetMap());
       if (postId) dispatch(exit());
+
+      if (clickedMenu === 'MYTRIP') {
+        onMyTripArticle();
+      }
+      if (clickedMenu === 'LIKEDTRIP') {
+        onLikedArticle();
+      }
+      if (clickedMenu === 'SAVEDTRIP') {
+        onSavedArticle();
+      }
     },
-    [dispatch, postId],
+    [dispatch, onLikedArticle, onMyTripArticle, onSavedArticle, postId],
   );
 
   let content = <Modify />;
@@ -36,13 +78,13 @@ const Index = () => {
       content = <Modify accessToken={accessToken} />;
       break;
     case MypageMenu.MYTRIP:
-      content = <MyTrip accessToken={accessToken} />;
+      content = <MyTrip articleData={myArticleData} />;
       break;
     case MypageMenu.LIKEDTRIP:
-      content = <LikedTrip accessToken={accessToken} />;
+      content = <LikedTrip articleData={likedArticleData} />;
       break;
     case MypageMenu.SAVEDTRIP:
-      content = <SavedTrip accessToken={accessToken} />;
+      content = <SavedTrip articleData={savedArticleData} />;
       break;
     case MypageMenu.UNSIGNED:
       content = <Unsigned accessToken={accessToken} />;

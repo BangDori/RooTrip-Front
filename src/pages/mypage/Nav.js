@@ -18,7 +18,9 @@ const Nav = ({ onClickMenu }) => {
         <div
           key={menuItem.id}
           className={`navBox ${mypageMenu === menuItem.id ? 'selected' : ''}`}
-          onClick={() => onClickMenu(menuItem.id)}
+          onClick={() => {
+            onClickMenu(menuItem.id);
+          }}
         >
           <p>{menuItem.label}</p>
         </div>

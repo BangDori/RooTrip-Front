@@ -219,11 +219,36 @@ content{
     object-fit: cover;
     .article{
         width: 250px;
-        height: 250px;
-        background: #ccc;
+        height: 200px;
+        background: white;
         border: 1px solid #ccc;
         margin: 0 15px 15px 0;
+        text-align: center;
+        overflow: hidden;
+        border-radius: 15px;
+        .articleImg{
+            width:250px;
+            height: 150px;
+            img{
+                width:250px;
+                height: 150px;
+                object-fit:cover;
+            }
+        }
+        .articleTitle{
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
     }
+
+    .article:hover{
+        box-shadow: 3px 3px 3px 3px #ccc;
+        cursor: pointer;
+    }
+
     .recommended{
         width: 250px;
         height: 250px;
