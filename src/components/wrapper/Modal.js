@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 
-import '@styles/components/Modal.scss';
+import '@styles/components/modal.scss';
 
 const Backdrop = ({ background, onClose }) => (
   <div className={`backdrop ${background}`} onClick={onClose} />

@@ -7,7 +7,7 @@ import Menu from '@constants/menu';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';
 import ThirdWritePage from './ThirdWritePage';
-import '@styles/home/Write.scss';
+import '@styles/home/write.scss';
 
 const Write = ({ onClose }) => {
   const [isUpload, setIsUpload] = useState(false);

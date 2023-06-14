@@ -9,7 +9,7 @@ import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import { updateLocation } from '@store/location';
 import { changeQueryBounds } from '@utils/metadata';
 import CustomMarker from './CustomMarker';
-import '@styles/components/Map.scss';
+import '@styles/components/map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const viewport = {

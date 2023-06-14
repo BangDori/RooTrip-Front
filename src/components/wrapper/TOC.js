@@ -1,5 +1,5 @@
 import React from 'react';
-import '@styles/components/TOC.scss';
+import '@styles/components/toc.scss';
 
 const TOC = ({ table }) => (
   <div className='register-table'>

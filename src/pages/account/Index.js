@@ -3,7 +3,7 @@ import Title from '@components/wrapper/Title';
 import TOC from '@components/wrapper/TOC';
 import { accountTable } from '@constants/table';
 import AccountContainer from './AccountContainer';
-import '@styles/components/Title.scss';
+import '@styles/components/title.scss';
 
 const FindAccount = () => (
   <>

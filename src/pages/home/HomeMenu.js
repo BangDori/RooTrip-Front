@@ -9,7 +9,7 @@ import TripIcon from '@assets/menu/trip.png';
 import RouteIcon from '@assets/menu/route.png';
 import LogIcon from '@assets/menu/log.png';
 import WriteIcon from '@assets/menu/write.png';
-import '@styles/home/Nav.scss';
+import '@styles/home/nav.scss';
 
 const menuItems = [
   { id: Menu.FRIEND, label: '친구 게시글', icon: FriendIcon },
