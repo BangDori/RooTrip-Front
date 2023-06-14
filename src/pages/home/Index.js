@@ -26,9 +26,6 @@ const Index = () => {
   const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
-  // eslint-disable-next-line no-console
-  console.log(postId);
-
   // 메시지 애니메이션
   useEffect(() => {
     if (showMessage) {

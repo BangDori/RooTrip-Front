@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Menu from '@constants/menu';
-import { exit } from '@store/article';
 import { setCoordinatesOnMap } from '@store/map';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import { updateLocation } from '@store/location';
