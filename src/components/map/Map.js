@@ -29,6 +29,7 @@ const Map = () => {
   const changeCenter = useSelector((state) => state.map.center);
   const changeZoom = useSelector((state) => state.map.zoom);
   const marker = useSelector((state) => state.marker.marker);
+  const userMarker = useSelector((state) => state.marker.userMarker);
   const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
@@ -118,8 +119,33 @@ const Map = () => {
 
   let markers = null;
 
+  let userMarkers = null;
+
   if (marker && accessToken) {
     markers = marker.map((mark) => {
+      if (!mark.coordinate) return null;
+
+      const coordinateString = mark.coordinate
+        .replace('POINT(', '')
+        .replace(')', '');
+
+      const [lat, lng] = coordinateString.split(' ');
+
+      return (
+        <CustomMarker
+          key={mark.id}
+          postId={mark.postId}
+          lat={lat}
+          lng={lng}
+          imageURl={mark.imageUrl}
+          order={mark.order}
+        />
+      );
+    });
+  }
+
+  if (userMarker && accessToken) {
+    userMarkers = marker.map((mark) => {
       if (!mark.coordinate) return null;
 
       const coordinateString = mark.coordinate
@@ -158,6 +184,7 @@ const Map = () => {
         {...zoom}
       >
         {markers}
+        {userMarkers}
       </MapGL>
       <div className='ocean-container'></div>
     </div>

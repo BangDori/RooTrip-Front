@@ -4,6 +4,7 @@ import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
 
 import Menu from '@constants/menu';
+import { insertUserMarker } from '@store/marker';
 import { resetMap } from '@store/map';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';
@@ -71,6 +72,7 @@ const Write = ({ onClose }) => {
 
       try {
         const { data, message } = await createPost(accessToken, post);
+        dispatch(insertUserMarker(data));
         onClose(Menu.TRIP, message);
       } catch (e) {
         alert(e.message);
@@ -78,7 +80,7 @@ const Write = ({ onClose }) => {
         setIsUpload(false);
       }
     },
-    [onClose, isUpload, accessToken, photos, routes],
+    [dispatch, onClose, isUpload, accessToken, photos, routes],
   );
 
   const updateCoordinateHandler = useCallback(
