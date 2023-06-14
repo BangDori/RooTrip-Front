@@ -7,13 +7,16 @@ import { change } from '@store/marker';
 import Logo from '@assets/Logo.png';
 import '@styles/mypage/mypage.scss';
 import MypageMenu from '@constants/mypageMenu';
+import { likedArticle } from '@services/auth';
 import Nav from './Nav';
 import Modify from './Modify';
 import MyTrip from './MyTrip';
 import LikedTrip from './LikedTrip';
 import SavedTrip from './SavedTrip';
+import Unsigned from './Unsigned';
 
 const Index = () => {
+  const { accessToken } = useSelector((state) => state.accessToken);
   const dispatch = useDispatch();
   const mypageMenu = useSelector((state) => state.marker.menu);
   const { postId } = useSelector((state) => state.article);
@@ -26,19 +29,23 @@ const Index = () => {
     },
     [dispatch, postId],
   );
+
   let content = <Modify />;
   switch (mypageMenu) {
     case MypageMenu.MODIFY:
-      content = <Modify />;
+      content = <Modify accessToken={accessToken} />;
       break;
     case MypageMenu.MYTRIP:
-      content = <MyTrip />;
+      content = <MyTrip accessToken={accessToken} />;
       break;
     case MypageMenu.LIKEDTRIP:
-      content = <LikedTrip />;
+      content = <LikedTrip accessToken={accessToken} />;
       break;
     case MypageMenu.SAVEDTRIP:
-      content = <SavedTrip />;
+      content = <SavedTrip accessToken={accessToken} />;
+      break;
+    case MypageMenu.UNSIGNED:
+      content = <Unsigned accessToken={accessToken} />;
       break;
     default:
       content = '';
