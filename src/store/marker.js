@@ -3,11 +3,13 @@ import { createAction, handleActions } from 'redux-actions';
 const CHANGE = 'MENU/CHANGE';
 const LOAD = 'MARKER/LOAD';
 const INSERT = 'MARKER/INSERT';
+const INSERT_USER_MARKER = 'MRKER/INSERT_USER_MARKER';
 const REMOVE = 'MARKER/REMOVE';
 const REOMVE_ALL = 'MARKER/REMOVEALL';
 
 export const change = createAction(CHANGE);
 export const load = createAction(LOAD);
+export const insertUserMarker = createAction(INSERT_USER_MARKER);
 export const insert = createAction(INSERT);
 export const remove = createAction(REMOVE);
 export const removeAll = createAction(REOMVE_ALL);
@@ -15,11 +17,13 @@ export const removeAll = createAction(REOMVE_ALL);
 const initialMarkersState = {
   menu: 'TRIP',
   marker: [],
+  userMarker: [],
 };
 
 const marker = handleActions(
   {
     [CHANGE]: (state, { payload }) => ({
+      ...state,
       menu: payload.clickedMenu,
       marker: [],
     }),
@@ -31,10 +35,14 @@ const marker = handleActions(
       ...state,
       marker: state.marker.concat(data),
     }),
+    [INSERT_USER_MARKER]: (state, { payload: data }) => ({
+      ...state,
+      userMarker: state.userMarker.concat(data),
+    }),
     [REMOVE]: (state, { payload }) => {
       const removedMarker = state.marker.filter((m) => m.id === payload.id);
 
-      if (removedMarker.order) {
+      if (removedMarker[0]?.order) {
         return {
           ...state,
           marker: state.marker
@@ -52,7 +60,10 @@ const marker = handleActions(
         marker: state.marker.filter((m) => m.postId !== payload.postId),
       };
     },
-    [REOMVE_ALL]: (state, { payload }) => initialMarkersState,
+    [REOMVE_ALL]: (state, { payload }) => ({
+      ...state,
+      marker: [],
+    }),
   },
   initialMarkersState,
 );

@@ -4,7 +4,7 @@ import Input from '@components/wrapper/Input';
 import Button from '@components/wrapper/Button';
 import useInitialState from '@hooks/useInitialState';
 import { regExpSpace } from '@constants/regExp';
-import showError from '@utils/change';
+import showError from '@utils/showError';
 import useValidateForm from '@hooks/useValidateForm';
 import {
   PASSWORD_REQUIRED_ERROR,

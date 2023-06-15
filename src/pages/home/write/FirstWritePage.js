@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import camera from '@assets/camera.png';
+import camera from '@assets/write/camera.png';
 import EXIF from 'exif-js';
 import { getLocation } from '@utils/metadata';
 import { useDropzone } from 'react-dropzone';

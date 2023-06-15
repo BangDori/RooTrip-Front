@@ -4,16 +4,19 @@ import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
 
 import Menu from '@constants/menu';
+import { insertUserMarker } from '@store/marker';
+import { resetMap } from '@store/map';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';
 import ThirdWritePage from './ThirdWritePage';
-import '@styles/home/Write.scss';
+import '@styles/home/write.scss';
 
 const Write = ({ onClose }) => {
   const [isUpload, setIsUpload] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
+
   const { accessToken } = useSelector((state) => state.accessToken);
   const dispatch = useDispatch();
 
@@ -21,10 +24,11 @@ const Write = ({ onClose }) => {
     if (currentPage === 0) {
       setPhotos([]);
       setRoutes([]);
+      dispatch(resetMap());
     }
-  }, [currentPage]);
+  }, [dispatch, currentPage]);
 
-  const onMovePage = useCallback(async (move) => {
+  const onMovePage = useCallback((move) => {
     setCurrentPage((prevPage) => prevPage + move);
   }, []);
 
@@ -68,6 +72,7 @@ const Write = ({ onClose }) => {
 
       try {
         const { data, message } = await createPost(accessToken, post);
+        dispatch(insertUserMarker(data));
         onClose(Menu.TRIP, message);
       } catch (e) {
         alert(e.message);
@@ -75,7 +80,7 @@ const Write = ({ onClose }) => {
         setIsUpload(false);
       }
     },
-    [onClose, isUpload, accessToken, photos, routes],
+    [dispatch, onClose, isUpload, accessToken, photos, routes],
   );
 
   const updateCoordinateHandler = useCallback(

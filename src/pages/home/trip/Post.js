@@ -8,8 +8,8 @@ import { change, load, removeAll } from '@store/marker';
 import { changeCityToCoordinate } from '@utils/metadata';
 import Menu from '@constants/menu';
 import Modal from '@components/wrapper/Modal';
-import NAVIGATE_IMAGE from '@assets/navigate_image.png';
-import DefaultProfile from '@assets/DefaultProfileImage.png';
+import NavigationImage from '@assets/post/navigation.png';
+import DefaultImage from '@assets/user/default.png';
 import Photos from './post/Photos';
 import Comment from './post/Comment';
 import LikeButton from './post/LikeButton';
@@ -30,6 +30,7 @@ const Post = ({ postId, accessToken }) => {
   const [prevMarkers, setPrevMarkers] = useState([]);
 
   const marker = useSelector((state) => state.marker.marker);
+  const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -71,8 +72,8 @@ const Post = ({ postId, accessToken }) => {
     if (isRouting) {
       setIsRouting(false);
       dispatch(change({ clickedMenu: Menu.TRIP }));
-      dispatch(removeAll());
       dispatch(resetMap());
+      dispatch(removeAll());
       dispatch(load({ prevMarkers }));
       setPrevMarkers([]);
       return;
@@ -125,8 +126,12 @@ const Post = ({ postId, accessToken }) => {
   }, [dispatch, article, photos, isRouting, prevMarkers, marker]);
 
   const onCloseArticle = useCallback(() => {
+    if (menu === Menu.ROUTE) {
+      dispatch(removeAll());
+    }
+
     dispatch(exit());
-  }, [dispatch]);
+  }, [dispatch, menu]);
 
   const onClickPostModalHandler = useCallback(() => {
     setIsPostModal((prevState) => !prevState);
@@ -154,7 +159,7 @@ const Post = ({ postId, accessToken }) => {
               <div className='profile_image'>
                 <img
                   src={
-                    DefaultProfile
+                    DefaultImage
                     // profileImage.length === 0 ? DefaultProfile : profileImage
                   }
                   alt='user profile image'
@@ -191,9 +196,11 @@ const Post = ({ postId, accessToken }) => {
                 </div>
               </div>
               <div className='side-bar'>
-                <button type='button' onClick={onClickNavigationHandler}>
-                  <img src={NAVIGATE_IMAGE} alt='NAVIGATE_IMAGE' />
-                </button>
+                {menu === Menu.Trip && (
+                  <button type='button' onClick={onClickNavigationHandler}>
+                    <img src={NavigationImage} alt='NAVIGATE_IMAGE' />
+                  </button>
+                )}
                 <LikeButton
                   accessToken={accessToken}
                   postId={postId}

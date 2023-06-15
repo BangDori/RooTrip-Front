@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { getComments } from '@services/post';
 
-import Profile from '@assets/DefaultProfileImage.png';
-import Navigation from '@assets/navigate_image.png';
-import Like from '@assets/Like.png';
-import NotLike from '@assets/NotLike.png';
+import DefaultImage from '@assets/user/default.png';
+import NavigationImage from '@assets/post/navigation.png';
+import likeImage from '@assets/post/like.png';
+import notLikeImage from '@assets/post/notLike.png';
 import Photos from './Photos';
 import Comment from './Comment';
 
@@ -62,17 +62,20 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
           </div>
           <div className='modal-other-right'>
             <button>
-              <img src={Navigation} alt='navigation image' />
+              <img src={NavigationImage} alt='navigation image' />
             </button>
             <button>
-              <img src={isLikedPost ? Like : NotLike} alt='like image' />
+              <img
+                src={isLikedPost ? likeImage : notLikeImage}
+                alt='like image'
+              />
             </button>
           </div>
         </div>
       </div>
       <div className='modal-right'>
         <div className='modal-user'>
-          <img src={profileImage || Profile} alt='profile image' />
+          <img src={profileImage || DefaultImage} alt='profile image' />
           <h5 className='profile_name'>{name}</h5>
         </div>
 
@@ -88,7 +91,7 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
             {comments.map((comment) => (
               <div key={comment.id} className='modal-comment'>
                 <div className='modal-comment-user'>
-                  <img src={profileImage || Profile} alt='profile image' />
+                  <img src={profileImage || DefaultImage} alt='profile image' />
                   <h5 className='profile_name'>{comment.name}</h5>
                   <span className='modal-comment-createAt'>
                     {comment.createdAt}
@@ -98,7 +101,7 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
                   <p className='modal-comment-content'>{comment.comment}</p>
                 </div>
                 <div className='modal-comment-like'>
-                  <img src={NotLike} alt='like button' />
+                  <img src={notLikeImage} alt='like button' />
                   <span className='modal-comment-like-count'>
                     {comment.like}
                   </span>

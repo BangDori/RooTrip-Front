@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import Menu from '@constants/menu';
 import MyPageIcon from '@assets/menu/mypage.png';
 import FriendIcon from '@assets/menu/friend.png';
 import TripIcon from '@assets/menu/trip.png';
 import RouteIcon from '@assets/menu/route.png';
 import LogIcon from '@assets/menu/log.png';
 import WriteIcon from '@assets/menu/write.png';
-import '@styles/home/Nav.scss';
+import Menu from '@constants/menu';
+import { getPosts } from '@services/post';
+import { load } from '@store/marker';
+import '@styles/home/nav.scss';
 
 const menuItems = [
   { id: Menu.FRIEND, label: '친구 게시글', icon: FriendIcon },
@@ -30,7 +32,21 @@ const menuItems = [
 ];
 
 const HomeGnb = ({ onClickMenu }) => {
+  const { accessToken } = useSelector((state) => state.accessToken);
   const menu = useSelector((state) => state.marker.menu);
+  const { viewType, markerCount, polygon } = useSelector((state) => state.map);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getMarkers = async () => {
+      const data = await getPosts(accessToken, viewType, polygon, markerCount);
+      dispatch(load({ data }));
+    };
+
+    if (menu === Menu.TRIP) {
+      getMarkers();
+    }
+  }, [dispatch, menu, accessToken, viewType, polygon, markerCount]);
 
   return (
     <nav className='side_nav'>

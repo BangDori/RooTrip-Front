@@ -3,13 +3,12 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Menu from '@constants/menu';
-import { exit } from '@store/article';
 import { setCoordinatesOnMap } from '@store/map';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import { updateLocation } from '@store/location';
 import { changeQueryBounds } from '@utils/metadata';
 import CustomMarker from './CustomMarker';
-import '@styles/components/Map.scss';
+import '@styles/components/map.scss';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 const viewport = {
@@ -30,6 +29,7 @@ const Map = () => {
   const changeCenter = useSelector((state) => state.map.center);
   const changeZoom = useSelector((state) => state.map.zoom);
   const marker = useSelector((state) => state.marker.marker);
+  const userMarker = useSelector((state) => state.marker.userMarker);
   const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
@@ -88,7 +88,6 @@ const Map = () => {
       const bounds = e.target.getBounds();
       const polygon = changeQueryBounds(bounds);
 
-      dispatch(exit());
       dispatch(
         setCoordinatesOnMap({
           viewType,
@@ -120,8 +119,33 @@ const Map = () => {
 
   let markers = null;
 
+  let userMarkers = null;
+
   if (marker && accessToken) {
     markers = marker.map((mark) => {
+      if (!mark.coordinate) return null;
+
+      const coordinateString = mark.coordinate
+        .replace('POINT(', '')
+        .replace(')', '');
+
+      const [lat, lng] = coordinateString.split(' ');
+
+      return (
+        <CustomMarker
+          key={mark.id}
+          postId={mark.postId}
+          lat={lat}
+          lng={lng}
+          imageURl={mark.imageUrl}
+          order={mark.order}
+        />
+      );
+    });
+  }
+
+  if (menu === Menu.TRIP && userMarker && accessToken) {
+    userMarkers = marker.map((mark) => {
       if (!mark.coordinate) return null;
 
       const coordinateString = mark.coordinate
@@ -160,6 +184,7 @@ const Map = () => {
         {...zoom}
       >
         {markers}
+        {userMarkers}
       </MapGL>
       <div className='ocean-container'></div>
     </div>

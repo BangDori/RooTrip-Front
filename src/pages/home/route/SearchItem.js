@@ -1,15 +1,21 @@
 import React, { useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { insert, remove } from '@store/marker';
-import LikeImage from '@assets/route-like.png';
-import CommentImage from '@assets/route-comment.png';
+import LikeImage from '@assets/route/like.png';
+import CommentImage from '@assets/route/comment.png';
+import { getOnePost } from '@services/post';
+import { load, insert, remove } from '@store/marker';
+import { loadArticle } from '@store/article';
+import { setChangeCoordinate } from '@store/map';
+import { changeCityToCoordinate } from '@utils/metadata';
 
-const SearchItem = ({ item }) => {
+const SearchItem = ({ item, onSetPrevMarkers }) => {
+  const { accessToken } = useSelector((state) => state.accessToken);
+  const marker = useSelector((state) => state.marker.marker);
+  const dispatch = useDispatch();
+
   const { id, imageUrl, post, coordinate, commentCount } = item;
   const { id: postId, title, createdAt, like, routes } = post;
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(insert({ id, postId, imageUrl, coordinate }));
@@ -19,12 +25,47 @@ const SearchItem = ({ item }) => {
     };
   }, [dispatch, id, postId, imageUrl, coordinate]);
 
-  const onClickPostHandler = useCallback(() => {
-    // eslint-disable-next-line no-console
-    console.log(item);
-    // eslint-disable-next-line no-console
-    console.log(routes);
-  }, [item, routes]);
+  const onClickPostHandler = useCallback(async () => {
+    try {
+      const { photos } = await getOnePost(accessToken, postId);
+
+      dispatch(loadArticle({ postId }));
+      const data = photos.map((photo) =>
+        routes.includes(String(photo.order + 1))
+          ? {
+              id: photo.id,
+              imageUrl: photo.imageUrl,
+              coordinate: photo.coordinate,
+              order: routes.indexOf(String(photo.order + 1)) + 1,
+            }
+          : null,
+      );
+      dispatch(load({ data }));
+
+      const movedPoint = photos.map((photo) => {
+        if (!photo.coordinate || !routes.includes(String(photo.order + 1)))
+          return null;
+
+        const coordinateString = photo.coordinate
+          .replace('POINT(', '')
+          .replace(')', '');
+
+        const [lng, lat] = coordinateString.split(' ');
+
+        return {
+          id: photo.id,
+          name: photo.city,
+          coordinate: [Number(lat), Number(lng)],
+        };
+      });
+      const map = changeCityToCoordinate(movedPoint);
+      dispatch(setChangeCoordinate({ map }));
+
+      onSetPrevMarkers(marker);
+    } catch (e) {
+      alert(e.message);
+    }
+  }, [dispatch, onSetPrevMarkers, postId, marker, accessToken, routes]);
 
   return (
     <div className='search-item'>

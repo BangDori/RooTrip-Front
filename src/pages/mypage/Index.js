@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { exit } from '@store/article';
 import { resetMap } from '@store/map';
 import { change } from '@store/marker';
-import Logo from '@assets/Logo.png';
+import LogoImage from '@assets/rooTrip/logo.png';
 import '@styles/mypage/mypage.scss';
 import MypageMenu from '@constants/mypageMenu';
 import { likedArticle, myTripArticle, savedArticle } from '@services/auth';
@@ -97,7 +97,7 @@ const Index = () => {
     <div>
       <header>
         <Link to='../'>
-          <img src={Logo} alt='사진 없음' />
+          <img src={LogoImage} alt='사진 없음' />
         </Link>
         <h1>마이 페이지</h1>
       </header>
