@@ -101,12 +101,16 @@ content{
                     margin-top: 15px;
                     cursor: pointer;
                     
-                    span{
+                    button{
                         font-size: 17px;
                         letter-spacing: 5px;
                         color: #2743a6;
+                        border: 0;
+                        width: 200px;
+                        background: white;
+                        font-weight: bold;
                     }
-                    span:hover{
+                    button:hover{
                         text-decoration: underline
                     }
                 }

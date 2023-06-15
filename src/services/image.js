@@ -53,3 +53,27 @@ export async function uploadFileToS3(formData, preSignedUrl) {
     .then((res) => res.request.responseURL)
     .catch((e) => new Error(e.message));
 }
+
+/**
+ * 프로필 사진 변경
+ * @param {String} profileImage Pre-signed url
+ */
+export async function uploadProfileToS3(profileImage, accessToken) {
+  console.log(profileImage);
+  const { status, message, ...token } = await axios
+    .post(
+      `${MAIN_SERVER}/api/mypage/account/edit/profile/image`,
+      profileImage,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+    .then((res) => res.request.responseURL)
+    .catch((e) => new Error(e.message));
+  // console.log(status);
+  if (!status) throw new Error(message);
+
+  return status;
+}

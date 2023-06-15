@@ -1,9 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef } from 'react';
 import useInitialState from '@hooks/useInitialState';
 import ProfileTest from '@assets/social/naver.png';
 import { changeNickname, changeSex, changePassword } from '@services/auth';
+import { uploadProfileToS3 } from '@services/image';
 
 const Modify = ({ accessToken }) => {
+  // 파일 선택 창을 열기 위한 ref
+  const fileInputRef = useRef(null);
   // 닉네임
   const [nickForm, setNickForm, resetNickForm] = useInitialState({
     nickname: '',
@@ -28,12 +31,15 @@ const Modify = ({ accessToken }) => {
   });
   const { password } = passwordForm;
   const { passwordConfirm } = passwordConfirmForm;
-
   // 비밀번호 일치 상태 검사 메세지
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
   // 비밀번호 유호성 검사
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
-
+  // 프로필 사진
+  const [profileForm, setProfileForm, resetProfileForm] = useInitialState({
+    profile: [],
+  });
+  const { profile } = profileForm;
   // 닉네임 입력
   const onInput = useCallback(
     (e) => {
@@ -80,6 +86,21 @@ const Modify = ({ accessToken }) => {
     },
     [password, setPasswordConfirmForm],
   );
+  // 프로필 사진 선택
+  const handleProfileChange = useCallback((e) => {
+    fileInputRef.current.click();
+  }, []);
+  // 파일 선택 시 profileForm 업데이트
+  const handleProfileFileChange = useCallback(
+    (e) => {
+      const files = Array.from(e.target.files); // 선택한 파일 객체를 배열로 변환
+      setProfileForm((prevForm) => ({
+        ...prevForm,
+        profile: files,
+      }));
+    },
+    [setProfileForm],
+  );
   // 닉네임 form 통신
   const nicknameChange = useCallback(
     async (nicknameForm) => {
@@ -112,6 +133,19 @@ const Modify = ({ accessToken }) => {
         alert('비밀번호 변경 성공');
       } catch (e) {
         alert('비밀번호 변경 실패');
+      }
+    },
+    [accessToken],
+  );
+  // 프로필 사진 form 통신
+  const profileChange = useCallback(
+    async (profileform) => {
+      console.log(profileform);
+      try {
+        const profileToken = await uploadProfileToS3(profileform, accessToken);
+        alert('프로필 사진 변경 성공');
+      } catch (e) {
+        alert('프로필 사진 변경 실패');
       }
     },
     [accessToken],
@@ -158,6 +192,18 @@ const Modify = ({ accessToken }) => {
     },
     [passwordForm, passwordChange, resetSexForm],
   );
+  // 프로필 사진 form 상태 입력
+  const handleSubmitProfile = useCallback(
+    (e) => {
+      e.preventDefault();
+
+      profileChange(profileForm);
+
+      resetProfileForm();
+    },
+    [profileChange, profileForm, resetProfileForm],
+  );
+
   return (
     <>
       <div className='modifyBox'>
@@ -176,12 +222,23 @@ const Modify = ({ accessToken }) => {
                   value={nickname}
                   onChange={onInput}
                 />
-                <button type='submit'>변경</button>
               </form>
             </div>
-            <div className='changeProfile'>
-              <span>프로필 사진 변경</span>
-            </div>
+            <form className='changeProfile' onSubmit={handleSubmitProfile}>
+              {/* 파일 선택 창을 열기 위해 hidden으로 설정 */}
+              <input
+                ref={fileInputRef}
+                type='file'
+                name='profile'
+                accept='image/*'
+                style={{ display: 'none' }}
+                onChange={handleProfileFileChange}
+              />
+              <button type='button' onClick={handleProfileChange}>
+                프로필 사진 변경
+              </button>
+              <button type='submit'>저장</button>
+            </form>
           </div>
         </div>
         <div className='modifyIntroduction'>

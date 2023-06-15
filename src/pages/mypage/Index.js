@@ -7,7 +7,8 @@ import { change } from '@store/marker';
 import LogoImage from '@assets/rooTrip/logo.png';
 import '@styles/mypage/mypage.scss';
 import MypageMenu from '@constants/mypageMenu';
-import { likedArticle, myTripArticle, savedArticle } from '@services/auth';
+import { likedArticle, myTripArticle, savedArticle } from '@services/route';
+import { getPreSignedUrl } from '@services/image';
 import Nav from './Nav';
 import Modify from './Modify';
 import MyTrip from './MyTrip';
@@ -23,6 +24,7 @@ const Index = () => {
   const [myArticleData, setMyArticleData] = useState(null);
   const [likedArticleData, setLikedArticleData] = useState(null);
   const [savedArticleData, setsavedArticleData] = useState(null);
+  // const [profileImgUrl, setProfileImgUrl] = useState('');
 
   // 내가 올린 게시글 불러오기
   const onMyTripArticle = useCallback(async () => {
@@ -37,6 +39,7 @@ const Index = () => {
   const onLikedArticle = useCallback(async () => {
     try {
       const likedArticleToken = await likedArticle(accessToken);
+      // console.log(likedArticleToken);
       setLikedArticleData(likedArticleToken);
     } catch (e) {
       alert('좋아요 게시글 가져오기 실패!');
@@ -52,7 +55,17 @@ const Index = () => {
       alert('저장된 게시글 가져오기 실패!');
     }
   }, [accessToken]);
+  // 프로필 이미지 url 불러오기
+  // const onProfileUrl = useCallback(async () => {
+  //   try {
+  //     const profileUrlToken = await savedArticle(accessToken);
+  //     setProfileImgUrl(profileUrlToken);
+  //   } catch (e) {
+  //     alert('프로필 가져오기 실패!');
+  //   }
+  // }, [accessToken]);
 
+  // 메뉴 클릭 이벤트
   const onClickMenuHandler = useCallback(
     (clickedMenu) => {
       dispatch(change({ clickedMenu }));
