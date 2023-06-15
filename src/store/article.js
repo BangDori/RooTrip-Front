@@ -3,7 +3,7 @@ import { createAction, handleActions } from 'redux-actions';
 const LOAD = 'ARTICLE/LOAD';
 const EXIT = 'ARTICLE/EXIT';
 
-export const load = createAction(LOAD);
+export const loadArticle = createAction(LOAD);
 export const exit = createAction(EXIT);
 
 const articleState = {

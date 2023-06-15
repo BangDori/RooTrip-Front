@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Marker } from 'react-map-gl';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { load } from '@store/article';
+import { loadArticle } from '@store/article';
 import Menu from '@constants/menu';
 
 const CustomMarker = ({ postId, lng, lat, imageURl, order }) => {
@@ -18,7 +18,7 @@ const CustomMarker = ({ postId, lng, lat, imageURl, order }) => {
   }, [postId, id]);
 
   const onMarkerClick = useCallback(() => {
-    dispatch(load({ postId }));
+    dispatch(loadArticle({ postId }));
   }, [dispatch, postId]);
 
   return (
