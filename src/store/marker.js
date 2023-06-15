@@ -42,7 +42,7 @@ const marker = handleActions(
     [REMOVE]: (state, { payload }) => {
       const removedMarker = state.marker.filter((m) => m.id === payload.id);
 
-      if (removedMarker[0].order) {
+      if (removedMarker[0]?.order) {
         return {
           ...state,
           marker: state.marker

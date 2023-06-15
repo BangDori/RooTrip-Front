@@ -8,7 +8,7 @@ import { change, load, removeAll } from '@store/marker';
 import { changeCityToCoordinate } from '@utils/metadata';
 import Menu from '@constants/menu';
 import Modal from '@components/wrapper/Modal';
-import NavigationImage from '@assets/navigation.png';
+import NavigationImage from '@assets/post/navigation.png';
 import DefaultImage from '@assets/user/default.png';
 import Photos from './post/Photos';
 import Comment from './post/Comment';
@@ -30,6 +30,7 @@ const Post = ({ postId, accessToken }) => {
   const [prevMarkers, setPrevMarkers] = useState([]);
 
   const marker = useSelector((state) => state.marker.marker);
+  const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -125,8 +126,12 @@ const Post = ({ postId, accessToken }) => {
   }, [dispatch, article, photos, isRouting, prevMarkers, marker]);
 
   const onCloseArticle = useCallback(() => {
+    if (menu === Menu.ROUTE) {
+      dispatch(removeAll());
+    }
+
     dispatch(exit());
-  }, [dispatch]);
+  }, [dispatch, menu]);
 
   const onClickPostModalHandler = useCallback(() => {
     setIsPostModal((prevState) => !prevState);
@@ -191,9 +196,11 @@ const Post = ({ postId, accessToken }) => {
                 </div>
               </div>
               <div className='side-bar'>
-                <button type='button' onClick={onClickNavigationHandler}>
-                  <img src={NavigationImage} alt='NAVIGATE_IMAGE' />
-                </button>
+                {menu === Menu.Trip && (
+                  <button type='button' onClick={onClickNavigationHandler}>
+                    <img src={NavigationImage} alt='NAVIGATE_IMAGE' />
+                  </button>
+                )}
                 <LikeButton
                   accessToken={accessToken}
                   postId={postId}

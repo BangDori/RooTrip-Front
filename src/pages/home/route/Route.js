@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { changeCityToCoordinate } from '@utils/metadata';
 import { setChangeCoordinate } from '@store/map';
+import { load } from '@store/marker';
 import getRecommendPost from '@services/route';
 import SearchItem from './SearchItem';
 import City from './City';
@@ -102,9 +103,18 @@ const Route = () => {
   const [searchCity, setSearchCity] = useState([]);
   const [searchList, setSearchList] = useState([]);
   const [message, setMessage] = useState('');
+  const [prevMarkers, setPrevMarkers] = useState([]);
 
   const { accessToken } = useSelector((state) => state.accessToken);
+  const { postId } = useSelector((state) => state.article);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!postId && prevMarkers.length !== 0) {
+      dispatch(load({ prevMarkers }));
+      setPrevMarkers([]);
+    }
+  }, [dispatch, postId, prevMarkers]);
 
   const onClickAddCityHandler = useCallback(() => {
     setIsAddCity((prevState) => !prevState);
@@ -208,7 +218,11 @@ const Route = () => {
       </div>
       <div className='route-search-list'>
         {searchList.map((item) => (
-          <SearchItem key={item.id} item={item} />
+          <SearchItem
+            key={item.id}
+            item={item}
+            onSetPrevMarkers={setPrevMarkers}
+          />
         ))}
         {message && <p className='no-list-message'>{message}</p>}
       </div>

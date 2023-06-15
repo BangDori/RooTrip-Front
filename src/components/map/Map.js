@@ -144,7 +144,7 @@ const Map = () => {
     });
   }
 
-  if (userMarker && accessToken) {
+  if (menu === Menu.TRIP && userMarker && accessToken) {
     userMarkers = marker.map((mark) => {
       if (!mark.coordinate) return null;
 
