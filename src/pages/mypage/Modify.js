@@ -140,7 +140,7 @@ const Modify = ({ accessToken }) => {
   // 프로필 사진 form 통신
   const profileChange = useCallback(
     async (profileform) => {
-      console.log(profileform);
+      // console.log(profileform);
       try {
         const profileToken = await uploadProfileToS3(profileform, accessToken);
         alert('프로필 사진 변경 성공');

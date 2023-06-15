@@ -59,7 +59,7 @@ export async function uploadFileToS3(formData, preSignedUrl) {
  * @param {String} profileImage Pre-signed url
  */
 export async function uploadProfileToS3(profileImage, accessToken) {
-  console.log(profileImage);
+  // console.log(profileImage);
   const { status, message, ...token } = await axios
     .post(
       `${MAIN_SERVER}/api/mypage/account/edit/profile/image`,
