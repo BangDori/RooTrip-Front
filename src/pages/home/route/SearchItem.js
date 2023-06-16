@@ -30,7 +30,7 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
       const { photos } = await getOnePost(accessToken, postId);
 
       dispatch(loadPost({ postId }));
-      const data = photos.map((photo) =>
+      const prevMarkers = photos.map((photo) =>
         routes.includes(String(photo.order + 1))
           ? {
               id: photo.id,
@@ -40,7 +40,7 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
             }
           : null,
       );
-      dispatch(loadMarkers({ data }));
+      dispatch(loadMarkers({ prevMarkers }));
 
       const movedPoint = photos.map((photo) => {
         if (!photo.coordinate || !routes.includes(String(photo.order + 1)))

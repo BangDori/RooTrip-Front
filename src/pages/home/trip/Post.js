@@ -27,7 +27,7 @@ const Post = ({ postId, accessToken }) => {
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [isRouting, setIsRouting] = useState(false);
-  const [prevMarkers, setPrevMarkers] = useState([]);
+  const [prevMarkersState, setPrevMarkersState] = useState([]);
 
   const marker = useSelector((state) => state.marker.marker);
   const menu = useSelector((state) => state.marker.menu);
@@ -74,19 +74,19 @@ const Post = ({ postId, accessToken }) => {
       dispatch(changeMenu({ clickedMenu: Menu.TRIP }));
       dispatch(resetCoordinateOnMap());
       dispatch(removeAllMarkers());
-      dispatch(loadMarkers({ prevMarkers }));
-      setPrevMarkers([]);
+      dispatch(loadMarkers({ prevMarkersState }));
+      setPrevMarkersState([]);
       return;
     }
 
     const { routes } = article;
     if (routes.length === 0) return;
 
-    setPrevMarkers(marker);
+    setPrevMarkersState(marker);
     dispatch(removeAllMarkers());
     dispatch(changeMenu({ clickedMenu: Menu.ORDER }));
     const updateMarker = () => {
-      const data = photos.map((photo) =>
+      const prevMarkers = photos.map((photo) =>
         routes.includes(String(photo.order + 1))
           ? {
               id: photo.id,
@@ -96,7 +96,7 @@ const Post = ({ postId, accessToken }) => {
             }
           : null,
       );
-      dispatch(loadMarkers({ data }));
+      dispatch(loadMarkers({ prevMarkers }));
     };
 
     const updateCoordinate = () => {
@@ -123,7 +123,7 @@ const Post = ({ postId, accessToken }) => {
     updateMarker();
     updateCoordinate();
     setIsRouting(true);
-  }, [dispatch, article, photos, isRouting, prevMarkers, marker]);
+  }, [dispatch, article, photos, isRouting, prevMarkersState, marker]);
 
   const onCloseArticle = useCallback(() => {
     if (menu === Menu.ROUTE) {

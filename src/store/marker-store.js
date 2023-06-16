@@ -29,7 +29,7 @@ const marker = handleActions(
     }),
     [LOAD]: (state, { payload: markers }) => ({
       ...state,
-      marker: markers.data || markers.prevMarkers,
+      marker: markers.prevMarkers,
     }),
     [INSERT]: (state, { payload: data }) => ({
       ...state,
