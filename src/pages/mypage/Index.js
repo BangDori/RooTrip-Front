@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePost } from '@store/post-store';
-import { resetMap } from '@store/map';
+import { resetCoordinateOnMap } from '@store/map-store';
 import { change } from '@store/marker';
 import LogoImage from '@assets/rooTrip/logo.png';
 import '@styles/mypage/mypage.scss';
@@ -69,7 +69,7 @@ const Index = () => {
   const onClickMenuHandler = useCallback(
     (clickedMenu) => {
       dispatch(change({ clickedMenu }));
-      dispatch(resetMap());
+      dispatch(resetCoordinateOnMap());
       if (postId) dispatch(closePost());
 
       if (clickedMenu === 'MYTRIP') {

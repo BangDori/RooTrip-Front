@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Menu from '@constants/menu';
-import { setCoordinatesOnMap } from '@store/map';
+import { setCoordinateOnMap } from '@store/map-store';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import { updateLocation } from '@store/photoLocation-store';
 import { changeQueryBounds } from '@utils/metadata';
@@ -26,8 +26,9 @@ const Map = () => {
 
   const accessToken = useSelector((state) => state.auth.accessToken);
   const { isSetLocation } = useSelector((state) => state.photoLocation);
-  const changeCenter = useSelector((state) => state.map.center);
-  const changeZoom = useSelector((state) => state.map.zoom);
+  const { center: changeCenter, zoom: changeZoom } = useSelector(
+    (state) => state.map,
+  );
   const marker = useSelector((state) => state.marker.marker);
   const userMarker = useSelector((state) => state.marker.userMarker);
   const menu = useSelector((state) => state.marker.menu);
@@ -66,7 +67,7 @@ const Map = () => {
       const polygon = changeQueryBounds(bounds);
 
       dispatch(
-        setCoordinatesOnMap({ viewType, currentZoom, polygon, markerCount }),
+        setCoordinateOnMap({ viewType, currentZoom, polygon, markerCount }),
       );
     },
     [dispatch],
@@ -89,7 +90,7 @@ const Map = () => {
       const polygon = changeQueryBounds(bounds);
 
       dispatch(
-        setCoordinatesOnMap({
+        setCoordinateOnMap({
           viewType,
           currentZoom,
           markerCount,

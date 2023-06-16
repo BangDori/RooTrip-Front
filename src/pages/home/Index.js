@@ -3,7 +3,7 @@ import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { closePost } from '@store/post-store';
-import { resetMap } from '@store/map';
+import { resetCoordinateOnMap } from '@store/map-store';
 import { change } from '@store/marker';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
@@ -40,7 +40,7 @@ const Index = () => {
       if (message) setShowMessage(message);
 
       dispatch(change({ clickedMenu }));
-      dispatch(resetMap());
+      dispatch(resetCoordinateOnMap());
       dispatch(closePost());
     },
     [dispatch],

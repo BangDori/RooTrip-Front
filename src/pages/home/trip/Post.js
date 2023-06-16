@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getOnePost } from '@services/post';
-import { setChangeCoordinate, resetMap } from '@store/map';
+import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
 import { closePost } from '@store/post-store';
 import { change, load, removeAll } from '@store/marker';
 import { changeCityToCoordinate } from '@utils/metadata';
@@ -72,7 +72,7 @@ const Post = ({ postId, accessToken }) => {
     if (isRouting) {
       setIsRouting(false);
       dispatch(change({ clickedMenu: Menu.TRIP }));
-      dispatch(resetMap());
+      dispatch(resetCoordinateOnMap());
       dispatch(removeAll());
       dispatch(load({ prevMarkers }));
       setPrevMarkers([]);
@@ -117,7 +117,7 @@ const Post = ({ postId, accessToken }) => {
         };
       });
       const data = changeCityToCoordinate(movedPoint);
-      dispatch(setChangeCoordinate({ data }));
+      dispatch(changeCoordinateOnMap({ data }));
     };
 
     updateMarker();

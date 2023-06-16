@@ -5,7 +5,7 @@ import { createPost } from '@services/post';
 
 import Menu from '@constants/menu';
 import { insertUserMarker } from '@store/marker';
-import { resetMap } from '@store/map';
+import { resetCoordinateOnMap } from '@store/map-store';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';
 import ThirdWritePage from './ThirdWritePage';
@@ -24,7 +24,7 @@ const Write = ({ onClose }) => {
     if (currentPage === 0) {
       setPhotos([]);
       setRoutes([]);
-      dispatch(resetMap());
+      dispatch(resetCoordinateOnMap());
     }
   }, [dispatch, currentPage]);
 

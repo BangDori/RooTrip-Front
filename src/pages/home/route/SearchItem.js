@@ -6,7 +6,7 @@ import CommentImage from '@assets/route/comment.png';
 import { getOnePost } from '@services/post';
 import { load, insert, remove } from '@store/marker';
 import { loadPost } from '@store/post-store';
-import { setChangeCoordinate } from '@store/map';
+import { changeCoordinateOnMap } from '@store/map-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 
 const SearchItem = ({ item, onSetPrevMarkers }) => {
@@ -59,7 +59,7 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
         };
       });
       const map = changeCityToCoordinate(movedPoint);
-      dispatch(setChangeCoordinate({ map }));
+      dispatch(changeCoordinateOnMap({ map }));
 
       onSetPrevMarkers(marker);
     } catch (e) {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { changeCityToCoordinate } from '@utils/metadata';
-import { setChangeCoordinate } from '@store/map';
+import { changeCoordinateOnMap } from '@store/map-store';
 import { load } from '@store/marker';
 import getRecommendPost from '@services/route';
 import SearchItem from './SearchItem';
@@ -145,7 +145,7 @@ const Route = () => {
     setIsSearch(true);
 
     const data = changeCityToCoordinate(searchCity);
-    dispatch(setChangeCoordinate({ data }));
+    dispatch(changeCoordinateOnMap({ data }));
 
     try {
       const searchCityList = searchCity.map((city) => city.name);

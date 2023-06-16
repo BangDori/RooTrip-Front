@@ -2,7 +2,7 @@ import Photo from '@components/wrapper/Photo';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { resetMap, setChangeCoordinate } from '@store/map';
+import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
 import { insert, remove, removeAll } from '@store/marker';
 import { changeCityToCoordinate } from '@utils/metadata';
 import Modal from '@components/wrapper/Modal';
@@ -40,12 +40,12 @@ const SecondWritePage = ({
 
   useEffect(() => {
     if (routesOnMap.length === 0) {
-      dispatch(resetMap());
+      dispatch(resetCoordinateOnMap());
       return;
     }
 
     const data = changeCityToCoordinate(routesOnMap);
-    dispatch(setChangeCoordinate({ data }));
+    dispatch(changeCoordinateOnMap({ data }));
   }, [dispatch, routesOnMap]);
 
   const onInsert = useCallback(

@@ -1,14 +1,14 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const SET = 'MAP/SET';
-const CHANGE = 'MAP/CHANGE';
-const RESET = 'MAP/RESET';
+const SET = 'MAP_COORDINATE/SET';
+const CHANGE = 'MAP_COORDINATE/CHANGE';
+const RESET = 'MAP_COORDINATE/RESET';
 
-export const setCoordinatesOnMap = createAction(SET);
-export const setChangeCoordinate = createAction(CHANGE);
-export const resetMap = createAction(RESET);
+export const setCoordinateOnMap = createAction(SET);
+export const changeCoordinateOnMap = createAction(CHANGE);
+export const resetCoordinateOnMap = createAction(RESET);
 
-const initialCoordinatesOnMap = {
+const mapState = {
   viewType: 0,
   currentZoom: 0,
   markerCount: 8,
@@ -28,9 +28,16 @@ const map = handleActions(
       center: payload.data?.center || payload.map?.center,
       zoom: payload.data?.zoom || payload.map?.zoom,
     }),
-    [RESET]: (state, action) => initialCoordinatesOnMap,
+    [RESET]: (state, action) => ({
+      viewType: 0,
+      currentZoom: 0,
+      markerCount: 8,
+      polygon: '',
+      center: [131.1, 36.4395],
+      zoom: 5.5,
+    }),
   },
-  initialCoordinatesOnMap,
+  mapState,
 );
 
 export default map;
