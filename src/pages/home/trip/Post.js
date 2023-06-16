@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getOnePost } from '@services/post';
 import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
 import { closePost } from '@store/post-store';
-import { change, load, removeAll } from '@store/marker';
+import { changeMenu, loadMarkers, removeAllMarkers } from '@store/marker-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 import Menu from '@constants/menu';
 import Modal from '@components/wrapper/Modal';
@@ -71,10 +71,10 @@ const Post = ({ postId, accessToken }) => {
   const onClickNavigationHandler = useCallback(() => {
     if (isRouting) {
       setIsRouting(false);
-      dispatch(change({ clickedMenu: Menu.TRIP }));
+      dispatch(changeMenu({ clickedMenu: Menu.TRIP }));
       dispatch(resetCoordinateOnMap());
-      dispatch(removeAll());
-      dispatch(load({ prevMarkers }));
+      dispatch(removeAllMarkers());
+      dispatch(loadMarkers({ prevMarkers }));
       setPrevMarkers([]);
       return;
     }
@@ -83,8 +83,8 @@ const Post = ({ postId, accessToken }) => {
     if (routes.length === 0) return;
 
     setPrevMarkers(marker);
-    dispatch(removeAll());
-    dispatch(change({ clickedMenu: Menu.ORDER }));
+    dispatch(removeAllMarkers());
+    dispatch(changeMenu({ clickedMenu: Menu.ORDER }));
     const updateMarker = () => {
       const data = photos.map((photo) =>
         routes.includes(String(photo.order + 1))
@@ -96,7 +96,7 @@ const Post = ({ postId, accessToken }) => {
             }
           : null,
       );
-      dispatch(load({ data }));
+      dispatch(loadMarkers({ data }));
     };
 
     const updateCoordinate = () => {
@@ -127,7 +127,7 @@ const Post = ({ postId, accessToken }) => {
 
   const onCloseArticle = useCallback(() => {
     if (menu === Menu.ROUTE) {
-      dispatch(removeAll());
+      dispatch(removeAllMarkers());
     }
 
     dispatch(closePost());

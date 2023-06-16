@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { closePost } from '@store/post-store';
 import { resetCoordinateOnMap } from '@store/map-store';
-import { change } from '@store/marker';
+import { changeMenu } from '@store/marker-store';
 import LogoImage from '@assets/rooTrip/logo.png';
 import '@styles/mypage/mypage.scss';
 import MypageMenu from '@constants/mypageMenu';
@@ -68,7 +68,7 @@ const Index = () => {
   // 메뉴 클릭 이벤트
   const onClickMenuHandler = useCallback(
     (clickedMenu) => {
-      dispatch(change({ clickedMenu }));
+      dispatch(changeMenu({ clickedMenu }));
       dispatch(resetCoordinateOnMap());
       if (postId) dispatch(closePost());
 

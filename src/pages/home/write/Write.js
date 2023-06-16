@@ -4,7 +4,7 @@ import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
 import { createPost } from '@services/post';
 
 import Menu from '@constants/menu';
-import { insertUserMarker } from '@store/marker';
+import { insertUserMarker } from '@store/marker-store';
 import { resetCoordinateOnMap } from '@store/map-store';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';

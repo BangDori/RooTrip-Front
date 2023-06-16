@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { changeCityToCoordinate } from '@utils/metadata';
 import { changeCoordinateOnMap } from '@store/map-store';
-import { load } from '@store/marker';
+import { loadMarkers } from '@store/marker-store';
 import getRecommendPost from '@services/route';
 import SearchItem from './SearchItem';
 import City from './City';
@@ -111,7 +111,7 @@ const Route = () => {
 
   useEffect(() => {
     if (!postId && prevMarkers.length !== 0) {
-      dispatch(load({ prevMarkers }));
+      dispatch(loadMarkers({ prevMarkers }));
       setPrevMarkers([]);
     }
   }, [dispatch, postId, prevMarkers]);

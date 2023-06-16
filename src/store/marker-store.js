@@ -7,14 +7,14 @@ const INSERT_USER_MARKER = 'MRKER/INSERT_USER_MARKER';
 const REMOVE = 'MARKER/REMOVE';
 const REOMVE_ALL = 'MARKER/REMOVEALL';
 
-export const change = createAction(CHANGE);
-export const load = createAction(LOAD);
+export const changeMenu = createAction(CHANGE);
+export const loadMarkers = createAction(LOAD);
 export const insertUserMarker = createAction(INSERT_USER_MARKER);
-export const insert = createAction(INSERT);
-export const remove = createAction(REMOVE);
-export const removeAll = createAction(REOMVE_ALL);
+export const insertMarker = createAction(INSERT);
+export const removeMarker = createAction(REMOVE);
+export const removeAllMarkers = createAction(REOMVE_ALL);
 
-const initialMarkersState = {
+const markerState = {
   menu: 'TRIP',
   marker: [],
   userMarker: [],
@@ -65,7 +65,7 @@ const marker = handleActions(
       marker: [],
     }),
   },
-  initialMarkersState,
+  markerState,
 );
 
 export default marker;

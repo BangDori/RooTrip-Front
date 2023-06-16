@@ -10,7 +10,7 @@ import LogIcon from '@assets/menu/log.png';
 import WriteIcon from '@assets/menu/write.png';
 import Menu from '@constants/menu';
 import { getPosts } from '@services/post';
-import { load } from '@store/marker';
+import { loadMarkers } from '@store/marker-store';
 import '@styles/home/nav.scss';
 
 const menuItems = [
@@ -40,7 +40,7 @@ const HomeGnb = ({ onClickMenu }) => {
   useEffect(() => {
     const getMarkers = async () => {
       const data = await getPosts(accessToken, viewType, polygon, markerCount);
-      dispatch(load({ data }));
+      dispatch(loadMarkers({ data }));
     };
 
     if (menu === Menu.TRIP) {
