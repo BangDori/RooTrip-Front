@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Menu from '@constants/menu';
 import { setCoordinatesOnMap } from '@store/map';
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
-import { updateLocation } from '@store/location';
+import { updateLocation } from '@store/photoLocation-store';
 import { changeQueryBounds } from '@utils/metadata';
 import CustomMarker from './CustomMarker';
 import '@styles/components/map.scss';
@@ -25,7 +25,7 @@ const Map = () => {
   const MapGLRef = useRef();
 
   const accessToken = useSelector((state) => state.auth.accessToken);
-  const { isSetLocation } = useSelector((state) => state.location);
+  const { isSetLocation } = useSelector((state) => state.photoLocation);
   const changeCenter = useSelector((state) => state.map.center);
   const changeZoom = useSelector((state) => state.map.zoom);
   const marker = useSelector((state) => state.marker.marker);

@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 
 import auth from './auth-store';
-import location from './location';
+import photoLocation from './photoLocation-store';
 import map from './map';
 import marker from './marker';
 import post from './post-store';
 
 const rootReducer = combineReducers({
   auth,
-  location,
   map,
   marker,
+  photoLocation,
   post,
 });
 

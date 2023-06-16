@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAddress } from '@services/image';
 
-import { setLocation, finishLocation } from '@store/location';
+import { onLocation, offLocation } from '@store/photoLocation-store';
 import Modal from './Modal';
 import '@styles/components/modalMessage.scss';
 
@@ -17,7 +17,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
     fileName: updatedFileName,
     latitude: updatedLatitude,
     longitude: updatedLongitude,
-  } = useSelector((state) => state.location);
+  } = useSelector((state) => state.photoLocation);
 
   useEffect(() => {
     if (!updatedLatitude) return;
@@ -29,7 +29,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
         updatedLongitude,
       };
       await updateCoordinate(updatedInfo);
-      await dispatch(finishLocation());
+      await dispatch(offLocation());
       setIsSelectLocation(false);
     };
 
@@ -63,7 +63,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
     if (isSelectLocation) return;
 
     setIsSelectLocation(true);
-    dispatch(setLocation(fileName));
+    dispatch(onLocation(fileName));
     setIsShowMessage('지도에 위치를 설정해주세요!');
     setTimeout(() => {
       setIsShowMessage('');
