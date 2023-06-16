@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getOnePost } from '@services/post';
 import { setChangeCoordinate, resetMap } from '@store/map';
-import { exit } from '@store/article';
+import { closePost } from '@store/post-store';
 import { change, load, removeAll } from '@store/marker';
 import { changeCityToCoordinate } from '@utils/metadata';
 import Menu from '@constants/menu';
@@ -130,7 +130,7 @@ const Post = ({ postId, accessToken }) => {
       dispatch(removeAll());
     }
 
-    dispatch(exit());
+    dispatch(closePost());
   }, [dispatch, menu]);
 
   const onClickPostModalHandler = useCallback(() => {

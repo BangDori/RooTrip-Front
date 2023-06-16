@@ -5,7 +5,7 @@ import LikeImage from '@assets/route/like.png';
 import CommentImage from '@assets/route/comment.png';
 import { getOnePost } from '@services/post';
 import { load, insert, remove } from '@store/marker';
-import { loadArticle } from '@store/article';
+import { loadPost } from '@store/post-store';
 import { setChangeCoordinate } from '@store/map';
 import { changeCityToCoordinate } from '@utils/metadata';
 
@@ -29,7 +29,7 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
     try {
       const { photos } = await getOnePost(accessToken, postId);
 
-      dispatch(loadArticle({ postId }));
+      dispatch(loadPost({ postId }));
       const data = photos.map((photo) =>
         routes.includes(String(photo.order + 1))
           ? {

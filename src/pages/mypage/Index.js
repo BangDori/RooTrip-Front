@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { exit } from '@store/article';
+import { closePost } from '@store/post-store';
 import { resetMap } from '@store/map';
 import { change } from '@store/marker';
 import LogoImage from '@assets/rooTrip/logo.png';
@@ -20,7 +20,7 @@ const Index = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const dispatch = useDispatch();
   const mypageMenu = useSelector((state) => state.marker.menu);
-  const { postId } = useSelector((state) => state.article);
+  const { postId } = useSelector((state) => state.post);
   const [myArticleData, setMyArticleData] = useState(null);
   const [likedArticleData, setLikedArticleData] = useState(null);
   const [savedArticleData, setsavedArticleData] = useState(null);
@@ -70,7 +70,7 @@ const Index = () => {
     (clickedMenu) => {
       dispatch(change({ clickedMenu }));
       dispatch(resetMap());
-      if (postId) dispatch(exit());
+      if (postId) dispatch(closePost());
 
       if (clickedMenu === 'MYTRIP') {
         onMyTripArticle();

@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { exit } from '@store/article';
+import { closePost } from '@store/post-store';
 import { resetMap } from '@store/map';
 import { change } from '@store/marker';
 import Modal from '@components/wrapper/Modal';
@@ -22,7 +22,7 @@ const Index = () => {
   const [showMessage, setShowMessage] = useState('');
 
   const accessToken = useSelector((state) => state.auth.accessToken);
-  const { postId } = useSelector((state) => state.article);
+  const { postId } = useSelector((state) => state.post);
   const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ const Index = () => {
 
       dispatch(change({ clickedMenu }));
       dispatch(resetMap());
-      dispatch(exit());
+      dispatch(closePost());
     },
     [dispatch],
   );

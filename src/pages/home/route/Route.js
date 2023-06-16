@@ -106,7 +106,7 @@ const Route = () => {
   const [prevMarkers, setPrevMarkers] = useState([]);
 
   const accessToken = useSelector((state) => state.auth.accessToken);
-  const { postId } = useSelector((state) => state.article);
+  const { postId } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   useEffect(() => {

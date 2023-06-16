@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Article = ({ closeArticle, data }) => {
-  // console.log(data);
   return (
     <div className='articleContent'>
       <header>
