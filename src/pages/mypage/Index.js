@@ -17,7 +17,7 @@ import SavedTrip from './SavedTrip';
 import Unsigned from './Unsigned';
 
 const Index = () => {
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const dispatch = useDispatch();
   const mypageMenu = useSelector((state) => state.marker.menu);
   const { postId } = useSelector((state) => state.article);

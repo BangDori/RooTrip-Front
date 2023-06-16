@@ -21,7 +21,7 @@ const Map = loadable(() => import('@components/map/Map'));
 const Index = () => {
   const [showMessage, setShowMessage] = useState('');
 
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const { postId } = useSelector((state) => state.article);
   const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();

@@ -1,19 +1,19 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const ISSUE = 'EMAIL/ISSUE';
+const SET = 'TOKEN/SET';
 const REMOVE = 'TOKEN/REMOVE';
 
-export const issue = createAction(ISSUE);
-export const remove = createAction(REMOVE);
+export const setToken = createAction(SET);
+export const removeToken = createAction(REMOVE);
 
 const accessTokenState = {
   accessToken: '',
   expireTime: 14 * 60 * 1000, // Client(Default) = 14m, Server = 15m
 };
 
-const accessToken = handleActions(
+const auth = handleActions(
   {
-    [ISSUE]: (state, { payload }) => ({
+    [SET]: (state, { payload }) => ({
       accessToken: payload.accessToken,
       expireTime: (payload.expire - 60) * 1000, // 원활한 통신을 위해 Client 만료 시간 14분으로 설정
     }),
@@ -22,4 +22,4 @@ const accessToken = handleActions(
   accessTokenState,
 );
 
-export default accessToken;
+export default auth;

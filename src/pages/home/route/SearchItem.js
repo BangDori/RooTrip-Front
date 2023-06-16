@@ -10,7 +10,7 @@ import { setChangeCoordinate } from '@store/map';
 import { changeCityToCoordinate } from '@utils/metadata';
 
 const SearchItem = ({ item, onSetPrevMarkers }) => {
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const marker = useSelector((state) => state.marker.marker);
   const dispatch = useDispatch();
 

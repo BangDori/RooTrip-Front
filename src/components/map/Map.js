@@ -24,7 +24,7 @@ const zoom = {
 const Map = () => {
   const MapGLRef = useRef();
 
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const { isSetLocation } = useSelector((state) => state.location);
   const changeCenter = useSelector((state) => state.map.center);
   const changeZoom = useSelector((state) => state.map.zoom);

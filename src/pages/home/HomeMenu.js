@@ -32,7 +32,7 @@ const menuItems = [
 ];
 
 const HomeGnb = ({ onClickMenu }) => {
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const menu = useSelector((state) => state.marker.menu);
   const { viewType, markerCount, polygon } = useSelector((state) => state.map);
   const dispatch = useDispatch();

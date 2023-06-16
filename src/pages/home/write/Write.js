@@ -17,7 +17,7 @@ const Write = ({ onClose }) => {
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
 
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const dispatch = useDispatch();
 
   useEffect(() => {

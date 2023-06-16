@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { socialLogin } from '@services/auth';
 import { useDispatch } from 'react-redux';
-import { issue } from '@store/accessToken';
+import { setToken } from '@store/auth-store';
 import { setRefreshToken } from '@utils/authCookie';
 
 const SocialAuth = () => {
@@ -18,7 +18,7 @@ const SocialAuth = () => {
         const { accessToken, expire, refreshToken } = token;
 
         setRefreshToken(refreshToken);
-        dispatch(issue({ accessToken, expire }));
+        dispatch(setToken({ accessToken, expire }));
         navigate('/');
       } catch (e) {
         alert(e.message);
