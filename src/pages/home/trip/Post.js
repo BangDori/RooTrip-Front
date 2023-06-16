@@ -213,7 +213,14 @@ const Post = ({ postId, accessToken }) => {
                 />
               </div>
             </div>
-            <p className='content'>{content}</p>
+            <div className='content'>
+              {content.split('\\r\\n').map((line, index) => (
+                <p key={index}>
+                  {line}
+                  <br />
+                </p>
+              ))}
+            </div>
             <button
               className='content-more-button'
               onClick={onClickPostModalHandler}

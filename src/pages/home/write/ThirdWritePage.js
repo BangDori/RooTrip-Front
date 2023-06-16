@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { regLineBreak } from '@constants/regExp';
 
 const VisibleModes = [
   {
@@ -39,7 +40,8 @@ const WriteContent = ({ onMovePage, onUploadWrite }) => {
       return;
     }
 
-    onUploadWrite({ title, content, visibility });
+    const formattedContent = content.replace(regLineBreak, '\\r\\n');
+    onUploadWrite({ title, content: formattedContent, visibility });
   }, [title, content, visibility, onUploadWrite]);
 
   return (
