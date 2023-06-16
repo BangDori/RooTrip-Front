@@ -74,7 +74,7 @@ const Post = ({ postId, accessToken }) => {
       dispatch(changeMenu({ clickedMenu: Menu.TRIP }));
       dispatch(resetCoordinateOnMap());
       dispatch(removeAllMarkers());
-      dispatch(loadMarkers({ prevMarkersState }));
+      dispatch(loadMarkers({ prevMarkers: prevMarkersState }));
       setPrevMarkersState([]);
       return;
     }
@@ -196,7 +196,7 @@ const Post = ({ postId, accessToken }) => {
                 </div>
               </div>
               <div className='side-bar'>
-                {menu === Menu.Trip && (
+                {menu === Menu.TRIP && (
                   <button type='button' onClick={onClickNavigationHandler}>
                     <img src={NavigationImage} alt='NAVIGATE_IMAGE' />
                   </button>

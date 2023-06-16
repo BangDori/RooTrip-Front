@@ -39,8 +39,13 @@ const HomeGnb = ({ onClickMenu }) => {
 
   useEffect(() => {
     const getMarkers = async () => {
-      const data = await getPosts(accessToken, viewType, polygon, markerCount);
-      dispatch(loadMarkers({ data }));
+      const prevMarkers = await getPosts(
+        accessToken,
+        viewType,
+        polygon,
+        markerCount,
+      );
+      dispatch(loadMarkers({ prevMarkers }));
     };
 
     if (menu === Menu.TRIP) {
