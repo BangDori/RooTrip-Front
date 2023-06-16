@@ -130,6 +130,10 @@ const Post = ({ postId, accessToken }) => {
       dispatch(removeAllMarkers());
     }
 
+    if (menu === Menu.ORDER) {
+      dispatch(changeMenu({ clickedMenu: Menu.TRIP }));
+    }
+
     dispatch(closePost());
   }, [dispatch, menu]);
 
