@@ -116,8 +116,8 @@ const Post = ({ postId, accessToken }) => {
           coordinate: [Number(lat), Number(lng)],
         };
       });
-      const data = changeCityToCoordinate(movedPoint);
-      dispatch(changeCoordinateOnMap({ data }));
+      const newMap = changeCityToCoordinate(movedPoint);
+      dispatch(changeCoordinateOnMap({ newMap }));
     };
 
     updateMarker();

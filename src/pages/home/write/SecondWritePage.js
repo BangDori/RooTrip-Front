@@ -44,8 +44,8 @@ const SecondWritePage = ({
       return;
     }
 
-    const data = changeCityToCoordinate(routesOnMap);
-    dispatch(changeCoordinateOnMap({ data }));
+    const newMap = changeCityToCoordinate(routesOnMap);
+    dispatch(changeCoordinateOnMap({ newMap }));
   }, [dispatch, routesOnMap]);
 
   const onInsert = useCallback(

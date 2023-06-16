@@ -144,8 +144,8 @@ const Route = () => {
     setIsAddCity(false);
     setIsSearch(true);
 
-    const data = changeCityToCoordinate(searchCity);
-    dispatch(changeCoordinateOnMap({ data }));
+    const newMap = changeCityToCoordinate(searchCity);
+    dispatch(changeCoordinateOnMap({ newMap }));
 
     try {
       const searchCityList = searchCity.map((city) => city.name);

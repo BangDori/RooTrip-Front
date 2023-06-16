@@ -25,8 +25,8 @@ const map = handleActions(
     }),
     [CHANGE]: (state, { payload }) => ({
       ...state,
-      center: payload.data?.center || payload.map?.center,
-      zoom: payload.data?.zoom || payload.map?.zoom,
+      center: payload.newMap.center,
+      zoom: payload.newMap.zoom,
     }),
     [RESET]: (state, action) => ({
       viewType: 0,

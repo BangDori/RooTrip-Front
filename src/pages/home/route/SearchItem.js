@@ -58,8 +58,8 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
           coordinate: [Number(lat), Number(lng)],
         };
       });
-      const map = changeCityToCoordinate(movedPoint);
-      dispatch(changeCoordinateOnMap({ map }));
+      const newMap = changeCityToCoordinate(movedPoint);
+      dispatch(changeCoordinateOnMap({ newMap }));
 
       onSetPrevMarkers(marker);
     } catch (e) {
