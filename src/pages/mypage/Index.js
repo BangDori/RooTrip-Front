@@ -42,7 +42,6 @@ const Index = () => {
   const onLikedArticle = useCallback(async () => {
     try {
       const likedArticleToken = await likedArticle(accessToken);
-      // console.log(likedArticleToken);
       setLikedArticleData(likedArticleToken);
     } catch (e) {
       alert('좋아요 게시글 가져오기 실패!');
@@ -54,7 +53,6 @@ const Index = () => {
     try {
       const savedArticleToken = await savedArticle(accessToken);
       setsavedArticleData(savedArticleToken);
-      // console.log(savedArticleToken);
     } catch (e) {
       alert('저장된 게시글 가져오기 실패!');
     }

@@ -8,6 +8,7 @@ import LoginForm from './loginForm/LoginForm';
 import LoginError from './loginForm/LoginError';
 
 const LoginContainer = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
   const dispatch = useDispatch();
@@ -15,7 +16,10 @@ const LoginContainer = () => {
   // 로그인 시 발생하는 함수
   const onLogin = useCallback(
     async (loginForm) => {
+      if (isLoading) return;
+
       try {
+        setIsLoading(true);
         const token = await login(loginForm);
         const { accessToken, expire, refreshToken } = token;
         setRefreshToken(refreshToken);
@@ -23,8 +27,10 @@ const LoginContainer = () => {
       } catch (e) {
         setError(e.message);
       }
+
+      setIsLoading(false);
     },
-    [dispatch],
+    [dispatch, isLoading],
   );
 
   return (

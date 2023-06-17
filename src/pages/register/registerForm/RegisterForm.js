@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import cn from 'classnames';
 
 import Input from '@components/wrapper/Input';
@@ -30,6 +30,7 @@ const RegisterForm = ({ onRegister }) => {
     password: '※ 숫자, 영어, 특수문자를 포함해 8~16자리로 입력해주세요.',
     password2: '※ 위 입력한 비밀번호를 다시 입력해주세요.',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const onInput = useCallback(
     (e) => {
@@ -68,12 +69,16 @@ const RegisterForm = ({ onRegister }) => {
     async (e) => {
       // 페이지 이동 막기
       e.preventDefault();
+      if (isLoading) return;
+
+      setIsLoading(true);
 
       const list = Object.keys(validation);
       const isValid = Object.values(validation);
 
       // 유효성 검사에 만족하지 못한게 하나라도 있다면,
       if (isValid.includes(false)) {
+        setIsLoading(false);
         const key = isValid.indexOf(false);
 
         alert(showError(list[key]));
@@ -91,8 +96,10 @@ const RegisterForm = ({ onRegister }) => {
       } catch (error) {
         // error
       }
+
+      setIsLoading(false);
     },
-    [onRegister, validation, form, resetForm],
+    [onRegister, isLoading, validation, form, resetForm],
   );
 
   return (

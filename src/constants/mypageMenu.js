@@ -3,7 +3,7 @@ const MypageMenu = {
   MYTRIP: 'MYTRIP',
   LIKEDTRIP: 'LIKEDTRIP',
   SAVEDTRIP: 'SAVEDTRIP',
-  UNSIGNEDL: 'UNSIGNED',
+  UNSIGNED: 'UNSIGNED',
 };
 
 export default MypageMenu;

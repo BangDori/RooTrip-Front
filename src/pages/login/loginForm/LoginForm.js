@@ -1,25 +1,17 @@
-import { useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-import useInitialState from '@hooks/useInitialState';
 import LoginButton from './LoginButton';
 
 const Login = ({ onLogin }) => {
-  const [form, setForm, resetForm] = useInitialState({
-    email: '',
-    password: '',
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const { email, password } = form;
+  const passwordRef = useRef();
 
-  // form 상태 입력
-  const onInput = useCallback(
-    (e) => {
-      setForm((prevForm) => ({
-        ...prevForm,
-        [e.target.name]: e.target.value,
-      }));
-    },
-    [setForm],
+  const onChangeEmailHandler = useCallback((e) => setEmail(e.target.value), []);
+  const onChangePasswordHandler = useCallback(
+    (e) => setPassword(e.target.value),
+    [],
   );
 
   // 회원가입시
@@ -29,12 +21,12 @@ const Login = ({ onLogin }) => {
       e.preventDefault();
 
       // 상위 컴포넌트로 로그인 정보 전달
-      onLogin(form);
+      onLogin({ email, password });
 
-      // form 상태 초기화
-      resetForm();
+      setPassword('');
+      passwordRef.current.focus();
     },
-    [onLogin, form, resetForm],
+    [onLogin, email, password],
   );
 
   return (
@@ -44,15 +36,16 @@ const Login = ({ onLogin }) => {
         name='email'
         value={email}
         placeholder='사용자 이메일 또는 아이디'
-        onChange={onInput}
+        onChange={onChangeEmailHandler}
       />
       <input
+        ref={passwordRef}
         className='logintext'
         type='password'
         name='password'
         value={password}
         placeholder='비밀번호'
-        onChange={onInput}
+        onChange={onChangePasswordHandler}
       />
 
       <LoginButton />

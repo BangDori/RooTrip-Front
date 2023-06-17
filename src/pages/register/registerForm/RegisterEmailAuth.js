@@ -110,7 +110,9 @@ const RegisterEmailAuth = ({
 
     // 에러가 발생하지 않았다면,
     try {
-      const status = await sendVerifyNumber(type, email);
+      if (isSend) return;
+
+      const status = sendVerifyNumber(type, email);
 
       // 이메일 전송이 완료되었다면,
       if (status) {
@@ -129,7 +131,7 @@ const RegisterEmailAuth = ({
       // error
       alert(e.message);
     }
-  }, [type, email, startTimer]);
+  }, [type, email, isSend, startTimer]);
 
   // 인증 번호 재발신
   const resendEmail = useCallback(() => {
@@ -150,18 +152,18 @@ const RegisterEmailAuth = ({
 
   // 인증 번호 확인
   const handleVerifyNumber = useCallback(async () => {
+    // 시간이 만료되었다면,
+    if (isCompleted) {
+      alert('시간이 만료되었습니다.');
+      return;
+    }
+
+    if (number.length <= 0) {
+      alert('인증 번호를 입력해주세요.');
+      return;
+    }
+
     try {
-      // 시간이 만료되었다면,
-      if (isCompleted) {
-        alert('시간이 만료되었습니다.');
-        return;
-      }
-
-      if (number.length <= 0) {
-        alert('인증 번호를 입력해주세요.');
-        return;
-      }
-
       await authVerifyNumber(email, number);
 
       // 성공 시

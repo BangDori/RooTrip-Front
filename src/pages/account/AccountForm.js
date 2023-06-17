@@ -5,6 +5,7 @@ import { sendPassword } from '@services/email';
 import '@styles/account/account.scss';
 
 const AccountForm = ({ changePassword }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [validation, setValidation] = useState(false);
   const [verifyNumber, setVerifyNumber] = useState('');
@@ -18,7 +19,8 @@ const AccountForm = ({ changePassword }) => {
       e.preventDefault();
 
       // 페이지 이동
-      if (!validation) return;
+      if (!validation || isLoading) return;
+      setIsLoading(true);
 
       try {
         // 임시 비밀번호 전송
@@ -30,8 +32,10 @@ const AccountForm = ({ changePassword }) => {
       } catch (error) {
         alert(error.message);
       }
+
+      setIsLoading(false);
     },
-    [changePassword, email, verifyNumber, validation],
+    [changePassword, isLoading, email, verifyNumber, validation],
   );
 
   return (

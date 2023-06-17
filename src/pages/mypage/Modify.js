@@ -311,7 +311,7 @@ const Modify = ({ accessToken }) => {
               <button
                 type='submit'
                 style={{ marginLeft: '20px' }}
-                disabled={`${isPasswordConfirm ? '' : 'true'}`}
+                disabled={!isPasswordConfirm}
               >
                 변경
               </button>
