@@ -7,7 +7,11 @@ import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import { getOnePost } from '@services/post';
 import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
-import { loadMarkers, removeAllMarkers } from '@store/marker-store';
+import {
+  loadMarkers,
+  savePrevMarkers,
+  removeAllMarkers,
+} from '@store/marker-store';
 import { changeMenu } from '@store/menu-store';
 import { closePost } from '@store/post-store';
 import { changeCityToCoordinate } from '@utils/metadata';
@@ -28,7 +32,6 @@ const Post = ({ postId, accessToken }) => {
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [isRouting, setIsRouting] = useState(false);
-  const [prevMarkersState, setPrevMarkersState] = useState([]);
 
   const marker = useSelector((state) => state.marker.marker);
   const menu = useSelector((state) => state.menu);
@@ -75,19 +78,17 @@ const Post = ({ postId, accessToken }) => {
       dispatch(changeMenu({ clickedMenu: Menu.TRIP }));
       dispatch(resetCoordinateOnMap());
       dispatch(removeAllMarkers());
-      dispatch(loadMarkers({ prevMarkers: prevMarkersState }));
-      setPrevMarkersState([]);
       return;
     }
 
     const { routes } = article;
     if (routes.length === 0) return;
 
-    setPrevMarkersState(marker);
+    dispatch(savePrevMarkers({ data: marker }));
     dispatch(removeAllMarkers());
     dispatch(changeMenu({ clickedMenu: Menu.ORDER }));
     const updateMarker = () => {
-      const prevMarkers = photos.map((photo) =>
+      const markers = photos.map((photo) =>
         routes.includes(String(photo.order + 1))
           ? {
               id: photo.id,
@@ -97,7 +98,7 @@ const Post = ({ postId, accessToken }) => {
             }
           : null,
       );
-      dispatch(loadMarkers({ prevMarkers }));
+      dispatch(loadMarkers({ prevMarkers: markers }));
     };
 
     const updateCoordinate = () => {
@@ -124,7 +125,7 @@ const Post = ({ postId, accessToken }) => {
     updateMarker();
     updateCoordinate();
     setIsRouting(true);
-  }, [dispatch, article, photos, isRouting, prevMarkersState, marker]);
+  }, [dispatch, article, photos, isRouting, marker]);
 
   const onCloseArticle = useCallback(() => {
     if (menu === Menu.ROUTE) {

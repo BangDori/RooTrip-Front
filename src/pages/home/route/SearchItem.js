@@ -5,7 +5,12 @@ import LikeImage from '@assets/route/like.png';
 import CommentImage from '@assets/route/comment.png';
 import { getOnePost } from '@services/post';
 import { changeCoordinateOnMap } from '@store/map-store';
-import { loadMarkers, insertMarker, removeMarker } from '@store/marker-store';
+import {
+  loadMarkers,
+  insertMarker,
+  savePrevMarkers,
+  removeMarker,
+} from '@store/marker-store';
 import { loadPost } from '@store/post-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 
@@ -61,11 +66,11 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
       const newMap = changeCityToCoordinate(movedPoint);
       dispatch(changeCoordinateOnMap({ newMap }));
 
-      onSetPrevMarkers(marker);
+      dispatch(savePrevMarkers({ data: marker }));
     } catch (e) {
       alert(e.message);
     }
-  }, [dispatch, onSetPrevMarkers, postId, marker, accessToken, routes]);
+  }, [dispatch, postId, marker, accessToken, routes]);
 
   return (
     <div className='search-item'>

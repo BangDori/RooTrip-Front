@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import getRecommendPost from '@services/route';
 import { changeCoordinateOnMap } from '@store/map-store';
-import { loadMarkers } from '@store/marker-store';
+import { loadMarkers, removePrevMarkers } from '@store/marker-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 import City from './City';
 import SearchItem from './SearchItem';
@@ -103,16 +103,16 @@ const Route = () => {
   const [searchCity, setSearchCity] = useState([]);
   const [searchList, setSearchList] = useState([]);
   const [message, setMessage] = useState('');
-  const [prevMarkers, setPrevMarkers] = useState([]);
 
   const accessToken = useSelector((state) => state.auth.accessToken);
+  const prevMarkers = useSelector((state) => state.marker.prevMarkers);
   const { postId } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!postId && prevMarkers.length !== 0) {
       dispatch(loadMarkers({ prevMarkers }));
-      setPrevMarkers([]);
+      dispatch(removePrevMarkers());
     }
   }, [dispatch, postId, prevMarkers]);
 
@@ -218,11 +218,7 @@ const Route = () => {
       </div>
       <div className='route-search-list'>
         {searchList.map((item) => (
-          <SearchItem
-            key={item.id}
-            item={item}
-            onSetPrevMarkers={setPrevMarkers}
-          />
+          <SearchItem key={item.id} item={item} />
         ))}
         {message && <p className='no-list-message'>{message}</p>}
       </div>

@@ -10,7 +10,7 @@ import LogIcon from '@assets/menu/log.png';
 import WriteIcon from '@assets/menu/write.png';
 import Menu from '@constants/menu';
 import { getPosts } from '@services/post';
-import { loadMarkers } from '@store/marker-store';
+import { loadMarkers, removePrevMarkers } from '@store/marker-store';
 import '@styles/home/nav.scss';
 
 const menuItems = [
@@ -34,24 +34,39 @@ const menuItems = [
 const HomeGnb = ({ onClickMenu }) => {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const { viewType, markerCount, polygon } = useSelector((state) => state.map);
+  const prevMarkers = useSelector((state) => state.marker.prevMarkers);
   const menu = useSelector((state) => state.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getMarkers = async () => {
-      const prevMarkers = await getPosts(
+      if (prevMarkers.length !== 0) {
+        dispatch(loadMarkers({ prevMarkers }));
+        dispatch(removePrevMarkers());
+        return;
+      }
+
+      const markers = await getPosts(
         accessToken,
         viewType,
         polygon,
         markerCount,
       );
-      dispatch(loadMarkers({ prevMarkers }));
+      dispatch(loadMarkers({ prevMarkers: markers }));
     };
 
     if (menu === Menu.TRIP) {
       getMarkers();
     }
-  }, [dispatch, menu, accessToken, viewType, polygon, markerCount]);
+  }, [
+    dispatch,
+    menu,
+    accessToken,
+    viewType,
+    polygon,
+    prevMarkers,
+    markerCount,
+  ]);
 
   return (
     <nav className='side_nav'>

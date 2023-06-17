@@ -3,18 +3,23 @@ import { createAction, handleActions } from 'redux-actions';
 const LOAD = 'MARKER/LOAD';
 const INSERT = 'MARKER/INSERT';
 const INSERT_USER_MARKER = 'MRKER/INSERT_USER_MARKER';
+const SAVE_PREV = 'MARKER/SAVE';
 const REMOVE = 'MARKER/REMOVE';
-const REOMVE_ALL = 'MARKER/REMOVEALL';
+const REMOVE_PREV = 'MARKER/REMOVE_PREV';
+const REOMVE_ALL = 'MARKER/REMOVE_ALL';
 
 export const loadMarkers = createAction(LOAD);
-export const insertUserMarker = createAction(INSERT_USER_MARKER);
 export const insertMarker = createAction(INSERT);
+export const insertUserMarker = createAction(INSERT_USER_MARKER);
+export const savePrevMarkers = createAction(SAVE_PREV);
 export const removeMarker = createAction(REMOVE);
+export const removePrevMarkers = createAction(REMOVE_PREV);
 export const removeAllMarkers = createAction(REOMVE_ALL);
 
 const markerState = {
   marker: [],
   userMarker: [],
+  prevMarkers: [],
 };
 
 const marker = handleActions(
@@ -30,6 +35,10 @@ const marker = handleActions(
     [INSERT_USER_MARKER]: (state, { payload: data }) => ({
       ...state,
       userMarker: state.userMarker.concat(data),
+    }),
+    [SAVE_PREV]: (state, { payload }) => ({
+      ...state,
+      prevMarkers: payload.data,
     }),
     [REMOVE]: (state, { payload }) => {
       const removedMarker = state.marker.filter((m) => m.id === payload.id);
@@ -52,6 +61,10 @@ const marker = handleActions(
         marker: state.marker.filter((m) => m.postId !== payload.postId),
       };
     },
+    [REMOVE_PREV]: (state, { payload }) => ({
+      ...state,
+      prevMarkers: [],
+    }),
     [REOMVE_ALL]: (state, { payload }) => ({
       ...state,
       marker: [],
