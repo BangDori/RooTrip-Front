@@ -1,30 +1,32 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { closePost } from '@store/post-store';
+
+import LogoImage from '@assets/rooTrip/logo.png';
+import MypageMenu from '@constants/mypageMenu';
+import { getPreSignedUrl } from '@services/image';
+import { likedArticle, myTripArticle, savedArticle } from '@services/route';
 import { resetCoordinateOnMap } from '@store/map-store';
 import { changeMenu } from '@store/marker-store';
-import LogoImage from '@assets/rooTrip/logo.png';
-import '@styles/mypage/mypage.scss';
-import MypageMenu from '@constants/mypageMenu';
-import { likedArticle, myTripArticle, savedArticle } from '@services/route';
-import { getPreSignedUrl } from '@services/image';
+import { closePost } from '@store/post-store';
 import Nav from './Nav';
 import Modify from './Modify';
 import MyTrip from './MyTrip';
 import LikedTrip from './LikedTrip';
 import SavedTrip from './SavedTrip';
 import Unsigned from './Unsigned';
+import '@styles/mypage/mypage.scss';
 
 const Index = () => {
-  const accessToken = useSelector((state) => state.auth.accessToken);
-  const dispatch = useDispatch();
-  const mypageMenu = useSelector((state) => state.marker.menu);
-  const { postId } = useSelector((state) => state.post);
   const [myArticleData, setMyArticleData] = useState(null);
   const [likedArticleData, setLikedArticleData] = useState(null);
   const [savedArticleData, setsavedArticleData] = useState(null);
   // const [profileImgUrl, setProfileImgUrl] = useState('');
+
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const mypageMenu = useSelector((state) => state.marker.menu);
+  const { postId } = useSelector((state) => state.post);
+  const dispatch = useDispatch();
 
   // 내가 올린 게시글 불러오기
   const onMyTripArticle = useCallback(async () => {
@@ -35,6 +37,7 @@ const Index = () => {
       alert('저장된 게시글 가져오기 실패!');
     }
   }, [accessToken]);
+
   // 좋아요 누른 게시글 불러오기
   const onLikedArticle = useCallback(async () => {
     try {
@@ -45,6 +48,7 @@ const Index = () => {
       alert('좋아요 게시글 가져오기 실패!');
     }
   }, [accessToken]);
+
   // 저장된 게시글 불러오기
   const onSavedArticle = useCallback(async () => {
     try {
@@ -55,6 +59,7 @@ const Index = () => {
       alert('저장된 게시글 가져오기 실패!');
     }
   }, [accessToken]);
+
   // 프로필 이미지 url 불러오기
   // const onProfileUrl = useCallback(async () => {
   //   try {
@@ -106,6 +111,7 @@ const Index = () => {
       content = <Modify accessToken={accessToken} />;
       break;
   }
+
   return (
     <div>
       <header>

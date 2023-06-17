@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getOnePost } from '@services/post';
-import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
-import { closePost } from '@store/post-store';
-import { changeMenu, loadMarkers, removeAllMarkers } from '@store/marker-store';
-import { changeCityToCoordinate } from '@utils/metadata';
-import Menu from '@constants/menu';
-import Modal from '@components/wrapper/Modal';
 import NavigationImage from '@assets/post/navigation.png';
 import DefaultImage from '@assets/user/default.png';
+import Modal from '@components/wrapper/Modal';
+import Menu from '@constants/menu';
+import { getOnePost } from '@services/post';
+import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
+import { changeMenu, loadMarkers, removeAllMarkers } from '@store/marker-store';
+import { closePost } from '@store/post-store';
+import { changeCityToCoordinate } from '@utils/metadata';
 import Photos from './post/Photos';
 import Comment from './post/Comment';
 import LikeButton from './post/LikeButton';

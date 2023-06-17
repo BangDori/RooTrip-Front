@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
-import { createPost } from '@services/post';
 
 import Menu from '@constants/menu';
-import { insertUserMarker } from '@store/marker-store';
+import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
+import { createPost } from '@services/post';
 import { resetCoordinateOnMap } from '@store/map-store';
+import { insertUserMarker } from '@store/marker-store';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';
 import ThirdWritePage from './ThirdWritePage';

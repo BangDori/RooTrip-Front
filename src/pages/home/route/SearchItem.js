@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import LikeImage from '@assets/route/like.png';
 import CommentImage from '@assets/route/comment.png';
 import { getOnePost } from '@services/post';
+import { changeCoordinateOnMap } from '@store/map-store';
 import { loadMarkers, insertMarker, removeMarker } from '@store/marker-store';
 import { loadPost } from '@store/post-store';
-import { changeCoordinateOnMap } from '@store/map-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 
 const SearchItem = ({ item, onSetPrevMarkers }) => {

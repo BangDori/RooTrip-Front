@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
-import { login } from '@services/auth';
 import { useDispatch } from 'react-redux';
+
+import { login } from '@services/auth';
 import { setToken } from '@store/auth-store';
 import { setRefreshToken } from '@utils/authCookie';
 import LoginForm from './loginForm/LoginForm';
@@ -8,6 +9,7 @@ import LoginError from './loginForm/LoginError';
 
 const LoginContainer = () => {
   const [error, setError] = useState('');
+
   const dispatch = useDispatch();
 
   // 로그인 시 발생하는 함수

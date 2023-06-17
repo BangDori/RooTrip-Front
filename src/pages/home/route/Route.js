@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeCityToCoordinate } from '@utils/metadata';
+import getRecommendPost from '@services/route';
 import { changeCoordinateOnMap } from '@store/map-store';
 import { loadMarkers } from '@store/marker-store';
-import getRecommendPost from '@services/route';
-import SearchItem from './SearchItem';
+import { changeCityToCoordinate } from '@utils/metadata';
 import City from './City';
+import SearchItem from './SearchItem';
 import '@styles/home/route.scss';
 
 const cities = [

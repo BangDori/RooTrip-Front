@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import Input from '@components/wrapper/Input';
 
 const RegisterButton = () => {
@@ -6,6 +7,7 @@ const RegisterButton = () => {
     service: false,
     marketing: false,
   });
+
   const { service, marketing } = checkBox;
 
   const onChecked = useCallback((e) => {

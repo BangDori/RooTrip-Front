@@ -39,4 +39,22 @@ const accountTable = [
   },
 ];
 
-export { registerTable, accountTable };
+const visibleModes = [
+  {
+    id: 1,
+    label: '전체공개',
+    name: 'public',
+  },
+  {
+    id: 2,
+    label: '친구공개',
+    name: 'friend',
+  },
+  {
+    id: 3,
+    label: '나만보기',
+    name: 'private',
+  },
+];
+
+export { registerTable, accountTable, visibleModes };

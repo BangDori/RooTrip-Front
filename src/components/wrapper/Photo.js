@@ -1,23 +1,25 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAddress } from '@services/image';
 
+import { getAddress } from '@services/image';
 import { onLocation, offLocation } from '@store/photoLocation-store';
 import Modal from './Modal';
 import '@styles/components/modalMessage.scss';
 
 const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
-  const { fileName, url, latitude, longitude } = photo;
-  const [loading, setLoading] = useState(false);
-  const [addressPoint, setAddressPint] = useState(undefined);
-  const [isShowMessage, setIsShowMessage] = useState('');
+  const [addressPoint, setAddressPint] = useState('');
   const [isSelectLocation, setIsSelectLocation] = useState(false);
-  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+
   const {
     fileName: updatedFileName,
     latitude: updatedLatitude,
     longitude: updatedLongitude,
   } = useSelector((state) => state.photoLocation);
+  const dispatch = useDispatch();
+
+  const { fileName, url, latitude, longitude } = photo;
 
   useEffect(() => {
     if (!updatedLatitude) return;
@@ -47,6 +49,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
     // 좌표 정보 주소로 변환 받기
     const getAddressPoint = async () => {
       const address = await getAddress(latitude, longitude);
+
       setAddressPint(address);
       setLoading(true);
     };
@@ -55,7 +58,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
     else setLoading(true);
   }, [latitude, longitude]);
 
-  const handleClick = useCallback(() => {
+  const onClickRouteHandler = useCallback(() => {
     addRoute(id, photo);
   }, [id, addRoute, photo]);
 
@@ -64,9 +67,9 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
 
     setIsSelectLocation(true);
     dispatch(onLocation(fileName));
-    setIsShowMessage('지도에 위치를 설정해주세요!');
+    setMessage('지도에 위치를 설정해주세요!');
     setTimeout(() => {
-      setIsShowMessage('');
+      setMessage('');
     }, 2000);
   }, [dispatch, isSelectLocation, fileName]);
 
@@ -89,7 +92,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
                 {latitude ? (
                   <button
                     type='button'
-                    onClick={handleClick}
+                    onClick={onClickRouteHandler}
                     className={clicked ? 'select-location' : ''}
                   >
                     경로 표시
@@ -117,10 +120,10 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
           </tbody>
         </table>
       </li>
-      {isShowMessage && (
+      {message && (
         <Modal className='modal' background='white'>
           <div className='modal-message'>
-            <p>{isShowMessage}</p>
+            <p>{message}</p>
           </div>
         </Modal>
       )}

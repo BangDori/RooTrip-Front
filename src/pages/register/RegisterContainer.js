@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import { register } from '@services/auth';
 import RegisterForm from './registerForm/RegisterForm';
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -33,8 +33,8 @@ const menuItems = [
 
 const HomeGnb = ({ onClickMenu }) => {
   const accessToken = useSelector((state) => state.auth.accessToken);
-  const menu = useSelector((state) => state.marker.menu);
   const { viewType, markerCount, polygon } = useSelector((state) => state.map);
+  const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { getComments } from '@services/post';
+import { useCallback, useEffect, useState } from 'react';
 
 import DefaultImage from '@assets/user/default.png';
 import NavigationImage from '@assets/post/navigation.png';
 import likeImage from '@assets/post/like.png';
 import notLikeImage from '@assets/post/notLike.png';
+import { getComments } from '@services/post';
 import Photos from './Photos';
 import Comment from './Comment';
 
@@ -12,8 +12,8 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [comments, setComments] = useState([]);
   const [currentPhoto, setCurrentPhoto] = useState(0);
-  const { postView, isLikedPost, like, commentsCount } = others;
 
+  const { postView, isLikedPost, like, commentsCount } = others;
   const { user, title, content } = post;
   const { profileImage, name } = user;
 

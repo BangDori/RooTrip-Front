@@ -1,11 +1,12 @@
+import { useCallback, useRef, useState } from 'react';
+import cn from 'classnames';
+import styled from 'styled-components';
+
 import Input from '@components/wrapper/Input';
 import Button from '@components/wrapper/Button';
-import React, { useCallback, useRef, useState } from 'react';
-import cn from 'classnames';
-import { sendVerifyNumber, authVerifyNumber } from '@services/email';
 import useTimer from '@hooks/useTimer';
+import { sendVerifyNumber, authVerifyNumber } from '@services/email';
 import validate from '@utils/validation';
-import styled from 'styled-components';
 
 const StyledRegisterEmailAuth = styled.div`
   .input-register_form {

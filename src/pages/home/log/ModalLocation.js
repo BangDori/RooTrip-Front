@@ -1,7 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import '@styles/components/modalChooseLocation.scss';
+import { useState, useCallback, useEffect } from 'react';
+
 import CityType from './CityType';
 import SmallCityType from './SmallCityType';
+import '@styles/components/modalChooseLocation.scss';
 
 const ModalLocation = ({
   closeModal,

@@ -2,9 +2,9 @@ import MapGL from 'react-map-gl';
 import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import Menu from '@constants/menu';
 import { setCoordinateOnMap } from '@store/map-store';
-import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import { updateLocation } from '@store/photoLocation-store';
 import { changeQueryBounds } from '@utils/metadata';
 import CustomMarker from './CustomMarker';
@@ -25,13 +25,13 @@ const Map = () => {
   const MapGLRef = useRef();
 
   const accessToken = useSelector((state) => state.auth.accessToken);
+  const marker = useSelector((state) => state.marker.marker);
+  const menu = useSelector((state) => state.marker.menu);
+  const userMarker = useSelector((state) => state.marker.userMarker);
   const { isSetLocation } = useSelector((state) => state.photoLocation);
   const { center: changeCenter, zoom: changeZoom } = useSelector(
     (state) => state.map,
   );
-  const marker = useSelector((state) => state.marker.marker);
-  const userMarker = useSelector((state) => state.marker.userMarker);
-  const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const Map = () => {
     });
   }, [changeCenter, changeZoom]);
 
-  const setLocationHandler = useCallback(
+  const onClickHandler = useCallback(
     (e) => {
       const { lat, lng } = e.lngLat;
       dispatch(updateLocation({ lat, lng }));
@@ -176,7 +176,7 @@ const Map = () => {
         style={{ width: '100vw', height: '100vh' }}
         mapStyle={MAP_API_STYLE}
         mapboxAccessToken={MAP_API_TOKEN}
-        onClick={isSetLocation && setLocationHandler}
+        onClick={isSetLocation && onClickHandler}
         scrollZoom={accessToken} // accessToken ? true : false
         dragPan={accessToken} // accessToken ? true : false
         onLoad={onLoadHandler}

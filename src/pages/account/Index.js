@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Title from '@components/wrapper/Title';
 import TOC from '@components/wrapper/TOC';
 import { accountTable } from '@constants/table';

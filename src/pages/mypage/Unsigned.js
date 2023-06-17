@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { goUnsigned } from '@services/auth';
 
 const Unsigned = ({ accessToken }) => {
@@ -11,6 +12,7 @@ const Unsigned = ({ accessToken }) => {
       alert('회원 탈퇴 실패');
     }
   }, [accessToken]);
+
   return (
     <div>
       <button type='button' onClick={communicationUnsigned}>

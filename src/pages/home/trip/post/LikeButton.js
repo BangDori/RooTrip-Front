@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import { likePost, unLikePost } from '@services/post';
+import { useCallback } from 'react';
 
 import likeImage from '@assets/post/like.png';
 import notLikeImage from '@assets/post/notLike.png';
+import { likePost, unLikePost } from '@services/post';
 
 const LikeButton = ({ accessToken, postId, isLikedPost, setIsLikedPost }) => {
   const onClickLikeHandler = useCallback(async () => {

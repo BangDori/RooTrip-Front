@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { parseString } from 'xml2js';
-import '@styles/components/modalChooseTheme.scss';
+
 import BigThemeType from './BigThemeType';
 import MiddleThemeType from './MiddleThemeType';
 import SmallThemeType from './SmallThemeType';
+import '@styles/components/modalChooseTheme.scss';
 
 const ModalTheme = ({
   closeModal,
@@ -88,6 +89,7 @@ const ModalTheme = ({
     },
     [setBigThemeTemp],
   );
+
   const handleMiddleClick = useCallback(
     (selectedTheme) => {
       setCheckSelected(true);
@@ -95,6 +97,7 @@ const ModalTheme = ({
     },
     [setMiddleThemeTemp],
   );
+
   const handleSmallClick = useCallback(
     (selectedTheme) => {
       setCheckSelected(true);
@@ -102,6 +105,7 @@ const ModalTheme = ({
     },
     [setSmallThemeTemp],
   );
+
   return (
     <>
       <div className='modalChooseTheme'>

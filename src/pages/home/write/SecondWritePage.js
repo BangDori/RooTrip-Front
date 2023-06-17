@@ -1,7 +1,8 @@
-import Photo from '@components/wrapper/Photo';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
+import Modal from '@components/wrapper/Modal';
+import Photo from '@components/wrapper/Photo';
 import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
 import {
   insertMarker,
@@ -9,7 +10,6 @@ import {
   removeAllMarkers,
 } from '@store/marker-store';
 import { changeCityToCoordinate } from '@utils/metadata';
-import Modal from '@components/wrapper/Modal';
 
 function routeReducer(routes, action) {
   switch (action.type) {
@@ -32,6 +32,7 @@ const SecondWritePage = ({
   const [routes, dispatchRoute] = useReducer(routeReducer, prevRoutes);
   const [routesOnMap, setRoutesOnMap] = useState([]);
   const [showMessage, setShowMessage] = useState('');
+
   const dispatch = useDispatch();
 
   useEffect(() => {

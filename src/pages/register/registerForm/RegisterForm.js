@@ -1,15 +1,16 @@
 import { useCallback } from 'react';
 import cn from 'classnames';
+
 import Input from '@components/wrapper/Input';
 import Button from '@components/wrapper/Button';
-import useInitialState from '@hooks/useInitialState';
-import { regExpSpace } from '@constants/regExp';
-import showError from '@utils/showError';
-import useValidateForm from '@hooks/useValidateForm';
 import {
   PASSWORD_REQUIRED_ERROR,
   PASSWORD_MISMATCH_ERROR,
 } from '@constants/error';
+import { regExpSpace } from '@constants/regExp';
+import useInitialState from '@hooks/useInitialState';
+import useValidateForm from '@hooks/useValidateForm';
+import showError from '@utils/showError';
 import RegisterButton from './RegisterButton';
 import RegisterEmailAuth from './RegisterEmailAuth';
 

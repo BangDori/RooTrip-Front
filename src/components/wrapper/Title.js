@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
 import LogoImage from '@assets/rooTrip/logo.png';
 
 const Title = ({ className, title }) => (
