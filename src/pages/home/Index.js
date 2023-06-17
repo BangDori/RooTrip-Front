@@ -5,7 +5,7 @@ import loadable from '@loadable/component';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import { resetCoordinateOnMap } from '@store/map-store';
-import { changeMenu } from '@store/marker-store';
+import { changeMenu } from '@store/menu-store';
 import { closePost } from '@store/post-store';
 import HomeMenu from './HomeMenu';
 import HomeLogo from './HomeLogo';
@@ -22,7 +22,7 @@ const Index = () => {
   const [showMessage, setShowMessage] = useState('');
 
   const accessToken = useSelector((state) => state.auth.accessToken);
-  const menu = useSelector((state) => state.marker.menu);
+  const menu = useSelector((state) => state.menu);
   const { postId } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 

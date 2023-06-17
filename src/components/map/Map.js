@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { MAP_API_TOKEN, MAP_API_STYLE } from '@config/service';
 import Menu from '@constants/menu';
+import { removeAllMarkers } from '@store/marker-store';
 import { setCoordinateOnMap } from '@store/map-store';
 import { updateLocation } from '@store/photoLocation-store';
 import { changeQueryBounds } from '@utils/metadata';
@@ -26,13 +27,19 @@ const Map = () => {
 
   const accessToken = useSelector((state) => state.auth.accessToken);
   const marker = useSelector((state) => state.marker.marker);
-  const menu = useSelector((state) => state.marker.menu);
+  const menu = useSelector((state) => state.menu);
   const userMarker = useSelector((state) => state.marker.userMarker);
   const { isSetLocation } = useSelector((state) => state.photoLocation);
   const { center: changeCenter, zoom: changeZoom } = useSelector(
     (state) => state.map,
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (menu !== Menu.ORDER) {
+      dispatch(removeAllMarkers());
+    }
+  }, [dispatch, menu]);
 
   useEffect(() => {
     if (!MapGLRef.current || changeCenter.length === 0) return;

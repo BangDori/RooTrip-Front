@@ -7,7 +7,7 @@ import MypageMenu from '@constants/mypageMenu';
 import { getPreSignedUrl } from '@services/image';
 import { likedArticle, myTripArticle, savedArticle } from '@services/route';
 import { resetCoordinateOnMap } from '@store/map-store';
-import { changeMenu } from '@store/marker-store';
+import { changeMenu } from '@store/menu-store';
 import { closePost } from '@store/post-store';
 import Nav from './Nav';
 import Modify from './Modify';
@@ -24,7 +24,7 @@ const Index = () => {
   // const [profileImgUrl, setProfileImgUrl] = useState('');
 
   const accessToken = useSelector((state) => state.auth.accessToken);
-  const mypageMenu = useSelector((state) => state.marker.menu);
+  const mypageMenu = useSelector((state) => state.menu);
   const { postId } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 

@@ -8,7 +8,7 @@ import { loadPost } from '@store/post-store';
 const CustomMarker = ({ postId, lng, lat, imageURl, order }) => {
   const [isClick, setIsClick] = useState(false);
 
-  const menu = useSelector((state) => state.marker.menu);
+  const menu = useSelector((state) => state.menu);
   const { postId: id } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 

@@ -12,7 +12,7 @@ const menuItems = [
 ];
 
 const Nav = ({ onClickMenu }) => {
-  const mypageMenu = useSelector((state) => state.marker.menu);
+  const mypageMenu = useSelector((state) => state.menu);
 
   return (
     <div className='navBar'>

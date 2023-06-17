@@ -7,7 +7,8 @@ import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
 import { getOnePost } from '@services/post';
 import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
-import { changeMenu, loadMarkers, removeAllMarkers } from '@store/marker-store';
+import { loadMarkers, removeAllMarkers } from '@store/marker-store';
+import { changeMenu } from '@store/menu-store';
 import { closePost } from '@store/post-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 import Photos from './post/Photos';
@@ -30,7 +31,7 @@ const Post = ({ postId, accessToken }) => {
   const [prevMarkersState, setPrevMarkersState] = useState([]);
 
   const marker = useSelector((state) => state.marker.marker);
-  const menu = useSelector((state) => state.marker.menu);
+  const menu = useSelector((state) => state.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -200,7 +201,7 @@ const Post = ({ postId, accessToken }) => {
                 </div>
               </div>
               <div className='side-bar'>
-                {menu === Menu.TRIP && (
+                {menu !== Menu.ROUTE && (
                   <button type='button' onClick={onClickNavigationHandler}>
                     <img src={NavigationImage} alt='NAVIGATE_IMAGE' />
                   </button>
