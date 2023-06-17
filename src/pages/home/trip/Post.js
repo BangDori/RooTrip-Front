@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getOnePost } from '@services/post';
-import { setChangeCoordinate, resetMap } from '@store/map';
-import { exit } from '@store/article';
-import { change, load, removeAll } from '@store/marker';
-import { changeCityToCoordinate } from '@utils/metadata';
-import Menu from '@constants/menu';
-import Modal from '@components/wrapper/Modal';
 import NavigationImage from '@assets/post/navigation.png';
 import DefaultImage from '@assets/user/default.png';
+import Modal from '@components/wrapper/Modal';
+import Menu from '@constants/menu';
+import { getOnePost } from '@services/post';
+import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
+import { changeMenu, loadMarkers, removeAllMarkers } from '@store/marker-store';
+import { closePost } from '@store/post-store';
+import { changeCityToCoordinate } from '@utils/metadata';
 import Photos from './post/Photos';
 import Comment from './post/Comment';
 import LikeButton from './post/LikeButton';
@@ -27,7 +27,7 @@ const Post = ({ postId, accessToken }) => {
   const [commentsCount, setCommentsCount] = useState(0);
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [isRouting, setIsRouting] = useState(false);
-  const [prevMarkers, setPrevMarkers] = useState([]);
+  const [prevMarkersState, setPrevMarkersState] = useState([]);
 
   const marker = useSelector((state) => state.marker.marker);
   const menu = useSelector((state) => state.marker.menu);
@@ -71,22 +71,22 @@ const Post = ({ postId, accessToken }) => {
   const onClickNavigationHandler = useCallback(() => {
     if (isRouting) {
       setIsRouting(false);
-      dispatch(change({ clickedMenu: Menu.TRIP }));
-      dispatch(resetMap());
-      dispatch(removeAll());
-      dispatch(load({ prevMarkers }));
-      setPrevMarkers([]);
+      dispatch(changeMenu({ clickedMenu: Menu.TRIP }));
+      dispatch(resetCoordinateOnMap());
+      dispatch(removeAllMarkers());
+      dispatch(loadMarkers({ prevMarkers: prevMarkersState }));
+      setPrevMarkersState([]);
       return;
     }
 
     const { routes } = article;
     if (routes.length === 0) return;
 
-    setPrevMarkers(marker);
-    dispatch(removeAll());
-    dispatch(change({ clickedMenu: Menu.ORDER }));
+    setPrevMarkersState(marker);
+    dispatch(removeAllMarkers());
+    dispatch(changeMenu({ clickedMenu: Menu.ORDER }));
     const updateMarker = () => {
-      const data = photos.map((photo) =>
+      const prevMarkers = photos.map((photo) =>
         routes.includes(String(photo.order + 1))
           ? {
               id: photo.id,
@@ -96,7 +96,7 @@ const Post = ({ postId, accessToken }) => {
             }
           : null,
       );
-      dispatch(load({ data }));
+      dispatch(loadMarkers({ prevMarkers }));
     };
 
     const updateCoordinate = () => {
@@ -116,21 +116,25 @@ const Post = ({ postId, accessToken }) => {
           coordinate: [Number(lat), Number(lng)],
         };
       });
-      const data = changeCityToCoordinate(movedPoint);
-      dispatch(setChangeCoordinate({ data }));
+      const newMap = changeCityToCoordinate(movedPoint);
+      dispatch(changeCoordinateOnMap({ newMap }));
     };
 
     updateMarker();
     updateCoordinate();
     setIsRouting(true);
-  }, [dispatch, article, photos, isRouting, prevMarkers, marker]);
+  }, [dispatch, article, photos, isRouting, prevMarkersState, marker]);
 
   const onCloseArticle = useCallback(() => {
     if (menu === Menu.ROUTE) {
-      dispatch(removeAll());
+      dispatch(removeAllMarkers());
     }
 
-    dispatch(exit());
+    if (menu === Menu.ORDER) {
+      dispatch(changeMenu({ clickedMenu: Menu.TRIP }));
+    }
+
+    dispatch(closePost());
   }, [dispatch, menu]);
 
   const onClickPostModalHandler = useCallback(() => {
@@ -196,7 +200,7 @@ const Post = ({ postId, accessToken }) => {
                 </div>
               </div>
               <div className='side-bar'>
-                {menu === Menu.Trip && (
+                {menu === Menu.TRIP && (
                   <button type='button' onClick={onClickNavigationHandler}>
                     <img src={NavigationImage} alt='NAVIGATE_IMAGE' />
                   </button>
@@ -209,7 +213,14 @@ const Post = ({ postId, accessToken }) => {
                 />
               </div>
             </div>
-            <p className='content'>{content}</p>
+            <div className='content'>
+              {content.split('\\r\\n').map((line, index) => (
+                <p key={index}>
+                  {line}
+                  <br />
+                </p>
+              ))}
+            </div>
             <button
               className='content-more-button'
               onClick={onClickPostModalHandler}

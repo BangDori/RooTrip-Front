@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const City = ({ addSearchCity, city, isMax }) => {
   const [isSelected, setIsSelected] = useState(false);

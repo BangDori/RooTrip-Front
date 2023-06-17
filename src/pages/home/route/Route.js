@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeCityToCoordinate } from '@utils/metadata';
-import { setChangeCoordinate } from '@store/map';
-import { load } from '@store/marker';
 import getRecommendPost from '@services/route';
-import SearchItem from './SearchItem';
+import { changeCoordinateOnMap } from '@store/map-store';
+import { loadMarkers } from '@store/marker-store';
+import { changeCityToCoordinate } from '@utils/metadata';
 import City from './City';
+import SearchItem from './SearchItem';
 import '@styles/home/route.scss';
 
 const cities = [
@@ -105,13 +105,13 @@ const Route = () => {
   const [message, setMessage] = useState('');
   const [prevMarkers, setPrevMarkers] = useState([]);
 
-  const { accessToken } = useSelector((state) => state.accessToken);
-  const { postId } = useSelector((state) => state.article);
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const { postId } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!postId && prevMarkers.length !== 0) {
-      dispatch(load({ prevMarkers }));
+      dispatch(loadMarkers({ prevMarkers }));
       setPrevMarkers([]);
     }
   }, [dispatch, postId, prevMarkers]);
@@ -144,8 +144,8 @@ const Route = () => {
     setIsAddCity(false);
     setIsSearch(true);
 
-    const data = changeCityToCoordinate(searchCity);
-    dispatch(setChangeCoordinate({ data }));
+    const newMap = changeCityToCoordinate(searchCity);
+    dispatch(changeCoordinateOnMap({ newMap }));
 
     try {
       const searchCityList = searchCity.map((city) => city.name);

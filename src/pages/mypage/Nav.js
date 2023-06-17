@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import MypageMenu from '@constants/mypageMenu';
 
 const menuItems = [
@@ -12,6 +13,7 @@ const menuItems = [
 
 const Nav = ({ onClickMenu }) => {
   const mypageMenu = useSelector((state) => state.marker.menu);
+
   return (
     <div className='navBar'>
       {menuItems.map((menuItem) => (

@@ -1,31 +1,30 @@
-import loadable from '@loadable/component';
 import React from 'react';
-import LoginTitle from './LoginTitle';
+import loadable from '@loadable/component';
+
+import Account from './Account';
 import LoginContainer from './LoginContainer';
 import LoginSocial from './LoginSocial';
-import Account from './Account';
+import LoginTitle from './LoginTitle';
 import '@styles/login/login.scss';
 
 const Map = loadable(() => import('@components/map/Map'));
 
-const Index = () => {
-  return (
-    <div className='map-container'>
-      <div className='whole_page'>
-        <div className='pages'>
-          <div className='LoginPage'>
-            <LoginTitle />
-            <LoginContainer />
-            <LoginSocial />
-          </div>
-          <div className='AccountPage'>
-            <Account />
-          </div>
+const Index = () => (
+  <div className='map-container'>
+    <div className='whole_page'>
+      <div className='pages'>
+        <div className='LoginPage'>
+          <LoginTitle />
+          <LoginContainer />
+          <LoginSocial />
+        </div>
+        <div className='AccountPage'>
+          <Account />
         </div>
       </div>
-      <Map />
     </div>
-  );
-};
+    <Map />
+  </div>
+);
 
 export default Index;

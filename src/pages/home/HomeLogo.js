@@ -1,6 +1,7 @@
 import React from 'react';
-import LogoImage from '@assets/rooTrip/logo.png';
 import styled from 'styled-components';
+
+import LogoImage from '@assets/rooTrip/logo.png';
 
 const StyledLogo = styled.div`
   position: absolute;
@@ -16,12 +17,10 @@ const StyledLogo = styled.div`
   }
 `;
 
-const HomeLogo = () => {
-  return (
-    <StyledLogo className='Title'>
-      <img src={LogoImage} alt='루트트립 로고' className='Logo' />
-    </StyledLogo>
-  );
-};
+const HomeLogo = () => (
+  <StyledLogo className='Title'>
+    <img src={LogoImage} alt='루트트립 로고' className='Logo' />
+  </StyledLogo>
+);
 
 export default HomeLogo;

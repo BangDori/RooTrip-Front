@@ -1,16 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import LikeImage from '@assets/route/like.png';
 import CommentImage from '@assets/route/comment.png';
 import { getOnePost } from '@services/post';
-import { load, insert, remove } from '@store/marker';
-import { loadArticle } from '@store/article';
-import { setChangeCoordinate } from '@store/map';
+import { changeCoordinateOnMap } from '@store/map-store';
+import { loadMarkers, insertMarker, removeMarker } from '@store/marker-store';
+import { loadPost } from '@store/post-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 
 const SearchItem = ({ item, onSetPrevMarkers }) => {
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const marker = useSelector((state) => state.marker.marker);
   const dispatch = useDispatch();
 
@@ -18,10 +18,10 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
   const { id: postId, title, createdAt, like, routes } = post;
 
   useEffect(() => {
-    dispatch(insert({ id, postId, imageUrl, coordinate }));
+    dispatch(insertMarker({ id, postId, imageUrl, coordinate }));
 
     return () => {
-      dispatch(remove({ postId }));
+      dispatch(removeMarker({ postId }));
     };
   }, [dispatch, id, postId, imageUrl, coordinate]);
 
@@ -29,8 +29,8 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
     try {
       const { photos } = await getOnePost(accessToken, postId);
 
-      dispatch(loadArticle({ postId }));
-      const data = photos.map((photo) =>
+      dispatch(loadPost({ postId }));
+      const prevMarkers = photos.map((photo) =>
         routes.includes(String(photo.order + 1))
           ? {
               id: photo.id,
@@ -40,7 +40,7 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
             }
           : null,
       );
-      dispatch(load({ data }));
+      dispatch(loadMarkers({ prevMarkers }));
 
       const movedPoint = photos.map((photo) => {
         if (!photo.coordinate || !routes.includes(String(photo.order + 1)))
@@ -58,8 +58,8 @@ const SearchItem = ({ item, onSetPrevMarkers }) => {
           coordinate: [Number(lat), Number(lng)],
         };
       });
-      const map = changeCityToCoordinate(movedPoint);
-      dispatch(setChangeCoordinate({ map }));
+      const newMap = changeCityToCoordinate(movedPoint);
+      dispatch(changeCoordinateOnMap({ newMap }));
 
       onSetPrevMarkers(marker);
     } catch (e) {

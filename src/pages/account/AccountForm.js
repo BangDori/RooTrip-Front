@@ -1,4 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+
 import RegisterEmailAuth from '@pages/register/registerForm/RegisterEmailAuth';
 import { sendPassword } from '@services/email';
 import '@styles/account/account.scss';

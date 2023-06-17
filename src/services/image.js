@@ -1,5 +1,5 @@
-import { MAIN_SERVER } from '@config/setting';
 import axios from 'axios';
+import { MAIN_SERVER } from '@config/setting';
 
 /**
  * 행정구역을 받아오기 위한 함수

@@ -1,19 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { reIssue } from '@services/auth';
-import { issue } from '@store/accessToken';
+import { setToken } from '@store/auth-store';
 import { getRefreshToken } from '@utils/authCookie';
 
 const useAccessToken = (accessToken, expireTime) => {
-  const dispatch = useDispatch();
-  const refreshToken = getRefreshToken();
   const timer = useRef(null);
+  const refreshToken = getRefreshToken();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const tokenReIssue = async () => {
       try {
         const token = await reIssue(refreshToken);
-        dispatch(issue(token));
+        dispatch(setToken(token));
       } catch (e) {
         // 토근 발급 실패시에는 경고 메시지 X
       }

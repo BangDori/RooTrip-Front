@@ -1,10 +1,12 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
 const BigThemeType = ({ handleBigClick, item, setCheckSelected }) => {
   const [isSelected, setIsSelected] = useState(false);
+
   const onClickHandler = useCallback(() => {
     setIsSelected((prevSelected) => !prevSelected);
   }, []);
+
   return (
     <button
       className='themeNames'

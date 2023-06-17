@@ -1,11 +1,9 @@
-// 댓글 관리를 위한 컴포넌트
+import { useState, useCallback } from 'react';
+import EmojiPicker from 'emoji-picker-react';
 
-import React, { useState, useCallback } from 'react';
 import DefaultImage from '@assets/user/default.png';
-import { createComment } from '@services/post';
-import EmojiPicker, { Emoji } from 'emoji-picker-react';
-
 import Modal from '@components/wrapper/Modal';
+import { createComment } from '@services/post';
 import '@styles/home/comment.scss';
 import '@styles/components/modalEmoji.scss';
 

@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
-import { createPost } from '@services/post';
 
 import Menu from '@constants/menu';
-import { insertUserMarker } from '@store/marker';
-import { resetMap } from '@store/map';
+import { getPreSignedUrl, uploadFileToS3 } from '@services/image';
+import { createPost } from '@services/post';
+import { resetCoordinateOnMap } from '@store/map-store';
+import { insertUserMarker } from '@store/marker-store';
 import FirstWritePage from './FirstWritePage';
 import SecondWritePage from './SecondWritePage';
 import ThirdWritePage from './ThirdWritePage';
@@ -17,14 +17,14 @@ const Write = ({ onClose }) => {
   const [photos, setPhotos] = useState([]);
   const [routes, setRoutes] = useState([]);
 
-  const { accessToken } = useSelector((state) => state.accessToken);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (currentPage === 0) {
       setPhotos([]);
       setRoutes([]);
-      dispatch(resetMap());
+      dispatch(resetCoordinateOnMap());
     }
   }, [dispatch, currentPage]);
 

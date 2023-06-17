@@ -1,6 +1,4 @@
-// 사진 배열 관리를 위한 컴포넌트
-
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import LeftDirectionImage from '@assets/post/left-direction.png';
 import RightDirectionImage from '@assets/post/right-direction.png';
@@ -12,6 +10,7 @@ const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
   const prevPhotoHandler = useCallback(() => {
     onChangePhoto(-1);
   }, [onChangePhoto]);
+
   const nextPhotoHandler = useCallback(() => {
     onChangePhoto(1);
   }, [onChangePhoto]);

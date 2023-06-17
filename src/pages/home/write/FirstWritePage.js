@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
-import camera from '@assets/write/camera.png';
-import EXIF from 'exif-js';
-import { getLocation } from '@utils/metadata';
 import { useDropzone } from 'react-dropzone';
 import cn from 'classnames';
+import EXIF from 'exif-js';
+
+import camera from '@assets/write/camera.png';
+import { getLocation } from '@utils/metadata';
 
 const FirstWritePage = ({ onMovePage, onUploadPhotos }) => {
   // 메타 정보와 함께 사진 생성하기

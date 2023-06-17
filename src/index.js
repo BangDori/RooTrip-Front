@@ -1,14 +1,14 @@
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { Provider } from 'react-redux';
-import rootReducer from '@store/index';
+import rootStore from '@store/root-store';
 import { createStore } from 'redux';
 import { BrowserRouter } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(rootStore, composeWithDevTools());
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(

@@ -1,11 +1,15 @@
-import Photo from '@components/wrapper/Photo';
 import { useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { resetMap, setChangeCoordinate } from '@store/map';
-import { insert, remove, removeAll } from '@store/marker';
-import { changeCityToCoordinate } from '@utils/metadata';
 import Modal from '@components/wrapper/Modal';
+import Photo from '@components/wrapper/Photo';
+import { changeCoordinateOnMap, resetCoordinateOnMap } from '@store/map-store';
+import {
+  insertMarker,
+  removeMarker,
+  removeAllMarkers,
+} from '@store/marker-store';
+import { changeCityToCoordinate } from '@utils/metadata';
 
 function routeReducer(routes, action) {
   switch (action.type) {
@@ -28,6 +32,7 @@ const SecondWritePage = ({
   const [routes, dispatchRoute] = useReducer(routeReducer, prevRoutes);
   const [routesOnMap, setRoutesOnMap] = useState([]);
   const [showMessage, setShowMessage] = useState('');
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,12 +45,12 @@ const SecondWritePage = ({
 
   useEffect(() => {
     if (routesOnMap.length === 0) {
-      dispatch(resetMap());
+      dispatch(resetCoordinateOnMap());
       return;
     }
 
-    const data = changeCityToCoordinate(routesOnMap);
-    dispatch(setChangeCoordinate({ data }));
+    const newMap = changeCityToCoordinate(routesOnMap);
+    dispatch(changeCoordinateOnMap({ newMap }));
   }, [dispatch, routesOnMap]);
 
   const onInsert = useCallback(
@@ -53,7 +58,9 @@ const SecondWritePage = ({
       const { url: imageUrl, longitude, latitude } = photo;
       const coordinate = `POINT(${latitude} ${longitude})`;
       dispatchRoute({ type: 'INSERT', id });
-      dispatch(insert({ coordinate, imageUrl, id, order: routes.length + 1 }));
+      dispatch(
+        insertMarker({ coordinate, imageUrl, id, order: routes.length + 1 }),
+      );
       setRoutesOnMap((prevState) => [
         ...prevState,
         { id, coordinate: [longitude, latitude] },
@@ -65,7 +72,7 @@ const SecondWritePage = ({
   const onRemove = useCallback(
     (id) => {
       dispatchRoute({ type: 'REMOVE', id });
-      dispatch(remove({ id }));
+      dispatch(removeMarker({ id }));
 
       const updatedRoutesOnMap = routesOnMap.filter((cur) => cur.id !== id);
       setRoutesOnMap(updatedRoutesOnMap);
@@ -83,7 +90,7 @@ const SecondWritePage = ({
 
   const onPrevPageHandler = useCallback(() => {
     onMovePage(-1);
-    dispatch(removeAll());
+    dispatch(removeAllMarkers());
   }, [dispatch, onMovePage]);
 
   const onNextPageHandler = useCallback(() => {

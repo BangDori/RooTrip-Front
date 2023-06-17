@@ -1,29 +1,29 @@
 import { useState, useCallback, useEffect } from 'react';
-import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
+import loadable from '@loadable/component';
 
-import { exit } from '@store/article';
-import { resetMap } from '@store/map';
-import { change } from '@store/marker';
 import Modal from '@components/wrapper/Modal';
 import Menu from '@constants/menu';
+import { resetCoordinateOnMap } from '@store/map-store';
+import { changeMenu } from '@store/marker-store';
+import { closePost } from '@store/post-store';
 import HomeMenu from './HomeMenu';
 import HomeLogo from './HomeLogo';
-import Write from './write/Write';
-import Route from './route/Route';
 import Log from './log/ChooseTheme';
+import Route from './route/Route';
+import Post from './trip/Post';
+import Write from './write/Write';
 import '@styles/components/modalMessage.scss';
 import '@styles/home/log.scss';
-import Post from './trip/Post';
 
 const Map = loadable(() => import('@components/map/Map'));
 
 const Index = () => {
   const [showMessage, setShowMessage] = useState('');
 
-  const { accessToken } = useSelector((state) => state.accessToken);
-  const { postId } = useSelector((state) => state.article);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const menu = useSelector((state) => state.marker.menu);
+  const { postId } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   // 메시지 애니메이션
@@ -39,9 +39,9 @@ const Index = () => {
     (clickedMenu, message) => {
       if (message) setShowMessage(message);
 
-      dispatch(change({ clickedMenu }));
-      dispatch(resetMap());
-      dispatch(exit());
+      dispatch(changeMenu({ clickedMenu }));
+      dispatch(resetCoordinateOnMap());
+      dispatch(closePost());
     },
     [dispatch],
   );

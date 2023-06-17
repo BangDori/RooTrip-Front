@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import Modal from '@components/wrapper/Modal';
 import ModalLocation from './ModalLocation';
@@ -15,24 +15,29 @@ const ChooseTheme = () => {
   const [middleThemeTemp, setMiddleThemeTemp] = useState({ code: null });
   const [smallThemeTemp, setSmallThemeTemp] = useState({ code: null });
   const [clickSearch, setClickSearch] = useState(false);
+
   const openModalLocation = () => {
     setClickChooseLocation(true);
     setClickChoose(true);
   };
+
   const openModalTheme = () => {
     setClickChooseTheme(true);
     setClickChoose(true);
   };
+
   const closeModal = () => {
     setClickChooseLocation(false);
     setClickChooseTheme(false);
     setClickChoose(false);
   };
+
   const SearchTourism = () => {
     if (cityTemp != null || bigThemeTemp != null) {
       setClickSearch(true);
     }
   };
+
   return (
     <div className='log-content'>
       <div className='content'>

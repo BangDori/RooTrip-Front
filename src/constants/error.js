@@ -12,13 +12,5 @@ export const PASSWORD_MISMATCH_ERROR = '비밀번호가 일치하지 않습니�
 export const EMAIL_VERIFICATION_NOT_COMPLETED_ERROR =
   '이메일 인증이 완료되지 않았습니다';
 
-// 통신 에러
-export const USER_LOGIN_FAILED_ERROR = '로그인 정보가 일치하지 않습니다. ';
-export const USER_LOGOUT_FAILED_ERROR = '로그아웃에 실패하였습니다.';
-export const TOKEN_REISSUE_ERROR = '토큰 재발급에 실패하였습니다.';
-export const USER_SOCIAL_LOGIN_FAILED_ERROR =
-  '소셜 로그인 정보가 일치하지 않습니다.';
-export const EMAIL_SEND_FAILURE = '이메일 전송에 실패했습니다.';
-
 // 알 수 없는 에러
 export const UNKNOWN_ERROR = '알 수 없는 오류가 발생하였습니다.';

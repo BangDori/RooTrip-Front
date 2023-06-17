@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,7 +10,7 @@ import LogIcon from '@assets/menu/log.png';
 import WriteIcon from '@assets/menu/write.png';
 import Menu from '@constants/menu';
 import { getPosts } from '@services/post';
-import { load } from '@store/marker';
+import { loadMarkers } from '@store/marker-store';
 import '@styles/home/nav.scss';
 
 const menuItems = [
@@ -32,15 +32,20 @@ const menuItems = [
 ];
 
 const HomeGnb = ({ onClickMenu }) => {
-  const { accessToken } = useSelector((state) => state.accessToken);
-  const menu = useSelector((state) => state.marker.menu);
+  const accessToken = useSelector((state) => state.auth.accessToken);
   const { viewType, markerCount, polygon } = useSelector((state) => state.map);
+  const menu = useSelector((state) => state.marker.menu);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getMarkers = async () => {
-      const data = await getPosts(accessToken, viewType, polygon, markerCount);
-      dispatch(load({ data }));
+      const prevMarkers = await getPosts(
+        accessToken,
+        viewType,
+        polygon,
+        markerCount,
+      );
+      dispatch(loadMarkers({ prevMarkers }));
     };
 
     if (menu === Menu.TRIP) {

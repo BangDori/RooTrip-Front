@@ -1,3 +1,5 @@
+// RooTrip Menu 목록
+
 const Menu = {
   ORDER: ' ORDER',
   FRIEND: 'FRIEND',
