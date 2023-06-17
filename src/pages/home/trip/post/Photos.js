@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import LeftDirectionImage from '@assets/post/left-direction.png';
 import RightDirectionImage from '@assets/post/right-direction.png';
+import PhotoItem from './PhotoItem';
 import '@styles/home/photo.scss';
 
 const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
@@ -26,11 +27,17 @@ const Photos = ({ photoWidth, photos, current, onChangePhoto }) => {
         className='photo-slide'
         style={{ width, right: `${current * photoWidth}px` }}
       >
-        {photos.map((photo) => (
-          <div key={photo.id} className='photo'>
-            <img src={photo.imageUrl} alt={`${photo.id}-image`} />
-          </div>
-        ))}
+        {photos.map((photo) => {
+          const address = `${photo.city} ${photo.first} ${photo.second}`;
+
+          return (
+            <PhotoItem
+              key={photo.id}
+              imageUrl={photo.imageUrl}
+              address={address}
+            />
+          );
+        })}
       </div>
       {current < photos.length - 1 && (
         <button className='move-button next_move' onClick={nextPhotoHandler}>
