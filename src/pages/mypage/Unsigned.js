@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { goUnsigned } from '@services/auth';
+import { goUnsigned } from '@services/mypage';
 
 const Unsigned = ({ accessToken }) => {
   // 회원 탈퇴 통신

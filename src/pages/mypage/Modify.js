@@ -2,7 +2,7 @@ import { useCallback, useState, useRef } from 'react';
 
 import ProfileTest from '@assets/social/naver.png';
 import useInitialState from '@hooks/useInitialState';
-import { changeNickname, changeSex, changePassword } from '@services/auth';
+import { changeNickname, changeSex, changePassword } from '@services/mypage';
 import { uploadProfileToS3 } from '@services/image';
 
 const Modify = ({ accessToken }) => {
