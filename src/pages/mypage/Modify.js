@@ -1,20 +1,26 @@
 import { useCallback, useState, useRef } from 'react';
-
-import ProfileTest from '@assets/social/naver.png';
 import useInitialState from '@hooks/useInitialState';
-import { changeNickname, changeSex, changePassword } from '@services/mypage';
-import { uploadProfileToS3 } from '@services/image';
+import { changeNickname, changeSex, changePassword } from '@services/auth';
+import {
+  uploadProfile,
+  getPreSignedUrl,
+  uploadFileToS3,
+} from '@services/image';
 
-const Modify = ({ accessToken }) => {
+const Modify = ({ accessToken, myProfileImg }) => {
+  // 파일 선택 창을 열기 위한 ref
+  const fileInputRef = useRef(null);
+  // 닉네임
   const [nickForm, setNickForm, resetNickForm] = useInitialState({
     nickname: '',
   });
+  const { nickname } = nickForm;
+  // 성별
   const [sexForm, setSexForm, resetSexForm] = useInitialState({
     gender: '',
   });
-  const [passwordForm, setPasswordForm, resetPasswordForm] = useInitialState({
-    password: 'password',
-  });
+  const { gender } = sexForm;
+  // 비밀번호 확인
   const [
     passwordConfirmForm,
     setPasswordConfirmForm,
@@ -22,20 +28,26 @@ const Modify = ({ accessToken }) => {
   ] = useInitialState({
     passwordConfirm: 'passwordConfirm',
   });
+  // 비민번호
+  const [passwordForm, setPasswordForm, resetPasswordForm] = useInitialState({
+    password: 'password',
+  });
+  const { password } = passwordForm;
+  const { passwordConfirm } = passwordConfirmForm;
+  // 비밀번호 일치 상태 검사 메세지
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
+  // 비밀번호 유호성 검사
   const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+  // 프로필 사진
   const [profileForm, setProfileForm, resetProfileForm] = useInitialState({
     profile: [],
   });
-
-  const fileInputRef = useRef(null);
-
-  const { nickname } = nickForm;
-  const { gender } = sexForm;
-  const { password } = passwordForm;
-  const { passwordConfirm } = passwordConfirmForm;
   const { profile } = profileForm;
-
+  // ProfileImgUrl
+  const [profileImageUrlForm, setProfileImageUrlForm] = useState({
+    profileImage: '',
+    tagLine: '',
+  });
   // 닉네임 입력
   const onInput = useCallback(
     (e) => {
@@ -46,7 +58,6 @@ const Modify = ({ accessToken }) => {
     },
     [setNickForm],
   );
-
   // 성별 입력
   const onSex = useCallback(
     (e) => {
@@ -57,7 +68,6 @@ const Modify = ({ accessToken }) => {
     },
     [setSexForm],
   );
-
   // 비밀 번호 입력
   const onPassword = useCallback(
     (e) => {
@@ -68,7 +78,6 @@ const Modify = ({ accessToken }) => {
     },
     [setPasswordForm],
   );
-
   // 비밀번호 확인 입력
   const onPasswordConfirm = useCallback(
     (e) => {
@@ -85,7 +94,6 @@ const Modify = ({ accessToken }) => {
     },
     [password, setPasswordConfirmForm],
   );
-
   // 프로필 사진 선택
   const handleProfileChange = useCallback((e) => {
     fileInputRef.current.click();
@@ -101,7 +109,6 @@ const Modify = ({ accessToken }) => {
     },
     [setProfileForm],
   );
-
   // 닉네임 form 통신
   const nicknameChange = useCallback(
     async (nicknameForm) => {
@@ -114,7 +121,6 @@ const Modify = ({ accessToken }) => {
     },
     [accessToken],
   );
-
   // 성별 form 통신
   const sexChange = useCallback(
     async (sexform) => {
@@ -127,7 +133,6 @@ const Modify = ({ accessToken }) => {
     },
     [accessToken],
   );
-
   // 비밀번호 form 통신
   const passwordChange = useCallback(
     async (passwordform) => {
@@ -140,21 +145,6 @@ const Modify = ({ accessToken }) => {
     },
     [accessToken],
   );
-
-  // 프로필 사진 form 통신
-  const profileChange = useCallback(
-    async (profileform) => {
-      // console.log(profileform);
-      try {
-        const profileToken = await uploadProfileToS3(profileform, accessToken);
-        alert('프로필 사진 변경 성공');
-      } catch (e) {
-        alert('프로필 사진 변경 실패');
-      }
-    },
-    [accessToken],
-  );
-
   // 닉네임 form 상태 입력
   const handleSubmitNickname = useCallback(
     (e) => {
@@ -169,7 +159,6 @@ const Modify = ({ accessToken }) => {
     },
     [nickForm, nicknameChange, resetNickForm],
   );
-
   // 성별 form 상태 입력
   const handleSubmitSex = useCallback(
     (e) => {
@@ -184,7 +173,6 @@ const Modify = ({ accessToken }) => {
     },
     [sexForm, sexChange, resetSexForm],
   );
-
   // 비밀번호 form 상태 입력
   const handleSubmitPassword = useCallback(
     (e) => {
@@ -199,17 +187,52 @@ const Modify = ({ accessToken }) => {
     },
     [passwordForm, passwordChange, resetSexForm],
   );
-
+  // 프로필 사진 업로드 함수
+  const profileUpload = useCallback(
+    async (preSignedUrl) => {
+      // 프로필 URL 전달
+      try {
+        const uploadedProfile = await uploadProfile(
+          {
+            profileImage: preSignedUrl[0],
+            tagLine: '내가 우너하는 tagLine',
+          },
+          accessToken,
+        );
+        alert('프로필 변경 성공');
+      } catch (e) {
+        alert('프로필 변경 실패');
+      }
+    },
+    [accessToken],
+  );
   // 프로필 사진 form 상태 입력
   const handleSubmitProfile = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
 
-      profileChange(profileForm);
-
+      try {
+        // 파일 선택 여부 확인
+        if (profile.length > 1) {
+          alert('프로필 사진은 1장만 선택해주세요.');
+          return;
+        }
+        // 파일 업로드
+        const preSignedUrl = await getPreSignedUrl([
+          `${Date.now()}-${profile[0].name}`,
+        ]);
+        await uploadFileToS3(profile[0], preSignedUrl);
+        profileUpload(preSignedUrl);
+      } catch (exception) {
+        alert('프로필 사진 변경 실패');
+      }
+      setProfileImageUrlForm({
+        profileImageUrl: '',
+        tagLine: '',
+      });
       resetProfileForm();
     },
-    [profileChange, profileForm, resetProfileForm],
+    [resetProfileForm, profile, profileUpload],
   );
 
   return (
@@ -217,7 +240,7 @@ const Modify = ({ accessToken }) => {
       <div className='modifyBox'>
         <div className='modifyProfile'>
           <div className='modifyTitle'>
-            <img src={ProfileTest} alt='Test' />
+            <img src={myProfileImg} alt='프로필 사진 없음' />
           </div>
           <div className='modifyContent'>
             <div style={{ display: 'flex' }}>
@@ -232,7 +255,11 @@ const Modify = ({ accessToken }) => {
                 />
               </form>
             </div>
-            <form className='changeProfile' onSubmit={handleSubmitProfile}>
+            <form
+              className='changeProfile'
+              method='post'
+              onSubmit={handleSubmitProfile}
+            >
               {/* 파일 선택 창을 열기 위해 hidden으로 설정 */}
               <input
                 ref={fileInputRef}
@@ -311,7 +338,7 @@ const Modify = ({ accessToken }) => {
               <button
                 type='submit'
                 style={{ marginLeft: '20px' }}
-                disabled={!isPasswordConfirm}
+                disabled={`${isPasswordConfirm ? '' : 'true'}`}
               >
                 변경
               </button>

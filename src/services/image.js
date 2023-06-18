@@ -37,14 +37,13 @@ export async function getPreSignedUrl(fileNames) {
     .post(`${MAIN_SERVER}/api/photo/signed`, fileNames)
     .then((res) => res.data)
     .catch((e) => new Error(e.message));
-
   if (!status) throw new Error(message);
   return url;
 }
 
 /**
  * Pre-signed Url에 파일 업로드하기
- * @param {Object} file 파일
+ * @param {Object} formData 파일
  * @param {String} preSignedUrl Pre-signed url
  */
 export async function uploadFileToS3(formData, preSignedUrl) {
@@ -56,24 +55,35 @@ export async function uploadFileToS3(formData, preSignedUrl) {
 
 /**
  * 프로필 사진 변경
- * @param {String} profileImage Pre-signed url
+ * @param {object} profileImage Pre-signed url과 tagLine
+ * @param {String} accessToken client 측의 accessToken
  */
-export async function uploadProfileToS3(profileImage, accessToken) {
-  // console.log(profileImage);
+export async function uploadProfile(profileImage, accessToken) {
   const { status, message, ...token } = await axios
-    .post(
-      `${MAIN_SERVER}/api/mypage/account/edit/profile/image`,
-      profileImage,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    .post(`${MAIN_SERVER}/api/mypage/account/edit/profile`, profileImage, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-    )
-    .then((res) => res.request.responseURL)
+    })
+    .then((res) => res.data)
     .catch((e) => new Error(e.message));
-  // console.log(status);
   if (!status) throw new Error(message);
-
   return status;
+}
+
+/**
+ * 프로필 사진 받아오기
+ * @param {String} accessToken client 측의 accessToken
+ */
+export async function loadedProfile(accessToken) {
+  const { status, message, ...token } = await axios
+    .post(`${MAIN_SERVER}/api/mypage/account/profile`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+  return token.data;
 }
