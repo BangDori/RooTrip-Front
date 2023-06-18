@@ -26,6 +26,8 @@ const Search = ({
         const items = json.response.body.items.item;
         if (Array.isArray(items)) {
           setTourismData(items);
+          // 받아온 장소의 이름 주소 좌표 사진의 url을 콘솔에 표시
+          console.log(items);
         }
       } catch (error) {
         alert('error');
