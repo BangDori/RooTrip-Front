@@ -55,6 +55,22 @@ const config = {
   module: {
     rules: [
       {
+        /**
+         * 2023.06.19 이영수 sdk 배포용 작업
+         */
+        // oneOf:[
+        //   {
+        // // Babel 파일 로더 설정
+        // test: /\.(js|jsx|ts|tsx)$/i,
+        // exclude: /node_modules/,
+        // loader: 'babel-loader',
+        //   },
+        //   {
+        //     test: /\.(ts|tsx)$/i,
+        //     loader: 'ts-loader',
+        //   },
+        // ]
+
         // Babel 파일 로더 설정
         test: /\.(js|jsx|ts|tsx)$/i,
         exclude: /node_modules/,
@@ -81,6 +97,13 @@ const config = {
     ],
   },
   resolve: {
+
+    /**
+     * 2023.06.19 이영수 sdk 배포용 작업
+     */
+    // fallback:{
+    //   crypto : require.resolve('crypto-browserify'),
+    // },
     // 절대 경로 별칭 등록
     alias: {
       '@assets': path.resolve(__dirname, 'src/assets'),
