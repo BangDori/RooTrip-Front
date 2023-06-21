@@ -2,13 +2,21 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getAddress } from '@services/image';
-import { onLocation, offLocation } from '@store/photoLocation-store';
+import { offLocation } from '@store/photoLocation-store';
 import Modal from './Modal';
 import '@styles/components/modalMessage.scss';
 
-const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
+const Photo = ({
+  id,
+  photo,
+  addRoute,
+  clicked,
+  updateCoordinate,
+  isSelectLocation,
+  setIsSelectLocation,
+  onClick,
+}) => {
   const [addressPoint, setAddressPint] = useState('');
-  const [isSelectLocation, setIsSelectLocation] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
@@ -32,7 +40,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
       };
       await updateCoordinate(updatedInfo);
       await dispatch(offLocation());
-      setIsSelectLocation(false);
+      setIsSelectLocation('');
     };
 
     if (fileName === updatedFileName) update();
@@ -43,6 +51,7 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
     updatedFileName,
     updatedLatitude,
     updatedLongitude,
+    setIsSelectLocation,
   ]);
 
   useEffect(() => {
@@ -61,17 +70,6 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
   const onClickRouteHandler = useCallback(() => {
     addRoute(id, photo);
   }, [id, addRoute, photo]);
-
-  const onClickLocationHandler = useCallback(() => {
-    if (isSelectLocation) return;
-
-    setIsSelectLocation(true);
-    dispatch(onLocation(fileName));
-    setMessage('지도에 위치를 설정해주세요!');
-    setTimeout(() => {
-      setMessage('');
-    }, 2000);
-  }, [dispatch, isSelectLocation, fileName]);
 
   if (!loading) {
     return <li className='List_piece'></li>;
@@ -100,9 +98,11 @@ const Photo = ({ photo, addRoute, clicked, updateCoordinate, id }) => {
                 ) : (
                   <button
                     type='button'
-                    onClick={onClickLocationHandler}
-                    disabled={isSelectLocation}
-                    className={isSelectLocation ? 'select-location' : ''}
+                    onClick={() => onClick(fileName)}
+                    disabled={isSelectLocation === fileName}
+                    className={
+                      isSelectLocation === fileName ? 'select-location' : ''
+                    }
                   >
                     위치 설정
                   </button>

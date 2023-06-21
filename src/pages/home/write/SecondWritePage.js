@@ -9,6 +9,7 @@ import {
   removeMarker,
   removeAllMarkers,
 } from '@store/marker-store';
+import { onLocation } from '@store/photoLocation-store';
 import { changeCityToCoordinate } from '@utils/metadata';
 
 function routeReducer(routes, action) {
@@ -32,6 +33,7 @@ const SecondWritePage = ({
   const [routes, dispatchRoute] = useReducer(routeReducer, prevRoutes);
   const [routesOnMap, setRoutesOnMap] = useState([]);
   const [showMessage, setShowMessage] = useState('');
+  const [isSelectLocation, setIsSelectLocation] = useState('');
 
   const dispatch = useDispatch();
 
@@ -103,6 +105,26 @@ const SecondWritePage = ({
     setRoutes(routes);
   }, [routes, onMovePage, setRoutes]);
 
+  const onClickLocationHandler = useCallback(
+    (fileName) => {
+      if (isSelectLocation) {
+        setShowMessage('위치를 먼저 선택해주세요!');
+        setTimeout(() => {
+          setShowMessage('');
+        }, 2000);
+        return;
+      }
+
+      setIsSelectLocation(fileName);
+      dispatch(onLocation(fileName));
+      setShowMessage('지도에 위치를 설정해주세요!');
+      setTimeout(() => {
+        setShowMessage('');
+      }, 2000);
+    },
+    [dispatch, isSelectLocation],
+  );
+
   return (
     <>
       <div className='Second_modal'>
@@ -133,6 +155,9 @@ const SecondWritePage = ({
                 addRoute={addRoute}
                 clicked={routes.indexOf(idx + 1) + 1}
                 updateCoordinate={updateCoordinate}
+                isSelectLocation={isSelectLocation}
+                setIsSelectLocation={setIsSelectLocation}
+                onClick={onClickLocationHandler}
               />
             ))}
           </div>
