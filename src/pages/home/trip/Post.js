@@ -98,7 +98,9 @@ const Post = ({ postId, accessToken }) => {
             }
           : null,
       );
-      dispatch(loadMarkers({ prevMarkers: markers }));
+
+      const formattedMarkers = markers.filter((m) => m !== null);
+      dispatch(loadMarkers({ prevMarkers: formattedMarkers }));
     };
 
     const updateCoordinate = () => {
@@ -118,7 +120,9 @@ const Post = ({ postId, accessToken }) => {
           coordinate: [Number(lat), Number(lng)],
         };
       });
-      const newMap = changeCityToCoordinate(movedPoint);
+
+      const formattedPoint = movedPoint.filter((point) => point !== null);
+      const newMap = changeCityToCoordinate(formattedPoint);
       dispatch(changeCoordinateOnMap({ newMap }));
     };
 

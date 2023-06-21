@@ -39,6 +39,8 @@ export function changeCityToCoordinate(cities) {
   let maxLat = -Infinity;
 
   cities.forEach((city) => {
+    if (city === null) return;
+
     const [lng, lat] = city.coordinate;
     totalLng += lng;
     totalLat += lat;

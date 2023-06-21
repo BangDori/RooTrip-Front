@@ -153,7 +153,7 @@ const Map = () => {
   }
 
   if (menu === Menu.TRIP && userMarker && accessToken) {
-    userMarkers = marker.map((mark) => {
+    userMarkers = userMarker.map((mark) => {
       if (!mark.coordinate) return null;
 
       const coordinateString = mark.coordinate
