@@ -83,12 +83,16 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
           <div className='modal-article'>
             <h3 className='modal-title'>{title}</h3>
             <div className='modal-content'>
-              {content.split('\\r\\n').map((line, index) => (
-                <p key={index}>
-                  {line}
-                  <br />
-                </p>
-              ))}
+              {content.split('\\r\\n').map((line, index) => {
+                if (line === '') return null;
+
+                return (
+                  <p key={index}>
+                    {line}
+                    <br />
+                  </p>
+                );
+              })}
             </div>
           </div>
           <div className='modal-comments'>

@@ -213,12 +213,16 @@ const Post = ({ postId, accessToken }) => {
               </div>
             </div>
             <div className='content'>
-              {content.split('\\r\\n').map((line, index) => (
-                <p key={index}>
-                  {line}
-                  <br />
-                </p>
-              ))}
+              {content.split('\\r\\n').map((line, index) => {
+                if (line === '') return null;
+
+                return (
+                  <p key={index}>
+                    {line}
+                    <br />
+                  </p>
+                );
+              })}
             </div>
             <button
               className='content-more-button'
