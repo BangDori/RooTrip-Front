@@ -82,7 +82,14 @@ const Content = ({ accessToken, postId, post, photos, others, onClose }) => {
         <div className='modal-main-content'>
           <div className='modal-article'>
             <h3 className='modal-title'>{title}</h3>
-            <p className='modal-content'>{content}</p>
+            <div className='modal-content'>
+              {content.split('\\r\\n').map((line, index) => (
+                <p key={index}>
+                  {line}
+                  <br />
+                </p>
+              ))}
+            </div>
           </div>
           <div className='modal-comments'>
             <div className='modal-comments-tot-count-box'>

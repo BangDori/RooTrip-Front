@@ -189,9 +189,6 @@ const Post = ({ postId, accessToken }) => {
               onChangePhoto={onChangePhoto}
             />
           </div>
-          {/* <div className='addr'>
-            <span>경상북도 경산시 대학로 280 or (영남대 정문)</span>
-          </div> */}
           <div className='article'>
             <div className='header-bar'>
               <div className='left-bar'>
