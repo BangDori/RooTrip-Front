@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { loadMarkers, removeAllMarkers } from '@store/marker-store';
 import Article from './Article';
 
 const Search = ({
@@ -12,6 +14,8 @@ const Search = ({
   const [tourismData, setTourismData] = useState(null);
   const [isArticle, setIsArticle] = useState(false);
   const [articleData, setArticleData] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,15 +30,21 @@ const Search = ({
         const items = json.response.body.items.item;
         if (Array.isArray(items)) {
           setTourismData(items);
-          // 받아온 장소의 이름 주소 좌표 사진의 url을 콘솔에 표시
-          console.log(items);
+          dispatch(removeAllMarkers());
+          const markers = items.map((item) => ({
+            id: item.contentid,
+            coordinate: `POINT(${item.mapy} ${item.mapx})`,
+            imageUrl: item.firstimage,
+          }));
+
+          dispatch(loadMarkers({ prevMarkers: markers }));
         }
       } catch (error) {
         alert('error');
       }
     };
     fetchData();
-  }, [bigThemeTemp.code, cityTemp.code, middleThemeTemp, smallThemeTemp]);
+  }, [dispatch, bigThemeTemp, cityTemp, middleThemeTemp, smallThemeTemp.code]);
 
   // 게시글 클릭
   const openArticle = useCallback((item) => {

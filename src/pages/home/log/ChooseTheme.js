@@ -33,8 +33,10 @@ const ChooseTheme = () => {
   };
 
   const SearchTourism = () => {
-    if (cityTemp != null || bigThemeTemp != null) {
+    if (cityTemp != null || bigThemeTemp.code != null) {
       setClickSearch(true);
+      // eslint-disable-next-line no-console
+      console.log('hi');
     }
   };
 
