@@ -5,7 +5,6 @@ const Menu = {
   FRIEND: 'FRIEND',
   TRIP: 'TRIP',
   ROUTE: 'ROUTE',
-  LOG: 'LOG',
   WRITE: 'WRITE',
 };
 

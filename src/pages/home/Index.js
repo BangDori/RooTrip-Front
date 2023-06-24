@@ -9,12 +9,10 @@ import { changeMenu } from '@store/menu-store';
 import { closePost } from '@store/post-store';
 import HomeMenu from './HomeMenu';
 import HomeLogo from './HomeLogo';
-import Log from './log/ChooseTheme';
 import Route from './route/Route';
 import Post from './trip/Post';
 import Write from './write/Write';
 import '@styles/components/modalMessage.scss';
-import '@styles/home/log.scss';
 
 const Map = loadable(() => import('@components/map/Map'));
 
@@ -50,9 +48,6 @@ const Index = () => {
   switch (menu) {
     case Menu.ROUTE:
       content = <Route />;
-      break;
-    case Menu.LOG:
-      content = <Log />;
       break;
     case Menu.WRITE:
       content = <Write onClose={onCloseHandler} />;

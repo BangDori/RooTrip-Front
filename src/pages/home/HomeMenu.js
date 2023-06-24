@@ -6,7 +6,6 @@ import MyPageIcon from '@assets/menu/mypage.png';
 import FriendIcon from '@assets/menu/friend.png';
 import TripIcon from '@assets/menu/trip.png';
 import RouteIcon from '@assets/menu/route.png';
-import LogIcon from '@assets/menu/log.png';
 import WriteIcon from '@assets/menu/write.png';
 import Menu from '@constants/menu';
 import { getPosts } from '@services/post';
@@ -17,12 +16,6 @@ const menuItems = [
   { id: Menu.FRIEND, label: '친구 게시글', icon: FriendIcon },
   { id: Menu.TRIP, label: 'Trip', icon: TripIcon },
   { id: Menu.ROUTE, label: 'Route', icon: RouteIcon },
-  {
-    id: Menu.LOG,
-    label: 'Log',
-    icon: LogIcon,
-    iconWidth: '26px',
-  },
   {
     id: Menu.WRITE,
     label: '게시글 작성',
