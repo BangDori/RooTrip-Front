@@ -10,7 +10,7 @@ import '@styles/register/register.scss';
 const Index = () => (
   <>
     <Title title='JOIN MEMBERS' className='registerTitle' />
-    <div className='Register_main'>
+    <div className='register-container'>
       <TOC table={registerTable} />
       <RegisterContainer />
     </div>

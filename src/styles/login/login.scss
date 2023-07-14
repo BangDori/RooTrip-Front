@@ -79,7 +79,9 @@ button {
     .login_error {
       color: rgb(249, 63, 63);
       font-weight: bold;
+      margin-top: 0;
       margin-bottom: 12px;
+
       @media only screen and (min-width: 1601px) {
         font-size: 16px;
       }

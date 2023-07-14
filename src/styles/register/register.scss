@@ -1,17 +1,11 @@
-.Register_main {
-  .User_data {
+.register-container {
+  .register-form {
     display: flex;
     flex-direction: column;
     margin-left: 390px;
   }
 
-  .User_data_crt {
-    display: flex;
-    flex-direction: row;
-    margin-top: 15px;
-    margin-left: 375px;
-  }
-  .User_data_content {
+  .register-section {
     display: flex;
     flex-direction: column;
     padding-left: 30px;
@@ -19,11 +13,13 @@
     .check_box {
       display: inline-flex;
       margin-left: 30px;
-      .check_sex {
+
+      .gender {
         margin: 0;
         display: flex;
         justify-content: center;
         align-items: center;
+
         button {
           font-size: 18px;
           width: 45px;

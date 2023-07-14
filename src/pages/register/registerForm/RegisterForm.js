@@ -103,8 +103,8 @@ const RegisterForm = ({ onRegister }) => {
   );
 
   return (
-    <form className='User_data' onSubmit={handleSubmit}>
-      <div className='User_data_content'>
+    <form className='register-form' onSubmit={handleSubmit}>
+      <section className='register-section'>
         <div className='input-register_form'>
           <Input
             name='name'
@@ -114,7 +114,7 @@ const RegisterForm = ({ onRegister }) => {
             placeholder='이름을 입력해주세요'
           />
           <div className='check_box'>
-            <span className='check_sex'>
+            <span className='gender'>
               <Button
                 type='button'
                 name='gender'
@@ -124,7 +124,7 @@ const RegisterForm = ({ onRegister }) => {
                 content='남'
               />
             </span>
-            <span className='check_sex'>
+            <span className='gender'>
               <Button
                 type='button'
                 name='gender'
@@ -179,7 +179,7 @@ const RegisterForm = ({ onRegister }) => {
             <p>{validation.password2}</p>
           </Input>
         </div>
-      </div>
+      </section>
 
       <RegisterButton />
     </form>
