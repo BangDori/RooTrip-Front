@@ -6,8 +6,6 @@ import MypageMenu from '@constants/mypageMenu';
 const menuItems = [
   { id: MypageMenu.MODIFY, label: '개인정보 수정' },
   { id: MypageMenu.MYTRIP, label: '나의 여행' },
-  { id: MypageMenu.LIKEDTRIP, label: '좋아한 여행' },
-  { id: MypageMenu.SAVEDTRIP, label: '저장한 여행' },
   { id: MypageMenu.UNSIGNED, label: '회원 탈퇴' },
 ];
 
