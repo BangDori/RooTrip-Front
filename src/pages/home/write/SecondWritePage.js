@@ -57,7 +57,8 @@ const SecondWritePage = ({
 
   const onInsert = useCallback(
     (id, photo) => {
-      const { url: imageUrl, longitude, latitude } = photo;
+      const { url: imageUrl } = photo;
+      const { longitude, latitude } = photo.coordinate;
       const coordinate = `POINT(${latitude} ${longitude})`;
       dispatchRoute({ type: 'INSERT', id });
       dispatch(
