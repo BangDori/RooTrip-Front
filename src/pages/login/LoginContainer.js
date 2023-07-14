@@ -5,7 +5,6 @@ import { login } from '@services/auth';
 import { setToken } from '@store/auth-store';
 import { setRefreshToken } from '@utils/authCookie';
 import LoginForm from './loginForm/LoginForm';
-import LoginError from './loginForm/LoginError';
 
 const LoginContainer = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +35,7 @@ const LoginContainer = () => {
   return (
     <>
       <LoginForm onLogin={onLogin} />
-      {error && <LoginError error={error} />}
+      {error && <p className='login_error'>{error}</p>}
     </>
   );
 };

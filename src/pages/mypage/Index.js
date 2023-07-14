@@ -13,8 +13,6 @@ import { loadedProfile } from '@services/image';
 import Nav from './Nav';
 import Modify from './Modify';
 import MyTrip from './MyTrip';
-import LikedTrip from './LikedTrip';
-import SavedTrip from './SavedTrip';
 import Unsigned from './Unsigned';
 import '@styles/mypage/mypage.scss';
 
@@ -40,25 +38,6 @@ const Index = () => {
     }
   }, [accessToken]);
 
-  // 좋아요 누른 게시글 불러오기
-  const onLikedArticle = useCallback(async () => {
-    try {
-      const likedArticleToken = await likedArticle(accessToken);
-      setLikedArticleData(likedArticleToken);
-    } catch (e) {
-      alert('좋아요 게시글 가져오기 실패!');
-    }
-  }, [accessToken]);
-
-  // 저장된 게시글 불러오기
-  const onSavedArticle = useCallback(async () => {
-    try {
-      const savedArticleToken = await savedArticle(accessToken);
-      setsavedArticleData(savedArticleToken);
-    } catch (e) {
-      alert('저장된 게시글 가져오기 실패!');
-    }
-  }, [accessToken]);
   // 저장된 프로필 가져오기
   const loadProfile = useCallback(async () => {
     try {
@@ -82,21 +61,8 @@ const Index = () => {
       if (clickedMenu === 'MYTRIP') {
         onMyTripArticle();
       }
-      if (clickedMenu === 'LIKEDTRIP') {
-        onLikedArticle();
-      }
-      if (clickedMenu === 'SAVEDTRIP') {
-        onSavedArticle();
-      }
     },
-    [
-      dispatch,
-      loadProfile,
-      onLikedArticle,
-      onMyTripArticle,
-      onSavedArticle,
-      postId,
-    ],
+    [dispatch, loadProfile, onMyTripArticle, postId],
   );
 
   let content = '';
@@ -108,12 +74,6 @@ const Index = () => {
       break;
     case MypageMenu.MYTRIP:
       content = <MyTrip articleData={myArticleData} />;
-      break;
-    case MypageMenu.LIKEDTRIP:
-      content = <LikedTrip articleData={likedArticleData} />;
-      break;
-    case MypageMenu.SAVEDTRIP:
-      content = <SavedTrip articleData={savedArticleData} />;
       break;
     case MypageMenu.UNSIGNED:
       content = <Unsigned accessToken={accessToken} />;

@@ -12,9 +12,8 @@ const FirstWritePage = ({ onMovePage, onUploadPhotos }) => {
     const newPhoto = {
       fileName: `${Date.now()}-${fileInfo.name}`,
       dateTime: '',
-      latitude: '',
-      longitude: '',
       url: URL.createObjectURL(fileInfo),
+      coordinate: {},
     };
 
     if (
@@ -37,10 +36,9 @@ const FirstWritePage = ({ onMovePage, onUploadPhotos }) => {
       );
 
       newPhoto.dateTime = DateTime;
-      newPhoto.latitude = latitude;
-      newPhoto.longitude = longitude;
+      newPhoto.coordinate.latitude = latitude;
+      newPhoto.coordinate.longitude = longitude;
     }
-
     return newPhoto;
   }, []);
 

@@ -27,7 +27,8 @@ const Photo = ({
   } = useSelector((state) => state.photoLocation);
   const dispatch = useDispatch();
 
-  const { fileName, url, latitude, longitude } = photo;
+  const { fileName, url } = photo;
+  const { latitude, longitude } = photo.coordinate;
 
   useEffect(() => {
     if (!updatedLatitude) return;
