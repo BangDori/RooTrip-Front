@@ -1,37 +1,31 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import loadable from '@loadable/component';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import useAccessToken from '@hooks/useAccessToken';
+import RootLayout from './pages/RootLayout';
+import ErrorPage from './pages/Error';
+import LoginPage from './pages/Login';
 
-const Home = loadable(() => import('@pages/home/Index'));
-const Login = loadable(() => import('@pages/login/Index'));
-const FindAccount = loadable(() => import('@pages/account/Index'));
-const Register = loadable(() => import('@pages/register/Index'));
-const SocialAuth = loadable(() => import('@components/common/SocialAuth'));
-const Mypage = loadable(() => import('@pages/mypage/Index'));
-const NotFound = loadable(() => import('@components/common/NotFound'));
+import AuthLayout from './pages/AuthLayout';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <LoginPage />,
+      },
+    ],
+  },
+  {
+    path: '/auth',
+    element: <AuthLayout />,
+  },
+]);
 
 const App = () => {
-  const { accessToken, expireTime } = useSelector((state) => state.auth);
-
-  useAccessToken(accessToken, expireTime);
-
-  return (
-    <Routes>
-      {!accessToken ? (
-        <Route path='/' element={<Login />} />
-      ) : (
-        <Route path='/' element={<Home />} />
-      )}
-      <Route path='/account' element={<FindAccount />} />
-      <Route path='/register' element={<Register />} />
-      <Route path='/oauth/:provider/*' element={<SocialAuth />} />
-      <Route path='/mypage' element={<Mypage />} />
-      <Route path='/*' element={<NotFound />} />
-    </Routes>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App;

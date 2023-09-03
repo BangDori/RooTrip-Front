@@ -3,15 +3,20 @@
     [
       "@babel/preset-env",
       {
-        "useBuiltIns": "usage", // 폴리필 삽입 옵션 usage = 실제 사용한 폴리필 삽입
-        "corejs": 3 // corejs 버전
+        // 브라우저 버전 명시
+        "targets": {
+          "browsers": ["last 2 versions", "ie >= 11"]
+        },
+        // 폴리필 삽입 옵션 usage = 실제 사용한 폴리필 삽입
+        "useBuiltIns": "usage",
+        "corejs": 3
       }
     ],
-    ["@babel/preset-react", { "runtime": "automatic" }],
-    "@babel/preset-typescript"
+    ["@babel/preset-react", { "runtime": "automatic" }]
   ],
   "plugins": [
-    "@babel/syntax-dynamic-import",
+    "babel-plugin-styled-components",
+    "@babel/plugin-syntax-dynamic-import",
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties"
   ]
