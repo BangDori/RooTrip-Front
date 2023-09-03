@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -12,9 +13,11 @@
     "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.4",
     "react-map-gl": "^7.0.21",
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
+    "react-spinners": "^0.13.8",
     "styled-components": "^5.3.8"
   },
   "scripts": {
@@ -72,7 +75,7 @@
     "mini-css-extract-plugin": "^2.7.3",
     "prettier": "^2.8.4",
     "react-refresh": "^0.14.0",
-    "sass": "^1.59.2",
+    "sass": "^1.66.1",
     "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
     "typescript": "^4.9.5",
