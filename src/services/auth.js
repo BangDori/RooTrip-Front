@@ -1,6 +1,8 @@
 import { json } from 'react-router-dom';
 import { MAIN_SERVER } from '@config/server-config';
 
+const AUTH_API_SERVER = `${MAIN_SERVER}/api/auth`;
+
 /**
  * API 요청 Interface
  * @param {String} url 통신 URI
@@ -10,7 +12,7 @@ import { MAIN_SERVER } from '@config/server-config';
  */
 export async function authAPI(url, method, data) {
   try {
-    const response = await fetch(MAIN_SERVER + url, {
+    const response = await fetch(AUTH_API_SERVER + url, {
       method,
       headers: {
         'Content-Type': 'application/json',
@@ -25,12 +27,23 @@ export async function authAPI(url, method, data) {
 }
 
 /**
+ * 회원가입 API
+ * @param {Object} signupForm
+ * @returns 응답
+ */
+const signupAPI = async (signupForm) => {
+  const response = await authAPI('/register', 'POST', signupForm);
+
+  return response;
+};
+
+/**
  * 로그인 API
  * @param {Object} loginForm
  * @returns 응답
  */
 const loginAPI = async (loginForm) => {
-  const response = await authAPI('/api/auth/login', 'POST', loginForm);
+  const response = await authAPI('/login', 'POST', loginForm);
 
   return response;
 };
@@ -42,7 +55,7 @@ const loginAPI = async (loginForm) => {
  * @returns
  */
 const socialLoginAPI = async (provider, code) => {
-  const response = await authAPI('/api/auth/social', 'POST', {
+  const response = await authAPI('/social', 'POST', {
     provider,
     code,
   });
@@ -56,11 +69,7 @@ const socialLoginAPI = async (provider, code) => {
  * @returns 응답
  */
 const reIssueAPI = async (reIssueForm) => {
-  const response = await authAPI(
-    '/api/auth/token/reissue',
-    'POST',
-    reIssueForm,
-  );
+  const response = await authAPI('/token/reissue', 'POST', reIssueForm);
 
   return response;
 };
@@ -69,7 +78,7 @@ const reIssueAPI = async (reIssueForm) => {
  * 로그아웃 API
  */
 const logoutAPI = async () => {
-  await authAPI('/api/auth/logout');
+  await authAPI('/logout');
 };
 
-export { loginAPI, socialLoginAPI, reIssueAPI, logoutAPI };
+export { signupAPI, loginAPI, socialLoginAPI, reIssueAPI, logoutAPI };
