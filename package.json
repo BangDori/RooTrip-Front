@@ -18,7 +18,8 @@
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
     "react-spinners": "^0.13.8",
-    "styled-components": "^5.3.8"
+    "styled-components": "^5.3.8",
+    "use-timer": "^2.0.1"
   },
   "scripts": {
     "dev": "webpack serve",
