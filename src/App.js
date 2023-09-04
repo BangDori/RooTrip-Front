@@ -7,7 +7,7 @@ import TripPage from '@pages/root/TripPage';
 
 import AuthLayout from '@pages/AuthLayout';
 import SignUpPage, { action as signupAction } from '@pages/auth/SignUpPage';
-import AccountPage from '@pages/auth/AccountPage';
+import AccountPage, { action as accountAction } from '@pages/auth/AccountPage';
 
 import { loader as socialLoginLoader } from '@pages/social/SocialLogin';
 
@@ -89,6 +89,7 @@ const router = createBrowserRouter([
         path: 'account',
         element: <AccountPage />,
         loader: restrictAccessWithToken,
+        action: accountAction,
       },
     ],
   },
