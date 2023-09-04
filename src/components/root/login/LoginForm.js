@@ -18,8 +18,8 @@ const LoginForm = ({ error, isSubmitting }) => {
   } = useForm({
     mode: 'onSubmit',
     defaultValues: {
-      email: 'test@example.com',
-      password: 'test1234!',
+      email: '',
+      password: '',
     },
   });
   const submit = useSubmit();
