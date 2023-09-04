@@ -5,18 +5,21 @@ import { BeatLoader } from 'react-spinners';
 
 import { regExpEmail } from '@constants/regular-expression';
 import useVerify from '@hooks/useVerify';
+import usePreventLeave from '@hooks/usePreventLeave';
 
 const AccountForm = ({ error, isSubmitting }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     getValues,
     setError,
   } = useForm({ mode: 'onBlur' });
 
   const { timer, isSend, sendCount, sendCode, isStopped } = useVerify();
   const submit = useSubmit();
+
+  usePreventLeave(isDirty);
 
   const onSendVerifyCode = () => {
     const email = getValues('email');

@@ -10,12 +10,13 @@ import {
   regExpPassword,
   regExpNickname,
 } from '@constants/regular-expression';
+import usePreventLeave from '@hooks/usePreventLeave';
 
 const SignUpForm = ({ error, isSubmitting }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
     setError,
     reset,
     setFocus,
@@ -23,6 +24,8 @@ const SignUpForm = ({ error, isSubmitting }) => {
     mode: 'onBlur',
   });
   const submit = useSubmit();
+
+  usePreventLeave(isDirty);
 
   useEffect(() => setFocus('email'), [setFocus]);
 
