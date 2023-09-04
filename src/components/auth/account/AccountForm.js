@@ -22,8 +22,7 @@ const AccountForm = ({ error, isSubmitting }) => {
 
   const { timer, isSend, sendCount, sendCode, isStopped } = useVerify();
   const submit = useSubmit();
-  const notify = (message) => toast(`🦄 ${message}`);
-
+  const notify = (message) => toast.info(message);
   usePreventLeave(isDirty);
 
   useEffect(() => setFocus('email'), [setFocus]);
@@ -47,7 +46,6 @@ const AccountForm = ({ error, isSubmitting }) => {
     }
 
     submit(accountForm, { method: 'POST' });
-    notify('초기화된 비밀번호가 전송되었습니다.');
   };
 
   return (
@@ -125,10 +123,9 @@ const AccountForm = ({ error, isSubmitting }) => {
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
-        draggable
         pauseOnHover
         theme='light'
-      />{' '}
+      />
     </form>
   );
 };
