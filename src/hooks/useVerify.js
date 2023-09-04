@@ -24,9 +24,9 @@ const useVerify = () => {
     .toString()
     .padStart(2, '0')}:${(time % 60).toString().padStart(2, '0')}`;
 
-  const sendCode = async (email) => {
+  const sendCode = async (email, notify) => {
     if (sendCount <= 0) {
-      alert('인증번호 전송 횟수를 초과하였습니다.');
+      notify('인증번호 전송 횟수를 초과하였습니다.');
       return;
     }
 
@@ -42,11 +42,11 @@ const useVerify = () => {
     const resData = await response.json();
 
     if (!resData.status) {
-      alert('이메일 인증에 실패하였습니다. 다시 시도해주세요.');
+      notify('이메일 인증에 실패하였습니다. 다시 시도해주세요.');
       return;
     }
 
-    alert(message);
+    notify(message);
     start();
     setIsSend(true);
     setSendCount((prevCount) => prevCount - 1);

@@ -1,12 +1,14 @@
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSubmit } from 'react-router-dom';
 import { ErrorMessage } from '@hookform/error-message';
 import { BeatLoader } from 'react-spinners';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { regExpEmail } from '@constants/regular-expression';
 import useVerify from '@hooks/useVerify';
 import usePreventLeave from '@hooks/usePreventLeave';
-import { useEffect } from 'react';
 
 const AccountForm = ({ error, isSubmitting }) => {
   const {
@@ -20,12 +22,13 @@ const AccountForm = ({ error, isSubmitting }) => {
 
   const { timer, isSend, sendCount, sendCode, isStopped } = useVerify();
   const submit = useSubmit();
+  const notify = (message) => toast(`🦄 ${message}`);
 
   usePreventLeave(isDirty);
 
   useEffect(() => setFocus('email'), [setFocus]);
 
-  const onSendVerifyCode = () => {
+  const onSendVerifyCode = async () => {
     const email = getValues('email');
 
     if (!regExpEmail.test(email)) {
@@ -34,7 +37,7 @@ const AccountForm = ({ error, isSubmitting }) => {
       return;
     }
 
-    sendCode(email);
+    await sendCode(email, notify);
   };
 
   const onSubmit = (accountForm) => {
@@ -44,6 +47,7 @@ const AccountForm = ({ error, isSubmitting }) => {
     }
 
     submit(accountForm, { method: 'POST' });
+    notify('초기화된 비밀번호가 전송되었습니다.');
   };
 
   return (
@@ -99,7 +103,6 @@ const AccountForm = ({ error, isSubmitting }) => {
           render={({ message }) => <p className='error-message'>{message}</p>}
         />
       </div>
-
       <button className='submit-button' type='submit' disabled={isSubmitting}>
         {isSubmitting && (
           <BeatLoader
@@ -113,6 +116,18 @@ const AccountForm = ({ error, isSubmitting }) => {
         {!isSubmitting && '비밀번호 초기화'}
       </button>
       {error && <p className='fetch-error-message'>{error.message}</p>}
+      <ToastContainer
+        position='top-right'
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='light'
+      />{' '}
     </form>
   );
 };

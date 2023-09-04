@@ -29,7 +29,6 @@ export async function action({ request }) {
     return json({ message: resData.message });
   }
 
-  alert('초기화된 비밀번호를 메일로 전송하였습니다.');
   // 비밀번호 초기화 메일 전송 성공
   return redirect('/');
 }
