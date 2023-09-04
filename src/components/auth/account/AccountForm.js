@@ -6,6 +6,7 @@ import { BeatLoader } from 'react-spinners';
 import { regExpEmail } from '@constants/regular-expression';
 import useVerify from '@hooks/useVerify';
 import usePreventLeave from '@hooks/usePreventLeave';
+import { useEffect } from 'react';
 
 const AccountForm = ({ error, isSubmitting }) => {
   const {
@@ -14,6 +15,7 @@ const AccountForm = ({ error, isSubmitting }) => {
     formState: { errors, isDirty },
     getValues,
     setError,
+    setFocus,
   } = useForm({ mode: 'onBlur' });
 
   const { timer, isSend, sendCount, sendCode, isStopped } = useVerify();
@@ -21,11 +23,14 @@ const AccountForm = ({ error, isSubmitting }) => {
 
   usePreventLeave(isDirty);
 
+  useEffect(() => setFocus('email'), [setFocus]);
+
   const onSendVerifyCode = () => {
     const email = getValues('email');
 
     if (!regExpEmail.test(email)) {
       setError('email', { message: '※ 이메일 형식이 올바르지 않습니다.' });
+      setFocus('email');
       return;
     }
 
