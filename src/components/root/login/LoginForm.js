@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import BeatLoader from 'react-spinners/BeatLoader';
 
-import '@styles/login/LoginForm.scss';
+import '@styles/root/login/LoginForm.scss';
 import '@styles/spinner/BeatSpinner.scss';
 
 const LoginForm = ({ error, isSubmitting }) => {

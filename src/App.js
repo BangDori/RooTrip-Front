@@ -2,14 +2,16 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import RootLayout from '@pages/RootLayout';
 import ErrorPage from '@pages/ErrorPage';
-import LoginPage, { action as loginAction } from '@pages/LoginPage';
-import TripPage from '@pages/TripPage';
+import LoginPage, { action as loginAction } from '@pages/root/LoginPage';
+import TripPage from '@pages/root/TripPage';
 
 import AuthLayout from '@pages/AuthLayout';
+import SignUpPage, { action as signupAction } from '@pages/auth/SignUpPage';
+import AccountPage from '@pages/auth/AccountPage';
 
-import { loader as socialLoginLoader } from '@pages/SocialLogin';
+import { loader as socialLoginLoader } from '@pages/social/SocialLogin';
 
-import { loader as logoutLoader } from '@pages/Logout';
+import { loader as logoutLoader } from '@pages/logout/Logout';
 import {
   tokenLoader,
   restrictAccessWithNoToken,
@@ -79,10 +81,13 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'signup',
+        element: <SignUpPage />,
         loader: restrictAccessWithToken,
+        action: signupAction,
       },
       {
         path: 'account',
+        element: <AccountPage />,
         loader: restrictAccessWithToken,
       },
     ],

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import kakaoIcon from '@assets/kakao-icon.png';
 import naverIcon from '@assets/naver-icon.png';
 import { NAVER_AUTH_URL, KAKAO_AUTH_URL } from '@config/auth-config';
-import '@styles/login/LoginNavigation.scss';
+import '@styles/root/login/LoginNavigation.scss';
 
 const LoginNavigation = () => {
   return (

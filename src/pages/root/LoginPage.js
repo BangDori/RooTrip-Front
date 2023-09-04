@@ -1,6 +1,6 @@
 import { json, redirect, useActionData, useNavigation } from 'react-router-dom';
 
-import Login from '@components/Login';
+import Login from '@components/root/login/Login';
 import { loginAPI } from '@services/auth';
 import { setTokens } from '@utils/token';
 
