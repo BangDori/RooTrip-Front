@@ -65,6 +65,7 @@ const AccountForm = ({ error, isSubmitting }) => {
             {...register('email', {
               required: '※ 필수 항목 입니다.',
             })}
+            disabled={isSend}
           />
           <button
             className={`send-button ${sendCount === 0 && 'disabled'}`}
