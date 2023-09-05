@@ -1,7 +1,7 @@
-import { redirectDocument, json } from 'react-router-dom';
+import { json, redirect } from 'react-router-dom';
 
 import store from '@store/configureStore';
-import { reIssueStore } from '@store/user';
+import { loginStore } from '@store/user';
 import { socialLoginAPI } from '@services/auth';
 
 export async function loader({ request, params }) {
@@ -19,7 +19,7 @@ export async function loader({ request, params }) {
 
   // 로그인 성공
   const tokens = resData.data;
-  store.dispatch(reIssueStore(tokens));
+  store.dispatch(loginStore(tokens));
 
-  return redirectDocument('/trip');
+  return redirect('/trip');
 }
