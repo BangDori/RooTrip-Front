@@ -1,15 +1,23 @@
+import { json, redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { json } from 'react-router-dom';
+
+import store from '@store/configureStore';
+
+/**
+ * refreshtoken 반환
+ * @returns refreshtoken or undefined
+ */
+export function getRefreshToken() {
+  return Cookies.get('refreshtoken');
+}
 
 /**
  * 토큰의 잔여 시간을 받아오기 위한 함수
  * @returns 잔여 시간
  */
-export function getTokenDuration() {
-  const storedExpirationDate = Cookies.get('expiration');
-  const expirationDate = new Date(storedExpirationDate);
+export function getTokenDuration(expiration) {
   const now = new Date();
-  const duration = expirationDate.getTime() - now.getTime();
+  const duration = expiration - now.getTime();
 
   return duration;
 }
@@ -19,19 +27,11 @@ export function getTokenDuration() {
  * @returns 토큰
  */
 export function getAuthToken() {
-  const accesstoken = Cookies.get('accesstoken');
+  const { user } = store.getState();
+  const { accessToken: accesstoken, expiration } = user;
 
-  if (!accesstoken) {
-    return null;
-  }
-
-  const tokenDuration = getTokenDuration();
-
-  if (tokenDuration < 0) {
-    return 'EXPIRED';
-  }
-
-  return accesstoken;
+  const tokenDuration = getTokenDuration(expiration);
+  return { accesstoken, expiration: tokenDuration };
 }
 
 /**
@@ -49,16 +49,10 @@ export function tokenLoader() {
  * @returns 로그인페이지로 이동
  */
 export async function restrictAccessWithNoToken() {
-  const token = getAuthToken();
+  const { accesstoken } = getAuthToken();
 
-  if (!token) {
-    throw json(
-      {
-        message: '로그인 후 이용해주세요.',
-        link: '/',
-      },
-      { status: 401 },
-    );
+  if (!accesstoken) {
+    return redirect('/');
   }
 
   return null;
@@ -69,10 +63,10 @@ export async function restrictAccessWithNoToken() {
  * @returns 에러 요청
  */
 export function restrictAccessWithToken() {
-  const token = getAuthToken();
+  const { accesstoken } = getAuthToken();
 
   // 토큰이 존재할 경우 Error
-  if (token) {
+  if (accesstoken) {
     throw json(
       {
         message: '요청한 페이지를 찾을 수 없습니다.',
@@ -86,16 +80,21 @@ export function restrictAccessWithToken() {
 }
 
 /**
- * 토큰 저장
- * @param {String} accesstoken
+ * refreshtoken 저장
  * @param {String} refreshtoken
- * @param {Number} expire 만료 시간
  */
-export function setTokens(accesstoken, refreshtoken, expire) {
-  const now = new Date();
-  const expiration = new Date(now.getTime() + expire * 1000);
-
-  Cookies.set('accesstoken', accesstoken);
+export function setRefreshToken(refreshtoken) {
   Cookies.set('refreshtoken', refreshtoken);
-  Cookies.set('expiration', expiration.toISOString());
+}
+
+/**
+ * 만료 시간 변환
+ * @param {Number} expire
+ * @returns 만료 시간
+ */
+export function getExpiration(expire) {
+  const now = new Date();
+  const expiration = new Date(now.getTime() + expire * 1000).getTime();
+
+  return expiration;
 }

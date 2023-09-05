@@ -1,12 +1,9 @@
-import Cookies from 'js-cookie';
 import { redirectDocument } from 'react-router-dom';
-import { logoutAPI } from '@services/auth';
+
+import store from '@store/configureStore';
+import { logoutStore } from '@store/user';
 
 export async function loader() {
-  await logoutAPI();
-  Cookies.remove('accesstoken');
-  Cookies.remove('refreshtoken');
-  Cookies.remove('expiration');
-
+  await store.dispatch(logoutStore());
   return redirectDocument('/');
 }

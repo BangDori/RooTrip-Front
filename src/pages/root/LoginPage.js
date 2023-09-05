@@ -1,8 +1,9 @@
 import { json, redirect, useActionData, useNavigation } from 'react-router-dom';
 
 import Login from '@components/root/login/Login';
+import store from '@store/configureStore';
+import { loginStore } from '@store/user';
 import { loginAPI } from '@services/auth';
-import { setTokens } from '@utils/token';
 
 const LoginPage = () => {
   const error = useActionData();
@@ -31,8 +32,8 @@ export async function action({ request }) {
   }
 
   // 로그인 성공
-  const { accessToken, refreshToken, expire } = resData.data;
-  setTokens(accessToken, refreshToken, expire);
+  const tokens = resData.data;
+  store.dispatch(loginStore(tokens));
 
   return redirect('/trip');
 }

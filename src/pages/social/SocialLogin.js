@@ -1,7 +1,8 @@
 import { redirectDocument, json } from 'react-router-dom';
 
+import store from '@store/configureStore';
+import { reIssueStore } from '@store/user';
 import { socialLoginAPI } from '@services/auth';
-import { setTokens } from '@utils/token';
 
 export async function loader({ request, params }) {
   const { provider } = params;
@@ -17,8 +18,8 @@ export async function loader({ request, params }) {
   }
 
   // 로그인 성공
-  const { accessToken, refreshToken, expire } = resData.data;
-  setTokens(accessToken, refreshToken, expire);
+  const tokens = resData.data;
+  store.dispatch(reIssueStore(tokens));
 
   return redirectDocument('/trip');
 }
