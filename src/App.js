@@ -1,3 +1,4 @@
+import { Provider } from 'react-redux';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import RootLayout from '@pages/RootLayout';
@@ -12,6 +13,8 @@ import AccountPage, { action as accountAction } from '@pages/auth/AccountPage';
 import { loader as socialLoginLoader } from '@pages/social/SocialLogin';
 
 import { loader as logoutLoader } from '@pages/logout/Logout';
+
+import store from '@store/configureStore';
 import {
   tokenLoader,
   restrictAccessWithNoToken,
@@ -104,7 +107,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />;
+    </Provider>
+  );
 };
 
 export default App;

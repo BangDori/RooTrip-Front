@@ -1,29 +1,20 @@
 import { useCallback, useEffect } from 'react';
 import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 import Map from '@components/Map';
-import { setTokens, getTokenDuration } from '@utils/token';
-import { reIssueAPI } from '@services/auth';
+import store from '@store/configureStore';
+import { reIssueStore } from '@store/user';
+import { getRefreshToken } from '@utils/token';
 
 const RootLayout = () => {
-  const accesstoken = useLoaderData();
-  const refreshtoken = Cookies.get('refreshtoken');
+  const { accesstoken, expiration } = useLoaderData();
+  const refreshtoken = getRefreshToken('refreshtoken');
   const navigate = useNavigate();
 
   const reIssueToken = useCallback(async () => {
-    const reIssueForm = {
-      grant_type: 'refresh_token',
-      refresh_token: refreshtoken,
-    };
-    const response = await reIssueAPI(reIssueForm);
-    const resData = await response.json();
-
-    const { accessToken, expire } = resData.data;
-    setTokens(accessToken, refreshtoken, expire);
-
+    await store.dispatch(reIssueStore(refreshtoken));
     navigate('/trip');
-  }, [refreshtoken, navigate]);
+  }, [navigate, refreshtoken]);
 
   useEffect(() => {
     if (!accesstoken) {
@@ -31,17 +22,15 @@ const RootLayout = () => {
       return;
     }
 
-    if (accesstoken === 'EXPIRED') {
+    if (expiration <= 0) {
       reIssueToken();
       return;
     }
 
-    const tokenDuration = getTokenDuration();
-
     setTimeout(() => {
       reIssueToken();
-    }, tokenDuration);
-  }, [navigate, accesstoken, refreshtoken, reIssueToken]);
+    }, expiration);
+  }, [navigate, accesstoken, expiration, refreshtoken, reIssueToken]);
 
   return (
     <>
