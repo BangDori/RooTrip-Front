@@ -1,13 +1,15 @@
-import { Link } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
-const TripPage = () => {
-  return (
-    <div style={{ position: 'absolute' }}>
-      <button>
-        <Link to='/logout'>로그아웃</Link>
-      </button>
-    </div>
-  );
-};
+import { getAuthToken } from '@utils/token';
 
-export default TripPage;
+export async function loader() {
+  const { accesstoken } = getAuthToken();
+
+  if (!accesstoken) {
+    return redirect('/');
+  }
+
+  // Marker 받아오기
+
+  return null;
+}

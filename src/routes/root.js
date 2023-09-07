@@ -1,7 +1,10 @@
 import RootLayout from '@pages/RootLayout';
 import ErrorPage from '@pages/ErrorPage';
 import LoginPage, { action as loginAction } from '@pages/root/LoginPage';
-import TripPage from '@pages/root/TripPage';
+import { loader as tripPostsLoader } from '@pages/root/TripPage';
+import TripPostPage, {
+  loader as tripPostLoader,
+} from '@pages/root/TripPostPage';
 
 import {
   tokenLoader,
@@ -15,6 +18,7 @@ const root = {
   element: <RootLayout />,
   errorElement: <ErrorPage />,
   loader: tokenLoader,
+  shouldRevalidate: ({ currentUrl }) => currentUrl.pathname === '/',
   children: [
     {
       index: true,
@@ -24,11 +28,12 @@ const root = {
     },
     {
       path: 'trip',
-      element: <TripPage />,
-      loader: restrictAccessWithNoToken,
+      loader: tripPostsLoader,
       children: [
         {
           path: ':postId',
+          element: <TripPostPage />,
+          loader: tripPostLoader,
         },
       ],
     },
