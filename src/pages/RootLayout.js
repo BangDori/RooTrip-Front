@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 
+import GNB from '@components/GNB';
 import Map from '@components/Map';
 import store from '@store/configureStore';
 import { reIssueStore } from '@store/user';
@@ -34,6 +35,7 @@ const RootLayout = () => {
 
   return (
     <>
+      {accesstoken && <GNB />}
       <Map />
       <Outlet />
     </>
