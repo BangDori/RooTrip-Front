@@ -4,21 +4,28 @@ const markerSlice = createSlice({
   name: 'marker',
   initialState: {
     markers: [],
-    type: 'TRIP',
+    type: 'PROFILE',
   },
   reducers: {
     loadMarkers: (state, action) => {
-      const { photos, type } = action.payload;
+      const { photos } = action.payload;
       const filteredMarkers = photos.filter((photo) => photo.dateTime);
 
-      state.type = type;
       state.markers = [...state.markers, ...filteredMarkers];
     },
-    resetMarkers: (state) => {
+    removeMarker: (state, action) => {
+      const { fileName } = action.payload;
+
+      state.markers = state.markers.filter(
+        (marker) => marker.fileName !== fileName,
+      );
+    },
+    resetMarkers: (state, { payload }) => {
       state.markers = [];
+      state.type = payload;
     },
   },
 });
 
-export const { loadMarkers, resetMarkers } = markerSlice.actions;
+export const { loadMarkers, removeMarker, resetMarkers } = markerSlice.actions;
 export default markerSlice.reducer;

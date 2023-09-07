@@ -35,16 +35,6 @@ export function getAuthToken() {
 }
 
 /**
- * 토큰을 반환해주는 Loader
- * @returns 토큰
- */
-export function tokenLoader() {
-  const token = getAuthToken();
-
-  return token;
-}
-
-/**
  * 토큰이 없는 경우 로그인 페이지로 이동시키기 위한 Loader
  * @returns 로그인페이지로 이동
  */

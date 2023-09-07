@@ -1,11 +1,12 @@
 import { useCallback, useEffect } from 'react';
 import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 
-import GNB from '@components/GNB';
-import Map from '@components/Map';
+import GNB from '@components/common/GNB';
+import Map from '@components/mapbox/Map';
 import store from '@store/configureStore';
+import { resetMarkers } from '@store/marker';
 import { reIssueStore } from '@store/user';
-import { getRefreshToken } from '@utils/token';
+import { getAuthToken, getRefreshToken } from '@utils/token';
 
 const RootLayout = () => {
   const { accesstoken, expiration } = useLoaderData();
@@ -43,3 +44,26 @@ const RootLayout = () => {
 };
 
 export default RootLayout;
+
+export function loader({ request }) {
+  const { pathname } = new URL(request.url);
+
+  let type = 'PROFILE';
+  if (pathname.includes('trip')) {
+    type = 'TRIP';
+  } else if (pathname.includes('route')) {
+    type = 'ROUTE';
+  } else if (pathname.includes('write')) {
+    type = 'WRITE';
+  }
+  store.dispatch(resetMarkers(type));
+
+  const isToken = store.getState('token').user.accesstoken;
+
+  if (isToken) {
+    return null;
+  }
+
+  const token = getAuthToken();
+  return token;
+}
