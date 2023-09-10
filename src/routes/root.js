@@ -1,24 +1,26 @@
-import RootLayout from '@pages/RootLayout';
+import RootLayout, { loader as initLoader } from '@pages/RootLayout';
 import ErrorPage from '@pages/ErrorPage';
 import LoginPage, { action as loginAction } from '@pages/root/LoginPage';
 import { loader as tripPostsLoader } from '@pages/root/TripPage';
 import TripPostPage, {
   loader as tripPostLoader,
 } from '@pages/root/TripPostPage';
+import WritePage, { action as writeAction } from '@pages/root/WritePage';
 
 import {
-  tokenLoader,
   restrictAccessWithNoToken,
   restrictAccessWithToken,
 } from '@utils/token';
+import CompletionPage from '@pages/root/CompletionPage';
 
 const root = {
   path: '/',
   id: 'root',
   element: <RootLayout />,
   errorElement: <ErrorPage />,
-  loader: tokenLoader,
-  shouldRevalidate: ({ currentUrl }) => currentUrl.pathname === '/',
+  loader: initLoader,
+  shouldRevalidate: ({ currentUrl, nextUrl }) =>
+    currentUrl.pathname !== nextUrl.pathname,
   children: [
     {
       index: true,
@@ -58,13 +60,13 @@ const root = {
       loader: restrictAccessWithNoToken,
       children: [
         {
-          path: '1',
+          index: true,
+          element: <WritePage />,
+          action: writeAction,
         },
         {
-          path: '2',
-        },
-        {
-          path: '3',
+          path: 'completion',
+          element: <CompletionPage />,
         },
       ],
     },
