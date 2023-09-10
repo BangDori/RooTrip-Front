@@ -14,6 +14,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons';
 
 import '@styles/root/post/Post.scss';
+import '@styles/root/trip/Trip.scss';
 import { formatNumber } from '@utils/format';
 
 import Comment from './Comment';
