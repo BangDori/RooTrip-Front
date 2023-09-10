@@ -1,4 +1,4 @@
-@keyframes fadeIn {
+@keyframes fadeInCompletion {
   0% {
     opacity: 0;
     width: 0px;
@@ -6,8 +6,6 @@
   }
   100% {
     opacity: 1;
-    width: 80px;
-    height: 80px;
   }
 }
 
@@ -34,7 +32,7 @@
     height: 80px;
 
     opacity: 0;
-    animation: fadeIn 0.5s ease-in-out 0s forwards;
+    animation: fadeInCompletion 0.5s ease-in-out 0s forwards;
   }
 }
 
