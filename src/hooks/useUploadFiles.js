@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
-import EXIF from 'exif-js';
-
-import { getLocation } from '@utils/metadata';
+import exifr from 'exifr';
+// import heic2any from 'heic2any';
 
 const useUploadFiles = ({ notify, onUpload }) => {
-  const createNewPhoto = useCallback((fileInfo, exifdata) => {
+  const createNewPhoto = useCallback(async (fileInfo) => {
     const newPhoto = {
       type: fileInfo.type,
       fileName: fileInfo.name,
@@ -13,28 +12,15 @@ const useUploadFiles = ({ notify, onUpload }) => {
       coordinate: {},
     };
 
+    const data = await exifr.parse(fileInfo);
+
     if (
-      Object.keys(exifdata).includes('GPSLatitude') &&
-      Object.keys(exifdata).includes('GPSLongitude')
+      Object.keys(data).includes('latitude') &&
+      Object.keys(data).includes('longitude')
     ) {
-      const {
-        DateTime,
-        GPSLatitudeRef,
-        GPSLatitude,
-        GPSLongitudeRef,
-        GPSLongitude,
-      } = EXIF.getAllTags(fileInfo);
-
-      const [latitude, longitude] = getLocation(
-        GPSLatitudeRef,
-        GPSLatitude,
-        GPSLongitudeRef,
-        GPSLongitude,
-      );
-
-      newPhoto.dateTime = DateTime;
-      newPhoto.coordinate.latitude = latitude;
-      newPhoto.coordinate.longitude = longitude;
+      newPhoto.dateTime = new Date(data.DateTimeOriginal).toISOString();
+      newPhoto.coordinate.latitude = data.latitude;
+      newPhoto.coordinate.longitude = data.longitude;
     }
 
     return newPhoto;
@@ -66,39 +52,30 @@ const useUploadFiles = ({ notify, onUpload }) => {
       return null;
     }
 
-    const promises = [];
     const newFiles = [];
+    const promises = [];
 
-    Object.entries(e).forEach(([fileInfo]) => {
-      const promise = new Promise((resolve) => {
-        const { name } = e[fileInfo];
+    Object.entries(e).forEach(async ([, fileInfo]) => {
+      const { type } = fileInfo;
 
-        switch (name.split('.')[1]) {
-          case 'heic':
-            // eslint-disable-next-line no-console
-            console.log('HEIC TYPE');
-            break;
-          case 'mp4':
-            const newVideo = createNewVideo(e[fileInfo]);
-            newFiles.push(newVideo);
-            resolve();
-            break;
-          default:
-            EXIF.getData(e[fileInfo], () => {
-              const newPhoto = createNewPhoto(
-                e[fileInfo],
-                e[fileInfo].exifdata,
-              );
-              newFiles.push(newPhoto);
-              resolve();
-            });
-        }
-      });
+      if (type.includes('image') && type !== 'image/gif') {
+        const newPhoto = createNewPhoto(fileInfo);
+        promises.push(newPhoto);
+        return;
+      }
 
-      promises.push(promise);
+      const newVideo = createNewVideo(fileInfo);
+      newFiles.push(newVideo);
     });
 
-    await Promise.all(promises);
+    // 모든 Promise를 병렬로 실행하고 결과를 기다립니다.
+    const photoResults = await Promise.all(promises);
+
+    // photoResults를 newFiles에 추가합니다.
+    newFiles.push(...photoResults);
+
+    // eslint-disable-next-line no-console
+    console.log(newFiles);
 
     sort(newFiles);
     onUpload(newFiles);
