@@ -79,6 +79,7 @@ const config = {
     },
 
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    fallback: { 'process/browser': require.resolve('process/browser') },
   },
   plugins: [
     new HtmlWebpackPlugin({
