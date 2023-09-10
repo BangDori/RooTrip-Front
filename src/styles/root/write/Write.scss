@@ -1,3 +1,15 @@
+@keyframes fadeInVolume {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .write-description {
   font-weight: bold;
   padding: 16px 0;
@@ -60,7 +72,7 @@
 
   .direction {
     position: absolute;
-    top: 26%;
+    top: 23%;
     transform: translate(0, -26%);
 
     color: #ccc;
@@ -110,7 +122,26 @@
 
         overflow: hidden;
 
+        .image-volume {
+          position: absolute;
+
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+
+          color: #d3d3d3;
+
+          svg {
+            opacity: 0;
+            width: 36px;
+            height: 36px;
+            animation: fadeInVolume 1.5s ease-in-out 0s forwards;
+          }
+        }
+
         .image-xmark {
+          z-index: 15;
+
           background: #ccc;
 
           border-radius: 50%;
