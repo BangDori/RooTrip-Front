@@ -6,7 +6,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
-const Video = ({ file, onRemove }) => {
+const PreviewVideo = ({ file, onRemove }) => {
   const [muted, setMuted] = useState(true);
   const [showMutedIcon, setShowMutedIcon] = useState(false);
 
@@ -42,7 +42,7 @@ const Video = ({ file, onRemove }) => {
         src={file.url}
         loop
         autoPlay
-        muted={muted}
+        muted={true}
         preload='metadata'
         onClick={onChangeMuted}
         width='128px'
@@ -55,4 +55,4 @@ const Video = ({ file, onRemove }) => {
   );
 };
 
-export default Video;
+export default PreviewVideo;

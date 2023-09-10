@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Image = ({ file, onRemove }) => {
+const PreviewImage = ({ file, onRemove }) => {
   return (
     <div
       key={file.fileName}
@@ -18,4 +18,4 @@ const Image = ({ file, onRemove }) => {
   );
 };
 
-export default Image;
+export default PreviewImage;
