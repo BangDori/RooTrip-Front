@@ -1,7 +1,7 @@
 import PreviewImage from './PreviewImage';
 import PreviewVideo from './PreviewVideo';
 
-const UploadFile = ({ file, onRemove }) => {
+const PreviewFile = ({ file, onRemove }) => {
   if (file.type === 'video/mp4') {
     return <PreviewVideo file={file} onRemove={onRemove} />;
   }
@@ -9,4 +9,4 @@ const UploadFile = ({ file, onRemove }) => {
   return <PreviewImage file={file} onRemove={onRemove} />;
 };
 
-export default UploadFile;
+export default PreviewFile;

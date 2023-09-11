@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import PhotoSlider from '@components/common/PhotoSlider';
-import UploadFile from './upload/UploadFile';
+import PreviewFile from './preview/PreviewFile';
 
 const PostCreation = ({ onPrev, files, onUpload, onRemove, notify }) => {
   const [cur, setCur] = useState(0);
@@ -23,7 +23,7 @@ const PostCreation = ({ onPrev, files, onUpload, onRemove, notify }) => {
   const renderFiles = files.map((file) => {
     if (!file.dateTime) notRegisterCount += 1;
 
-    return <UploadFile key={file.fileName} file={file} onRemove={onRemove} />;
+    return <PreviewFile key={file.fileName} file={file} onRemove={onRemove} />;
   });
 
   const onCreatePost = (postForm) => {
