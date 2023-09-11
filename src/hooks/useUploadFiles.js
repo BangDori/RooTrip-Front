@@ -61,7 +61,7 @@ const useUploadFiles = ({ onUpload }) => {
   );
 
   // 사진 업로드시 호출되는 함수
-  const handleUploadFiles = useCallback(async (e) => {
+  const handleUploadFiles = useCallback(async (e, setIsSubmitting) => {
     const promises = [];
     const newFiles = [];
 
@@ -82,6 +82,7 @@ const useUploadFiles = ({ onUpload }) => {
     const photoResults = await Promise.all(promises);
     newFiles.push(...photoResults);
 
+    setIsSubmitting(false);
     sort(newFiles);
     onUpload(newFiles);
     // eslint-disable-next-line react-hooks/exhaustive-deps
