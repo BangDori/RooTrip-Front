@@ -46,6 +46,10 @@
   &:focus {
     outline: none;
   }
+
+  .loading-message {
+    margin-top: 32px;
+  }
 }
 
 .dragging {
