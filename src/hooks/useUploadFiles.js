@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import exifr from 'exifr';
-// import heic2any from 'heic2any';
+import heic2any from 'heic2any';
 
-const useUploadFiles = ({ notify, onUpload }) => {
+const useUploadFiles = ({ onUpload }) => {
   const createNewPhoto = useCallback(async (fileInfo) => {
     const newPhoto = {
       type: fileInfo.type,
@@ -11,6 +11,21 @@ const useUploadFiles = ({ notify, onUpload }) => {
       dateTime: '',
       coordinate: {},
     };
+
+    if (fileInfo.type === 'image/heic') {
+      const convertedJPEG = await heic2any({
+        blob: fileInfo,
+        toType: 'image/jpeg',
+      }).then(
+        (resultBlob) =>
+          new File([resultBlob], `${fileInfo.name.split('.')[0]}.jpg`, {
+            type: 'image/jpeg',
+            lastModified: new Date().getTime(),
+          }),
+      );
+
+      newPhoto.url = URL.createObjectURL(convertedJPEG);
+    }
 
     const data = await exifr.parse(fileInfo);
 
@@ -46,40 +61,31 @@ const useUploadFiles = ({ notify, onUpload }) => {
   );
 
   // 사진 업로드시 호출되는 함수
-  const handleUploadFiles = async (e) => {
-    if (e.length > 10) {
-      notify('업로드 가능한 파일은 10개 이하입니다.');
-      return null;
-    }
-
-    const newFiles = [];
+  const handleUploadFiles = useCallback(async (e) => {
     const promises = [];
+    const newFiles = [];
 
-    Object.entries(e).forEach(async ([, fileInfo]) => {
-      const { type } = fileInfo;
+    Object.entries(e).forEach(async ([, file]) => {
+      const { type } = file;
 
       if (type.includes('image') && type !== 'image/gif') {
-        const newPhoto = createNewPhoto(fileInfo);
+        const newPhoto = createNewPhoto(file);
         promises.push(newPhoto);
         return;
       }
 
-      const newVideo = createNewVideo(fileInfo);
+      const newVideo = createNewVideo(file);
       newFiles.push(newVideo);
     });
 
     // 모든 Promise를 병렬로 실행하고 결과를 기다립니다.
     const photoResults = await Promise.all(promises);
-
-    // photoResults를 newFiles에 추가합니다.
     newFiles.push(...photoResults);
-
-    // eslint-disable-next-line no-console
-    console.log(newFiles);
 
     sort(newFiles);
     onUpload(newFiles);
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { handleUploadFiles };
 };
