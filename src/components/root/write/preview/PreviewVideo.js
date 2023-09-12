@@ -10,6 +10,12 @@ const PreviewVideo = ({ file, onRemove, notify }) => {
   const [muted, setMuted] = useState(true);
   const [showMutedIcon, setShowMutedIcon] = useState(false);
 
+  let className = '';
+
+  if (file.status === 'specified') className = 'specified-coord';
+  else if (file.status === 'custom') className = 'custom-coord';
+  else if (file.status === 'unspecified') className = 'unspecified-coord';
+
   const onChangeMuted = (e) => {
     setMuted(!e.target.muted);
     setShowMutedIcon(true);
@@ -33,10 +39,7 @@ const PreviewVideo = ({ file, onRemove, notify }) => {
   }, [showMutedIcon]);
 
   return (
-    <div
-      key={file.fileName}
-      className={`upload-image ${file.dateTime ? 'coord' : 'no-coord'}`}
-    >
+    <div key={file.fileName} className={`upload-image ${className}`}>
       <div className='image-volume'>
         {showMutedIcon && !muted && <FontAwesomeIcon icon={faVolumeUp} />}
         {showMutedIcon && muted && <FontAwesomeIcon icon={faVolumeXmark} />}

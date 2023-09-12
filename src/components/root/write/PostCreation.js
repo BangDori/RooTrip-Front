@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import PhotoSlider from '@components/common/PhotoSlider';
+
 import PreviewFile from './preview/PreviewFile';
 
 const PostCreation = ({
@@ -26,9 +27,9 @@ const PostCreation = ({
     if (files.length <= 3) setCur(0);
   }, [files.length]);
 
-  let notRegisterCount = 0;
+  let unspecified = 0;
   const renderFiles = files.map((file) => {
-    if (!file.dateTime) notRegisterCount += 1;
+    if (file.status === 'unspecified') unspecified += 1;
 
     return (
       <PreviewFile
@@ -41,7 +42,7 @@ const PostCreation = ({
   });
 
   const onCreatePost = (postForm) => {
-    if (notRegisterCount === files.length) {
+    if (unspecified === files.length) {
       notify('이미지를 클릭해 지도에 등록해주세요.', 'error');
       return;
     }
@@ -100,12 +101,12 @@ const PostCreation = ({
           />
         </div>
 
-        {notRegisterCount === 0 && (
+        {unspecified === 0 && (
           <p className='register'>지도에 모든 사진이 등록되었습니다!</p>
         )}
-        {notRegisterCount !== 0 && (
+        {unspecified !== 0 && (
           <p className='not-register'>
-            지도에 등록되지 않은 {notRegisterCount}개의 이미지가 있습니다.
+            지도에 등록되지 않은 {unspecified}개의 이미지가 있습니다.
           </p>
         )}
       </div>

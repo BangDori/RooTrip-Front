@@ -10,6 +10,7 @@ const useUploadFiles = ({ onUpload }) => {
       url: URL.createObjectURL(fileInfo),
       dateTime: '',
       coordinate: {},
+      status: 'unspecified',
     };
 
     if (fileInfo.type === 'image/heic') {
@@ -36,6 +37,7 @@ const useUploadFiles = ({ onUpload }) => {
       newPhoto.dateTime = new Date(data.DateTimeOriginal).toISOString();
       newPhoto.coordinate.latitude = data.latitude;
       newPhoto.coordinate.longitude = data.longitude;
+      newPhoto.status = 'specified';
     }
 
     return newPhoto;
@@ -48,6 +50,7 @@ const useUploadFiles = ({ onUpload }) => {
       url: URL.createObjectURL(fileInfo),
       dateTime: '',
       coordinate: {},
+      status: 'unspecified',
     };
 
     return newVideo;
