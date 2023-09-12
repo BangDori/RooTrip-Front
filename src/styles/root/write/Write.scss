@@ -126,6 +126,10 @@
 
         overflow: hidden;
 
+        border-width: 3px;
+        border-style: solid;
+        border-color: transparent;
+
         .image-volume {
           position: absolute;
 
@@ -191,12 +195,16 @@
         }
       }
 
-      .coord {
-        border: 3px solid #0095f6;
+      .specified-coord {
+        border-color: #0095f6;
       }
 
-      .no-coord {
-        border: 3px solid #ff0000;
+      .custom-coord {
+        border-color: #ffd700;
+      }
+
+      .unspecified-coord {
+        border-color: #ff0000;
       }
     }
   }
