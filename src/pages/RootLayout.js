@@ -48,15 +48,20 @@ export default RootLayout;
 export function loader({ request }) {
   const { pathname } = new URL(request.url);
 
-  let type = 'PROFILE';
-  if (pathname.includes('trip')) {
-    type = 'TRIP';
+  const { type: prevType } = store.getState().marker;
+
+  let type = 'TRIP';
+  if (pathname.includes('profile')) {
+    type = 'PROFILE';
   } else if (pathname.includes('route')) {
     type = 'ROUTE';
   } else if (pathname.includes('write')) {
     type = 'WRITE';
   }
-  store.dispatch(resetMarkers(type));
+
+  if (type !== prevType) {
+    store.dispatch(resetMarkers({ type, prevType }));
+  }
 
   const isToken = store.getState('token').user.accesstoken;
 
