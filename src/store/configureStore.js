@@ -1,13 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 
 import userReducer from './user';
 import customReducer from './custom';
 import markerReducer from './marker';
 
 import login from './middleware/login';
-import logout from './middleware/logout';
 import reIssue from './middleware/reIssue';
+import logout from './middleware/logout';
+import updateCoord from './middleware/updateCoord';
 
 const store = configureStore({
   reducer: {
@@ -17,10 +18,11 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware(),
-    logger,
+    // logger,
     login,
     reIssue,
     logout,
+    updateCoord,
   ],
 });
 

@@ -4,6 +4,7 @@ const customSlice = createSlice({
   name: 'custom',
   initialState: {
     isCustomMode: false,
+    isSetCoordinate: false,
     fileName: '',
     latitude: -1,
     longitude: -1,
@@ -17,11 +18,14 @@ const customSlice = createSlice({
     },
     setCoordinateFile: (state, action) => {
       const { latitude, longitude } = action.payload;
+
+      state.isSetCoordinate = true;
       state.latitude = latitude;
       state.longitude = longitude;
     },
     endFile: (state) => {
       state.isCustomMode = false;
+      state.isSetCoordinate = false;
       state.fileName = '';
       state.latitude = -1;
       state.longitude = -1;
