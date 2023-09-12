@@ -39,12 +39,16 @@ const PostCreation = ({ onPrev, files, onUpload, onRemove, notify }) => {
       return;
     }
 
-    submit(postForm, { method: 'post' });
+    submit(postForm, { method: 'post', action: '/write' });
   };
 
   return (
-    <form method='post' onSubmit={handleSubmit(onCreatePost)}>
-      <input type='hidden' name='files' value={JSON.stringify(files)} />
+    <form onSubmit={handleSubmit(onCreatePost)}>
+      <input
+        type='hidden'
+        value={JSON.stringify(files)}
+        {...register('files')}
+      />
       <nav className='post-nav'>
         <button type='button' className='move-button' onClick={onPrev}>
           이전

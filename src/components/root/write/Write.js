@@ -8,7 +8,6 @@ import '@styles/root/write/Write.scss';
 
 import MediaUpload from './MediaUpload';
 import PostCreation from './PostCreation';
-import Completion from './Completion';
 
 function filesReducer(state, action) {
   switch (action.type) {
@@ -87,7 +86,6 @@ const Write = () => {
             notify={notify}
           />
         )}
-        {page === 3 && <Completion />}
       </div>
 
       <ToastContainer
