@@ -1,8 +1,13 @@
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
-import { loadMarkers, removeMarker, resetMarkers } from '@store/marker';
+import {
+  loadMarkers,
+  updateMarker,
+  removeMarker,
+  resetMarkers,
+} from '@store/marker';
 import '@styles/root/post/Post.scss';
 import '@styles/root/write/Write.scss';
 
@@ -10,43 +15,17 @@ import MediaUpload from './MediaUpload';
 import PostCreation from './PostCreation';
 import Completion from './Completion';
 
-function filesReducer(state, action) {
-  switch (action.type) {
-    case 'INSERT':
-      const newFiles = action.payload.filter((newFile) => {
-        let isUnique = true;
-        for (let i = 0; i < state.length; i += 1) {
-          if (state[i].fileName === newFile.fileName) {
-            isUnique = false;
-            return;
-          }
-        }
-
-        if (isUnique) {
-          return newFile;
-        }
-
-        return null;
-      });
-
-      return [...state, ...newFiles];
-    case 'REMOVE':
-      const filteredFiles = state.filter(
-        (photo) => photo.fileName !== action.payload,
-      );
-
-      return filteredFiles;
-    case 'RESET':
-      return [];
-    default:
-      return state;
-  }
-}
-
 const Write = ({ isSubmitting }) => {
-  const [files, filesDispatch] = useReducer(filesReducer, []);
+  const { markers, onError } = useSelector((state) => state.marker);
   const [page, setPage] = useState(1);
-  const { isCustomMode } = useSelector((state) => state.custom);
+  const {
+    isCustomMode,
+    isSetCoordinate,
+    fileName: updatedFileName,
+    latitude: updatedLat,
+    longitude: updatedLng,
+  } = useSelector((state) => state.custom);
+  const dispatch = useDispatch();
 
   const notify = (message, type = 'info') => {
     if (type === 'error') {
@@ -55,27 +34,39 @@ const Write = ({ isSubmitting }) => {
     }
     toast.info(message);
   };
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (files.length === 0) setPage(1);
-    if (files.length !== 0) setPage(2);
-  }, [files.length, dispatch]);
+    if (onError) {
+      notify(onError, 'error');
+    }
+  }, [onError]);
+
+  useEffect(() => {
+    if (isSetCoordinate) {
+      const updatedFile = { updatedFileName, updatedLat, updatedLng };
+      dispatch(updateMarker(updatedFile));
+    }
+  }, [
+    dispatch,
+    isCustomMode,
+    isSetCoordinate,
+    updatedFileName,
+    updatedLat,
+    updatedLng,
+  ]);
+
+  useEffect(() => {
+    if (markers.length === 0) setPage(1);
+    if (markers.length !== 0) setPage(2);
+  }, [markers.length]);
 
   const onNextPage = () => setPage((prev) => prev + 1);
   const onPrevPage = () => {
     setPage((prev) => prev - 1);
-    filesDispatch({ type: 'RESET' });
     dispatch(resetMarkers('WRITE'));
   };
-  const onUpload = (newFiles) => {
-    filesDispatch({ type: 'INSERT', payload: newFiles });
-    dispatch(loadMarkers({ files: newFiles }));
-  };
-  const onRemovePhoto = (fileName) => {
-    filesDispatch({ type: 'REMOVE', payload: fileName });
-    dispatch(removeMarker({ fileName }));
-  };
+  const onUpload = (newFiles) => dispatch(loadMarkers({ files: newFiles }));
+  const onRemovePhoto = (fileName) => dispatch(removeMarker({ fileName }));
 
   return (
     <>
@@ -93,7 +84,7 @@ const Write = ({ isSubmitting }) => {
           <PostCreation
             onPrev={onPrevPage}
             onNext={onNextPage}
-            files={files}
+            files={markers}
             onUpload={onUpload}
             onRemove={onRemovePhoto}
             notify={notify}
