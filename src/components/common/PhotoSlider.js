@@ -40,7 +40,7 @@ const PhotoSlider = ({ files, onUpload, notify, left }) => {
         </div>
       )}
       {isSubmitting && (
-        <div className='upload-button'>
+        <div className='upload-button submitting'>
           <BeatLoader size={8} />
         </div>
       )}

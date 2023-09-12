@@ -196,6 +196,15 @@
           }
         }
 
+        .submitting {
+          background: white;
+
+          cursor: auto;
+          &:hover {
+            background: none;
+          }
+        }
+
         .specified-coord {
           border-color: #0095f6;
         }
