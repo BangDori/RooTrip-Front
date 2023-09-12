@@ -52,7 +52,7 @@ const PostCreation = ({
   };
 
   return (
-    <form onSubmit={handleSubmit(onCreatePost)}>
+    <form className='post-form' onSubmit={handleSubmit(onCreatePost)}>
       <input
         type='hidden'
         value={JSON.stringify(files)}

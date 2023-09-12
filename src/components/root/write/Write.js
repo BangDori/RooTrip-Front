@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
 import { loadMarkers, removeMarker, resetMarkers } from '@store/marker';
@@ -46,6 +46,8 @@ function filesReducer(state, action) {
 const Write = ({ isSubmitting }) => {
   const [files, filesDispatch] = useReducer(filesReducer, []);
   const [page, setPage] = useState(1);
+  const { isCustomMode } = useSelector((state) => state.custom);
+
   const notify = (message, type = 'info') => {
     if (type === 'error') {
       toast.error(message);
@@ -78,6 +80,14 @@ const Write = ({ isSubmitting }) => {
   return (
     <>
       <div className='post-wrapper'>
+        {isCustomMode && (
+          <>
+            <p className='custom-message'>
+              지도에서 이미지의 위치를 클릭해주세요.
+            </p>
+            <div className='post-overlay' />
+          </>
+        )}
         {page === 1 && <MediaUpload onUpload={onUpload} notify={notify} />}
         {page === 2 && (
           <PostCreation

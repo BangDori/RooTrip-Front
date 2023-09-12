@@ -10,7 +10,7 @@ const markerSlice = createSlice({
     loadMarkers: (state, action) => {
       const { files } = action.payload;
       const filteredMarkers = files.filter((newFile) => {
-        if (!newFile.dateTime) return null;
+        if (newFile.status === 'unspecified') return null;
 
         let isUnique = true;
         for (let i = 0; i < state.markers.length; i += 1) {

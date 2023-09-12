@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faVolumeUp,
@@ -6,15 +7,21 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { loadFile } from '@store/custom';
+
 const PreviewVideo = ({ file, onRemove, notify }) => {
   const [muted, setMuted] = useState(true);
   const [showMutedIcon, setShowMutedIcon] = useState(false);
 
+  const { fileName } = useSelector((state) => state.custom);
+  const dispatch = useDispatch();
+
   let className = '';
 
   if (file.status === 'specified') className = 'specified-coord';
-  else if (file.status === 'custom') className = 'custom-coord';
   else if (file.status === 'unspecified') className = 'unspecified-coord';
+
+  if (file.fileName === fileName) className = 'custom-coord';
 
   const onChangeMuted = (e) => {
     setMuted(!e.target.muted);
@@ -38,8 +45,20 @@ const PreviewVideo = ({ file, onRemove, notify }) => {
     }
   }, [showMutedIcon]);
 
+  const setCustomLocation = () => {
+    if (file.status === 'specified') {
+      return;
+    }
+
+    dispatch(loadFile({ fileName: file.fileName }));
+  };
+
   return (
-    <div key={file.fileName} className={`upload-image ${className}`}>
+    <div
+      key={file.fileName}
+      className={`upload-image ${className}`}
+      onClick={setCustomLocation}
+    >
       <div className='image-volume'>
         {showMutedIcon && !muted && <FontAwesomeIcon icon={faVolumeUp} />}
         {showMutedIcon && muted && <FontAwesomeIcon icon={faVolumeXmark} />}
