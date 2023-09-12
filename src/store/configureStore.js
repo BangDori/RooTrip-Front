@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 
 import userReducer from './user';
 import markerReducer from './marker';
@@ -15,7 +15,7 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware(),
-    logger,
+    // logger,
     login,
     reIssue,
     logout,
