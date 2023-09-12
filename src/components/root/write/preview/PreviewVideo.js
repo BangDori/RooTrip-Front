@@ -6,13 +6,22 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
-const PreviewVideo = ({ file, onRemove }) => {
+const PreviewVideo = ({ file, onRemove, notify }) => {
   const [muted, setMuted] = useState(true);
   const [showMutedIcon, setShowMutedIcon] = useState(false);
 
   const onChangeMuted = (e) => {
     setMuted(!e.target.muted);
     setShowMutedIcon(true);
+  };
+
+  const onLoadMetadata = (e) => {
+    const { duration } = e.target;
+
+    if (duration > 60) {
+      notify('영상 길이는 1분 이내이어야 합니다.', 'error');
+      onRemove(file.fileName);
+    }
   };
 
   useEffect(() => {
@@ -44,6 +53,7 @@ const PreviewVideo = ({ file, onRemove }) => {
         autoPlay
         muted={true}
         preload='metadata'
+        onLoadedMetadata={onLoadMetadata}
         onClick={onChangeMuted}
         width='128px'
         height='128px'

@@ -23,7 +23,14 @@ const PostCreation = ({ onPrev, files, onUpload, onRemove, notify }) => {
   const renderFiles = files.map((file) => {
     if (!file.dateTime) notRegisterCount += 1;
 
-    return <PreviewFile key={file.fileName} file={file} onRemove={onRemove} />;
+    return (
+      <PreviewFile
+        key={file.fileName}
+        file={file}
+        onRemove={onRemove}
+        notify={notify}
+      />
+    );
   });
 
   const onCreatePost = (postForm) => {
