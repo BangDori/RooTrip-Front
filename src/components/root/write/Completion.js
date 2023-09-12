@@ -33,9 +33,9 @@ const Completion = () => {
         {isSending && '여행을 공유하고 있습니다...'}
         {!isSending && '여행이 정상적으로 공유되었습니다'}
       </p>
-      <button className='confirm-button'>
-        <Link to='/trip'>확인</Link>
-      </button>
+      <Link to='/trip'>
+        <button className='confirm-button'>확인</button>
+      </Link>
     </div>
   );
 };
