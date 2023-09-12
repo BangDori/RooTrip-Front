@@ -27,7 +27,7 @@ const markerSlice = createSlice({
       });
 
       if (filteredMarkers.length !== files.length) {
-        state.onError = '동일한 이미지는 업로드할 수 없습니다.';
+        state.onError = '동일한 파일은 업로드할 수 없습니다.';
       }
       state.markers = [...state.markers, ...filteredMarkers];
     },
@@ -55,9 +55,11 @@ const markerSlice = createSlice({
 
       state.markers = removedMarkers;
     },
-    resetMarkers: (state, { payload }) => {
+    resetMarkers: (state, action) => {
+      const { type } = action.payload;
+
       state.markers = [];
-      state.type = payload;
+      state.type = type;
     },
   },
 });
