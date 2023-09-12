@@ -6,14 +6,14 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import completionGIF from '@assets/completion.gif';
 import '@styles/root/write/Completion.scss';
 
-const Completion = () => {
+const Completion = ({ isSubmitting }) => {
   const [isSending, setIsSending] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setIsSending(false);
-    }, 2500);
-  }, []);
+    }, isSubmitting);
+  }, [isSubmitting]);
 
   return (
     <div className='post-wrapper'>
