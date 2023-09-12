@@ -6,7 +6,6 @@ import TripPostPage, {
   loader as tripPostLoader,
 } from '@pages/root/TripPostPage';
 import WritePage, { action as writeAction } from '@pages/root/WritePage';
-import CompletionPage from '@pages/root/CompletionPage';
 
 import {
   restrictAccessWithNoToken,
@@ -58,17 +57,8 @@ const root = {
     {
       path: 'write',
       loader: restrictAccessWithNoToken,
+      element: <WritePage />,
       action: writeAction,
-      children: [
-        {
-          index: true,
-          element: <WritePage />,
-        },
-        {
-          path: 'completion',
-          element: <CompletionPage />,
-        },
-      ],
     },
   ],
 };

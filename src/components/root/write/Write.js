@@ -8,6 +8,7 @@ import '@styles/root/write/Write.scss';
 
 import MediaUpload from './MediaUpload';
 import PostCreation from './PostCreation';
+import Completion from './Completion';
 
 function filesReducer(state, action) {
   switch (action.type) {
@@ -42,7 +43,7 @@ function filesReducer(state, action) {
   }
 }
 
-const Write = () => {
+const Write = ({ isSubmitting }) => {
   const [files, filesDispatch] = useReducer(filesReducer, []);
   const [page, setPage] = useState(1);
   const notify = (message, type = 'info') => {
@@ -59,6 +60,7 @@ const Write = () => {
     if (files.length !== 0) setPage(2);
   }, [files.length, dispatch]);
 
+  const onNextPage = () => setPage((prev) => prev + 1);
   const onPrevPage = () => {
     setPage((prev) => prev - 1);
     filesDispatch({ type: 'RESET' });
@@ -80,12 +82,14 @@ const Write = () => {
         {page === 2 && (
           <PostCreation
             onPrev={onPrevPage}
+            onNext={onNextPage}
             files={files}
             onUpload={onUpload}
             onRemove={onRemovePhoto}
             notify={notify}
           />
         )}
+        {page === 3 && <Completion isSubmitting={isSubmitting} />}
       </div>
 
       <ToastContainer

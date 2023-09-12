@@ -10,7 +10,14 @@ import {
 import PhotoSlider from '@components/common/PhotoSlider';
 import PreviewFile from './preview/PreviewFile';
 
-const PostCreation = ({ onPrev, files, onUpload, onRemove, notify }) => {
+const PostCreation = ({
+  onPrev,
+  onNext,
+  files,
+  onUpload,
+  onRemove,
+  notify,
+}) => {
   const [cur, setCur] = useState(0);
   const { register, handleSubmit } = useForm();
   const submit = useSubmit();
@@ -39,6 +46,7 @@ const PostCreation = ({ onPrev, files, onUpload, onRemove, notify }) => {
       return;
     }
 
+    onNext();
     submit(postForm, { method: 'post', action: '/write' });
   };
 
