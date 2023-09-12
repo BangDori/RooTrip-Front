@@ -59,190 +59,192 @@
   transition: border 0.24s ease-in-out;
 }
 
-.post-nav {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 10px;
-  border-bottom: 1px solid #ccc;
+.post-form {
+  margin: 4px 0 8px;
 
-  .move-button {
-    color: #0095f6;
-    cursor: pointer;
-  }
-}
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ccc;
 
-.post-section {
-  margin-bottom: 8px;
-
-  .direction {
-    position: absolute;
-    top: 23%;
-    transform: translate(0, -26%);
-
-    color: #ccc;
-
-    cursor: pointer;
-
-    &:hover {
-      color: #000;
+    .move-button {
+      color: #0095f6;
+      cursor: pointer;
     }
   }
 
-  .left-direction {
-    left: 5px;
-  }
-
-  .right-direction {
-    right: 5px;
-  }
-
-  .upload-image-section {
-    position: relative;
-    overflow: hidden;
-
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    gap: 12px;
-
-    margin: 8px 27px;
-    height: 134px;
-
-    .view-photos {
+  .post-section {
+    .direction {
       position: absolute;
-      left: 0;
+      top: 23%;
+      transform: translate(0, -26%);
+
+      color: #ccc;
+
+      cursor: pointer;
+
+      &:hover {
+        color: #000;
+      }
+    }
+
+    .left-direction {
+      left: 5px;
+    }
+
+    .right-direction {
+      right: 5px;
+    }
+
+    .upload-image-section {
+      position: relative;
+      overflow: hidden;
 
       display: flex;
+      justify-content: left;
+      align-items: center;
       gap: 12px;
 
-      transition: left 0.3s ease-in-out;
+      margin: 8px 27px;
+      height: 134px;
 
-      .upload-image {
-        position: relative;
-        width: 128px;
-        height: 128px;
+      .view-photos {
+        position: absolute;
+        left: 0;
 
-        border-radius: 15px;
+        display: flex;
+        gap: 12px;
 
-        overflow: hidden;
+        transition: left 0.3s ease-in-out;
 
-        border-width: 3px;
-        border-style: solid;
-        border-color: transparent;
+        .upload-image {
+          position: relative;
+          width: 128px;
+          height: 128px;
 
-        .image-volume {
-          position: absolute;
+          border-radius: 15px;
 
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
+          overflow: hidden;
 
-          color: #d3d3d3;
+          border-width: 3px;
+          border-style: solid;
+          border-color: transparent;
 
-          svg {
-            opacity: 0;
-            width: 36px;
-            height: 36px;
-            animation: fadeInVolume 1.5s ease-in-out 0s forwards;
+          .image-volume {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            color: #d3d3d3;
+
+            svg {
+              opacity: 0;
+              width: 36px;
+              height: 36px;
+              animation: fadeInVolume 1.5s ease-in-out 0s forwards;
+            }
+          }
+
+          .image-xmark {
+            z-index: 15;
+
+            background: #ccc;
+
+            border-radius: 50%;
+
+            position: absolute;
+            top: 3px;
+            left: 3px;
+
+            padding: 0;
+            width: 16px;
+            height: 16px;
+
+            cursor: pointer;
+
+            &:hover {
+              background: #000;
+              color: #ccc;
+            }
+          }
+
+          img {
+            width: inherit;
+            height: inherit;
+
+            object-fit: cover;
           }
         }
 
-        .image-xmark {
-          z-index: 15;
+        .upload-button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
 
-          background: #ccc;
+          width: 134px;
+          height: 134px;
 
-          border-radius: 50%;
-
-          position: absolute;
-          top: 3px;
-          left: 3px;
-
-          padding: 0;
-          width: 16px;
-          height: 16px;
-
+          background: #cccccc;
+          border-radius: 15px;
           cursor: pointer;
 
           &:hover {
-            background: #000;
-            color: #ccc;
+            background: #555555;
           }
         }
 
-        img {
-          width: inherit;
-          height: inherit;
+        .specified-coord {
+          border-color: #0095f6;
+        }
 
-          object-fit: cover;
+        .custom-coord {
+          border-color: #008000;
+        }
+
+        .unspecified-coord {
+          border-color: #ff0000;
         }
       }
+    }
 
-      .upload-button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .post-article-section {
+      .post-article {
+        resize: none;
+        width: 416px;
+        height: 240px;
 
-        width: 134px;
-        height: 134px;
+        border: 1px solid #cccccc;
+        border-radius: 10px;
 
-        background: #cccccc;
-        border-radius: 15px;
-        cursor: pointer;
+        font-size: 16px;
+        padding: 8px;
 
-        &:hover {
-          background: #555555;
+        font-family: 'IBM Plex Sans Hebrew';
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          font-weight: 700;
+          color: #c1c1c1;
         }
       }
-
-      .specified-coord {
-        border-color: #0095f6;
-      }
-
-      .custom-coord {
-        border-color: #ffd700;
-      }
-
-      .unspecified-coord {
-        border-color: #ff0000;
-      }
     }
-  }
 
-  .post-article-section {
-    .post-article {
-      resize: none;
-      width: 416px;
-      height: 240px;
-
-      border: 1px solid #cccccc;
-      border-radius: 10px;
-
-      font-size: 16px;
-      padding: 8px;
-
-      font-family: 'IBM Plex Sans Hebrew';
-
-      &:focus {
-        outline: none;
-      }
-
-      &::placeholder {
-        font-weight: 700;
-        color: #c1c1c1;
-      }
+    .register {
+      margin: 4px 0 0 23px;
+      text-align: left;
+      color: #0095f6;
     }
-  }
 
-  .register {
-    margin: 4px 0 0 23px;
-    text-align: left;
-    color: #0095f6;
-  }
-
-  .not-register {
-    margin: 4px 0 0 23px;
-    text-align: left;
-    color: #ff0000;
+    .not-register {
+      margin: 4px 0 0 23px;
+      text-align: left;
+      color: #ff0000;
+    }
   }
 }
