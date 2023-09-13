@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import MapGL from 'react-map-gl';
+import MapGL, { Layer, Source } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
 import {
@@ -43,6 +43,23 @@ const Map = () => {
     setShowPopup(false);
   };
 
+  const routesMarker = markers
+    .filter((marker) => marker.status !== 'unspecified')
+    .map((marker) => {
+      const { latitude, longitude } = marker.coordinate;
+      return [longitude, latitude];
+    });
+
+  // 경로 표시
+  const routes = {
+    type: 'Feature',
+    properties: {},
+    geometry: {
+      type: 'LineString',
+      coordinates: [...routesMarker],
+    },
+  };
+
   return (
     <div className='map-container'>
       <MapGL
@@ -56,6 +73,24 @@ const Map = () => {
       >
         {type === 'TRIP' && <TripMarkers markers={markers} />}
         {type === 'WRITE' && <WriteMarkers markers={markers} />}
+        {type === 'WRITE' && (
+          <Source id='polylineLayer' type='geojson' data={routes}>
+            <Layer
+              id='lineLayer'
+              type='line'
+              source='my-data'
+              layout={{
+                'line-join': 'round',
+                'line-cap': 'round',
+              }}
+              paint={{
+                'line-color': '#0095f6',
+                'line-width': 4,
+                'line-dasharray': [0, 3, 3],
+              }}
+            />
+          </Source>
+        )}
         {showPopup && (
           <CustomPopup
             info={popupInfo}
