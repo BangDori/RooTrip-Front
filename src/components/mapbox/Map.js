@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MapGL from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -9,24 +9,36 @@ import {
   initialViewState,
   ZoomRange,
 } from '@config/map-config';
+import { getReverseAddress } from '@services/photo';
 import { setCoordinateFile } from '@store/custom';
 import '@styles/mapbox/Map.scss';
 
 import CustomMarker from './CustomMarker';
+import CustomPopup from './CustomPopup';
 
 const Map = () => {
   const MapGLRef = useRef();
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupInfo, setPopupInfo] = useState({});
 
   const { isCustomMode } = useSelector((state) => state.custom);
   const { markers, type } = useSelector((state) => state.marker);
   const dispatch = useDispatch();
 
-  const setLocationFile = (e) => {
+  const onShowPopup = async (e) => {
     if (!isCustomMode) return;
-
-    // 좌표 삽입
     const { lat, lng } = e.lngLat;
+
+    const address = await getReverseAddress(lat, lng);
+    setShowPopup(true);
+    setPopupInfo({ lat, lng, address });
+  };
+
+  const setLocationFile = () => {
+    const { lat, lng } = popupInfo;
+
     dispatch(setCoordinateFile({ latitude: lat, longitude: lng }));
+    setShowPopup(false);
   };
 
   return (
@@ -36,12 +48,12 @@ const Map = () => {
         initialViewState={initialViewState}
         mapStyle={MAP_API_STYLE}
         mapboxAccessToken={MAP_API_TOKEN}
-        onClick={setLocationFile}
+        onClick={onShowPopup}
         dragRotate={false}
         {...ZoomRange}
       >
         {markers.map((marker) => {
-          if (marker.status === 'unspecified') return null;
+          if (marker.status === 'unspecified') return;
           const { latitude, longitude } = marker.coordinate;
 
           return (
@@ -56,6 +68,13 @@ const Map = () => {
             />
           );
         })}
+        {showPopup && (
+          <CustomPopup
+            info={popupInfo}
+            onClose={() => setShowPopup(false)}
+            setLocation={setLocationFile}
+          />
+        )}
       </MapGL>
       <div className='ocean-container'></div>
     </div>
