@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 
+import { endFile } from '@store/custom';
 import {
   loadMarkers,
   updateMarker,
@@ -68,6 +69,8 @@ const Write = ({ isSubmitting }) => {
   const onUpload = (newFiles) => dispatch(loadMarkers({ files: newFiles }));
   const onRemovePhoto = (fileName) => dispatch(removeMarker({ fileName }));
 
+  const cancelOverlay = () => dispatch(endFile());
+
   return (
     <>
       <div className='post-wrapper'>
@@ -76,7 +79,7 @@ const Write = ({ isSubmitting }) => {
             <p className='custom-message'>
               지도에서 이미지의 위치를 클릭해주세요.
             </p>
-            <div className='post-overlay' />
+            <div className='post-overlay' onClick={cancelOverlay} />
           </>
         )}
         {page === 1 && <MediaUpload onUpload={onUpload} notify={notify} />}
