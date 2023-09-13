@@ -63,7 +63,7 @@ const Write = ({ isSubmitting }) => {
   const onNextPage = () => setPage((prev) => prev + 1);
   const onPrevPage = () => {
     setPage((prev) => prev - 1);
-    dispatch(resetMarkers('WRITE'));
+    dispatch(resetMarkers({ type: 'WRITE', prevType: 'WRITE' }));
   };
   const onUpload = (newFiles) => dispatch(loadMarkers({ files: newFiles }));
   const onRemovePhoto = (fileName) => dispatch(removeMarker({ fileName }));
