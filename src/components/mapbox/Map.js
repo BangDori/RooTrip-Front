@@ -12,9 +12,11 @@ import {
 import { getReverseAddress } from '@services/photo';
 import { setCoordinateFile } from '@store/custom';
 import '@styles/mapbox/Map.scss';
+import '@styles/mapbox/Marker.scss';
 
-import CustomMarker from './CustomMarker';
 import CustomPopup from './CustomPopup';
+import TripMarkers from './TripMarkers';
+import WriteMarkers from './WriteMarkers';
 
 const Map = () => {
   const MapGLRef = useRef();
@@ -52,22 +54,8 @@ const Map = () => {
         dragRotate={false}
         {...ZoomRange}
       >
-        {markers.map((marker) => {
-          if (marker.status === 'unspecified') return;
-          const { latitude, longitude } = marker.coordinate;
-
-          return (
-            <CustomMarker
-              key={marker.fileName}
-              postId={-1}
-              lng={longitude}
-              lat={latitude}
-              imageURI={marker.url}
-              markerType={marker.type}
-              type={type}
-            />
-          );
-        })}
+        {type === 'TRIP' && <TripMarkers markers={markers} />}
+        {type === 'WRITE' && <WriteMarkers markers={markers} />}
         {showPopup && (
           <CustomPopup
             info={popupInfo}
