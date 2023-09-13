@@ -1,5 +1,10 @@
 import { useCallback, useEffect } from 'react';
-import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import {
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 
 import GNB from '@components/common/GNB';
 import Map from '@components/mapbox/Map';
@@ -10,13 +15,14 @@ import { getAuthToken, getRefreshToken } from '@utils/token';
 
 const RootLayout = () => {
   const { accesstoken, expiration } = useLoaderData();
+  const { pathname } = useLocation();
   const refreshtoken = getRefreshToken('refreshtoken');
   const navigate = useNavigate();
 
   const reIssueToken = useCallback(async () => {
     await store.dispatch(reIssueStore(refreshtoken));
-    navigate('/trip');
-  }, [navigate, refreshtoken]);
+    if (pathname === '/') navigate('/trip');
+  }, [pathname, navigate, refreshtoken]);
 
   useEffect(() => {
     if (!accesstoken) {
