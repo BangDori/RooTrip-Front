@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import '@styles/mapbox/Marker.scss';
 
-const CustomMarker = ({ postId, lng, lat, imageURI, type }) => {
+const CustomMarker = ({ postId, lng, lat, type, imageURI, markerType }) => {
   const [isClick, setIsClick] = useState(false);
   const markerPath = isClick ? '/trip' : `/trip/${postId}`;
 
@@ -30,7 +30,12 @@ const CustomMarker = ({ postId, lng, lat, imageURI, type }) => {
       return (
         <Marker longitude={lng} latitude={lat} anchor='bottom'>
           <div className='map-marker-image'>
-            <img src={imageURI} alt='marker' className='write-marker' />
+            {markerType.includes('image/') && (
+              <img className='write-marker' src={imageURI} alt='marker' />
+            )}
+            {markerType.includes('video/') && (
+              <video className='write-marker' src={`${imageURI}#t=0.5`} />
+            )}
           </div>
         </Marker>
       );
