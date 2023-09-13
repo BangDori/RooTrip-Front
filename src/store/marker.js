@@ -60,6 +60,7 @@ const markerSlice = createSlice({
 
       state.markers = [];
       state.type = type;
+      state.onError = '';
     },
   },
 });
