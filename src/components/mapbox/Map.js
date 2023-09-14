@@ -27,7 +27,7 @@ const Map = () => {
 
   const { isCustomMode } = useSelector((state) => state.custom);
   const { markers, type } = useSelector((state) => state.marker);
-  const { routes } = useGetRoutes(markers);
+  const { routesIndex, routesSource } = useGetRoutes(markers);
   const dispatch = useDispatch();
 
   const onShowPopup = async (e) => {
@@ -60,8 +60,8 @@ const Map = () => {
         {type === 'TRIP' && <TripMarkers markers={markers} />}
         {type === 'WRITE' && (
           <>
-            <WriteMarkers markers={markers} />
-            <CustomRoutes routes={routes} />
+            <WriteMarkers markers={markers} routesIndex={routesIndex} />
+            <CustomRoutes routes={routesSource} />
           </>
         )}
         {showPopup && (
