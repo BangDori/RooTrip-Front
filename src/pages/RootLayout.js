@@ -1,20 +1,16 @@
 import { useCallback, useEffect } from 'react';
-import {
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useNavigate,
-} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import GNB from '@components/common/GNB';
 import Map from '@components/mapbox/Map';
 import store from '@store/configureStore';
 import { resetMarkers } from '@store/marker';
 import { reIssueStore } from '@store/user';
-import { getAuthToken, getRefreshToken } from '@utils/token';
+import { getRefreshToken } from '@utils/token';
 
 const RootLayout = () => {
-  const { accesstoken, expiration } = useLoaderData();
+  const { accessToken, expiration } = useSelector((state) => state.user);
   const { pathname } = useLocation();
   const refreshtoken = getRefreshToken('refreshtoken');
   const navigate = useNavigate();
@@ -25,24 +21,23 @@ const RootLayout = () => {
   }, [pathname, navigate, refreshtoken]);
 
   useEffect(() => {
-    if (!accesstoken) {
+    if (!accessToken) {
       if (refreshtoken) reIssueToken();
       return;
     }
 
-    if (expiration <= 0) {
-      reIssueToken();
-      return;
-    }
+    const interval = expiration - new Date().getTime();
 
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       reIssueToken();
-    }, expiration);
-  }, [navigate, accesstoken, expiration, refreshtoken, reIssueToken]);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [navigate, accessToken, expiration, refreshtoken, reIssueToken]);
 
   return (
     <>
-      {accesstoken && <GNB />}
+      {accessToken && <GNB />}
       <Map />
       <Outlet />
     </>
@@ -69,12 +64,5 @@ export function loader({ request }) {
     store.dispatch(resetMarkers({ type, prevType }));
   }
 
-  const isToken = store.getState('token').user.accesstoken;
-
-  if (isToken) {
-    return null;
-  }
-
-  const token = getAuthToken();
-  return token;
+  return null;
 }
