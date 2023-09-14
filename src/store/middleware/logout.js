@@ -15,7 +15,7 @@ const logout =
     await logoutAPI();
     Cookies.remove('refreshtoken');
 
-    dispatch({ type });
+    return dispatch({ type });
   };
 
 export default logout;

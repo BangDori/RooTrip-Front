@@ -22,7 +22,7 @@ const reIssue =
 
     const expiration = getExpiration(expire);
     const tokens = { accessToken, expiration };
-    dispatch({ type, payload: tokens });
+    return dispatch({ type, payload: tokens });
   };
 
 export default reIssue;
