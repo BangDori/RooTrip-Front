@@ -1,33 +1,22 @@
-import { Marker } from 'react-map-gl';
+import WriteMarker from './WriteMarker';
 
-const WriteMarkers = ({ markers }) => {
-  return (
-    <>
-      {markers.map((marker) => {
-        if (marker.status === 'unspecified') return;
-        const { fileName, type, url } = marker;
-        const { latitude, longitude } = marker.coordinate;
+const WriteMarkers = ({ markers, routesIndex }) => (
+  <>
+    {markers.map((marker, idx) => {
+      if (marker.status === 'unspecified') return;
 
-        return (
-          <Marker
-            key={fileName}
-            longitude={longitude}
-            latitude={latitude}
-            anchor='bottom'
-          >
-            <div className='map-marker-image'>
-              {type.includes('image/') && (
-                <img className='write-marker' src={url} alt='marker' />
-              )}
-              {type.includes('video/') && (
-                <video className='write-marker' src={`${url}#t=0.5`} />
-              )}
-            </div>
-          </Marker>
-        );
-      })}
-    </>
-  );
-};
+      const start = routesIndex[0] === idx;
+      const end = routesIndex.at(-1) === idx;
+
+      return (
+        <WriteMarker
+          key={marker.fileName}
+          marker={marker}
+          isAnimation={start || end}
+        />
+      );
+    })}
+  </>
+);
 
 export default WriteMarkers;

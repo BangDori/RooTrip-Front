@@ -13,8 +13,7 @@ const CustomRoutes = ({ routes }) => {
         }}
         paint={{
           'line-color': '#0095f6',
-          'line-width': 4,
-          'line-dasharray': [0, 2, 2],
+          'line-width': 2,
         }}
       />
     </Source>
