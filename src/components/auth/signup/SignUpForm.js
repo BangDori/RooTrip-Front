@@ -20,6 +20,7 @@ const SignUpForm = ({ error, isSubmitting }) => {
     setError,
     reset,
     setFocus,
+    getValues,
   } = useForm({
     mode: 'onBlur',
   });
@@ -39,6 +40,20 @@ const SignUpForm = ({ error, isSubmitting }) => {
 
   const onSignUp = (signupForm) => submit(signupForm, { method: 'post' });
 
+  const onSuccessEmail = regExpEmail.test(getValues('email'))
+    ? 'input-success'
+    : undefined;
+  const onSuccessName = regExpName.test(getValues('name'))
+    ? 'input-success'
+    : undefined;
+  const onSuccessNickname =
+    regExpNickname.test(getValues('nickname')) && !errors.nickname
+      ? 'input-success'
+      : undefined;
+  const onSuccessPassword = regExpPassword.test(getValues('password'))
+    ? 'input-success'
+    : undefined;
+
   return (
     <form
       method='post'
@@ -49,6 +64,7 @@ const SignUpForm = ({ error, isSubmitting }) => {
         <input
           type='text'
           placeholder='이메일 (test@test.com)'
+          className={onSuccessEmail}
           {...register('email', {
             required: '※ 필수 항목 입니다.',
             pattern: {
@@ -67,6 +83,7 @@ const SignUpForm = ({ error, isSubmitting }) => {
         <input
           type='text'
           placeholder='이름을 입력해주세요.'
+          className={onSuccessName}
           {...register('name', {
             required: '※ 필수 항목 입니다.',
             pattern: {
@@ -85,6 +102,7 @@ const SignUpForm = ({ error, isSubmitting }) => {
         <input
           type='text'
           placeholder='닉네임을 입력해주세요.'
+          className={onSuccessNickname}
           {...register('nickname', {
             required: '※ 필수 항목 입니다.',
             pattern: {
@@ -104,6 +122,7 @@ const SignUpForm = ({ error, isSubmitting }) => {
         <input
           type='password'
           placeholder='비밀번호를 입력해주세요.'
+          className={onSuccessPassword}
           {...register('password', {
             required: '※ 필수 항목 입니다.',
             pattern: {
