@@ -1,6 +1,7 @@
-import { json, redirect, useNavigation } from 'react-router-dom';
+import { json, useNavigation } from 'react-router-dom';
 
 import Write from '@components/root/write/Write';
+import { getPreSignedUrl, uploadFileToS3 } from '@services/media';
 import { createPost } from '@services/post';
 
 const WritePage = () => {
@@ -22,9 +23,33 @@ export async function action({ request }) {
     )
     .filter((idx) => idx !== null);
 
+  const fileNames = files.map((file) => file.fileName);
+  const urlResponse = await getPreSignedUrl(fileNames);
+  const urlResData = await urlResponse.json();
+  const { data: urls } = urlResData;
+
+  // pre-signed url에 사진 파일 전송하기
+  const newFiles = await Promise.all(
+    files.map(async (file, index) => {
+      const blob = new Blob([file]);
+      const newFile = new File([blob], `${Date.now()}-${file.fileName}`, {
+        type: file.type,
+      });
+
+      await uploadFileToS3(urls[index], newFile);
+
+      window.URL.revokeObjectURL(file.url);
+      return {
+        type: file.type,
+        fileName: file.fileName,
+        coordinate: file.coordinate,
+      };
+    }),
+  );
+
   const postForm = {
-    files,
-    artilce: data.get('article'),
+    files: newFiles,
+    article: data.get('article'),
     routes,
   };
 
@@ -32,15 +57,10 @@ export async function action({ request }) {
   const response = await createPost(postForm);
   const resData = await response.json();
 
-  // 사용한 파일들의 blob url 제거
-  files.forEach((file) => {
-    window.URL.revokeObjectURL(file.url);
-  });
-
   // 로그인 오류
   if (!resData.status) {
     throw json({ message: resData.message, link: '/trip' }, { status: 400 });
   }
 
-  return redirect('/write/completion');
+  return null;
 }
