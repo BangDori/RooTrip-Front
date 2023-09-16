@@ -91,6 +91,7 @@ const Write = ({ isSubmitting }) => {
             onUpload={onUpload}
             onRemove={onRemovePhoto}
             notify={notify}
+            isSubmitting={isSubmitting}
           />
         )}
         {page === 3 && <Completion isSubmitting={isSubmitting} />}

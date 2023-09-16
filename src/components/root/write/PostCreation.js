@@ -18,6 +18,7 @@ const PostCreation = ({
   onUpload,
   onRemove,
   notify,
+  isSubmitting,
 }) => {
   const [cur, setCur] = useState(0);
   const { register, handleSubmit } = useForm();
@@ -62,7 +63,7 @@ const PostCreation = ({
         <button type='button' className='move-button' onClick={onPrev}>
           이전
         </button>
-        <button type='submit' className='move-button'>
+        <button type='submit' className='move-button' disabled={isSubmitting}>
           공유
         </button>
       </nav>
