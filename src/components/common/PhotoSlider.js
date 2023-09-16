@@ -41,7 +41,7 @@ const PhotoSlider = ({ files, onUpload, notify, left }) => {
       )}
       {isSubmitting && (
         <div className='upload-button submitting'>
-          <BeatLoader size={8} />
+          <BeatLoader size={8} color={'#0095f6'} />
         </div>
       )}
     </div>
