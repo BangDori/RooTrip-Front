@@ -37,6 +37,7 @@ const useGetRoutes = (markers, MapGLRef) => {
     [markers],
   );
 
+  // Routes 진행 시, 지도 확대
   useEffect(() => {
     if (existCoordMarker.length !== 0) {
       const { center, zoom } = changeCityToCoordinate(existCoordMarker);
@@ -51,6 +52,21 @@ const useGetRoutes = (markers, MapGLRef) => {
           return t;
         },
       });
+
+      // Routes 종료 시, 지도 초기 상태로 복귀
+      return () => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        MapGLRef.current.flyTo({
+          center: [131.1, 36.4395],
+          zoom: 5.5,
+          speed: 1.5,
+          curve: 1.25,
+          essential: true,
+          easing(t) {
+            return t;
+          },
+        });
+      };
     }
   }, [existCoordMarker, MapGLRef]);
 
