@@ -28,7 +28,9 @@ export async function action({ request }) {
 
   // 로그인 오류
   if (!resData.status) {
-    return json({ message: resData.message });
+    if (resData.message === '입력값이 유효하지 않습니다.')
+      return json({ message: resData.message, status: 401 }); // 401, Authentication failed
+    return json({ message: resData.message, status: 422 }); // 422, Invalid email or password entered
   }
 
   // 로그인 성공

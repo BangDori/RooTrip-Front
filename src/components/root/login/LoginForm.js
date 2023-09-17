@@ -25,10 +25,15 @@ const LoginForm = ({ error, isSubmitting }) => {
   const submit = useSubmit();
 
   useEffect(() => {
-    if (error) {
+    if (error && error.status === 401) {
       setFocus('email');
       reset();
       setError('email', { message: error.message });
+    }
+    if (error && error.status === 422) {
+      setFocus('password');
+      reset((prevForm) => ({ ...prevForm, password: '' }));
+      setError('password', { message: error.message });
     }
   }, [setFocus, setError, reset, error]);
 
