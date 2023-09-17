@@ -23,18 +23,14 @@ const PreviewImage = ({ file, onRemove }) => {
   };
 
   return (
-    <div
-      key={file.fileName}
-      className={`upload-image ${className}`}
-      onClick={setCustomLocation}
-    >
+    <div key={file.fileName} className={`upload-image ${className}`}>
       <button
         className='image-xmark'
         onClick={onRemove.bind(null, file.fileName)}
       >
         <FontAwesomeIcon icon={faXmark} />
       </button>
-      <img src={file.url} alt='user upload photo' />
+      <img src={file.url} alt='user upload photo' onClick={setCustomLocation} />
     </div>
   );
 };
