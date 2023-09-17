@@ -40,6 +40,9 @@ const useGetRoutes = (markers, MapGLRef) => {
   // Routes 진행 시, 지도 확대
   useEffect(() => {
     if (existCoordMarker.length !== 0) {
+      const prevCenter = MapGLRef.current.getCenter();
+      const prevZoom = MapGLRef.current.getZoom();
+
       const { center, zoom } = changeCityToCoordinate(existCoordMarker);
 
       MapGLRef.current.flyTo({
@@ -57,8 +60,8 @@ const useGetRoutes = (markers, MapGLRef) => {
       return () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
         MapGLRef.current.flyTo({
-          center: [131.1, 36.4395],
-          zoom: 5.5,
+          center: prevCenter,
+          zoom: prevZoom,
           speed: 1.5,
           curve: 1.25,
           essential: true,
