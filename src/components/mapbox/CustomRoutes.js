@@ -16,6 +16,19 @@ const CustomRoutes = ({ routes }) => {
           'line-width': 2,
         }}
       />
+
+      <Layer
+        id='arrowLayer'
+        type='symbol'
+        source='polylineLayer'
+        layout={{
+          'symbol-placement': 'line',
+          'symbol-spacing': 100,
+          'icon-image': 'arrow1',
+          'icon-size': 0.75,
+        }}
+        paint={{ 'icon-color': '#0095f6' }}
+      />
     </Source>
   );
 };
