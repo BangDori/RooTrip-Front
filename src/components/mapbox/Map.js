@@ -9,6 +9,7 @@ import {
   initialViewState,
   ZoomRange,
 } from '@config/map-config';
+import useMapState from '@hooks/useMapState';
 import useGetRoutes from '@hooks/useGetRoutes';
 import { getReverseAddress } from '@services/photo';
 import { setCoordinateFile } from '@store/custom';
@@ -24,6 +25,7 @@ const Map = () => {
   const MapGLRef = useRef();
   const [showPopup, setShowPopup] = useState(false);
   const [popupInfo, setPopupInfo] = useState({});
+  const { onZoomEnd, onDragEnd } = useMapState();
 
   const { isCustomMode } = useSelector((state) => state.custom);
   const { markers, type } = useSelector((state) => state.marker);
@@ -55,6 +57,8 @@ const Map = () => {
         mapboxAccessToken={MAP_API_TOKEN}
         onClick={onShowPopup}
         dragRotate={false}
+        onZoomEnd={onZoomEnd}
+        onDragEnd={onDragEnd}
         {...ZoomRange}
       >
         {type === 'TRIP' && <TripMarkers markers={markers} />}

@@ -3,6 +3,7 @@ import logger from 'redux-logger';
 
 import userReducer from './user';
 import customReducer from './custom';
+import mapReducer from './map';
 import markerReducer from './marker';
 
 import reset from './middleware/reset';
@@ -15,6 +16,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     custom: customReducer,
+    map: mapReducer,
     marker: markerReducer,
   },
   middleware: (getDefaultMiddleware) => [
