@@ -29,7 +29,7 @@ const mapSlice = createSlice({
       state.center = [131.1, 36.4395];
       state.markerCount = 8;
       state.polygon = '';
-      state.zoom = '5.5';
+      state.zoom = 5.5;
     },
   },
 });

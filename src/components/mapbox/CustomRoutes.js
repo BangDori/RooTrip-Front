@@ -27,7 +27,6 @@ const CustomRoutes = ({ routes }) => {
           'icon-image': 'arrow1',
           'icon-size': 0.75,
         }}
-        paint={{ 'icon-color': '#0095f6' }}
       />
     </Source>
   );
