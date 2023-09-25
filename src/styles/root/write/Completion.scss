@@ -1,0 +1,65 @@
+@keyframes fadeInCompletion {
+  0% {
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.completion-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 0 auto;
+
+  width: 160px;
+  height: 160px;
+
+  .gif-animation {
+    width: inherit;
+    height: inherit;
+    object-fit: contain;
+  }
+
+  svg {
+    color: #0095f6;
+
+    width: 80px;
+    height: 80px;
+
+    opacity: 0;
+    animation: fadeInCompletion 0.5s ease-in-out 0s forwards;
+  }
+}
+
+.completion-message {
+  margin: 0;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.confirm-button {
+  width: 201px;
+  height: 29px;
+
+  border-radius: 5px;
+
+  color: white;
+  background: #0095f6;
+
+  cursor: pointer;
+
+  margin-bottom: 32px;
+
+  a {
+    color: white;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

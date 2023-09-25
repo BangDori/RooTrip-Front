@@ -1,0 +1,259 @@
+@keyframes fadeInVolume {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.write-description {
+  font-weight: bold;
+  padding: 16px 0;
+  margin: 0;
+
+  border-bottom: 1px solid #ccc;
+}
+
+.write-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 360px;
+
+  border: 2px dashed #fff;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+
+  .file-upload-button {
+    width: 201px;
+    height: 29px;
+
+    color: #fff;
+
+    background: #0095f6;
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  .loading-message {
+    margin-top: 32px;
+  }
+}
+
+.dragging {
+  background: #eeeeee;
+
+  border-color: #2196f3;
+  transition: border 0.24s ease-in-out;
+}
+
+.post-form {
+  margin: 4px 0 8px;
+
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px solid #ccc;
+
+    .move-button {
+      color: #0095f6;
+      cursor: pointer;
+    }
+  }
+
+  .post-section {
+    .direction {
+      position: absolute;
+      top: 23%;
+      transform: translate(0, -26%);
+
+      color: #ccc;
+
+      cursor: pointer;
+
+      &:hover {
+        color: #000;
+      }
+    }
+
+    .left-direction {
+      left: 5px;
+    }
+
+    .right-direction {
+      right: 5px;
+    }
+
+    .upload-image-section {
+      position: relative;
+      overflow: hidden;
+
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      gap: 12px;
+
+      margin: 8px 27px;
+      height: 134px;
+
+      .view-photos {
+        position: absolute;
+        left: 0;
+
+        display: flex;
+        gap: 12px;
+
+        transition: left 0.3s ease-in-out;
+
+        .upload-image {
+          position: relative;
+          width: 128px;
+          height: 128px;
+
+          border-radius: 15px;
+
+          overflow: hidden;
+
+          border-width: 3px;
+          border-style: solid;
+          border-color: transparent;
+
+          .image-volume {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            color: #d3d3d3;
+
+            svg {
+              opacity: 0;
+              width: 36px;
+              height: 36px;
+              animation: fadeInVolume 1.5s ease-in-out 0s forwards;
+            }
+          }
+
+          .image-xmark {
+            z-index: 15;
+
+            background: #ccc;
+
+            border-radius: 50%;
+
+            position: absolute;
+            top: 3px;
+            left: 3px;
+
+            padding: 0;
+            width: 16px;
+            height: 16px;
+
+            cursor: pointer;
+
+            &:hover {
+              background: #000;
+              color: #ccc;
+            }
+          }
+
+          img {
+            width: inherit;
+            height: inherit;
+
+            object-fit: cover;
+          }
+        }
+
+        .upload-button {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          width: 134px;
+          height: 134px;
+
+          background: #cccccc;
+          border-radius: 15px;
+          cursor: pointer;
+
+          &:hover {
+            background: #555555;
+          }
+        }
+
+        .submitting {
+          background: white;
+
+          cursor: auto;
+          &:hover {
+            background: none;
+          }
+        }
+
+        .specified-coord {
+          border-color: #0095f6;
+        }
+
+        .custom-coord {
+          border-color: #008000;
+        }
+
+        .unspecified-coord {
+          border-color: #ff0000;
+        }
+      }
+    }
+
+    .post-article-section {
+      .post-article {
+        resize: none;
+        width: 416px;
+        height: 240px;
+
+        border: 1px solid #cccccc;
+        border-radius: 10px;
+
+        font-size: 16px;
+        padding: 8px;
+
+        font-family: 'IBM Plex Sans Hebrew';
+
+        &:focus {
+          outline: none;
+        }
+
+        &::placeholder {
+          font-weight: 700;
+          color: #c1c1c1;
+        }
+      }
+    }
+
+    .register {
+      margin: 4px 0 0 23px;
+      text-align: left;
+      color: #0095f6;
+    }
+
+    .not-register {
+      margin: 4px 0 0 23px;
+      text-align: left;
+      color: #ff0000;
+    }
+  }
+}

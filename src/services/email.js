@@ -1,52 +1,49 @@
-import axios from 'axios';
-import { MAIN_SERVER } from '@config/setting';
+import { json } from 'react-router-dom';
+import { MAIN_SERVER } from '@config/server-config';
+
+const EMAIL_API_SERVER = `${MAIN_SERVER}/api/email`;
 
 /**
- * 이메일 인증 코드 전송 함수
- * @param {*} email 이메일
- * @returns 에러 메시지 or 성공
+ * API 요청 Interface
+ * @param {String} url 통신 URI
+ * @param {String} method HTTP Method
+ * @param {Object} data 입력 데이터
+ * @returns 응답 객체
  */
-export async function sendVerifyNumber(type, email) {
-  const { status, message } = await axios
-    .post(`${MAIN_SERVER}/api/email/verify/send`, { type, email })
-    .then((res) => res.data)
-    .catch((e) => new Error(e.message));
-
-  if (!status) throw new Error(message);
-  return status;
+export async function emailAPI(url, method, data) {
+  try {
+    const response = await fetch(EMAIL_API_SERVER + url, {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return response;
+  } catch (error) {
+    throw json({ message: error.message }, { status: error.status });
+  }
 }
 
 /**
- * 이메일 인증 코드 검증 함수
- * @param {*} value 이메일 인증 코드
+ * 인증번호 전송 API
+ * @param {Object} email
+ * @returns 응답
  */
-export async function authVerifyNumber(email, verifyNumber) {
-  const { status, message } = await axios
-    .post(`${MAIN_SERVER}/api/email/verify/auth`, {
-      email,
-      verifyNumber,
-    })
-    .then((res) => res.data)
-    .catch((e) => new Error(e.message));
+const sendVerifyNumberAPI = async (email) => {
+  const response = emailAPI('/verify/send', 'POST', { email });
 
-  if (!status) throw new Error(message);
-  return status;
-}
-
+  return response;
+};
 /**
- * auth 임시 비밀번호 발급 함수
- * @param {*} email 이메일, 인증 번호
- * @returns
+ * 비밀번호 초기화 API
+ * @param {Object} accountForm
+ * @returns 응답
  */
-export async function sendPassword(email, verifyNumber) {
-  const { status, message } = await axios
-    .post(`${MAIN_SERVER}/api/email/resetpassword`, {
-      email,
-      verifyNumber,
-    })
-    .then((res) => res.data)
-    .catch((e) => new Error(e.message));
+const resetPasswordAPI = async (accountForm) => {
+  const response = emailAPI('/resetPassword', 'POST', accountForm);
 
-  if (!status) throw new Error(message);
-  return status;
-}
+  return response;
+};
+
+export { sendVerifyNumberAPI, resetPasswordAPI };
