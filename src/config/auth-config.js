@@ -1,4 +1,0 @@
-const KAKAO_AUTH_URL = process.env.REACT_APP_KAKAO_AUTH_URL;
-const NAVER_AUTH_URL = process.env.REACT_APP_NAVER_AUTH_URL;
-
-export { KAKAO_AUTH_URL, NAVER_AUTH_URL };

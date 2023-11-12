@@ -1,84 +1,184 @@
-import { json } from 'react-router-dom';
-import { MAIN_SERVER } from '@config/server-config';
-
-const AUTH_API_SERVER = `${MAIN_SERVER}/api/auth`;
+import axios from 'axios';
+import { MAIN_SERVER } from '@config/setting';
 
 /**
- * API 요청 Interface
- * @param {String} url 통신 URI
- * @param {String} method HTTP Method
- * @param {Object} data 입력 데이터
- * @returns 응답 객체
+ * 회원가입
+ * @param {Object} registerForm 이름, 닉네임, 이메일, 비밀번호
+ * @returns message (message or Error)
  */
-export async function authAPI(url, method, data) {
-  try {
-    const response = await fetch(AUTH_API_SERVER + url, {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+export async function register(registerForm) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/auth/register`, registerForm)
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-    return response;
-  } catch (error) {
-    throw json({ message: error.message }, { status: error.status });
-  }
+  if (!status) throw new Error(message);
+  return status;
 }
 
 /**
- * 회원가입 API
- * @param {Object} signupForm
- * @returns 응답
+ * accessToken 재발급
+ * @param {String} refreshToken client 측의 refreshToken
+ * @returns message (message or Error)
  */
-const signupAPI = async (signupForm) => {
-  const response = await authAPI('/register', 'POST', signupForm);
+export async function reIssue(refreshToken) {
+  const { status, message, ...token } = await axios
+    .post(`${MAIN_SERVER}/api/auth/token/reissue`, {
+      grant_type: 'refresh_token',
+      refresh_token: refreshToken,
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-  return response;
-};
+  if (!status) throw new Error(message);
+  return token.data;
+}
 
 /**
- * 로그인 API
- * @param {Object} loginForm
- * @returns 응답
+ * 이메일, 닉네임 중복 체크
+ * @param {String} type 중복 확인할 타입
+ * @param {String} data 입력한 값
+ * @returns message (message or Error)
  */
-const loginAPI = async (loginForm) => {
-  const response = await authAPI('/login', 'POST', loginForm);
+export async function findOne(type, data) {
+  const { status, message } = await axios
+    .get(`${MAIN_SERVER}/api/auth/check?type=${type}&data=${data}`)
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-  return response;
-};
+  if (!status) throw new Error(message);
+  return status;
+}
 
 /**
- * 소셜로그인 API
- * @param {String} provider 제공자
- * @param {String} code 코드
- * @returns
+ * 로그아웃
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
  */
-const socialLoginAPI = async (provider, code) => {
-  const response = await authAPI('/social', 'POST', {
-    provider,
-    code,
-  });
+export async function logout(accessToken) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/auth/logout`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-  return response;
-};
+  if (!status) throw new Error(message);
+  return status;
+}
 
 /**
- * 토큰 재발급 API
- * @param {Object} reIssueForm
- * @returns 응답
+ * 로그인
+ * @param {Object} loginForm 이메일, 비밀번호
+ * @returns message (message or Error)
  */
-const reIssueAPI = async (reIssueForm) => {
-  const response = await authAPI('/token/reissue', 'POST', reIssueForm);
+export async function login(loginForm) {
+  const { status, message, ...token } = await axios
+    .post(`${MAIN_SERVER}/api/auth/login`, loginForm)
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-  return response;
-};
+  if (!status) throw new Error(message);
+  return token.data;
+}
 
 /**
- * 로그아웃 API
+ * 소셜 로그인 (카카오톡, 네이버, 구글)
+ * @param {String} provider 소셜 제공자
+ * @param {String} code 로그인 코드
+ * @returns accessToken, refreshToken, expire
  */
-const logoutAPI = async () => {
-  await authAPI('/logout');
-};
+export async function socialLogin(provider, code) {
+  const { status, message, ...token } = await axios
+    .post(`${MAIN_SERVER}/api/auth/social`, {
+      provider,
+      code,
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
 
-export { signupAPI, loginAPI, socialLoginAPI, reIssueAPI, logoutAPI };
+  if (!status) throw new Error(message);
+  return token.data;
+}
+
+/**
+ * 닉네임 변경
+ * @param {Object} nicknameForm 변경할 닉네임
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
+ */
+export async function changeNickname(nicknameForm, accessToken) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/mypage/account/edit/nickname`, nicknameForm, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+  return status;
+}
+
+/**
+ * 성별 변경
+ * @param {Object} sexForm 변경할 성별
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
+ */
+export async function changeSex(sexForm, accessToken) {
+  const { status, message } = await axios
+    .post(`${MAIN_SERVER}/api/mypage/account/edit/gender`, sexForm, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+  return status;
+}
+
+/**
+ * 비밀번호 변경
+ * @param {Object} passwordForm 변경할 닉네임
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
+ */
+export async function changePassword(passwordForm, accessToken) {
+  const { status, message } = await axios
+    .post(
+      `${MAIN_SERVER}/api/mypage/account/personal-info/change-password`,
+      passwordForm,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    )
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+  return status;
+}
+
+/**
+ * 회원탈퇴
+ * @param {String} accessToken client 측의 accessToken
+ * @returns message (message or Error)
+ */
+export async function goUnsigned(accessToken) {
+  const { status, message, ...token } = await axios
+    .post(`${MAIN_SERVER}/api/mypage/account/personal-info/withdrawal`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data)
+    .catch((e) => new Error(e.message));
+  if (!status) throw new Error(message);
+
+  return status;
+}
