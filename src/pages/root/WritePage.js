@@ -31,10 +31,15 @@ export async function action({ request }) {
   // pre-signed url에 사진 파일 전송하기
   const newFiles = await Promise.all(
     files.map(async (file, index) => {
-      const blob = new Blob([file]);
-      const newFile = new File([blob], `${Date.now()}-${file.fileName}`, {
-        type: file.type,
-      });
+      const fileUrl = await fetch(file.url);
+      const blob = await fileUrl.blob();
+      const newFile = new File(
+        [blob],
+        `${Date.now()}-${file.fileName}.${file.type}`,
+        {
+          type: file.type,
+        },
+      );
 
       await uploadFileToS3(urls[index], newFile);
 

@@ -50,9 +50,6 @@ const uploadFileToS3 = async (preSignedUrl, file) => {
     await fetch(preSignedUrl, {
       mode: 'cors',
       method: 'put',
-      headers: {
-        'Content-Type': 'application/json',
-      },
       body: file,
     });
   } catch (error) {
