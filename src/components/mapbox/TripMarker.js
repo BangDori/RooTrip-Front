@@ -3,17 +3,20 @@ import { Marker } from 'react-map-gl';
 import { Link } from 'react-router-dom';
 
 const TripMarker = ({ marker }) => {
-  const [clickedPostId, setClickedPostId] = useState(marker.postId);
-
   const { postId, type, imageUrl, coordinate, fileName } = marker;
   const { latitude, longitude } = coordinate;
 
-  const markerPath = `/trip/${clickedPostId}`;
+  const [clickedPostId, setClickedPostId] = useState('');
+  const markerPath = `/trip/${postId === clickedPostId ? '' : postId}`;
 
   const onClickPost = () => {
     if (clickedPostId === postId) setClickedPostId('');
     else setClickedPostId(postId);
   };
+
+  const markerClass = `map-marker-image trip-marker ${
+    clickedPostId === postId ? 'clicked' : ''
+  }`;
 
   return (
     <Marker
@@ -23,21 +26,12 @@ const TripMarker = ({ marker }) => {
       anchor='bottom'
     >
       <Link to={markerPath}>
-        <div className='map-marker-image'>
+        <div className={markerClass}>
           {type.includes('image/') && (
-            <img
-              src={imageUrl}
-              alt={fileName}
-              className={`${clickedPostId === postId ? 'clicked' : ''}`}
-              onClick={onClickPost}
-            />
+            <img src={imageUrl} alt={fileName} onClick={onClickPost} />
           )}
           {type.includes('video/') && (
-            <video
-              src={`${imageUrl}#t=0.5`}
-              className={`${clickedPostId === postId ? 'clicked' : ''}`}
-              onClick={onClickPost}
-            />
+            <video src={`${imageUrl}#t=0.5`} onClick={onClickPost} />
           )}
         </div>
       </Link>

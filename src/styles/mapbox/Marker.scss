@@ -35,6 +35,11 @@
 
 .trip-marker {
   border-color: white;
+  cursor: pointer;
+
+  &.clicked {
+    border-color: red;
+  }
 
   &:hover {
     border-color: orange;
