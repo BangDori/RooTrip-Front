@@ -29,7 +29,7 @@ const Map = () => {
   const { isCustomMode } = useSelector((state) => state.custom);
   const { markers, type } = useSelector((state) => state.marker);
   const { routesIndex, routesSource } = useGetRoutes(markers, MapGLRef);
-  const { onZoomEnd, onDragEnd } = useMapState(markers);
+  const { onZoomEnd, onDragEnd } = useMapState();
   const dispatch = useDispatch();
 
   const onShowPopup = async (e) => {
