@@ -1,4 +1,5 @@
 import { endFile } from '../custom';
+import { resetMap } from '../map';
 import { resetMarkers } from '../marker';
 
 const reset =
@@ -11,6 +12,7 @@ const reset =
 
     if (prevType === 'WRITE') {
       dispatch(endFile());
+      dispatch(resetMap());
     }
     return next(action);
   };
