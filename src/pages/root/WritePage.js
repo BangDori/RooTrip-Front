@@ -1,4 +1,4 @@
-import { json, useNavigation } from 'react-router-dom';
+import { json, redirect, useNavigation } from 'react-router-dom';
 
 import Write from '@components/root/write/Write';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/media';
@@ -48,7 +48,7 @@ export async function action({ request }) {
   );
 
   const postForm = {
-    files: newFiles,
+    newPhotos: newFiles,
     article: data.get('article'),
     routes,
   };
@@ -58,9 +58,9 @@ export async function action({ request }) {
   const resData = await response.json();
 
   // 로그인 오류
-  if (!resData.status) {
+  if (!response.status) {
     throw json({ message: resData.message, link: '/trip' }, { status: 400 });
   }
 
-  return null;
+  return redirect('/trip');
 }
