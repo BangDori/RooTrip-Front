@@ -14,12 +14,10 @@ const useMapState = () => {
     const { lng: lng1, lat: lat1 } = x;
     const { lng: lng2, lat: lat2 } = y;
 
-    const viewType = currentZoom >= 7 ? 'region' : 'city';
     const polygon = getPolygonBoundary(lng1, lat1, lng2, lat2);
     const center = [(lng1 + lng2) / 2, (lat1 + lat2) / 2];
 
     const changeForm = {
-      viewType,
       center,
       polygon,
       zoom: currentZoom,
