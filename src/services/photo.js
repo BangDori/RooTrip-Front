@@ -32,7 +32,7 @@ async function photoAPI(url, method, data) {
 }
 
 /**
- * 게시글 작성 API
+ * 좌표를 주소로 변경해주는 API
  * @param {Object} postForm 게시글
  */
 const getReverseAddress = async (lat, lng) => {
@@ -40,9 +40,9 @@ const getReverseAddress = async (lat, lng) => {
     `/reverse?latitude=${lat}&longitude=${lng}`,
     'GET',
   );
+
   const resData = await response.json();
-  const { data } = resData;
-  const { city, first, second, third } = data;
+  const { city, first, second, third } = resData.data.address;
 
   const address = `${city} ${first} ${second} ${third}`;
 
