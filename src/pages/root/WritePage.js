@@ -1,4 +1,4 @@
-import { json, redirect, useNavigation } from 'react-router-dom';
+import { json, useNavigation } from 'react-router-dom';
 
 import Write from '@components/root/write/Write';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/media';
@@ -62,5 +62,5 @@ export async function action({ request }) {
     throw json({ message: resData.message, link: '/trip' }, { status: 400 });
   }
 
-  return redirect('/trip');
+  return null;
 }
