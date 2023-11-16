@@ -28,8 +28,8 @@ export function changeCityToCoordinate(markers) {
     if (marker === null) return;
 
     const { longitude: lng, latitude: lat } = marker.coordinate;
-    totalLng += lng;
-    totalLat += lat;
+    totalLng += Number(lng);
+    totalLat += Number(lat);
 
     minLng = Math.min(minLng, lng);
     maxLng = Math.max(maxLng, lng);
