@@ -14,7 +14,7 @@ import useGetRoutes from '@hooks/useGetRoutes';
 import { getReverseAddress } from '@services/photo';
 import { setCoordinateFile } from '@store/custom';
 import { MAIN_SERVER } from '@config/server-config';
-import { loadMarkers } from '@store/marker';
+import { resetMarkers, loadMarkers } from '@store/marker';
 import '@styles/mapbox/Map.scss';
 import '@styles/mapbox/Marker.scss';
 
@@ -59,6 +59,7 @@ const Map = () => {
         const { data: files } = resData;
         const recentMarkers = { files };
 
+        dispatch(resetMarkers({ type: 'TRIP' }));
         dispatch(loadMarkers(recentMarkers));
       };
 
