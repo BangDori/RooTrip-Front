@@ -4,10 +4,28 @@ const markerSlice = createSlice({
   name: 'marker',
   initialState: {
     markers: [],
+    prevMarkers: [],
     type: 'TRIP',
     onError: '',
   },
   reducers: {
+    routeMarkers: (state, action) => {
+      const { photos, routes } = action.payload;
+
+      state.prevMarkers = state.markers;
+      state.type = 'ROUTE';
+      state.markers = routes.map((route) => {
+        return {
+          ...photos[Number(route)],
+          status: 'specified',
+        };
+      });
+    },
+    returnMarkers: (state) => {
+      state.markers = [...state.prevMarkers];
+      state.type = 'TRIP';
+      state.prevMarkers = [];
+    },
     loadMarkers: (state, action) => {
       const { files } = action.payload;
       const filteredMarkers = files.filter((newFile) => {
@@ -65,6 +83,12 @@ const markerSlice = createSlice({
   },
 });
 
-export const { loadMarkers, updateMarker, removeMarker, resetMarkers } =
-  markerSlice.actions;
+export const {
+  routeMarkers,
+  returnMarkers,
+  loadMarkers,
+  updateMarker,
+  removeMarker,
+  resetMarkers,
+} = markerSlice.actions;
 export default markerSlice.reducer;

@@ -31,7 +31,7 @@ function makeRoutes(markers) {
   return { routesIndex, existCoordMarker, routesSource };
 }
 
-const useGetRoutes = (markers, MapGLRef, type) => {
+const useGetRoutes = (markers, MapGLRef) => {
   const { routesIndex, existCoordMarker, routesSource } = useMemo(
     () => makeRoutes(markers),
     [markers],
@@ -39,7 +39,7 @@ const useGetRoutes = (markers, MapGLRef, type) => {
 
   // Routes 진행 시, 지도 확대
   useEffect(() => {
-    if (type === 'WRITE' && existCoordMarker.length !== 0) {
+    if (existCoordMarker.length !== 0) {
       const { center, zoom } = changeCityToCoordinate(existCoordMarker);
 
       MapGLRef.current.flyTo({
@@ -68,7 +68,7 @@ const useGetRoutes = (markers, MapGLRef, type) => {
         });
       };
     }
-  }, [type, existCoordMarker, MapGLRef]);
+  }, [existCoordMarker, MapGLRef]);
 
   return { routesIndex, routesSource };
 };
