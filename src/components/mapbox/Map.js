@@ -39,6 +39,8 @@ const Map = () => {
   useEffect(() => {
     if (type === 'TRIP') {
       const getMarkers = async () => {
+        if (!accessToken) return;
+
         const response = await fetch(
           `${MAIN_SERVER}/api/post?polygon=${polygon}&viewType=city`,
           {
