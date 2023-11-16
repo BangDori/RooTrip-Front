@@ -3,6 +3,7 @@ import { json, useNavigation } from 'react-router-dom';
 import Write from '@components/root/write/Write';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/media';
 import { createPost } from '@services/post';
+import { regLineBreak } from '@constants/regular-expression';
 
 const WritePage = () => {
   const navigation = useNavigation();
@@ -52,9 +53,11 @@ export async function action({ request }) {
     }),
   );
 
+  const article = data.get('article').replace(regLineBreak, '\\r\\n');
+
   const postForm = {
     newPhotos: newFiles,
-    article: data.get('article'),
+    article,
     routes,
   };
 
