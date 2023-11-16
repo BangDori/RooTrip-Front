@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useToggle } from '@uidotdev/usehooks';
@@ -42,6 +42,10 @@ const Post = ({ data }) => {
   } = data.post;
   const { id: userId, name, profile } = user;
   const totPage = photos.length;
+
+  useEffect(() => {
+    setCurPage(1);
+  }, [postId]);
 
   const [isLike, setIsLike] = useToggle(isLiked);
   const { type } = useSelector((state) => state.marker);
