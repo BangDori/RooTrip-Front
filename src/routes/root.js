@@ -5,6 +5,8 @@ import { loader as tripPostsLoader } from '@pages/root/TripPage';
 import TripPostPage, {
   loader as tripPostLoader,
 } from '@pages/root/TripPostPage';
+import ProfileLayout from '@pages/root/ProfileLayout';
+import ProfilePage from '@pages/root/ProfilePage';
 import WritePage, { action as writeAction } from '@pages/root/WritePage';
 
 import {
@@ -40,10 +42,12 @@ const root = {
     },
     {
       path: 'profile',
+      element: <ProfileLayout />,
       loader: restrictAccessWithNoToken,
       children: [
         {
           path: ':userId',
+          element: <ProfilePage />,
         },
         {
           path: 'edit',

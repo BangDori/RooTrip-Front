@@ -20,7 +20,7 @@ const GNB = () => {
       <ul className='menu'>
         <li>
           <NavLink
-            to='/profile'
+            to='/profile/3'
             className={({ isActive }) => (isActive ? 'isActive' : undefined)}
           >
             <div className='menu-icon'>
