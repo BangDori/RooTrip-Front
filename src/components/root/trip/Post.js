@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser, faXmark } from '@fortawesome/free-solid-svg-icons';
 import {
   faBookmark,
   faCompass,
@@ -53,6 +53,11 @@ const Post = ({ data }) => {
 
   return (
     <div className='post-wrapper'>
+      <div className='cancel-btn-container'>
+        <Link to='/trip' className='cancle-btn'>
+          {<FontAwesomeIcon icon={faXmark} size='lg' />}
+        </Link>
+      </div>
       <div className='post-page'>
         {curPage} / {totPage}
       </div>
