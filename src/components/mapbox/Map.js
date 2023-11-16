@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import MapGL from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -13,6 +13,8 @@ import useMapState from '@hooks/useMapState';
 import useGetRoutes from '@hooks/useGetRoutes';
 import { getReverseAddress } from '@services/photo';
 import { setCoordinateFile } from '@store/custom';
+import { MAIN_SERVER } from '@config/server-config';
+import { loadMarkers } from '@store/marker';
 import '@styles/mapbox/Map.scss';
 import '@styles/mapbox/Marker.scss';
 
@@ -26,11 +28,41 @@ const Map = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [popupInfo, setPopupInfo] = useState({});
 
+  const { polygon, center, zoom } = useSelector((state) => state.map);
+  const { accessToken } = useSelector((state) => state.user);
   const { isCustomMode } = useSelector((state) => state.custom);
   const { markers, type } = useSelector((state) => state.marker);
   const { routesIndex, routesSource } = useGetRoutes(markers, MapGLRef);
   const { onZoomEnd, onDragEnd } = useMapState();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (type === 'TRIP') {
+      const getMarkers = async () => {
+        const response = await fetch(
+          `${MAIN_SERVER}/api/post?polygon=${polygon}&viewType=city`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          },
+        );
+
+        const resData = await response.json();
+
+        if (!resData.status) {
+          return null;
+        }
+
+        const { data: files } = resData;
+        const recentMarkers = { files };
+
+        dispatch(loadMarkers(recentMarkers));
+      };
+
+      getMarkers();
+    }
+  }, [dispatch, accessToken, polygon, type, center, zoom]);
 
   const onShowPopup = async (e) => {
     if (!isCustomMode) return;
@@ -62,7 +94,7 @@ const Map = () => {
         {...ZoomRange}
       >
         {type === 'TRIP' && <TripMarkers markers={markers} />}
-        {type === 'WRITE' && (
+        {(type === 'WRITE' || type === 'ROUTE') && (
           <>
             <WriteMarkers markers={markers} routesIndex={routesIndex} />
             <CustomRoutes routes={routesSource} />
