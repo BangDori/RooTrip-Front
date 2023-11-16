@@ -1,31 +1,44 @@
-import '@styles/root/profile/My.scss';
-import '@styles/root/profile/Friend.scss';
-import '@styles/root/profile/Edit.scss';
+import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlaneUp,
   faBookmark,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+
+import test1 from '@assets/test/test1.jpg';
+import test2 from '@assets/test/test2.jpg';
+import test3 from '@assets/test/test3.jpg';
+import test4 from '@assets/test/test4.jpg';
+import test5 from '@assets/test/test5.jpg';
+import test6 from '@assets/test/test6.jpg';
+import '@styles/root/profile/My.scss';
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('travel');
-
   const [articleTab, setArticleTab] = useState('post');
 
   const renderTravelPosts = () => {
     return (
       <div className='article-group'>
-        <div className='article-image post1'></div>
-        <div className='article-image post2'></div>
-        <div className='article-image post3'></div>
-        <div className='article-image post4'></div>
-        <div className='article-image post5'></div>
-        <div className='article-image post6'></div>
-        <div className='article-image post7'></div>
-        <div className='article-image post8'></div>
-        <div className='article-image post9'></div>
+        <div className='article-image post1'>
+          <img src={test1} alt='test1' />
+        </div>
+        <div className='article-image post2'>
+          <img src={test2} alt='test1' />
+        </div>
+        <div className='article-image post3'>
+          <img src={test3} alt='test1' />
+        </div>
+        <div className='article-image post4'>
+          <img src={test4} alt='test1' />
+        </div>
+        <div className='article-image post5'>
+          <img src={test5} alt='test1' />
+        </div>
+        <div className='article-image post6'>
+          <img src={test6} alt='test1' />
+        </div>
       </div>
     );
   };
