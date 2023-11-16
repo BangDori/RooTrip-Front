@@ -32,7 +32,7 @@ const Map = () => {
   const { accessToken } = useSelector((state) => state.user);
   const { isCustomMode } = useSelector((state) => state.custom);
   const { markers, type } = useSelector((state) => state.marker);
-  const { routesIndex, routesSource } = useGetRoutes(markers, MapGLRef);
+  const { routesIndex, routesSource } = useGetRoutes(markers, MapGLRef, type);
   const { onZoomEnd, onDragEnd } = useMapState();
   const dispatch = useDispatch();
 
