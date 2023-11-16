@@ -32,6 +32,7 @@ const Post = ({ data }) => {
 
   const { postViews, post } = data;
   const { article, comments, like, user } = post;
+  const { name, profile } = user;
 
   const formattedArticle = article
     .split('\\r\\n')
@@ -46,8 +47,6 @@ const Post = ({ data }) => {
       );
     })
     .filter(Boolean);
-
-  const { name, profile } = user;
 
   return (
     <div className='post-wrapper'>
@@ -102,10 +101,12 @@ const Post = ({ data }) => {
         </div>
 
         <section className='post-section'>
-          {formattedArticle}
-          <button className='more-post-btn' onClick={toggleFullScreen}>
-            ... 더보기
-          </button>
+          {formattedArticle.slice(0, 4)}
+          {formattedArticle.length > 4 && (
+            <button className='more-post-btn' onClick={toggleFullScreen}>
+              ... 더보기
+            </button>
+          )}
         </section>
 
         <Comment comments={comments} />
