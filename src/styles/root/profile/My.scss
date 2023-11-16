@@ -1,0 +1,187 @@
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  li {
+    font-size: 1em;
+  }
+}
+
+.dvPost {
+  position: absolute;
+  width: 27.5%;
+  height: 69%;
+  background-color: #eee;
+  right: 15%;
+  top: 10%;
+  border-radius: 2%;
+  overflow-y: hidden;
+
+  header {
+    height: 30%;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+
+    .dvProfileImg {
+      width: 6.5em;
+      height: 6.5em;
+      background-color: #ccc;
+      border-radius: 50%;
+      margin: 0 1em;
+      position: relative;
+
+      svg {
+        position: absolute;
+        right: 25%;
+        top: 20%;
+        font-size: 3.5em;
+        color: #979797;
+      }
+    }
+
+    ul {
+      li {
+        margin-bottom: 0.5em;
+
+        span {
+          margin-right: 0.5em;
+        }
+
+        .spTitle {
+          font-size: 1.1em;
+          margin-right: 1em;
+          font-weight: bold;
+        }
+
+        .spFriends {
+          margin: 0.5em;
+        }
+
+        .introduce-text {
+          margin-top: 1em;
+          font-size: 0.9em;
+        }
+
+        .btProfileEdit {
+          width: 7em;
+          height: 1.5em;
+          background-color: #979797;
+          border-radius: 5px;
+          font-size: 1.1em;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  main {
+    width: 100%;
+
+    .main-header {
+      margin-top: 1em;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .profile-img {
+        width: 4em;
+        height: 4em;
+        background-color: #ccc;
+        border-radius: 50%;
+        margin: 2em 0 0.5em 0;
+      }
+      label {
+        color: #533bd8;
+      }
+      label:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+
+    ul {
+      margin-top: 3em;
+      li {
+        display: flex;
+        margin-bottom: 1em;
+        align-items: center;
+        justify-content: center;
+        p {
+          margin: 0;
+          width: 4em;
+          text-align: end;
+          margin-right: 1em;
+          font-size: 1.2em;
+        }
+        input {
+          width: 50%;
+          height: 2em;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+        }
+      }
+    }
+  }
+
+  footer {
+    margin-top: 3em;
+    text-align: center;
+
+    .btChange {
+      border-radius: 7px;
+      width: 9em;
+      height: 2em;
+      background-color: #533bd8;
+      color: #fff;
+      font-size: 1.1em;
+    }
+  }
+}
+
+.article-gnb {
+  ul {
+    display: flex;
+    justify-content: space-around;
+    li {
+      color: #979797;
+      padding: 0.5em;
+      text-align: center;
+      width: 50%;
+      cursor: pointer;
+      svg {
+        margin: 0 0.3em;
+      }
+    }
+    .checked {
+      background: #52b8ff;
+      color: #fff;
+    }
+  }
+}
+
+article::-webkit-scrollbar {
+  width: 0;
+}
+article {
+  overflow-y: scroll;
+  height: 63.5%;
+  .article-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    .article-image {
+      text-align: center;
+      width: 29.5%;
+      height: 8em;
+      border: 1px solid #fff;
+      margin: 0.5em;
+      background-color: #ddd;
+      cursor: pointer;
+    }
+  }
+}
