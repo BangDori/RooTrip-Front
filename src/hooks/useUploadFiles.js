@@ -29,6 +29,7 @@ const useUploadFiles = ({ onUpload }) => {
     }
 
     const data = await exifr.parse(fileInfo);
+    if (!data) return newPhoto;
 
     if (
       Object.keys(data).includes('latitude') &&
