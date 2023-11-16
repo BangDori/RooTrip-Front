@@ -54,11 +54,6 @@ const PostCreation = ({
 
   return (
     <form className='post-form' onSubmit={handleSubmit(onCreatePost)}>
-      <input
-        type='hidden'
-        value={JSON.stringify(files)}
-        {...register('files')}
-      />
       <nav className='post-nav'>
         <button type='button' className='move-button' onClick={onPrev}>
           이전

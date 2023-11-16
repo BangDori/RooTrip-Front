@@ -4,6 +4,7 @@ import Write from '@components/root/write/Write';
 import { getPreSignedUrl, uploadFileToS3 } from '@services/media';
 import { createPost } from '@services/post';
 import { regLineBreak } from '@constants/regular-expression';
+import store from '@store/configureStore';
 
 const WritePage = () => {
   const navigation = useNavigation();
@@ -16,11 +17,13 @@ export default WritePage;
 
 export async function action({ request }) {
   const data = await request.formData();
-  const files = JSON.parse(data.get('files'));
+  const { markers: files } = store.getState().marker;
 
   const routes = files
     .map((file, idx) =>
-      file.type.includes('image/') && file.dateTime ? idx : null,
+      file.type.includes('image/') && typeof file.coordinate === 'object'
+        ? idx
+        : null,
     )
     .filter((idx) => idx !== null);
 
