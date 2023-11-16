@@ -9,7 +9,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  faBookmark,
+  // faBookmark,
   faCompass,
   faHeart as faHeartRegular,
 } from '@fortawesome/free-regular-svg-icons';
@@ -43,11 +43,13 @@ const Post = ({ data }) => {
   const { id: userId, name, profile } = user;
   const totPage = photos.length;
 
-  useEffect(() => {
-    setCurPage(1);
-  }, [postId]);
-
   const [isLike, setIsLike] = useToggle(isLiked);
+
+  useEffect(() => {
+    setIsLike(isLiked);
+    setCurPage(1);
+  }, [setIsLike, postId, isLiked]);
+
   const { type } = useSelector((state) => state.marker);
 
   const currentLike = isLike ? like + 1 : like;
@@ -131,9 +133,9 @@ const Post = ({ data }) => {
                 color={type === 'ROUTE' ? '#0095f6' : '#000'}
               />
             </div>
-            <div className='right-icon'>
+            {/* <div className='right-icon'>
               <FontAwesomeIcon icon={faBookmark} />
-            </div>
+            </div> */}
           </div>
           <div className='post-info'>
             <span>{formatDate(updatedAt)}</span>
