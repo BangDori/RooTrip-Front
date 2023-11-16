@@ -1,0 +1,39 @@
+.image-slide {
+  position: relative;
+  height: inherit;
+
+  .photo {
+    position: absolute;
+    display: flex;
+
+    height: 240px;
+
+    transition: left 0.5s ease-in-out;
+
+    img {
+      width: 480px;
+      height: 100%;
+
+      object-fit: cover;
+    }
+  }
+
+  .direction {
+    position: absolute;
+    top: 50%;
+    color: #fff;
+
+    cursor: pointer;
+
+    z-index: 50;
+  }
+
+  .fa-left {
+    left: 12px;
+    transform: translate(-5%, -50%);
+  }
+  .fa-right {
+    right: 12px;
+    transform: translate(5%, -50%);
+  }
+}
