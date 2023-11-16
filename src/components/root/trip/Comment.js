@@ -1,8 +1,8 @@
 import { formatNumber } from '@utils/format';
 
-const commentCount = 16663;
+const Comment = ({ comments }) => {
+  const commentCount = comments.length;
 
-const Comment = () => {
   return (
     <div className='post-comment'>
       <button className='comment-button'>

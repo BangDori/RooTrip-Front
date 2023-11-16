@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useToggle } from '@uidotdev/usehooks';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,20 +14,40 @@ import {
   faHeart,
 } from '@fortawesome/free-regular-svg-icons';
 
+import { formatNumber } from '@utils/format';
 import '@styles/root/post/Post.scss';
 import '@styles/root/trip/Trip.scss';
-import { formatNumber } from '@utils/format';
 
+import Modal from '@components/common/Modal';
 import Comment from './Comment';
+import FullScreenPost from './FullScreenPost';
 
 const totPage = 2;
 
 const date = 3;
-const like = 1005120;
-const views = 1540;
 
-const Post = () => {
+const Post = ({ data }) => {
   const [curPage, setCurPage] = useState(1);
+  const [onFullScreen, toggleFullScreen] = useToggle(false);
+
+  const { postViews, post } = data;
+  const { article, comments, like, user } = post;
+
+  const formattedArticle = article
+    .split('\\r\\n')
+    .map((line, index) => {
+      if (line === '') return null;
+
+      return (
+        <p key={index}>
+          {line}
+          <br />
+        </p>
+      );
+    })
+    .filter(Boolean);
+
+  const { name, profile } = user;
 
   return (
     <div className='post-wrapper'>
@@ -35,9 +56,13 @@ const Post = () => {
       </div>
       <div className='post-main'>
         <div className='post-profile'>
-          <FontAwesomeIcon icon={faCircleUser} className='fa-circle-user' />
+          {profile ? (
+            <img src={profile} alt='user-image-profile' />
+          ) : (
+            <FontAwesomeIcon icon={faCircleUser} className='fa-circle-user' />
+          )}
           <p className='profile-name'>
-            <Link to='/profile'>유저</Link>
+            <Link to='/profile'>{name}</Link>
           </p>
         </div>
         <div className='image-slide'>
@@ -62,7 +87,7 @@ const Post = () => {
           <div className='post-icons'>
             <div className='left-icons'>
               <FontAwesomeIcon icon={faHeart} />
-              <FontAwesomeIcon icon={faComment} />
+              <FontAwesomeIcon icon={faComment} onClick={toggleFullScreen} />
               <FontAwesomeIcon icon={faCompass} />
             </div>
             <div className='right-icon'>
@@ -72,13 +97,24 @@ const Post = () => {
           <div className='post-info'>
             <span>{date}일 전</span>
             <span>좋아요 {formatNumber(like)}</span>
-            <span>조회수 {formatNumber(views)}</span>
+            <span>조회수 {formatNumber(postViews)}</span>
           </div>
         </div>
 
-        <section className='post-section'>Text</section>
+        <section className='post-section'>
+          {formattedArticle}
+          <button className='more-post-btn' onClick={toggleFullScreen}>
+            ... 더보기
+          </button>
+        </section>
 
-        <Comment />
+        <Comment comments={comments} />
+
+        {onFullScreen && (
+          <Modal onClose={toggleFullScreen}>
+            <FullScreenPost onClose={toggleFullScreen} />
+          </Modal>
+        )}
       </div>
     </div>
   );

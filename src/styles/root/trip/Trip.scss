@@ -113,6 +113,23 @@
 
     padding: 4px 8px 0;
     height: 196px;
+
+    overflow: hidden;
+
+    p {
+      margin: 4px 0;
+    }
+
+    .more-post-btn {
+      padding: 0;
+      color: #737373;
+
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .post-comment {
