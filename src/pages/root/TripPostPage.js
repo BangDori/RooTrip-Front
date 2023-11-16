@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Await, defer, useLoaderData } from 'react-router-dom';
+import { Await, defer, redirect, useLoaderData } from 'react-router-dom';
 
 import Post from '@components/root/trip/Post';
 import { MAIN_SERVER } from '@config/server-config';
@@ -32,6 +32,11 @@ export async function loader({ params }) {
   });
 
   const resData = await response.json();
+
+  if (!resData.status) {
+    return redirect('/trip');
+  }
+
   const { data } = resData;
 
   return defer({
