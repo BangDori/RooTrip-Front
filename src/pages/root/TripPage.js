@@ -14,13 +14,12 @@ export async function loader() {
 
   // Marker 받아오기
   const { polygon } = store.getState().map;
-  const { accessToken } = store.getState().user;
 
   const response = await fetch(
     `${MAIN_SERVER}/api/post?polygon=${polygon}&viewType=city`,
     {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accesstoken}`,
       },
     },
   );
