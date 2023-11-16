@@ -12,6 +12,9 @@ import test3 from '@assets/test/test3.jpg';
 import test4 from '@assets/test/test4.jpg';
 import test5 from '@assets/test/test5.jpg';
 import test6 from '@assets/test/test6.jpg';
+
+import test7 from '@assets/test/test7.jpg';
+import test8 from '@assets/test/test8.jpg';
 import '@styles/root/profile/My.scss';
 
 const Profile = () => {
@@ -25,19 +28,19 @@ const Profile = () => {
           <img src={test1} alt='test1' />
         </div>
         <div className='article-image post2'>
-          <img src={test2} alt='test1' />
+          <img src={test2} alt='test2' />
         </div>
         <div className='article-image post3'>
-          <img src={test3} alt='test1' />
+          <img src={test3} alt='test3' />
         </div>
         <div className='article-image post4'>
-          <img src={test4} alt='test1' />
+          <img src={test4} alt='test4' />
         </div>
         <div className='article-image post5'>
-          <img src={test5} alt='test1' />
+          <img src={test5} alt='test5' />
         </div>
         <div className='article-image post6'>
-          <img src={test6} alt='test1' />
+          <img src={test6} alt='test6' />
         </div>
       </div>
     );
@@ -46,8 +49,12 @@ const Profile = () => {
   const renderSavedPosts = () => {
     return (
       <div className='article-group'>
-        <div className='article-image post1'></div>
-        <div className='article-image post2'></div>
+        <div className='article-image post7'>
+          <img src={test7} alt='test7' />
+        </div>
+        <div className='article-image post8'>
+          <img src={test8} alt='test8' />
+        </div>
       </div>
     );
   };
