@@ -1,8 +1,10 @@
 import { Marker } from 'react-map-gl';
 
 const WriteMarker = ({ marker, isAnimation }) => {
-  const { fileName, type, url } = marker;
+  const { fileName, type, url, imageUrl } = marker;
   const { latitude, longitude } = marker.coordinate;
+
+  const fileURL = !url ? imageUrl : url;
 
   return (
     <Marker
@@ -12,8 +14,8 @@ const WriteMarker = ({ marker, isAnimation }) => {
       anchor='bottom'
     >
       <div className='map-marker-image write-marker'>
-        {type.includes('image/') && <img src={url} alt='marker' />}
-        {type.includes('video/') && <video src={`${url}#t=0.5`} />}
+        {type.includes('image/') && <img src={fileURL} alt='marker' />}
+        {type.includes('video/') && <video src={`${fileURL}#t=0.5`} />}
       </div>
       {isAnimation && <div className='path-animation' />}
     </Marker>
