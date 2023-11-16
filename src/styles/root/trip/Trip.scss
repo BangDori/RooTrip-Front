@@ -8,8 +8,10 @@
   width: inherit;
   margin: 8px 0;
 
+  width: 480px;
   height: 240px;
-  background: pink;
+
+  overflow: hidden;
 
   .post-profile {
     position: absolute;
@@ -19,6 +21,8 @@
     display: flex;
     align-items: center;
     gap: 4px;
+
+    z-index: 500;
 
     .fa-circle-user {
       width: 24px;
@@ -38,27 +42,6 @@
           text-decoration: none;
         }
       }
-    }
-  }
-
-  .image-slide {
-    height: inherit;
-
-    .direction {
-      position: absolute;
-      top: 50%;
-      color: #fff;
-
-      cursor: pointer;
-    }
-
-    .fa-left {
-      left: 12px;
-      transform: translate(-5%, -50%);
-    }
-    .fa-right {
-      right: 12px;
-      transform: translate(5%, -50%);
     }
   }
 }
@@ -128,45 +111,6 @@
 
       &:hover {
         text-decoration: underline;
-      }
-    }
-  }
-
-  .post-comment {
-    padding: 0 8px;
-    margin-bottom: 8px;
-
-    text-align: left;
-
-    .comment-button {
-      color: #737373;
-      padding: 4px 0;
-
-      cursor: pointer;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    .comment-form {
-      display: flex;
-
-      input {
-        flex: 1;
-
-        background: #fafafa;
-
-        height: 32px;
-
-        border: 1px solid #dbdbdb;
-        border-radius: 15px;
-
-        padding-inline-start: 8px;
-
-        &:focus {
-          outline: none;
-        }
       }
     }
   }

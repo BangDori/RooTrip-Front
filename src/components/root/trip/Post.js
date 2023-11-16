@@ -1,38 +1,32 @@
 import { useState } from 'react';
-import { useToggle } from '@uidotdev/usehooks';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCircleUser,
-  faCircleArrowLeft,
-  faCircleArrowRight,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 import {
   faBookmark,
-  faComment,
   faCompass,
   faHeart,
 } from '@fortawesome/free-regular-svg-icons';
 
-import { formatNumber } from '@utils/format';
+import { routeMarkers, returnMarkers } from '@store/marker';
+import { formatDate, formatNumber } from '@utils/format';
 import '@styles/root/post/Post.scss';
 import '@styles/root/trip/Trip.scss';
 
-import Modal from '@components/common/Modal';
-import Comment from './Comment';
-import FullScreenPost from './FullScreenPost';
-
-const totPage = 2;
-
-const date = 3;
+import ImageSlider from './ImageSlider';
 
 const Post = ({ data }) => {
   const [curPage, setCurPage] = useState(1);
-  const [onFullScreen, toggleFullScreen] = useToggle(false);
+
+  const dispatch = useDispatch();
 
   const { postViews, post } = data;
-  const { article, comments, like, user } = post;
-  const { name, profile } = user;
+  const { article, like, photos, routes, user, updatedAt } = post;
+  const { id: userId, name, profile } = user;
+  const totPage = photos.length;
+
+  const { type } = useSelector((state) => state.marker);
 
   const formattedArticle = article
     .split('\\r\\n')
@@ -48,6 +42,15 @@ const Post = ({ data }) => {
     })
     .filter(Boolean);
 
+  const routeOnMap = () => {
+    if (type === 'ROUTE') {
+      dispatch(returnMarkers());
+      return;
+    }
+
+    dispatch(routeMarkers({ photos, routes }));
+  };
+
   return (
     <div className='post-wrapper'>
       <div className='post-page'>
@@ -61,61 +64,35 @@ const Post = ({ data }) => {
             <FontAwesomeIcon icon={faCircleUser} className='fa-circle-user' />
           )}
           <p className='profile-name'>
-            <Link to='/profile'>{name}</Link>
+            <Link to={`/profile/${userId}`}>{name}</Link>
           </p>
         </div>
-        <div className='image-slide'>
-          {curPage > 1 && (
-            <FontAwesomeIcon
-              icon={faCircleArrowLeft}
-              className='fa-left direction'
-              onClick={() => setCurPage((prevPage) => prevPage - 1)}
-            />
-          )}
-          {curPage < totPage && (
-            <FontAwesomeIcon
-              icon={faCircleArrowRight}
-              className='fa-right direction'
-              onClick={() => setCurPage((prevPage) => prevPage + 1)}
-            />
-          )}
-        </div>
+        <ImageSlider
+          photos={photos}
+          curPage={curPage}
+          totPage={totPage}
+          setCurPage={setCurPage}
+        />
       </div>
       <div className='post-article'>
         <div className='post-top'>
           <div className='post-icons'>
             <div className='left-icons'>
               <FontAwesomeIcon icon={faHeart} />
-              <FontAwesomeIcon icon={faComment} onClick={toggleFullScreen} />
-              <FontAwesomeIcon icon={faCompass} />
+              <FontAwesomeIcon icon={faCompass} onClick={routeOnMap} />
             </div>
             <div className='right-icon'>
               <FontAwesomeIcon icon={faBookmark} />
             </div>
           </div>
           <div className='post-info'>
-            <span>{date}일 전</span>
+            <span>{formatDate(updatedAt)}</span>
             <span>좋아요 {formatNumber(like)}</span>
             <span>조회수 {formatNumber(postViews)}</span>
           </div>
         </div>
 
-        <section className='post-section'>
-          {formattedArticle.slice(0, 4)}
-          {formattedArticle.length > 4 && (
-            <button className='more-post-btn' onClick={toggleFullScreen}>
-              ... 더보기
-            </button>
-          )}
-        </section>
-
-        <Comment comments={comments} />
-
-        {onFullScreen && (
-          <Modal onClose={toggleFullScreen}>
-            <FullScreenPost onClose={toggleFullScreen} />
-          </Modal>
-        )}
+        <section className='post-section'>{formattedArticle}</section>
       </div>
     </div>
   );
