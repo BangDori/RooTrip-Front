@@ -94,10 +94,10 @@
   .post-section {
     text-align: left;
 
-    padding: 4px 8px 0;
-    height: 196px;
+    padding: 16px 8px 0;
+    height: 240px;
 
-    overflow: hidden;
+    overflow-y: auto;
 
     p {
       margin: 4px 0;
