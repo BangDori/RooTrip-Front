@@ -87,7 +87,7 @@ const Post = ({ data }) => {
               <FontAwesomeIcon
                 icon={faCompass}
                 onClick={routeOnMap}
-                color={type === 'ROUTE' && '#0095f6'}
+                color={type === 'ROUTE' ? '#0095f6' : '#000'}
               />
             </div>
             <div className='right-icon'>
