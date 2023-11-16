@@ -79,7 +79,11 @@ const Post = ({ data }) => {
           <div className='post-icons'>
             <div className='left-icons'>
               <FontAwesomeIcon icon={faHeart} />
-              <FontAwesomeIcon icon={faCompass} onClick={routeOnMap} />
+              <FontAwesomeIcon
+                icon={faCompass}
+                onClick={routeOnMap}
+                color={type === 'ROUTE' && '#0095f6'}
+              />
             </div>
             <div className='right-icon'>
               <FontAwesomeIcon icon={faBookmark} />
