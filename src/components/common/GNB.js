@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUser,
   faPlaneUp,
-  faMapLocationDot,
+  // faMapLocationDot,
   faCamera,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -38,7 +38,7 @@ const GNB = () => {
             </div>
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             to='/route'
             className={({ isActive }) => (isActive ? 'isActive' : undefined)}
@@ -47,7 +47,7 @@ const GNB = () => {
               <FontAwesomeIcon icon={faMapLocationDot} />
             </div>
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink
             to='/write'
