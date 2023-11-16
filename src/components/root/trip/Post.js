@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { useToggle } from '@uidotdev/usehooks';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUser, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleUser,
+  faHeart as faHeartSolid,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faBookmark,
   faCompass,
-  faHeart,
+  faHeart as faHeartRegular,
 } from '@fortawesome/free-regular-svg-icons';
 
+import { MAIN_SERVER } from '@config/server-config';
 import { routeMarkers, returnMarkers } from '@store/marker';
 import { formatDate, formatNumber } from '@utils/format';
 import '@styles/root/post/Post.scss';
@@ -16,17 +22,31 @@ import '@styles/root/trip/Trip.scss';
 
 import ImageSlider from './ImageSlider';
 
+const postViews = 1234;
+
 const Post = ({ data }) => {
   const [curPage, setCurPage] = useState(1);
+  const { accessToken } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 
-  const { postViews, post } = data;
-  const { article, like, photos, routes, user, updatedAt } = post;
+  const {
+    id: postId,
+    article,
+    isLiked,
+    like,
+    photos,
+    routes,
+    user,
+    updatedAt,
+  } = data.post;
   const { id: userId, name, profile } = user;
   const totPage = photos.length;
 
+  const [isLike, setIsLike] = useToggle(isLiked);
   const { type } = useSelector((state) => state.marker);
+
+  const currentLike = isLike ? like + 1 : like;
 
   const formattedArticle = article
     .split('\\r\\n')
@@ -49,6 +69,18 @@ const Post = ({ data }) => {
     }
 
     dispatch(routeMarkers({ photos, routes }));
+  };
+
+  const likePost = async () => {
+    await fetch(`${MAIN_SERVER}/api/post/${postId}/like`, {
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // api 통신
+    setIsLike();
   };
 
   return (
@@ -83,7 +115,12 @@ const Post = ({ data }) => {
         <div className='post-top'>
           <div className='post-icons'>
             <div className='left-icons'>
-              <FontAwesomeIcon icon={faHeart} />
+              {isLike ? (
+                <FontAwesomeIcon icon={faHeartSolid} />
+              ) : (
+                <FontAwesomeIcon icon={faHeartRegular} onClick={likePost} />
+              )}
+
               <FontAwesomeIcon
                 icon={faCompass}
                 onClick={routeOnMap}
@@ -96,7 +133,7 @@ const Post = ({ data }) => {
           </div>
           <div className='post-info'>
             <span>{formatDate(updatedAt)}</span>
-            <span>좋아요 {formatNumber(like)}</span>
+            <span>좋아요 {currentLike}</span>
             <span>조회수 {formatNumber(postViews)}</span>
           </div>
         </div>

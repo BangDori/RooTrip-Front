@@ -25,6 +25,8 @@ export async function loader({ params }) {
   // PostId에 대한 post 받아오기
   const { accessToken } = store.getState().user;
 
+  if (!accessToken) return null;
+
   const response = await fetch(`${MAIN_SERVER}/api/post/${postId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
