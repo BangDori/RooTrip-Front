@@ -37,12 +37,14 @@
   border-color: white;
   cursor: pointer;
 
-  &.clicked {
-    border-color: red;
-  }
-
   &:hover {
     border-color: orange;
+  }
+}
+
+.active {
+  .trip-marker {
+    border-color: red;
   }
 }
 
