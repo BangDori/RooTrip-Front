@@ -65,7 +65,7 @@
 
 ## ♾아키텍처
 
-![image](https://github.com/BangDori/RooTrip-Front/assets/44726494/8766e290-a321-4fd7-b12f-6702401f0b75)
+![123](https://github.com/BangDori/RooTrip-Front/assets/44726494/17f256d7-d8bc-4cee-a3ff-aa92772c18f7)
 
 <br />
 
